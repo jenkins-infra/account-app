@@ -44,12 +44,12 @@ public class Application {
             @QueryParameter String password2
     ) throws Exception {
 
-        final Attributes attrs = new BasicAttributes();
 
         if (!password1.equals(password2))
             throw new Error("Password mismatch");
 
-        attrs.put("objectClass", "inerOrgPerson");
+        Attributes attrs = new BasicAttributes();
+        attrs.put("objectClass", "inetOrgPerson");
         attrs.put("givenName", firstName);
         attrs.put("sn", lastName);
         attrs.put("mail", email);
@@ -65,11 +65,11 @@ public class Application {
         return new HttpRedirect("done");
     }
 
-    private LdapContext connect() throws NamingException {
+    public LdapContext connect() throws NamingException {
         return connect(params.managerDN(), params.managerPassword());
     }
 
-    private LdapContext connect(String dn, String password) throws NamingException {
+    public LdapContext connect(String dn, String password) throws NamingException {
         Hashtable<String,String> env = new Hashtable<String,String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(Context.PROVIDER_URL, params.server());
@@ -84,8 +84,13 @@ public class Application {
     ) throws Exception {
 
         String dn = "cn=" + userid + "," + params.newUserBaseDN();
-        Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(),
-                new Myself(dn,new ConnectionFactory(params.server(),dn,password)));
+        LdapContext context = connect(dn, password);    // make sure the password is valid
+        try {
+            Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(),
+                    new Myself(this,dn, context.getAttributes(dn)));
+        } finally {
+            context.close();
+        }
         return new HttpRedirect("myself/");
     }
 
@@ -95,6 +100,6 @@ public class Application {
     }
 
     public Myself getMyself() {
-        return (Myself)Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
     }
 }

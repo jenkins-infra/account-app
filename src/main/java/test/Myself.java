@@ -15,24 +15,18 @@ import javax.naming.ldap.LdapContext;
  * @author Kohsuke Kawaguchi
  */
 public class Myself {
+    private final Application parent;
     private final String dn;
-    private final ConnectionFactory factory;
     public String firstName, lastName, email, userId;
 
-    public Myself(String dn, ConnectionFactory factory) throws NamingException {
+    public Myself(Application parent, String dn, Attributes attributes) throws NamingException {
+        this.parent = parent;
         this.dn = dn;
-        this.factory = factory;
 
-        LdapContext context = factory.connect();
-        try {
-            Attributes attributes = context.getAttributes(dn);
-            firstName = getAttribute(attributes,"givenName");
-            lastName = getAttribute(attributes,"sn");
-            email = getAttribute(attributes,"mail");
-            userId = getAttribute(attributes,"cn");
-        } finally {
-            context.close();
-        }
+        firstName = getAttribute(attributes,"givenName");
+        lastName = getAttribute(attributes,"sn");
+        email = getAttribute(attributes,"mail");
+        userId = getAttribute(attributes,"cn");
     }
 
     private String getAttribute(Attributes attributes, String name) throws NamingException {
@@ -52,7 +46,7 @@ public class Myself {
         attrs.put("sn", lastName);
         attrs.put("mail", email);
 
-        LdapContext context = factory.connect();
+        LdapContext context = parent.connect();
         try {
             context.modifyAttributes(dn,DirContext.REPLACE_ATTRIBUTE,attrs);
         } finally {
@@ -63,6 +57,32 @@ public class Myself {
         this.lastName = lastName;
         this.email = email;
 
+        return new HttpRedirect("done");
+    }
+
+    public HttpResponse doChangePassword(
+            @QueryParameter String password,
+            @QueryParameter String newPassword1,
+            @QueryParameter String newPassword2
+    ) throws Exception {
+
+        if (!newPassword1.equals(newPassword2))
+            throw new Error("Password mismatch");
+
+        // verify the current password
+        parent.connect(dn,password).close();
+
+        // then update
+        Attributes attrs = new BasicAttributes();
+        attrs.put("userPassword", PasswordUtil.hashPassword(newPassword1));
+
+        LdapContext context = parent.connect();
+        try {
+            context.modifyAttributes(dn,DirContext.REPLACE_ATTRIBUTE,attrs);
+        } finally {
+            context.close();
+        }
+        
         return new HttpRedirect("done");
     }
 }
