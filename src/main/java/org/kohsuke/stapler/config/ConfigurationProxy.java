@@ -1,7 +1,5 @@
 package org.kohsuke.stapler.config;
 
-import org.apache.commons.configuration.Configuration;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
