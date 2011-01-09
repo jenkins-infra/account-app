@@ -25,6 +25,7 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import java.util.Hashtable;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import static javax.naming.directory.DirContext.*;
 import static test.PasswordUtil.*;
@@ -66,6 +67,8 @@ public class Application {
             con.close();
         }
 
+        LOGGER.info("User "+userid+" signed up: "+email);
+
         mailPassword(email,userid,password);
         
         return new HttpRedirect("doneMail");
@@ -85,7 +88,10 @@ public class Application {
             String dn = r.getName()+","+params.newUserBaseDN();
             con.modifyAttributes(dn,REPLACE_ATTRIBUTE,new BasicAttributes("userPassword",PasswordUtil.hashPassword(p)));
 
-            mailPassword((String)att.get("mail").get(), (String)att.get("cn").get(), p);
+            String userid = (String) att.get("cn").get();
+            String mail = (String) att.get("mail").get();
+            LOGGER.info("User "+userid+" reset the password: "+mail);
+            mailPassword(mail, userid, p);
         } finally {
             con.close();
         }
@@ -144,4 +150,6 @@ public class Application {
     public Myself getMyself() {
         return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
     }
+
+    private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
 }

@@ -1,5 +1,5 @@
 - better e-mail content
-- logging of the activity
 - super user mode
 
 - changing e-mail should reset the password to revalidate
+  (but java.net doesn't do this)

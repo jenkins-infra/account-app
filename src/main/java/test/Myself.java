@@ -10,6 +10,7 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 import javax.naming.ldap.LdapContext;
+import java.util.logging.Logger;
 
 /**
  * @author Kohsuke Kawaguchi
@@ -57,6 +58,8 @@ public class Myself {
         this.lastName = lastName;
         this.email = email;
 
+        LOGGER.info("User "+userId+" updated the profile. email="+email);
+
         return new HttpRedirect("done");
     }
 
@@ -82,7 +85,11 @@ public class Myself {
         } finally {
             context.close();
         }
-        
+
+        LOGGER.info("User "+userId+" changed the password");
+
         return new HttpRedirect("done");
     }
+
+    private static final Logger LOGGER = Logger.getLogger(Myself.class.getName());
 }
