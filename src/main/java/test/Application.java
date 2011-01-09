@@ -71,7 +71,7 @@ public class Application {
         return new HttpRedirect("doneSignup");
     }
 
-    public HttpResponse doPasswordReset(@QueryParameter String id) throws Exception {
+    public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
         final DirContext con = connect();
         try {
             NamingEnumeration<SearchResult> a = con.search(params.newUserBaseDN(), "(|(mail={0})(cn={0}))", new Object[]{id}, new SearchControls());
