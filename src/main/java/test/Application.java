@@ -47,21 +47,17 @@ public class Application {
             @QueryParameter String userid,
             @QueryParameter String firstName,
             @QueryParameter String lastName,
-            @QueryParameter String email,
-            @QueryParameter String password1,
-            @QueryParameter String password2
+            @QueryParameter String email
     ) throws Exception {
 
-
-        if (!password1.equals(password2))
-            throw new Error("Password mismatch");
 
         Attributes attrs = new BasicAttributes();
         attrs.put("objectClass", "inetOrgPerson");
         attrs.put("givenName", firstName);
         attrs.put("sn", lastName);
         attrs.put("mail", email);
-        attrs.put("userPassword", hashPassword(password1));
+        String password = generateRandomPassword();
+        attrs.put("userPassword", hashPassword(password));
 
         final DirContext con = connect();
         try {
@@ -69,8 +65,10 @@ public class Application {
         } finally {
             con.close();
         }
+
+        mailPassword(email,userid,password);
         
-        return new HttpRedirect("done");
+        return new HttpRedirect("doneSignup");
     }
 
     public HttpResponse doPasswordReset(@QueryParameter String id) throws Exception {
