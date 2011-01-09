@@ -82,7 +82,7 @@ public class Application {
             Attributes att = r.getAttributes();
 
             String p = PasswordUtil.generateRandomPassword();
-            String dn = r.getName();
+            String dn = r.getName()+","+params.newUserBaseDN();
             con.modifyAttributes(dn,REPLACE_ATTRIBUTE,new BasicAttributes("userPassword",PasswordUtil.hashPassword(p)));
 
             mailPassword((String)att.get("mail").get(), (String)att.get("cn").get(), p);
