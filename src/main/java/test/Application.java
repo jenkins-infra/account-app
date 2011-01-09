@@ -68,7 +68,7 @@ public class Application {
 
         mailPassword(email,userid,password);
         
-        return new HttpRedirect("doneSignup");
+        return new HttpRedirect("doneMail");
     }
 
     public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
@@ -90,7 +90,7 @@ public class Application {
             con.close();
         }
 
-        return new HttpRedirect("done");
+        return new HttpRedirect("doneMail");
     }
 
     private void mailPassword(String to, String cn, String password) throws MessagingException {
