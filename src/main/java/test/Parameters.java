@@ -12,4 +12,6 @@ public interface Parameters {
     String managerDN();
     String managerPassword();
     String server();
+
+    String smtpServer();
 }

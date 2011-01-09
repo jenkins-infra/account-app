@@ -2,14 +2,7 @@
   <html>
     <head>
       <title>Sign up</title>
-      <style>
-        h5 {
-          margin-bottom: 0em;
-        }
-        INPUT.text {
-          width: 20em;
-        }
-      </style>
+      <link rel="stylesheet" type="text/css" href="../style.css" />
     </head>
     <body>
       <h1>Your Profile</h1>

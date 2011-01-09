@@ -37,4 +37,12 @@ public class PasswordUtil {
         System.arraycopy(b,0,r,a.length,b.length);
         return r;
     }
+
+    public static String generateRandomPassword() {
+        String seed = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String r = "";
+        for (int i=0; i<8; i++)
+            r+=seed.charAt(random.nextInt(seed.length()));
+        return r;
+    }
 }
