@@ -23,7 +23,7 @@
     <dependency>
       <groupId>org.kohsuke.stapler</groupId>
       <artifactId>stapler-jelly</artifactId>
-      <version>1.148</version>
+      <version>1.156-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

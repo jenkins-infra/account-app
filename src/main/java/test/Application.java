@@ -148,7 +148,10 @@ public class Application {
     }
 
     public Myself getMyself() {
-        return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        if (myself==null)   // needs to login
+            throw HttpResponses.redirectViaContextPath("login");
+        return myself;
     }
 
     private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
