@@ -1,48 +1,42 @@
-<j:jelly xmlns:j="jelly:core">
-  <html>
-    <head>
-      <title>Sign up</title>
-      <link rel="stylesheet" type="text/css" href="../style.css" />
-    </head>
-    <body>
-      <h1>Your Profile</h1>
+<j:jelly xmlns:j="jelly:core" xmlns:t="/taglibs">
+  <t:layout title="Your Profile">
+    <h1>Your Profile</h1>
 
-      <form method="post" action="update">
-        <h5>User ID</h5>
-        <input type="text" readonly="true" value="${it.userId}" class="text" disabled="true"/>
+    <form method="post" action="update">
+      <h5>User ID</h5>
+      <input type="text" readonly="true" value="${it.userId}" class="text" disabled="true"/>
 
-        <h5>First Name</h5>
-        <input type="text" name="firstName" value="${it.firstName}" class="text"/>
+      <h5>First Name</h5>
+      <input type="text" name="firstName" value="${it.firstName}" class="text"/>
 
-        <h5>Last Name</h5>
-        <input type="text" name="lastName" value="${it.lastName}" class="text"/>
+      <h5>Last Name</h5>
+      <input type="text" name="lastName" value="${it.lastName}" class="text"/>
 
-        <h5>E-mail</h5>
-        <input type="text" name="email" value="${it.email}" class="text"/>
+      <h5>E-mail</h5>
+      <input type="text" name="email" value="${it.email}" class="text"/>
 
-        <h5>GitHub ID</h5>
-        <input type="text" name="githubId" value="${it.githubId}" class="text"/>
+      <h5>GitHub ID</h5>
+      <input type="text" name="githubId" value="${it.githubId}" class="text"/>
 
-        <h5>SSH Public Keys</h5>
-        <textarea name="sshKeys">${it.sshKeys}</textarea>
+      <h5>SSH Public Keys</h5>
+      <textarea name="sshKeys">${it.sshKeys}</textarea>
 
 
-        <input type="submit" style="margin-top:2em; display:block"/>
-      </form>
+      <input type="submit" style="margin-top:2em; display:block"/>
+    </form>
 
-      <h1>Change Password</h1>
-      <form method="post" action="changePassword">
-        <h5>Current Password</h5>
-        <input type="password" name="password" value="" class="text"/>
+    <h1>Change Password</h1>
+    <form method="post" action="changePassword">
+      <h5>Current Password</h5>
+      <input type="password" name="password" value="" class="text"/>
 
-        <h5>New Password</h5>
-        <input type="password" name="newPassword1" class="text"/>
+      <h5>New Password</h5>
+      <input type="password" name="newPassword1" class="text"/>
 
-        <h5>Confirm New Password</h5>
-        <input type="password" name="newPassword2" class="text"/>
+      <h5>Confirm New Password</h5>
+      <input type="password" name="newPassword2" class="text"/>
 
-        <input type="submit" style="margin-top:2em; display:block"/>
-      </form>
-    </body>
-  </html>
+      <input type="submit" style="margin-top:2em; display:block"/>
+    </form>
+  </t:layout>
 </j:jelly>

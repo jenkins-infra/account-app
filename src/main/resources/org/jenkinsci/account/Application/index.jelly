@@ -1,9 +1,9 @@
-<html>
-  <body>
+<j:jelly xmlns:j="jelly:core" xmlns:t="/taglibs">
+  <t:layout title="Account self-service app">
     <h1><a href="signup">Create a new account</a></h1>
 
     <h1><a href="passwordReset">Reset the password</a></h1>
 
     <h1><a href="myself/">Update your profile</a></h1>
-  </body>
-</html>
+  </t:layout>
+</j:jelly>

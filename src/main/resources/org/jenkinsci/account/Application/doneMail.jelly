@@ -1,8 +1,8 @@
-<html>
-  <body>
+<j:jelly xmlns:j="jelly:core" xmlns:t="/taglibs">
+  <t:layout title="Done!">
     <h1>Done!</h1>
     <p>
       Check your mail for the password.
     </p>
-  </body>
-</html>
+  </t:layout>
+</j:jelly>

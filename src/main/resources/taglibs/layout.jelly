@@ -1,4 +1,7 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:i="jelly:fmt">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define">
+  <st:documentation>
+    <st:attribute name="title" use="required"/>
+  </st:documentation>
   <st:contentType value="text/html;charset=UTF-8" />
   <html>
     <head>
