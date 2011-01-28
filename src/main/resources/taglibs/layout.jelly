@@ -1,0 +1,12 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:i="jelly:fmt">
+  <st:contentType value="text/html;charset=UTF-8" />
+  <html>
+    <head>
+      <title>${attrs.title}</title>
+      <link rel="stylesheet" type="text/css" href="/account/style.css" />
+    </head>
+    <body>
+      <d:invokeBody />
+    </body>
+  </html>
+</j:jelly>
