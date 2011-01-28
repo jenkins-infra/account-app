@@ -1,0 +1,30 @@
+<j:jelly xmlns:j="jelly:core">
+  <html>
+    <head>
+      <title>Sign up</title>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+      <h1>Sign up</h1>
+
+      <form method="post" action="doSignup">
+        <h5>User ID</h5>
+        <input type="text" name="userid" class="text"/>
+
+        <h5>First Name</h5>
+        <input type="text" name="firstName" class="text"/>
+
+        <h5>Last Name</h5>
+        <input type="text" name="lastName" class="text"/>
+
+        <h5>E-mail</h5>
+        <input type="text" name="email" class="text"/>
+
+        <h5>Captcha</h5>
+        ${it.createRecaptcha().createRecaptchaHtml(null,null)}
+
+        <input type="submit" style="margin-top:2em; display:block"/>
+      </form>
+    </body>
+  </html>
+</j:jelly>
