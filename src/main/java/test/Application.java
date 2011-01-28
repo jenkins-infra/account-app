@@ -1,4 +1,8 @@
 package test; 
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaFactory;
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
@@ -44,13 +48,27 @@ public class Application {
         this.params = ConfigurationProxy.create(config,Parameters.class);
     }
 
+    public ReCaptcha createRecaptcha() {
+        return ReCaptchaFactory.newReCaptcha(params.recaptchaPublicKey(), params.recaptchaPrivateKey(), false);
+    }
+
     public HttpResponse doDoSignup(
+            StaplerRequest request,
             @QueryParameter String userid,
             @QueryParameter String firstName,
             @QueryParameter String lastName,
             @QueryParameter String email
     ) throws Exception {
 
+        ReCaptcha reCaptcha = createRecaptcha();
+
+        String challenge = request.getParameter("recaptcha_challenge_field");
+        String uresponse = request.getParameter("recaptcha_response_field");
+        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(request.getRemoteAddr(), challenge, uresponse);
+
+        if (!reCaptchaResponse.isValid()) {
+            throw new Error("Captcha mismatch");
+        }
 
         Attributes attrs = new BasicAttributes();
         attrs.put("objectClass", "inetOrgPerson");

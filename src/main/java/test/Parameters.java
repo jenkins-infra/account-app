@@ -14,4 +14,7 @@ public interface Parameters {
     String server();
 
     String smtpServer();
+
+    String recaptchaPublicKey();
+    String recaptchaPrivateKey();
 }

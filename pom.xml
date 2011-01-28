@@ -21,6 +21,11 @@
       <version>1.4</version>
     </dependency>
     <dependency>
+      <groupId>net.tanesha.recaptcha4j</groupId>
+      <artifactId>recaptcha4j</artifactId>
+      <version>0.0.7</version>
+    </dependency>
+    <dependency>
       <groupId>org.kohsuke.stapler</groupId>
       <artifactId>stapler-jelly</artifactId>
       <version>1.156-SNAPSHOT</version>
