@@ -5,7 +5,7 @@ package test;
  */
 public interface Parameters {
     /**
-     * string like "ou=people,dc=cloudbees,dc=com" that decides where new users are created.
+     * string like "ou=people,dc=acme,dc=com" that decides where new users are created.
      */
     String newUserBaseDN();
 
