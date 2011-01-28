@@ -27,6 +27,7 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
+import java.io.File;
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -39,13 +40,14 @@ import static test.PasswordUtil.*;
  */
 public class Application {
     private final Parameters params;
+//    public final File rootDir;
 
     public Application(Parameters params) {
         this.params = params;
     }
 
     public Application(Properties config) {
-        this.params = ConfigurationProxy.create(config,Parameters.class);
+        this(ConfigurationProxy.create(config,Parameters.class));
     }
 
     public ReCaptcha createRecaptcha() {

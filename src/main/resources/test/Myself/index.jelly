@@ -20,6 +20,13 @@
         <h5>E-mail</h5>
         <input type="text" name="email" value="${it.email}" class="text"/>
 
+        <h5>GitHub ID</h5>
+        <input type="text" name="githubId" value="${it.githubId}" class="text"/>
+
+        <h5>SSH Public Keys</h5>
+        <textarea name="sshKeys">${it.sshKeys}</textarea>
+
+
         <input type="submit" style="margin-top:2em; display:block"/>
       </form>
 

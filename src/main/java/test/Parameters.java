@@ -17,4 +17,6 @@ public interface Parameters {
 
     String recaptchaPublicKey();
     String recaptchaPrivateKey();
+
+    String rootDir();
 }

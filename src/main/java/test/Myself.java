@@ -1,5 +1,6 @@
 package test;
 
+import org.apache.commons.io.FileUtils;
 import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.QueryParameter;
@@ -10,6 +11,8 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 import javax.naming.ldap.LdapContext;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +22,7 @@ public class Myself {
     private final Application parent;
     private final String dn;
     public String firstName, lastName, email, userId;
+    public String githubId, sshKeys;
 
     public Myself(Application parent, String dn, Attributes attributes) throws NamingException {
         this.parent = parent;
@@ -28,6 +32,8 @@ public class Myself {
         lastName = getAttribute(attributes,"sn");
         email = getAttribute(attributes,"mail");
         userId = getAttribute(attributes,"cn");
+        githubId = getAttribute(attributes,"employeeNumber");
+        sshKeys = getAttribute(attributes,"preferredLanguage");
     }
 
     private String getAttribute(Attributes attributes, String name) throws NamingException {
@@ -38,7 +44,9 @@ public class Myself {
     public HttpResponse doUpdate(
             @QueryParameter String firstName,
             @QueryParameter String lastName,
-            @QueryParameter String email
+            @QueryParameter String email,
+            @QueryParameter String githubId,
+            @QueryParameter String sshKeys
     ) throws Exception {
 
         final Attributes attrs = new BasicAttributes();
@@ -46,6 +54,8 @@ public class Myself {
         attrs.put("givenName", firstName);
         attrs.put("sn", lastName);
         attrs.put("mail", email);
+        attrs.put("employeeNumber",githubId);
+        attrs.put("preferredLanguage",sshKeys); // hack since I find it too hard to add custom attributes to LDAP
 
         LdapContext context = parent.connect();
         try {
@@ -57,6 +67,8 @@ public class Myself {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.githubId = githubId;
+        this.sshKeys = sshKeys;
 
         LOGGER.info("User "+userId+" updated the profile. email="+email);
 
