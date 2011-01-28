@@ -19,7 +19,7 @@ public class WebAppMain extends AbstractWebAppMain<Application> {
     }
 
     @Override
-    protected Object createApplication() throws Exception {
+    public Application createApplication() throws Exception {
         Properties config = new Properties();
         FileInputStream in = new FileInputStream("config.properties");
         try {

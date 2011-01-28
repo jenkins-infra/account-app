@@ -69,6 +69,14 @@ public class Application {
             throw new Error("Captcha mismatch");
         }
 
+        String password = createRecord(userid, firstName, lastName, email);
+
+        mailPassword(email,userid,password);
+        
+        return new HttpRedirect("doneMail");
+    }
+
+    public String createRecord(String userid, String firstName, String lastName, String email) throws NamingException {
         Attributes attrs = new BasicAttributes();
         attrs.put("objectClass", "inetOrgPerson");
         attrs.put("givenName", firstName);
@@ -85,10 +93,7 @@ public class Application {
         }
 
         LOGGER.info("User "+userid+" signed up: "+email);
-
-        mailPassword(email,userid,password);
-        
-        return new HttpRedirect("doneMail");
+        return password;
     }
 
     public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
