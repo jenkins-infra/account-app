@@ -56,7 +56,7 @@
         <artifactId>maven-jetty-plugin</artifactId>
         <version>6.1.24</version>
         <configuration>
-          <contextPath>/</contextPath>
+          <contextPath>/account</contextPath>
 
           <!-- use the test classpath for loading resources, since this takes priority -->
           <testClassesDirectory>src/main/resources</testClassesDirectory>
