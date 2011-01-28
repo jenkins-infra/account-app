@@ -1,4 +1,4 @@
-package test;
+package org.jenkinsci.account;
 
 /**
  * @author Kohsuke Kawaguchi

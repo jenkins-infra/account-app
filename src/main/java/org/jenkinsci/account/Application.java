@@ -1,7 +1,6 @@
-package test; 
+package org.jenkinsci.account;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
-import net.tanesha.recaptcha.ReCaptchaImpl;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
@@ -27,13 +26,11 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
-import java.io.File;
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import static javax.naming.directory.DirContext.*;
-import static test.PasswordUtil.*;
 
 /**
  * @author Kohsuke Kawaguchi
@@ -77,8 +74,8 @@ public class Application {
         attrs.put("givenName", firstName);
         attrs.put("sn", lastName);
         attrs.put("mail", email);
-        String password = generateRandomPassword();
-        attrs.put("userPassword", hashPassword(password));
+        String password = PasswordUtil.generateRandomPassword();
+        attrs.put("userPassword", PasswordUtil.hashPassword(password));
 
         final DirContext con = connect();
         try {

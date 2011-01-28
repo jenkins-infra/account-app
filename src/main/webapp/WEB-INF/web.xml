@@ -18,6 +18,6 @@
   </servlet-mapping>
 
   <listener>
-    <listener-class>test.WebAppMain</listener-class>
+    <listener-class>org.jenkinsci.account.WebAppMain</listener-class>
   </listener>
 </web-app>

@@ -1,4 +1,4 @@
-package test;
+package org.jenkinsci.account;
 
 import org.apache.commons.codec.binary.Base64;
 

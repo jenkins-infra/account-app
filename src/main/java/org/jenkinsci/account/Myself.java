@@ -1,6 +1,5 @@
-package test;
+package org.jenkinsci.account;
 
-import org.apache.commons.io.FileUtils;
 import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.QueryParameter;
@@ -11,8 +10,6 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 import javax.naming.ldap.LdapContext;
-import java.io.File;
-import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
