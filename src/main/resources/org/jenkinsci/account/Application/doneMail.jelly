@@ -3,6 +3,8 @@
     <h1>Done!</h1>
     <p>
       Check your mail for the password.
+      You can login to <a href="http://wiki.jenkins-ci.org/">Wiki</a>, <a href="http://issues.jenkins-ci.org/">JIRA</a>,
+      and <a href="http://fisheye.jenkins-ci.org/">Fisheye</a> with this username and password.
     </p>
   </t:layout>
 </j:jelly>
