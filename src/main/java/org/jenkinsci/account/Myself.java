@@ -58,11 +58,11 @@ public class Myself {
 
         final Attributes attrs = new BasicAttributes();
 
-        attrs.put("givenName", firstName);
-        attrs.put("sn", lastName);
+        attrs.put("givenName", fixEmpty(firstName));
+        attrs.put("sn", fixEmpty(lastName));
         attrs.put("mail", email);
-        attrs.put("employeeNumber",githubId);
-        attrs.put("preferredLanguage",sshKeys); // hack since I find it too hard to add custom attributes to LDAP
+        attrs.put("employeeNumber",fixEmpty(githubId));
+        attrs.put("preferredLanguage",fixEmpty(sshKeys)); // hack since I find it too hard to add custom attributes to LDAP
 
         LdapContext context = parent.connect();
         try {
@@ -108,6 +108,11 @@ public class Myself {
         LOGGER.info("User "+userId+" changed the password");
 
         return new HttpRedirect("done");
+    }
+
+    private String fixEmpty(String s) {
+        if (s!=null && s.length()==0)   return null;
+        return s;
     }
 
     private static final Logger LOGGER = Logger.getLogger(Myself.class.getName());
