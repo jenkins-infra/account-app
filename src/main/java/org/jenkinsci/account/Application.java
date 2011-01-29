@@ -146,7 +146,10 @@ public class Application {
         msg.setRecipient(RecipientType.TO, new InternetAddress(to));
         msg.setContent(
                 "Your userid is "+cn+"\n"+
-                "Your password is "+password, "text/plain");
+                "Your temporary password is "+password+"\n"+
+                "\n"+
+                "Please visit http://jenkins-ci.org/account and update your password and profile\n",
+                "text/plain");
         Transport.send(msg);
     }
 
