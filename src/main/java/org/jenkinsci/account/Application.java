@@ -98,7 +98,11 @@ public class Application {
 
         final DirContext con = connect();
         try {
-            con.createSubcontext("cn="+userid+","+params.newUserBaseDN(), attrs);
+            String fullDN = "cn=" + userid + "," + params.newUserBaseDN();
+            con.createSubcontext(fullDN, attrs);
+
+            // add to the right group
+            con.modifyAttributes("cn=all,ou=groups,dc=jenkins-ci,dc=org",ADD_ATTRIBUTE,new BasicAttributes("member",fullDN));
         } finally {
             con.close();
         }
