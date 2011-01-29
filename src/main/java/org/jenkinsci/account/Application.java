@@ -199,6 +199,11 @@ public class Application {
         return HttpResponses.redirectToDot();
     }
 
+    public boolean isLoggedIn() {
+        Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        return myself!=null;
+    }
+
     public Myself getMyself() {
         Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
         if (myself==null)   // needs to login
