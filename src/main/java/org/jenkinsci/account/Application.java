@@ -99,7 +99,7 @@ public class Application {
         final DirContext con = connect();
         try {
             String fullDN = "cn=" + userid + "," + params.newUserBaseDN();
-            con.createSubcontext(fullDN, attrs);
+            con.createSubcontext(fullDN, attrs).close();
 
             // add to the right group
             con.modifyAttributes("cn=all,ou=groups,dc=jenkins-ci,dc=org",ADD_ATTRIBUTE,new BasicAttributes("member",fullDN));
