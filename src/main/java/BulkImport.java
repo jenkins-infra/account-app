@@ -15,9 +15,12 @@ public class BulkImport {
         System.out.println("Listing up "+dir);
         for (File f : dir.listFiles()) {
             if (f.exists() && !f.isDirectory()) {
-                System.out.println(f.getName());
+                String name =f.getName().toLowerCase();
+                System.out.println(name);
+                if (name.contains("@"))  continue;   // invalid
+
                 try {
-                    app.createRecord(f.getName(),f.getName(),"-",f.getName()+"@java.net");
+                    app.createRecord(name,f.getName(),"-",f.getName()+"@java.net");
                 } catch (NameAlreadyBoundException e) {
                     // already registered. move on
                 }
