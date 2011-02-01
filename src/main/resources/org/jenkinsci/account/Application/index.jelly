@@ -2,8 +2,8 @@
   <t:layout title="Account self-service app">
     <p>
       You can create/manage your user account that you use for accessing
-      <a href="http://wiki.jenkins-ci.org/">Wiki</a>, <a href="http://issues.jenkins-ci.org/">JIRA</a>,
-      and <a href="http://fisheye.jenkins-ci.org/">Fisheye</a>.
+      <a href="http://wiki.jenkins-ci.org/" target="_top">Wiki</a>, <a href="http://issues.jenkins-ci.org/" target="_top">JIRA</a>,
+      and <a href="http://fisheye.jenkins-ci.org/" target="_top">Fisheye</a>.
     </p>
 
     <h1><a href="signup">Create a new account</a></h1>
