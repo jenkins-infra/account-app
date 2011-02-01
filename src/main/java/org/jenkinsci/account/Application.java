@@ -1,4 +1,6 @@
 package org.jenkinsci.account;
+import jiraldapsyncer.JiraLdapSyncer;
+import jiraldapsyncer.ServiceLocator;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
@@ -31,10 +33,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
+import java.rmi.RemoteException;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static javax.naming.directory.DirContext.*;
@@ -112,6 +116,14 @@ public class Application {
             }
         } finally {
             con.close();
+        }
+
+        try {
+            ServiceLocator locator = ServiceLocator.getInstance();
+            JiraLdapSyncer jiraLdapSyncer = (JiraLdapSyncer) locator.lookupService(JiraLdapSyncer.ROLE);
+            jiraLdapSyncer.syncOneUserFromLDAPToJIRA(userid);
+        } catch (RemoteException e) {
+            LOGGER.log(Level.SEVERE, "Failed to register " + userid + " to JIRA", e);
         }
 
         LOGGER.info("User "+userid+" signed up: "+email);
