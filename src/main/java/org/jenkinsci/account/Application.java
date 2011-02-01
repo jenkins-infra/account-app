@@ -18,6 +18,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -198,12 +199,16 @@ public class Application {
             throw new UserError("Missing credential");
 
         String dn = "cn=" + userid + "," + params.newUserBaseDN();
-        LdapContext context = connect(dn, password);    // make sure the password is valid
         try {
-            Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(),
-                    new Myself(this,dn, context.getAttributes(dn), getGroups(dn, context)));
-        } finally {
-            context.close();
+            LdapContext context = connect(dn, password);    // make sure the password is valid
+            try {
+                Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(),
+                        new Myself(this,dn, context.getAttributes(dn), getGroups(dn,context)));
+            } finally {
+                context.close();
+            }
+        } catch (AuthenticationException e) {
+            throw new UserError(e.getMessage());
         }
         return new HttpRedirect("myself/");
     }
