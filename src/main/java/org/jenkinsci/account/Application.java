@@ -40,6 +40,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import static javax.naming.directory.DirContext.*;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
@@ -84,6 +85,11 @@ public class Application {
         if (!reCaptchaResponse.isValid()) {
             throw new Error("Captcha mismatch");
         }
+
+        userid = userid.toLowerCase();
+        if (!VALID_ID.matcher(userid).matches())
+            throw new Error("Invalid user name: "+userid);
+
 
         String password = createRecord(userid, firstName, lastName, email);
 
@@ -234,4 +240,6 @@ public class Application {
     }
 
     private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
+
+    private static final Pattern VALID_ID = Pattern.compile("[a-z0-9_]+");
 }
