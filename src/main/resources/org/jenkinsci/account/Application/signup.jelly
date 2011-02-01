@@ -5,6 +5,9 @@
     <form method="post" action="doSignup">
       <h5>User ID</h5>
       <input type="text" name="userid" class="text"/>
+      <p class="description">
+        Only alphabets, numbers, and '_' is allowed.
+      </p>
 
       <h5>First Name</h5>
       <input type="text" name="firstName" class="text"/>
