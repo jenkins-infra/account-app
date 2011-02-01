@@ -4,3 +4,9 @@ h5 {
 INPUT.text {
   width: 20em;
 }
+
+p.description {
+  margin-top: 0em;
+  color: gray;
+  font-size: 0.8em;
+}
