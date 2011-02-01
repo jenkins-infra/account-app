@@ -125,8 +125,7 @@ public class Application {
         }
 
         try {
-            ServiceLocator locator = ServiceLocator.getInstance();
-            JiraLdapSyncer jiraLdapSyncer = (JiraLdapSyncer) locator.lookupService(JiraLdapSyncer.ROLE);
+            JiraLdapSyncer jiraLdapSyncer = (JiraLdapSyncer) new ServiceLocator().lookupService(JiraLdapSyncer.ROLE);
             jiraLdapSyncer.syncOneUserFromLDAPToJIRA(userid);
         } catch (RemoteException e) {
             LOGGER.log(Level.SEVERE, "Failed to register " + userid + " to JIRA", e);
