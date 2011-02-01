@@ -140,7 +140,7 @@ public class Application {
         try {
             NamingEnumeration<SearchResult> a = con.search(params.newUserBaseDN(), "(|(mail={0})(cn={0}))", new Object[]{id}, new SearchControls());
             if (!a.hasMore())
-                throw new Error("No such user account found: "+id);
+                throw new UserError("No such user account found: "+id);
 
             SearchResult r = a.nextElement();
             Attributes att = r.getAttributes();
@@ -195,7 +195,7 @@ public class Application {
             @QueryParameter String password
     ) throws Exception {
         if (userid==null || password==null)
-            throw new Error("Missing credential");
+            throw new UserError("Missing credential");
 
         String dn = "cn=" + userid + "," + params.newUserBaseDN();
         LdapContext context = connect(dn, password);    // make sure the password is valid
