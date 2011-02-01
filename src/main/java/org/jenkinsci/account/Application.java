@@ -194,6 +194,8 @@ public class Application {
             @QueryParameter String userid,
             @QueryParameter String password
     ) throws Exception {
+        if (userid==null || password==null)
+            throw new Error("Missing credential");
 
         String dn = "cn=" + userid + "," + params.newUserBaseDN();
         LdapContext context = connect(dn, password);    // make sure the password is valid
