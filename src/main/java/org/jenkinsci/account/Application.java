@@ -20,6 +20,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
+import javax.naming.NameAlreadyBoundException;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.AttributeInUseException;
@@ -121,6 +122,8 @@ public class Application {
                 con.modifyAttributes("cn=all,ou=groups,dc=jenkins-ci,dc=org",REMOVE_ATTRIBUTE,new BasicAttributes("member",fullDN));
                 con.modifyAttributes("cn=all,ou=groups,dc=jenkins-ci,dc=org",ADD_ATTRIBUTE,new BasicAttributes("member",fullDN));
             }
+        } catch (NameAlreadyBoundException e) {
+            throw new UserError("ID "+userid+" is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
         } finally {
             con.close();
         }
@@ -171,7 +174,7 @@ public class Application {
         msg.setRecipient(RecipientType.TO, new InternetAddress(to));
         msg.setContent(
                 "Your userid is "+cn+"\n"+
-                "Your temporary password is "+password+"\n"+
+                "Your temporary password is "+password+" \n"+
                 "\n"+
                 "Please visit http://jenkins-ci.org/account and update your password and profile\n",
                 "text/plain");
