@@ -53,7 +53,10 @@ public class Myself {
             @QueryParameter String lastName,
             @QueryParameter String email,
             @QueryParameter String githubId,
-            @QueryParameter String sshKeys
+            @QueryParameter String sshKeys,
+            @QueryParameter String password,
+            @QueryParameter String newPassword1,
+            @QueryParameter String newPassword2
     ) throws Exception {
 
         final Attributes attrs = new BasicAttributes();
@@ -79,9 +82,14 @@ public class Myself {
 
         LOGGER.info("User "+userId+" updated the profile. email="+email);
 
+        if (fixEmpty(newPassword1)!=null) {
+            doChangePassword(password,newPassword1,newPassword2);
+        }
+
         return new HttpRedirect("done");
     }
 
+    // no longer invoked directly from outside, but left as is
     public HttpResponse doChangePassword(
             @QueryParameter String password,
             @QueryParameter String newPassword1,
