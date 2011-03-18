@@ -10,6 +10,7 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 import javax.naming.ldap.LdapContext;
+import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -20,10 +21,12 @@ public class Myself {
     private final String dn;
     public String firstName, lastName, email, userId;
     public String githubId, sshKeys;
+    private final Set<String> groups;
 
-    public Myself(Application parent, String dn, Attributes attributes) throws NamingException {
+    public Myself(Application parent, String dn, Attributes attributes, Set<String> groups) throws NamingException {
         this.parent = parent;
         this.dn = dn;
+        this.groups = groups;
 
         firstName = getAttribute(attributes,"givenName");
         lastName = getAttribute(attributes,"sn");
@@ -31,6 +34,13 @@ public class Myself {
         userId = getAttribute(attributes,"cn");
         githubId = getAttribute(attributes,"employeeNumber");
         sshKeys = getAttribute(attributes,"preferredLanguage");
+    }
+
+    /**
+     * Is this an admin user?
+     */
+    public boolean isAdmin() {
+        return groups.contains("admins");
     }
 
     private String getAttribute(Attributes attributes, String name) throws NamingException {

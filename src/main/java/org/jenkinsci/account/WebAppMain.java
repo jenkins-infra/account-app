@@ -2,6 +2,7 @@ package org.jenkinsci.account;
 
 import org.kohsuke.stapler.framework.AbstractWebAppMain;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
@@ -20,13 +21,6 @@ public class WebAppMain extends AbstractWebAppMain<Application> {
 
     @Override
     public Application createApplication() throws Exception {
-        Properties config = new Properties();
-        FileInputStream in = new FileInputStream("config.properties");
-        try {
-            config.load(in);
-            return new Application(config);
-        } finally {
-            in.close();
-        }
+        return new Application(new File("config.properties"));
     }
 }

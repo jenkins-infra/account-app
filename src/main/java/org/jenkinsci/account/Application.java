@@ -26,11 +26,18 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import static javax.naming.directory.DirContext.*;
+import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 
 /**
  * @author Kohsuke Kawaguchi
@@ -44,7 +51,11 @@ public class Application {
     }
 
     public Application(Properties config) {
-        this(ConfigurationProxy.create(config,Parameters.class));
+        this(ConfigurationProxy.create(config, Parameters.class));
+    }
+
+    public Application(File config) throws IOException {
+        this(ConfigurationProxy.create(config, Parameters.class));
     }
 
     public ReCaptcha createRecaptcha() {
@@ -157,11 +168,26 @@ public class Application {
         LdapContext context = connect(dn, password);    // make sure the password is valid
         try {
             Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(),
-                    new Myself(this,dn, context.getAttributes(dn)));
+                    new Myself(this,dn, context.getAttributes(dn), getGroups(dn, context)));
         } finally {
             context.close();
         }
         return new HttpRedirect("myself/");
+    }
+
+    /**
+     * Obtains the group of the user specified by the given DN.
+     */
+    Set<String> getGroups(String dn, LdapContext context) throws NamingException {
+        Set<String> groups = new HashSet<String>();
+        SearchControls c = new SearchControls();
+        c.setReturningAttributes(new String[]{"cn"});
+        c.setSearchScope(SUBTREE_SCOPE);
+        NamingEnumeration<SearchResult> e = context.search("dc=jenkins-ci,dc=org", "(& (objectClass=groupOfNames) (member={0}))", new Object[]{dn}, c);
+        while (e.hasMore()) {
+            groups.add(e.nextElement().getAttributes().get("cn").get().toString());
+        }
+        return groups;
     }
 
     public HttpResponse doLogout(StaplerRequest req) {
