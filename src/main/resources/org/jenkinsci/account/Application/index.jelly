@@ -15,5 +15,9 @@
     <j:if test="${it.isLoggedIn()}">
       <h1><a href="logout">Logout</a></h1>
     </j:if>
+
+    <j:if test="${it.isAdmin()}">
+      <h1><a href="admin/">Administration</a></h1>
+    </j:if>
   </t:layout>
 </j:jelly>

@@ -241,6 +241,11 @@ public class Application {
         return myself!=null;
     }
 
+    public boolean isAdmin() {
+        Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        return myself!=null && myself.isAdmin();        
+    }
+
     public Myself getMyself() {
         Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
         if (myself==null)   // needs to login
