@@ -4,6 +4,7 @@ import jiraldapsyncer.ServiceLocator;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
+import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
@@ -45,6 +46,7 @@ import java.util.regex.Pattern;
 
 import static javax.naming.directory.DirContext.*;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
  * @author Kohsuke Kawaguchi
@@ -91,6 +93,12 @@ public class Application {
         if (!VALID_ID.matcher(userid).matches())
             throw new Error("Invalid user name: "+userid);
 
+        if (isEmpty(firstName))
+            throw new Error("First name is required");
+        if (isEmpty(lastName))
+            throw new Error("First name is required");
+        if (isEmpty(email))
+            throw new Error("e-mail is required");
 
         String password = createRecord(userid, firstName, lastName, email);
 
