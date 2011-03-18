@@ -1,0 +1,13 @@
+<j:jelly xmlns:j="jelly:core" xmlns:t="/taglibs">
+  <t:layout title="Administration">
+    <p>
+      Type the user name or the e-mail address to find the user.
+    </p>
+    <form method="post" action="search">
+      <h5>Username/email address</h5>
+      <input type="text" name="word" class="text"/>
+
+      <input type="submit" style="margin-top:2em; display:block"/>
+    </form>
+  </t:layout>
+</j:jelly>

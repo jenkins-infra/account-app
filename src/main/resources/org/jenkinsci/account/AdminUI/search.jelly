@@ -1,0 +1,23 @@
+<j:jelly xmlns:j="jelly:core" xmlns:t="/taglibs">
+  <t:layout title="Administration">
+    <table>
+      <tr>
+        <td>User ID</td>
+        <td>E-mail address</td>
+        <td/>
+      </tr>
+      <j:forEach var="u" items="${all}">
+        <tr>
+          <td>${u.id}</td>
+          <td>${u.mail}</td>
+          <td>
+            <form method="post" action="passwordReset" style="margin:0">
+              <input type="hidden" name="id" value="${u.id}" />
+              <input type="submit" value="Reset password" />
+            </form>
+          </td>
+        </tr>
+      </j:forEach>
+    </table>
+  </t:layout>
+</j:jelly>

@@ -28,7 +28,7 @@
     <dependency>
       <groupId>org.kohsuke.stapler</groupId>
       <artifactId>stapler-jelly</artifactId>
-      <version>1.156</version>
+      <version>1.159</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

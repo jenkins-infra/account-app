@@ -32,12 +32,11 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
@@ -95,8 +94,8 @@ public class Application {
 
         String password = createRecord(userid, firstName, lastName, email);
 
-        mailPassword(email,userid,password);
-        
+        new User(userid,email).mailPassword(password);
+
         return new HttpRedirect("doneMail");
     }
 
@@ -142,21 +141,15 @@ public class Application {
     public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
         final DirContext con = connect();
         try {
-            NamingEnumeration<SearchResult> a = con.search(params.newUserBaseDN(), "(|(mail={0})(cn={0}))", new Object[]{id}, new SearchControls());
-            if (!a.hasMore())
+            Iterator<User> a = searchByWord(id, con);
+            if (!a.hasNext())
                 throw new UserError("No such user account found: "+id);
 
-            SearchResult r = a.nextElement();
-            Attributes att = r.getAttributes();
+            User u = a.next();
 
             String p = PasswordUtil.generateRandomPassword();
-            String dn = r.getName()+","+params.newUserBaseDN();
-            con.modifyAttributes(dn,REPLACE_ATTRIBUTE,new BasicAttributes("userPassword",PasswordUtil.hashPassword(p)));
-
-            String userid = (String) att.get("cn").get();
-            String mail = (String) att.get("mail").get();
-            LOGGER.info("User "+userid+" reset the password: "+mail);
-            mailPassword(mail, userid, p);
+            u.modifyPassword(con, p);
+            u.mailPassword(p);
         } finally {
             con.close();
         }
@@ -164,21 +157,71 @@ public class Application {
         return new HttpRedirect("doneMail");
     }
 
-    private void mailPassword(String to, String cn, String password) throws MessagingException {
-        Properties props = new Properties(System.getProperties());
-        props.put("mail.smtp.host",params.smtpServer());
-        Session s = Session.getInstance(props);
-        MimeMessage msg = new MimeMessage(s);
-        msg.setSubject("Your access to jenkins-ci.org");
-        msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
-        msg.setRecipient(RecipientType.TO, new InternetAddress(to));
-        msg.setContent(
-                "Your userid is "+cn+"\n"+
-                "Your temporary password is "+password+" \n"+
-                "\n"+
-                "Please visit http://jenkins-ci.org/account and update your password and profile\n",
-                "text/plain");
-        Transport.send(msg);
+    public User getUserById(String id, DirContext con) throws NamingException {
+        String dn = "cn=" + id + "," + params.newUserBaseDN();
+        return new User(con.getAttributes(dn));
+    }
+
+    public class User {
+        public final String id;
+        public final String mail;
+
+        public User(String id, String mail) {
+            this.id = id;
+            this.mail = mail;
+        }
+
+        public User(Attributes att) throws NamingException {
+            id = (String) att.get("cn").get();
+            mail = (String) att.get("mail").get();
+        }
+
+        public String getDn() {
+            return String.format("cn=%s,%s", id, params.newUserBaseDN());
+        }
+
+        public void modifyPassword(DirContext con, String password) throws NamingException {
+            con.modifyAttributes(getDn(),REPLACE_ATTRIBUTE,new BasicAttributes("userPassword",PasswordUtil.hashPassword(password)));
+            LOGGER.info("User "+id+" reset the password: "+mail);
+        }
+
+        public void mailPassword(String password) throws MessagingException {
+            Properties props = new Properties(System.getProperties());
+            props.put("mail.smtp.host",params.smtpServer());
+            Session s = Session.getInstance(props);
+            MimeMessage msg = new MimeMessage(s);
+            msg.setSubject("Your access to jenkins-ci.org");
+            msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
+            msg.setRecipient(RecipientType.TO, new InternetAddress(mail));
+            msg.setContent(
+                    "Your userid is "+id+"\n"+
+                    "Your temporary password is "+password+" \n"+
+                    "\n"+
+                    "Please visit http://jenkins-ci.org/account and update your password and profile\n",
+                    "text/plain");
+            Transport.send(msg);
+        }
+    }
+
+    public Iterator<User> searchByWord(String id, DirContext con) throws NamingException {
+        final NamingEnumeration<SearchResult> e = con.search(params.newUserBaseDN(), "(|(mail={0})(cn={0}))", new Object[]{id}, new SearchControls());
+        return new Iterator<User>() {
+            public boolean hasNext() {
+                return e.hasMoreElements();
+            }
+
+            public User next() {
+                try {
+                    return new User(e.nextElement().getAttributes());
+                } catch (NamingException x) {
+                    throw new RuntimeException(x);
+                }
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     public LdapContext connect() throws NamingException {
@@ -206,7 +249,7 @@ public class Application {
             LdapContext context = connect(dn, password);    // make sure the password is valid
             try {
                 Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(),
-                        new Myself(this,dn, context.getAttributes(dn), getGroups(dn,context)));
+                        new Myself(this, dn, context.getAttributes(dn), getGroups(dn,context)));
             } finally {
                 context.close();
             }
@@ -251,6 +294,10 @@ public class Application {
         if (myself==null)   // needs to login
             throw HttpResponses.redirectViaContextPath("login");
         return myself;
+    }
+
+    public AdminUI getAdmin() {
+        return getMyself().isAdmin() ? new AdminUI(this) : null;
     }
 
     private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
