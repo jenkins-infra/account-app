@@ -86,7 +86,7 @@ public class Application {
         ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(request.getRemoteAddr(), challenge, uresponse);
 
         if (!reCaptchaResponse.isValid()) {
-            throw new Error("Captcha mismatch");
+            throw new UserError("Captcha mismatch. Please try again and retry a captcha to prove that you are a human");
         }
 
         userid = userid.toLowerCase();
