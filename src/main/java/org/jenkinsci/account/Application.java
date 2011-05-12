@@ -82,7 +82,9 @@ public class Application {
         ReCaptcha reCaptcha = createRecaptcha();
 
         String challenge = request.getParameter("recaptcha_challenge_field");
+        if (challenge==null)    throw new Error("challenge missing");
         String uresponse = request.getParameter("recaptcha_response_field");
+        if (uresponse==null)    throw new Error("uresponse missing");
         ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(request.getRemoteAddr(), challenge, uresponse);
 
         if (!reCaptchaResponse.isValid()) {
