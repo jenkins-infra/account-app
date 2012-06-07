@@ -68,7 +68,7 @@ public class Application {
     }
 
     public ReCaptcha createRecaptcha() {
-        return ReCaptchaFactory.newReCaptcha(params.recaptchaPublicKey(), params.recaptchaPrivateKey(), false);
+        return ReCaptchaFactory.newSecureReCaptcha(params.recaptchaPublicKey(), params.recaptchaPrivateKey(), false);
     }
 
     public HttpResponse doDoSignup(
