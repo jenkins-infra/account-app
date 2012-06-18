@@ -16,10 +16,18 @@
               <input type="submit" value="Reset password" />
             </form>
           </td>
-          <td>
+          <td style="padding-left:1em">
+            <form method="post" action="emailReset" style="margin:0">
+              <input type="hidden" name="id" value="${u.id}" />
+              <input type="text" name="email" value="${u.mail}" />
+              <input type="submit" value="Reset email" />
+            </form>
+          </td>
+
+          <td style="padding-left:1em">
             <form method="post" action="delete" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="text" name="confirm" />
+              <input type="text" name="confirm" style="width:3em" />
               <input type="submit" value="Delete" />
             </form>
           </td>

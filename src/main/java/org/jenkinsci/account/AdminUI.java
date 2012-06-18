@@ -58,6 +58,18 @@ public class AdminUI {
     }
 
     @RequirePOST
+    public HttpResponse doEmailReset(@QueryParameter String id, @QueryParameter String email) throws NamingException {
+        LdapContext con = app.connect();
+        try {
+            User u = app.getUserById(id, con);
+            u.modifyEmail(con, email);
+            return HttpResponses.redirectTo(".");
+        } finally {
+            con.close();
+        }
+    }
+
+    @RequirePOST
     public HttpResponse doDelete(@QueryParameter String id, @QueryParameter String confirm) throws NamingException {
         if (!confirm.equalsIgnoreCase("YES"))
             return HttpResponses.error(HttpServletResponse.SC_BAD_REQUEST,"No confirmation given");

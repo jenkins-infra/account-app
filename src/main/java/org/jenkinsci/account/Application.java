@@ -195,6 +195,11 @@ public class Application {
             LOGGER.info("User "+id+" reset the password: "+mail);
         }
 
+        public void modifyEmail(DirContext con, String email) throws NamingException {
+            con.modifyAttributes(getDn(),REPLACE_ATTRIBUTE,new BasicAttributes("mail",email));
+            LOGGER.info("User "+id+" reset the e-mail address to: "+email);
+        }
+
         public void mailPassword(String password) throws MessagingException {
             Properties props = new Properties(System.getProperties());
             props.put("mail.smtp.host",params.smtpServer());
