@@ -16,8 +16,18 @@
               <input type="submit" value="Reset password" />
             </form>
           </td>
+          <td>
+            <form method="post" action="delete" style="margin:0">
+              <input type="hidden" name="id" value="${u.id}" />
+              <input type="text" name="confirm" />
+              <input type="submit" value="Delete" />
+            </form>
+          </td>
         </tr>
       </j:forEach>
     </table>
+    <p>
+      To delete, type "YES" to the text field left of "Delete" then click the Delete button.
+    </p>
   </t:layout>
 </j:jelly>

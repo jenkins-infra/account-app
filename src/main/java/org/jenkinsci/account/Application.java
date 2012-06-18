@@ -211,6 +211,11 @@ public class Application {
                     "text/plain");
             Transport.send(msg);
         }
+
+        public void delete(DirContext con) throws NamingException {
+            con.destroySubcontext(getDn());
+            LOGGER.info("User " + id + " deleted");
+        }
     }
 
     public Iterator<User> searchByWord(String id, DirContext con) throws NamingException {

@@ -4,9 +4,11 @@ import org.jenkinsci.account.Application.User;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import javax.naming.NamingException;
 import javax.naming.ldap.LdapContext;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +42,7 @@ public class AdminUI {
         }
     }
 
+    @RequirePOST
     public HttpResponse doPasswordReset(@QueryParameter String id) throws NamingException {
         LdapContext con = app.connect();
         try {
@@ -49,6 +52,23 @@ public class AdminUI {
             u.modifyPassword(con, p);
 
             return HttpResponses.forwardToView(this,"newPassword.jelly").with("user",u).with("password",p);
+        } finally {
+            con.close();
+        }
+    }
+
+    @RequirePOST
+    public HttpResponse doDelete(@QueryParameter String id, @QueryParameter String confirm) throws NamingException {
+        if (!confirm.equalsIgnoreCase("YES"))
+            return HttpResponses.error(HttpServletResponse.SC_BAD_REQUEST,"No confirmation given");
+
+        LdapContext con = app.connect();
+        try {
+            User u = app.getUserById(id, con);
+
+            u.delete(con);
+
+            return HttpResponses.redirectTo(".");
         } finally {
             con.close();
         }
