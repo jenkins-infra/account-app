@@ -1,6 +1,8 @@
 package org.jenkinsci.account;
 
 /**
+ * Configuration of the application that needs to be set outside the application.
+ *
  * @author Kohsuke Kawaguchi
  */
 public interface Parameters {

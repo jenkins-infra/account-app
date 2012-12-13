@@ -49,6 +49,8 @@ import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
+ * Root of the application.
+ *
  * @author Kohsuke Kawaguchi
  */
 public class Application {

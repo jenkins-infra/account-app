@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 /**
+ * Bootstrap code.
+ *
  * @author Kohsuke Kawaguchi
  */
 public class WebAppMain extends AbstractWebAppMain<Application> {

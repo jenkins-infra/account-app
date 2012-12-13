@@ -11,6 +11,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Import user file into LDAP.
+ *
+ * This was a one-off tool used during the initial population of LDAP.
+ * Left only for historical archival purpose.
+ *
  * @author Kohsuke Kawaguchi
  */
 public class BulkImport {
