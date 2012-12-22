@@ -16,6 +16,11 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.kohsuke</groupId>
+      <artifactId>stopforumspam</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>1.4</version>

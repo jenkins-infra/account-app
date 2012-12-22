@@ -7,6 +7,8 @@ import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.jenkinsci.account.openid.OpenIDServer;
 import org.kohsuke.stapler.*;
 import org.kohsuke.stapler.config.ConfigurationProxy;
+import org.kohsuke.stopforumspam.Answer;
+import org.kohsuke.stopforumspam.StopForumSpam;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
@@ -91,7 +93,9 @@ public class Application {
             @QueryParameter String userid,
             @QueryParameter String firstName,
             @QueryParameter String lastName,
-            @QueryParameter String email
+            @QueryParameter String email,
+
+            @Header("X-Forwarded-For") String ip    // client IP
     ) throws Exception {
 
         ReCaptcha reCaptcha = createRecaptcha();
@@ -108,14 +112,22 @@ public class Application {
 
         userid = userid.toLowerCase();
         if (!VALID_ID.matcher(userid).matches())
-            throw new Error("Invalid user name: "+userid);
+            throw new UserError("Invalid user name: "+userid);
 
         if (isEmpty(firstName))
-            throw new Error("First name is required");
+            throw new UserError("First name is required");
         if (isEmpty(lastName))
-            throw new Error("First name is required");
+            throw new UserError("First name is required");
         if (isEmpty(email))
-            throw new Error("e-mail is required");
+            throw new UserError("e-mail is required");
+
+        // spam check
+        for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
+            if (a.isAppears()) {
+                LOGGER.warning("Rejecting, likely spam: "+a);
+                throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
+            }
+        }
 
         String password = createRecord(userid, firstName, lastName, email);
 
