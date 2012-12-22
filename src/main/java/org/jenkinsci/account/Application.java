@@ -4,12 +4,8 @@ import jiraldapsyncer.ServiceLocator;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
-import org.kohsuke.stapler.HttpRedirect;
-import org.kohsuke.stapler.HttpResponse;
-import org.kohsuke.stapler.HttpResponses;
-import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
+import org.jenkinsci.account.openid.OpenIDServer;
+import org.kohsuke.stapler.*;
 import org.kohsuke.stapler.config.ConfigurationProxy;
 
 import javax.mail.Message.RecipientType;
@@ -31,8 +27,11 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
+import javax.servlet.ServletException;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashSet;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
@@ -56,8 +55,11 @@ public class Application {
     private final Parameters params;
 //    public final File rootDir;
 
+    public final OpenIDServer openid;
+
     public Application(Parameters params) {
         this.params = params;
+        this.openid = new OpenIDServer(this,params.url()+"openid/");
     }
 
     public Application(Properties config) {
@@ -70,6 +72,10 @@ public class Application {
 
     public ReCaptcha createRecaptcha() {
         return ReCaptchaFactory.newSecureReCaptcha(params.recaptchaPublicKey(), params.recaptchaPrivateKey(), false);
+    }
+
+    public String getUrl() {
+        return params.url();
     }
 
     public HttpResponse doDoSignup(
@@ -326,9 +332,23 @@ public class Application {
             if (req.getQueryString()!=null)
                 from.append('?').append(req.getQueryString());
 
-            throw HttpResponses.redirectViaContextPath("login?from="+from);
+            try {
+                throw HttpResponses.redirectViaContextPath("login?from="+ URLEncoder.encode(from.toString(),"UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                throw new AssertionError(e);
+            }
         }
         return myself;
+    }
+
+    /**
+     * "/~USERID" is mapped to OpenID.
+     */
+    public void doDynamic(StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
+        if (req.getRestOfPath().startsWith("/~"))
+            req.getView(openid,"xrds.jelly").forward(req,rsp);
+        else
+            rsp.sendError(404);
     }
 
     private Myself current() {

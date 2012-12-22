@@ -28,7 +28,7 @@
     <dependency>
       <groupId>org.kohsuke.stapler</groupId>
       <artifactId>stapler-jelly</artifactId>
-      <version>1.192</version>
+      <version>1.201-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>commons-jexl</groupId>
@@ -81,6 +81,11 @@
           <artifactId>commons-jelly</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.openid4java</groupId>
+      <artifactId>openid4java-server</artifactId>
+      <version>0.9.5</version>
     </dependency>
   </dependencies>
   <build>
