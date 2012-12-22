@@ -47,14 +47,19 @@ import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
- * Root of the application.
+ * Root of the account application.
  *
  * @author Kohsuke Kawaguchi
  */
 public class Application {
+    /**
+     * Configuration parameter.
+     */
     private final Parameters params;
-//    public final File rootDir;
 
+    /**
+     * For bringing the OpenID server into the URL space.
+     */
     public final OpenIDServer openid;
 
     public Application(Parameters params) {
@@ -78,6 +83,9 @@ public class Application {
         return params.url();
     }
 
+    /**
+     * Receives the sign-up form submission.
+     */
     public HttpResponse doDoSignup(
             StaplerRequest request,
             @QueryParameter String userid,
@@ -116,6 +124,9 @@ public class Application {
         return new HttpRedirect("doneMail");
     }
 
+    /**
+     * Adds the new user entry to LDAP.
+     */
     public String createRecord(String userid, String firstName, String lastName, String email) throws NamingException {
         Attributes attrs = new BasicAttributes();
         attrs.put("objectClass", "inetOrgPerson");
@@ -155,6 +166,9 @@ public class Application {
         return password;
     }
 
+    /**
+     * Handles the password reset form submission.
+     */
     public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
         final DirContext con = connect();
         try {
@@ -179,8 +193,17 @@ public class Application {
         return new User(con.getAttributes(dn));
     }
 
+    /**
+     * Object that represents some user in LDAP.
+     */
     public class User {
+        /**
+         * User ID, such as 'kohsuke'
+         */
         public final String id;
+        /**
+         * E-mail address.
+         */
         public final String mail;
 
         public User(String id, String mail) {
@@ -207,6 +230,9 @@ public class Application {
             LOGGER.info("User "+id+" reset the e-mail address to: "+email);
         }
 
+        /**
+         * Sends a new password to this user.
+         */
         public void mailPassword(String password) throws MessagingException {
             Properties props = new Properties(System.getProperties());
             props.put("mail.smtp.host",params.smtpServer());
@@ -230,8 +256,11 @@ public class Application {
         }
     }
 
-    public Iterator<User> searchByWord(String id, DirContext con) throws NamingException {
-        final NamingEnumeration<SearchResult> e = con.search(params.newUserBaseDN(), "(|(mail={0})(cn={0}))", new Object[]{id}, new SearchControls());
+    /**
+     * Search LDAP with the given keyword, returning matching users.
+     */
+    public Iterator<User> searchByWord(String idOrMail, DirContext con) throws NamingException {
+        final NamingEnumeration<SearchResult> e = con.search(params.newUserBaseDN(), "(|(mail={0})(cn={0}))", new Object[]{idOrMail}, new SearchControls());
         return new Iterator<User>() {
             public boolean hasNext() {
                 return e.hasMoreElements();
@@ -264,6 +293,9 @@ public class Application {
         return new InitialLdapContext(env, null);
     }
 
+    /**
+     * Handles the login form submission.
+     */
     public HttpResponse doDoLogin(
             @QueryParameter String userid,
             @QueryParameter String password,

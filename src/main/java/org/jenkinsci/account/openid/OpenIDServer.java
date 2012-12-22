@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
+ * OpenID server that allows users to use their Jenkins identity as an OpenID.
+ *
  * @author Kohsuke Kawaguchi
  */
 public class OpenIDServer implements StaplerProxy {

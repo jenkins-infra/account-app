@@ -9,7 +9,7 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 
 /**
- * {@link org.openid4java.message.Message} as {@link org.kohsuke.stapler.HttpResponse}
+ * {@link Message} as {@link HttpResponse}
  *
  * @author Kohsuke Kawaguchi
  */
