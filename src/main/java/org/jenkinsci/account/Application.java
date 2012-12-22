@@ -4,7 +4,6 @@ import jiraldapsyncer.ServiceLocator;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
@@ -302,20 +301,23 @@ public class Application {
     }
 
     public boolean isLoggedIn() {
-        Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
-        return myself!=null;
+        return current() !=null;
     }
 
     public boolean isAdmin() {
-        Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        Myself myself = current();
         return myself!=null && myself.isAdmin();        
     }
 
     public Myself getMyself() {
-        Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        Myself myself = current();
         if (myself==null)   // needs to login
             throw HttpResponses.redirectViaContextPath("login");
         return myself;
+    }
+
+    private Myself current() {
+        return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
     }
 
     public AdminUI getAdmin() {
