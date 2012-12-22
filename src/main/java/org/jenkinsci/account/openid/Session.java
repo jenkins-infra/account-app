@@ -4,14 +4,12 @@ import org.jenkinsci.account.Myself;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
 import org.openid4java.message.*;
 import org.openid4java.message.ax.AxMessage;
 import org.openid4java.message.ax.FetchRequest;
 import org.openid4java.message.ax.FetchResponse;
 import org.openid4java.server.ServerManager;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -118,11 +116,15 @@ public class Session {
                 FetchResponse fr = FetchResponse.createFetchResponse();
 
                 for (Map.Entry<String,String> e : ((Map<String,String>)fetchReq.getAttributes()).entrySet()) {
-                    if (e.getValue().equals("http://axschema.org/contact/email")
-                    ||  e.getValue().equals("http://schema.openid.net/contact/email"))
-                        fr.addAttribute(e.getKey(),e.getValue(), myself.email);
+//                    if (e.getValue().equals("http://axschema.org/contact/email")
+//                    ||  e.getValue().equals("http://schema.openid.net/contact/email"))
+//                        fr.addAttribute(e.getKey(),e.getValue(), myself.email);
                     if (e.getValue().equals("http://axschema.org/namePerson/friendly"))
                         fr.addAttribute(e.getKey(),e.getValue(), myself.userId);
+                    if (e.getValue().equals("http://axschema.org/namePerson/first"))
+                        fr.addAttribute(e.getKey(),e.getValue(), myself.firstName);
+                    if (e.getValue().equals("http://axschema.org/namePerson/last"))
+                        fr.addAttribute(e.getKey(),e.getValue(), myself.lastName);
 
                 }
 
