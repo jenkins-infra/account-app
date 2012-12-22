@@ -281,7 +281,7 @@ public class Application {
 
         // to limit the redirect to this application, require that the from URL starts from '/'
         if (from==null || !from.startsWith("/")) from="/myself/";
-        return HttpResponses.redirectViaContextPath(from);
+        return HttpResponses.redirectTo(from);
     }
 
     /**
