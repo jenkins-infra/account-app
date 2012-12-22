@@ -260,7 +260,8 @@ public class Application {
 
     public HttpResponse doDoLogin(
             @QueryParameter String userid,
-            @QueryParameter String password
+            @QueryParameter String password,
+            @QueryParameter String from
     ) throws Exception {
         if (userid==null || password==null)
             throw new UserError("Missing credential");
@@ -277,7 +278,10 @@ public class Application {
         } catch (AuthenticationException e) {
             throw new UserError(e.getMessage());
         }
-        return new HttpRedirect("myself/");
+
+        // to limit the redirect to this application, require that the from URL starts from '/'
+        if (from==null || !from.startsWith("/")) from="/myself/";
+        return HttpResponses.redirectViaContextPath(from);
     }
 
     /**
@@ -309,10 +313,21 @@ public class Application {
         return myself!=null && myself.isAdmin();        
     }
 
+    /**
+     * If the user has already logged in, retrieve the current user, otherwise
+     * send the user to the login page.
+     */
     public Myself getMyself() {
         Myself myself = current();
-        if (myself==null)   // needs to login
-            throw HttpResponses.redirectViaContextPath("login");
+        if (myself==null) {
+            // needs to login
+            StaplerRequest req = Stapler.getCurrentRequest();
+            StringBuilder from = new StringBuilder(req.getRequestURI());
+            if (req.getQueryString()!=null)
+                from.append('?').append(req.getQueryString());
+
+            throw HttpResponses.redirectViaContextPath("login?from="+from);
+        }
         return myself;
     }
 
