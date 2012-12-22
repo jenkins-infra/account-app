@@ -383,6 +383,13 @@ public class Application {
             rsp.sendError(404);
     }
 
+    /**
+     * This is a test endpoint to make sure the reverse proxy forwarding is working.
+     */
+    public HttpResponse doForwardTest(@Header("X-Forwarded-For") String header) {
+        return HttpResponses.plainText(header);
+    }
+
     private Myself current() {
         return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
     }
