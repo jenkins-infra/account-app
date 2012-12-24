@@ -4,10 +4,15 @@ import org.jenkinsci.account.Myself;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.StaplerRequest;
+import org.openid4java.association.AssociationException;
 import org.openid4java.message.*;
 import org.openid4java.message.ax.AxMessage;
 import org.openid4java.message.ax.FetchRequest;
 import org.openid4java.message.ax.FetchResponse;
+import org.openid4java.message.sreg.SRegMessage;
+import org.openid4java.message.sreg.SRegRequest;
+import org.openid4java.message.sreg.SRegResponse;
+import org.openid4java.server.ServerException;
 import org.openid4java.server.ServerManager;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +20,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -88,6 +94,16 @@ public class Session {
 
                 Message rsp = manager.authResponse(requestp, identity, identity, true);
                 respondToFetchRequest(rsp);
+                if (rsp instanceof  AuthSuccess) {
+                    // Need to sign after because SReg extension parameters are signed by openid4java
+                    try {
+                        manager.sign((AuthSuccess)rsp);
+                    } catch (ServerException e) {
+                        throw HttpResponses.error(500,e);
+                    } catch (AssociationException e) {
+                        throw HttpResponses.error(500,e);
+                    }
+                }
 
                 return HttpResponses.redirectTo(rsp.getDestinationUrl(true));
             } else if ("check_authentication".equals(mode)) {
@@ -129,6 +145,20 @@ public class Session {
                 }
 
                 rsp.addExtension(fr);
+            }
+        }
+        if (authReq.hasExtension(SRegMessage.OPENID_NS_SREG)) {
+            MessageExtension ext = authReq.getExtension(SRegMessage.OPENID_NS_SREG);
+            if (ext instanceof SRegRequest) {
+                SRegRequest req = (SRegRequest) ext;
+                SRegResponse srsp = SRegResponse.createFetchResponse();
+
+                for (String name : (List<String>)req.getAttributes()) {
+                    if (name.equals("nickname"))
+                        srsp.addAttribute(name,myself.userId);
+                }
+
+                rsp.addExtension(srsp);
             }
         }
     }
