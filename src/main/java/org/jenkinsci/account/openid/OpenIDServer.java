@@ -1,10 +1,7 @@
 package org.jenkinsci.account.openid;
 
 import org.jenkinsci.account.Application;
-import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerProxy;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.*;
 import org.openid4java.server.InMemoryServerAssociationStore;
 import org.openid4java.server.ServerManager;
 
@@ -17,7 +14,7 @@ import java.io.IOException;
  *
  * @author Kohsuke Kawaguchi
  */
-public class OpenIDServer implements StaplerProxy {
+public class OpenIDServer implements StaplerFallback {
     public final Application app;
     final ServerManager manager =new ServerManager();
 
@@ -37,7 +34,7 @@ public class OpenIDServer implements StaplerProxy {
         manager.setOPEndpointUrl(address+"entryPoint");
     }
 
-    public Session getTarget() {
+    public Session getStaplerFallback() {
         HttpSession hs = Stapler.getCurrentRequest().getSession();
         Session o = (Session) hs.getAttribute("session");
         if (o==null)

@@ -112,6 +112,7 @@
           <!-- use the test classpath for loading resources, since this takes priority -->
           <testClassesDirectory>src/main/resources</testClassesDirectory>
           <useTestClasspath>true</useTestClasspath>
+          <port>8081</port>
 
           <systemProperties>
             <systemProperty>
