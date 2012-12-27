@@ -87,6 +87,7 @@ public class Session {
                 if (!isApproved()) {
                     // if the user hasn't logged in to us yet, this will make them do so
                     myself = provider.app.getMyself();
+                    identity = provider.app.getUrl()+"~"+ myself.userId;
 
                     // let's confirm the user, which will take them to doVerify
                     return HttpResponses.forwardToView(this,"confirm");
@@ -181,7 +182,6 @@ public class Session {
 
     public HttpResponse doVerify() {
         approvedRealms.add(realm);
-        identity = provider.app.getUrl()+"~"+ myself.userId;
         return handleRequest();
     }
 
