@@ -24,7 +24,7 @@ public interface Parameters {
     String recaptchaPrivateKey();
 
     /**
-     * HTTP URL that this application is running. Something like 'http://jenkins-ci.org/accounts/'. Must end with '/'.
+     * HTTP URL that this application is running. Something like 'http://jenkins-ci.org/account/'. Must end with '/'.
      */
     String url();
 }
