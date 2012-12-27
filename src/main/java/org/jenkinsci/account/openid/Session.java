@@ -84,7 +84,7 @@ public class Session {
                 return new MessageResponse(manager.associationResponse(requestp));
             } else
             if ("checkid_setup".equals(mode) || "checkid_immediate".equals(mode)) {
-                if (!approvedRealms.contains(realm)) {
+                if (!isApproved()) {
                     // if the user hasn't logged in to us yet, this will make them do so
                     myself = provider.app.getMyself();
 
@@ -115,6 +115,22 @@ public class Session {
             e.printStackTrace();
             throw HttpResponses.error(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,e);
         }
+    }
+
+    /**
+     * Returns true if the login for the specified realm/return_to location is ACKed by the user.
+     */
+    private boolean isApproved() {
+        if (approvedRealms.contains(realm)) return true;  // explicitly approved
+
+        try {
+            if (new URL(returnTo).getHost().endsWith(".jenkins-ci.org"))
+                return true;    // apps in our own domains are trusted
+        } catch (MalformedURLException e) {
+            // fall through
+        }
+
+        return false;
     }
 
     /**
