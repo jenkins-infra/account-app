@@ -1,6 +1,7 @@
 package org.jenkinsci.account;
 
 import org.kohsuke.stapler.HttpResponse;
+import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
@@ -18,8 +19,6 @@ public class UserError extends RuntimeException implements HttpResponse {
     }
 
     public void generateResponse(StaplerRequest req, StaplerResponse rsp, Object node) throws IOException, ServletException {
-        rsp.setContentType("text/plain");
-        rsp.setStatus(500);
-        rsp.getWriter().println(getMessage());
+        rsp.forward(this,"index",req);
     }
 }
