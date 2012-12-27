@@ -1,0 +1,13 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+  <st:contentType value="text/html" />
+  <html>
+    <body onload="document.forms['openid-form-redirection'].submit();">
+      <form name="openid-form-redirection" action="${endpoint}" method="post" accept-charset="utf-8">
+        <j:forEach var="item" items="${parameters.entrySet()}">
+          <input type="hidden" name="${item.key}" value="${item.value}"/>
+        </j:forEach>
+        <button type="submit">Continue...</button>
+      </form>
+    </body>
+  </html>
+</j:jelly>

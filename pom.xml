@@ -16,6 +16,11 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.kohsuke</groupId>
+      <artifactId>stopforumspam</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>1.4</version>
@@ -28,7 +33,7 @@
     <dependency>
       <groupId>org.kohsuke.stapler</groupId>
       <artifactId>stapler-jelly</artifactId>
-      <version>1.192</version>
+      <version>1.201</version>
       <exclusions>
         <exclusion>
           <groupId>commons-jexl</groupId>
@@ -82,6 +87,11 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>org.openid4java</groupId>
+      <artifactId>openid4java-server</artifactId>
+      <version>0.9.5</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -102,6 +112,7 @@
           <!-- use the test classpath for loading resources, since this takes priority -->
           <testClassesDirectory>src/main/resources</testClassesDirectory>
           <useTestClasspath>true</useTestClasspath>
+          <port>8081</port>
 
           <systemProperties>
             <systemProperty>

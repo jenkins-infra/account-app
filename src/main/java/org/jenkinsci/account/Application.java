@@ -4,14 +4,11 @@ import jiraldapsyncer.ServiceLocator;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
-import org.apache.commons.lang.StringUtils;
-import org.kohsuke.stapler.HttpRedirect;
-import org.kohsuke.stapler.HttpResponse;
-import org.kohsuke.stapler.HttpResponses;
-import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
+import org.jenkinsci.account.openid.OpenIDServer;
+import org.kohsuke.stapler.*;
 import org.kohsuke.stapler.config.ConfigurationProxy;
+import org.kohsuke.stopforumspam.Answer;
+import org.kohsuke.stopforumspam.StopForumSpam;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
@@ -32,8 +29,11 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
+import javax.servlet.ServletException;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashSet;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
@@ -49,16 +49,24 @@ import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
- * Root of the application.
+ * Root of the account application.
  *
  * @author Kohsuke Kawaguchi
  */
 public class Application {
+    /**
+     * Configuration parameter.
+     */
     private final Parameters params;
-//    public final File rootDir;
+
+    /**
+     * For bringing the OpenID server into the URL space.
+     */
+    public final OpenIDServer openid;
 
     public Application(Parameters params) {
         this.params = params;
+        this.openid = new OpenIDServer(this,params.url()+"openid/");
     }
 
     public Application(Properties config) {
@@ -73,12 +81,21 @@ public class Application {
         return ReCaptchaFactory.newSecureReCaptcha(params.recaptchaPublicKey(), params.recaptchaPrivateKey(), false);
     }
 
+    public String getUrl() {
+        return params.url();
+    }
+
+    /**
+     * Receives the sign-up form submission.
+     */
     public HttpResponse doDoSignup(
             StaplerRequest request,
             @QueryParameter String userid,
             @QueryParameter String firstName,
             @QueryParameter String lastName,
-            @QueryParameter String email
+            @QueryParameter String email,
+
+            @Header("X-Forwarded-For") String ip    // client IP
     ) throws Exception {
 
         ReCaptcha reCaptcha = createRecaptcha();
@@ -95,14 +112,22 @@ public class Application {
 
         userid = userid.toLowerCase();
         if (!VALID_ID.matcher(userid).matches())
-            throw new Error("Invalid user name: "+userid);
+            throw new UserError("Invalid user name: "+userid);
 
         if (isEmpty(firstName))
-            throw new Error("First name is required");
+            throw new UserError("First name is required");
         if (isEmpty(lastName))
-            throw new Error("First name is required");
+            throw new UserError("First name is required");
         if (isEmpty(email))
-            throw new Error("e-mail is required");
+            throw new UserError("e-mail is required");
+
+        // spam check
+        for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
+            if (a.isAppears()) {
+                LOGGER.warning("Rejecting, likely spam: "+a);
+                throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
+            }
+        }
 
         String password = createRecord(userid, firstName, lastName, email);
 
@@ -111,6 +136,9 @@ public class Application {
         return new HttpRedirect("doneMail");
     }
 
+    /**
+     * Adds the new user entry to LDAP.
+     */
     public String createRecord(String userid, String firstName, String lastName, String email) throws NamingException {
         Attributes attrs = new BasicAttributes();
         attrs.put("objectClass", "inetOrgPerson");
@@ -150,6 +178,9 @@ public class Application {
         return password;
     }
 
+    /**
+     * Handles the password reset form submission.
+     */
     public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
         final DirContext con = connect();
         try {
@@ -174,8 +205,17 @@ public class Application {
         return new User(con.getAttributes(dn));
     }
 
+    /**
+     * Object that represents some user in LDAP.
+     */
     public class User {
+        /**
+         * User ID, such as 'kohsuke'
+         */
         public final String id;
+        /**
+         * E-mail address.
+         */
         public final String mail;
 
         public User(String id, String mail) {
@@ -202,6 +242,9 @@ public class Application {
             LOGGER.info("User "+id+" reset the e-mail address to: "+email);
         }
 
+        /**
+         * Sends a new password to this user.
+         */
         public void mailPassword(String password) throws MessagingException {
             Properties props = new Properties(System.getProperties());
             props.put("mail.smtp.host",params.smtpServer());
@@ -225,8 +268,11 @@ public class Application {
         }
     }
 
-    public Iterator<User> searchByWord(String id, DirContext con) throws NamingException {
-        final NamingEnumeration<SearchResult> e = con.search(params.newUserBaseDN(), "(|(mail={0})(cn={0}))", new Object[]{id}, new SearchControls());
+    /**
+     * Search LDAP with the given keyword, returning matching users.
+     */
+    public Iterator<User> searchByWord(String idOrMail, DirContext con) throws NamingException {
+        final NamingEnumeration<SearchResult> e = con.search(params.newUserBaseDN(), "(|(mail={0})(cn={0}))", new Object[]{idOrMail}, new SearchControls());
         return new Iterator<User>() {
             public boolean hasNext() {
                 return e.hasMoreElements();
@@ -259,9 +305,13 @@ public class Application {
         return new InitialLdapContext(env, null);
     }
 
+    /**
+     * Handles the login form submission.
+     */
     public HttpResponse doDoLogin(
             @QueryParameter String userid,
-            @QueryParameter String password
+            @QueryParameter String password,
+            @QueryParameter String from
     ) throws Exception {
         if (userid==null || password==null)
             throw new UserError("Missing credential");
@@ -278,7 +328,10 @@ public class Application {
         } catch (AuthenticationException e) {
             throw new UserError(e.getMessage());
         }
-        return new HttpRedirect("myself/");
+
+        // to limit the redirect to this application, require that the from URL starts from '/'
+        if (from==null || !from.startsWith("/")) from="/myself/";
+        return HttpResponses.redirectTo(from);
     }
 
     /**
@@ -302,20 +355,55 @@ public class Application {
     }
 
     public boolean isLoggedIn() {
-        Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
-        return myself!=null;
+        return current() !=null;
     }
 
     public boolean isAdmin() {
-        Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        Myself myself = current();
         return myself!=null && myself.isAdmin();        
     }
 
+    /**
+     * If the user has already logged in, retrieve the current user, otherwise
+     * send the user to the login page.
+     */
     public Myself getMyself() {
-        Myself myself = (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
-        if (myself==null)   // needs to login
-            throw HttpResponses.redirectViaContextPath("login");
+        Myself myself = current();
+        if (myself==null) {
+            // needs to login
+            StaplerRequest req = Stapler.getCurrentRequest();
+            StringBuilder from = new StringBuilder(req.getRequestURI());
+            if (req.getQueryString()!=null)
+                from.append('?').append(req.getQueryString());
+
+            try {
+                throw HttpResponses.redirectViaContextPath("login?from="+ URLEncoder.encode(from.toString(),"UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                throw new AssertionError(e);
+            }
+        }
         return myself;
+    }
+
+    /**
+     * "/~USERID" is mapped to OpenID.
+     */
+    public void doDynamic(StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
+        if (req.getRestOfPath().startsWith("/~"))
+            req.getView(openid,"xrds.jelly").forward(req,rsp);
+        else
+            rsp.sendError(404);
+    }
+
+    /**
+     * This is a test endpoint to make sure the reverse proxy forwarding is working.
+     */
+    public HttpResponse doForwardTest(@Header("X-Forwarded-For") String header) {
+        return HttpResponses.plainText(header);
+    }
+
+    private Myself current() {
+        return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
     }
 
     public AdminUI getAdmin() {

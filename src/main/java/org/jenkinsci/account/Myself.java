@@ -17,6 +17,7 @@ import java.util.logging.Logger;
  * Represents the current user logged in and operations on it.
  *
  * @author Kohsuke Kawaguchi
+ * @see Application#getMyself()
  */
 public class Myself {
     private final Application parent;

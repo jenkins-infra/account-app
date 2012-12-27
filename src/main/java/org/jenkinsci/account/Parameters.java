@@ -11,6 +11,9 @@ public interface Parameters {
      */
     String newUserBaseDN();
 
+    /**
+     * Coordinates to access LDAP.
+     */
     String managerDN();
     String managerPassword();
     String server();
@@ -20,5 +23,8 @@ public interface Parameters {
     String recaptchaPublicKey();
     String recaptchaPrivateKey();
 
-    String rootDir();
+    /**
+     * HTTP URL that this application is running. Something like 'http://jenkins-ci.org/accounts/'. Must end with '/'.
+     */
+    String url();
 }
