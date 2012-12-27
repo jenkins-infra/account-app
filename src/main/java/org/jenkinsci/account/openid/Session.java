@@ -84,11 +84,11 @@ public class Session {
                 return new MessageResponse(manager.associationResponse(requestp));
             } else
             if ("checkid_setup".equals(mode) || "checkid_immediate".equals(mode)) {
-                if (!isApproved()) {
-                    // if the user hasn't logged in to us yet, this will make them do so
-                    myself = provider.app.getMyself();
-                    identity = provider.app.getUrl()+"~"+ myself.userId;
+                // if the user hasn't logged in to us yet, this will make them do so
+                myself = provider.app.getMyself();
+                identity = provider.app.getUrl()+"~"+ myself.userId;
 
+                if (!isApproved()) {
                     // let's confirm the user, which will take them to doVerify
                     return HttpResponses.forwardToView(this,"confirm");
                 }
