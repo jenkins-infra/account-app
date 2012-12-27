@@ -1,0 +1,11 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:t="/taglibs">
+  <t:layout title="OpenID">
+    <div style="padding-bottom:1em">
+      You are trying to login to <b>${it.realm}</b> with your Jenkins ID <b>${it.identity.nick}</b>
+    </div>
+
+    <form method="post" action="verify">
+      <input type="submit" value="Proceed"/>
+    </form>
+  </t:layout>
+</j:jelly>

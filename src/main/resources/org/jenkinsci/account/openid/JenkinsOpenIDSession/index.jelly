@@ -1,0 +1,19 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:t="/taglibs">
+  <!-- this tells the client to get XRDS elsewhere -->
+  <st:header name="X-XRDS-Location" value="${it.server.address}xrds"/>
+  <!-- the rest is human readable -->
+  <t:layout title="Jenkins OpenID Server">
+    <h1>Jenkins OpenID Server</h1>
+    <p>
+      This service allows you to use your Jenkins account as an OpenID.
+      It is of the following format:
+    </p>
+    <div align="center">
+      <div style="font-size:1.5em; background-color: #CCC; padding:0.5em; width:640px">
+        <b>${it.identity.getOpenId(it.server)}</b>
+      </div>
+    </div>
+  </t:layout>
+  <!--<meta http-equiv="X-XRDS-Location" content="${it.provider.address}xrds" />-->
+</j:jelly>
+

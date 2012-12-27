@@ -4,7 +4,7 @@
 
     <form method="post" action="doLogin">
       <h5>User ID</h5>
-      <input type="text" name="userid" class="text"/>
+      <input type="text" name="userid" class="text" id="userid"/>
 
       <h5>Password</h5>
       <input type="password" name="password" class="text"/>
@@ -15,5 +15,11 @@
     </form>
 
     (<a href="signup">Want to sign up?</a> or <a href="passwordReset">forgot the password?</a>)
+
+    <script>
+      window.onload = function() {
+        document.getElementById('userid').focus();
+      }
+    </script>
   </t:layout>
 </j:jelly>

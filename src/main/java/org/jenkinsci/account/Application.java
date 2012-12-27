@@ -4,7 +4,7 @@ import jiraldapsyncer.ServiceLocator;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
-import org.jenkinsci.account.openid.OpenIDServer;
+import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.*;
 import org.kohsuke.stapler.config.ConfigurationProxy;
 import org.kohsuke.stopforumspam.Answer;
@@ -62,14 +62,14 @@ public class Application {
     /**
      * For bringing the OpenID server into the URL space.
      */
-    public final OpenIDServer openid;
+    public final JenkinsOpenIDServer openid;
 
-    public Application(Parameters params) {
+    public Application(Parameters params) throws IOException {
         this.params = params;
-        this.openid = new OpenIDServer(this,params.url()+"openid/");
+        this.openid = new JenkinsOpenIDServer(this);
     }
 
-    public Application(Properties config) {
+    public Application(Properties config) throws IOException {
         this(ConfigurationProxy.create(config, Parameters.class));
     }
 
@@ -383,16 +383,6 @@ public class Application {
             }
         }
         return myself;
-    }
-
-    /**
-     * "/~USERID" is mapped to OpenID.
-     */
-    public void doDynamic(StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
-        if (req.getRestOfPath().startsWith("/~"))
-            req.getView(openid,"xrds.jelly").forward(req,rsp);
-        else
-            rsp.sendError(404);
     }
 
     /**
