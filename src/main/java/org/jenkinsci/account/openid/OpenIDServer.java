@@ -1,13 +1,13 @@
 package org.jenkinsci.account.openid;
 
 import org.jenkinsci.account.Application;
-import org.kohsuke.stapler.*;
+import org.kohsuke.stapler.Stapler;
+import org.kohsuke.stapler.StaplerFallback;
 import org.openid4java.server.InMemoryServerAssociationStore;
 import org.openid4java.server.ServerManager;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * OpenID server that allows users to use their Jenkins identity as an OpenID.
@@ -32,6 +32,7 @@ public class OpenIDServer implements StaplerFallback {
         manager.setSharedAssociations(new InMemoryServerAssociationStore());
         manager.setPrivateAssociations(new InMemoryServerAssociationStore());
         manager.setOPEndpointUrl(address+"entryPoint");
+        manager.setExpireIn((int)TimeUnit.DAYS.toSeconds(180));
     }
 
     public Session getStaplerFallback() {
