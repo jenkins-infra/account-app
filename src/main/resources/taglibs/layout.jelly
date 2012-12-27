@@ -3,13 +3,89 @@
     <st:attribute name="title" use="required"/>
   </st:documentation>
   <st:contentType value="text/html;charset=UTF-8" />
-  <html>
+  <!--<st:doctype publicId="-//W3C//DTD XHTML 1.0 Strict//EN" systemId="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" />-->
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr">
     <head>
-      <title>${attrs.title}</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>${attrs.title} | Jenkins CI</title>
+      <link rel="shortcut icon" href="https://jenkins-ci.org/sites/default/files/jenkins_favicon.ico" type="image/x-icon" />
+      <link type="text/css" rel="stylesheet" media="all" href="https://jenkins-ci.org/sites/default/files/master/master.css" />
+      <script type="text/javascript" src="https://jenkins-ci.org/sites/default/files/master/master.js"></script>
+      <meta name="description" content="Jenkins is an open-source continuous integration server with 300+ plugins to support all kinds of software development"/>
+
       <link rel="stylesheet" type="text/css" href="/account/style.css" />
     </head>
     <body>
-      <d:invokeBody />
+  <a href="http://github.com/jenkinsci"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork us on GitHub"/></a>
+      <div id="head" class="clearfloat">
+
+        <div class="clearfloat">
+          <div id="logo">
+            <a href="/" title="Jenkins CI"><img src="https://jenkins-ci.org/sites/default/files/jenkins_logo.png" alt="Jenkins CI" /></a>        <div id="tagline">An extendable open source continuous integration server</div>        </div>
+
+                </div>
+
+        <div id="navbar" class="clearfloat">
+            <div id="page-bar"><ul class="menu"><li class="leaf first"><a href="/node" title="Blog landing page">Blog</a></li>
+  <li class="expanded"><a href="/" title="">Connect</a><ul class="menu"><li class="leaf first"><a href="/content/mailing-lists" title="Browse Jenkins mailing list archives and/or subscribe to lists">Mailing Lists</a></li>
+  <li class="leaf"><a href="/content/chat" title="Chat with the rest of the Jenkins community on IRC">Chat</a></li>
+  <li class="leaf"><a href="http://twitter.com/jenkinsci" title="Check out @jenkinsci on Twitter">Twitter</a></li>
+  <li class="leaf"><a href="/content/event-calendar" title="Calendar for Jenkins events">Event Calendar</a></li>
+  <li class="leaf"><a href="https://wiki.jenkins-ci.org/display/JENKINS/Office+Hours" title="WebEx-based online meeting">Office Hours</a></li>
+  <li class="leaf last"><a href="http://jenkinsci.reddit.com/" title="Check out the latest links and news on jenkinsci.reddit.com!">reddit</a></li>
+  </ul></li>
+  <li class="leaf"><a href="https://wiki.jenkins-ci.org/display/JENKINS/Issue+Tracking" title="JIRA for Jenkins">Bug Tracker</a></li>
+  <li class="leaf"><a href="http://wiki.jenkins-ci.org/" title="Main documentation of Jenkins">Wiki</a></li>
+  <li class="leaf"><a href="http://ci.jenkins-ci.org/" title="Jenkins and plugins built on Jenkins">CI</a></li>
+  <li class="leaf"><a href="/views/hudson-tutorials">Tutorials</a></li>
+  <li class="leaf"><a href="/archive" title="Blog Archives">Archives</a></li>
+  <li class="leaf"><a href="https://wiki.jenkins-ci.org/display/JENKINS/Donation" title="">Donation</a></li>
+  <li class="leaf last active-trail"><a href="/content/about-jenkins-ci" title="About Jenkins CI" class="active">About</a></li>
+  </ul></div>              </div>
+      </div>
+
+      <div id="page" class="clearfloat">
+
+
+
+        <div id="content" class="main-content no-sidebar">
+          <d:invokeBody />
+        </div>
+      </div>
+
+      <div id="footer-region" class="clearfloat">
+          <!--
+          <div id="footer-left" class="clearfloat">
+              <div id="block-feedburner-3" class="block block-feedburner odd">
+                  <h3>Jenkins CI feeds</h3>
+
+                  <div class="content">
+                      yyy
+                  </div>
+              </div>
+        </div>
+
+        <div id="footer-middle" class="clearfloat">
+        </div>
+
+        <div id="footer-right" class="clearfloat">
+            <div id="block-creativecommons-site_license" class="block block-creativecommons even">
+                <h3>Site License</h3>
+
+                <div class="content">
+                    xxx
+                </div>
+            </div>
+        </div>
+        -->
+      </div>
+
+      <!--
+      <div id="footer-message">
+        Blurb
+      </div>
+      -->
     </body>
   </html>
+
 </j:jelly>

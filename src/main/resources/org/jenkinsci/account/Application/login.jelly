@@ -12,6 +12,6 @@
       <input type="submit" style="margin-top:2em; display:block"/>
     </form>
 
-    (<a href="passwordReset">Forgot the password?</a>)
+    (<a href="signup">Want to sign up?</a> or <a href="passwordReset">forgot the password?</a>)
   </t:layout>
 </j:jelly>

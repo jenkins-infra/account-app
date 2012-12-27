@@ -6,18 +6,26 @@
       and <a href="http://fisheye.jenkins-ci.org/" target="_top">Fisheye</a>.
     </p>
 
-    <h1><a href="signup">Create a new account</a></h1>
+    <style>
+      #account-menu H1 {
+        margin: 0.5em;
+      }
+    </style>
 
-    <h1><a href="passwordReset">Reset the password</a></h1>
+    <div id="account-menu">
+      <h1><a href="signup">Create a new account</a></h1>
 
-    <h1><a href="myself/">Update your profile</a></h1>
+      <h1><a href="passwordReset">Reset the password</a></h1>
 
-    <j:if test="${it.isLoggedIn()}">
-      <h1><a href="logout">Logout</a></h1>
-    </j:if>
+      <h1><a href="myself/">Update your profile</a></h1>
 
-    <j:if test="${it.isAdmin()}">
-      <h1><a href="admin/">Administration</a></h1>
-    </j:if>
+      <j:if test="${it.isLoggedIn()}">
+        <h1><a href="logout">Logout</a></h1>
+      </j:if>
+
+      <j:if test="${it.isAdmin()}">
+        <h1><a href="admin/">Administration</a></h1>
+      </j:if>
+    </div>
   </t:layout>
 </j:jelly>
