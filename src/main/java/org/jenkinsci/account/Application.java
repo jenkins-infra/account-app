@@ -6,7 +6,7 @@ import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.*;
-import org.kohsuke.stapler.config.ConfigurationProxy;
+import org.kohsuke.stapler.config.ConfigurationLoader;
 import org.kohsuke.stopforumspam.Answer;
 import org.kohsuke.stopforumspam.StopForumSpam;
 
@@ -70,11 +70,11 @@ public class Application {
     }
 
     public Application(Properties config) throws IOException {
-        this(ConfigurationProxy.create(config, Parameters.class));
+        this(ConfigurationLoader.from(config).as(Parameters.class));
     }
 
     public Application(File config) throws IOException {
-        this(ConfigurationProxy.create(config, Parameters.class));
+        this(ConfigurationLoader.from(config).as(Parameters.class));
     }
 
     public ReCaptcha createRecaptcha() {

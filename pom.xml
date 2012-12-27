@@ -32,8 +32,13 @@
     </dependency>
     <dependency>
       <groupId>org.kohsuke.stapler</groupId>
+      <artifactId>stapler</artifactId>
+      <version>1.203-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.kohsuke.stapler</groupId>
       <artifactId>stapler-jelly</artifactId>
-      <version>1.202</version>
+      <version>1.203-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>commons-jexl</groupId>
