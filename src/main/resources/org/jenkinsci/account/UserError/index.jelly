@@ -1,4 +1,4 @@
-<j:jelly xmlns:j="jelly:core" xmlns:t="/taglibs" xmlns:st="jelly:stapler">
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/backend/taglib/layout" xmlns:st="jelly:stapler">
   <st:statusCode value="500" />
   <t:layout title="Error">
     <h1>Oops!</h1>

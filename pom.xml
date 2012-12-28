@@ -16,6 +16,11 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.jenkins-ci.backend</groupId>
+      <artifactId>jenkins.ci-org-theme</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>org.kohsuke</groupId>
       <artifactId>stopforumspam</artifactId>
       <version>1.0</version>
