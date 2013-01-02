@@ -124,7 +124,9 @@ public class Application {
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
-                LOGGER.warning("Rejecting, likely spam: "+a);
+                LOGGER.warning(String.format(
+                        "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s",
+                        a, ip, email, userid,lastName,firstName));
                 throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
             }
         }

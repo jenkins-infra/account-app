@@ -6,6 +6,7 @@ import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
+import javax.mail.MessagingException;
 import javax.naming.NamingException;
 import javax.naming.ldap.LdapContext;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
 /**
  * Root object of the admin UI.
  *
- * Only administrator gets access to this.
+ * Only administrator gets access to this object.
  *
  * @author Kohsuke Kawaguchi
  */
@@ -84,6 +85,20 @@ public class AdminUI {
         } finally {
             con.close();
         }
+    }
+
+    @RequirePOST
+    public HttpResponse doDoSignup(
+            @QueryParameter String userid,
+            @QueryParameter String firstName,
+            @QueryParameter String lastName,
+            @QueryParameter String email
+    ) throws NamingException, MessagingException {
+        String password = app.createRecord(userid, firstName, lastName, email);
+
+        app.new User(userid,email).mailPassword(password);
+
+        return HttpResponses.plainText("Created");
     }
 
     private static final Logger LOGGER = Logger.getLogger(AdminUI.class.getName());
