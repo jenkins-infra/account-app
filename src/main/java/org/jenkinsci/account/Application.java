@@ -138,7 +138,7 @@ public class Application {
                 msg.setContent(
                         text+"\n\n"+
                         "To allow this account to be created, click the following link:\n"+
-                        "https://jenkins-ci.org/account/admin/signup?userId="+userid+"&firstName="+firstName+"&lastName="+lastName+"&email="+email+"\n",
+                        "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+enc(firstName)+"&lastName="+enc(lastName)+"&email="+enc(email)+"\n",
                         "text/plain");
                 Transport.send(msg);
 
@@ -151,6 +151,10 @@ public class Application {
         new User(userid,email).mailPassword(password);
 
         return new HttpRedirect("doneMail");
+    }
+
+    private static String enc(String s) throws UnsupportedEncodingException {
+        return URLEncoder.encode(s,"UTF-8");
     }
 
     /**
