@@ -5,7 +5,7 @@
     </p>
     <form method="post" action="doSignup">
       <h5>User ID</h5>
-      <input type="text" readonly="true" value="${request.getParameter('userId')}" class="text" disabled="true"/>
+      <input type="text" name="userid" readonly="true" value="${request.getParameter('userId')}" class="text" disabled="true"/>
 
       <h5>First Name</h5>
       <input type="text" name="firstName" value="${request.getParameter('firstName')}" class="text"/>
