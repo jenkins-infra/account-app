@@ -123,10 +123,25 @@ public class Application {
 
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
-            if (a.isAppears()) {
-                LOGGER.warning(String.format(
+            if (a.isAppears() || email.equals("kk+spamtest@kohsuke.org")) {
+                String text = String.format(
                         "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s",
-                        a, ip, email, userid,lastName,firstName));
+                        a, ip, email, userid, lastName, firstName);
+                LOGGER.warning(text);
+
+                // send an e-mail to the admins
+                Session s = createJavaMailSession();
+                MimeMessage msg = new MimeMessage(s);
+                msg.setSubject("Rejection of a new account creation");
+                msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
+                msg.setRecipient(RecipientType.TO, new InternetAddress("jenkinsci-account-admins@googlegroups.com"));
+                msg.setContent(
+                        text+"\n\n"+
+                        "To allow this account to be created, click the following link:\n"+
+                        "https://jenkins-ci.org/account/admin/signup?userId="+userid+"&firstName="+firstName+"&lastName="+lastName+"&email="+email+"\n",
+                        "text/plain");
+                Transport.send(msg);
+
                 throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
             }
         }
@@ -248,9 +263,7 @@ public class Application {
          * Sends a new password to this user.
          */
         public void mailPassword(String password) throws MessagingException {
-            Properties props = new Properties(System.getProperties());
-            props.put("mail.smtp.host",params.smtpServer());
-            Session s = Session.getInstance(props);
+            Session s = createJavaMailSession();
             MimeMessage msg = new MimeMessage(s);
             msg.setSubject("Your access to jenkins-ci.org");
             msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
@@ -268,6 +281,12 @@ public class Application {
             con.destroySubcontext(getDn());
             LOGGER.info("User " + id + " deleted");
         }
+    }
+
+    private Session createJavaMailSession() {
+        Properties props = new Properties(System.getProperties());
+        props.put("mail.smtp.host",params.smtpServer());
+        return Session.getInstance(props);
     }
 
     /**
