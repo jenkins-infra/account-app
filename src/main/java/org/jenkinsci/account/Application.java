@@ -149,6 +149,7 @@ public class Application {
         }
 
         String password = createRecord(userid, firstName, lastName, email);
+        LOGGER.info("User "+userid+" is from "+ip);
 
         new User(userid,email).mailPassword(password);
 
