@@ -98,6 +98,8 @@ public class Application {
             @Header("X-Forwarded-For") String ip    // client IP
     ) throws Exception {
 
+        ip = extractFirst(ip);
+
         ReCaptcha reCaptcha = createRecaptcha();
 
         String challenge = request.getParameter("recaptcha_challenge_field");
@@ -151,6 +153,15 @@ public class Application {
         new User(userid,email).mailPassword(password);
 
         return new HttpRedirect("doneMail");
+    }
+
+    /**
+     * If IP consists of multiple tokens, like "1.2.3.4, 5.6.7.8" then just extract the first one.
+     */
+    private String extractFirst(String ip) {
+        int idx = ip.indexOf(",");
+        if (idx>0)  return ip.substring(0,idx);
+        return ip;
     }
 
     private static String enc(String s) throws UnsupportedEncodingException {
