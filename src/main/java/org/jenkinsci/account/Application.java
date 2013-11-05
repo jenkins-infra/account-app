@@ -29,15 +29,17 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
-import javax.servlet.ServletException;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
@@ -146,6 +148,13 @@ public class Application {
 
                 throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
             }
+        }
+
+        // domain black list
+        String lm = email.toLowerCase(Locale.ENGLISH);
+        for (String fragment : EMAIL_BLACKLIST) {
+            if (lm.contains(fragment))
+                throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
         }
 
         String password = createRecord(userid, firstName, lastName, email);
@@ -440,4 +449,8 @@ public class Application {
     private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
 
     private static final Pattern VALID_ID = Pattern.compile("[a-z0-9_]+");
+
+    public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
+        "@mailnesia.com"
+    );
 }
