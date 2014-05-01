@@ -3,3 +3,4 @@
 *.iws
 target
 config.properties
+bin/jetty-runner.jar
