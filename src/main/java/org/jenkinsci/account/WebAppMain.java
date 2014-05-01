@@ -4,8 +4,6 @@ import org.kohsuke.stapler.framework.AbstractWebAppMain;
 import org.kohsuke.stapler.jelly.DefaultScriptInvoker;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
 
 /**
  * Bootstrap code.
@@ -25,6 +23,13 @@ public class WebAppMain extends AbstractWebAppMain<Application> {
 
     @Override
     public Application createApplication() throws Exception {
-        return new Application(new File("config.properties"));
+        File f;
+        String con = System.getProperty("CONFIG");
+        if (con!=null) {
+            f = new File(con);
+        } else {
+            f = new File("config.properties");
+        }
+        return new Application(f);
     }
 }
