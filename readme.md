@@ -1,4 +1,7 @@
-# Testing locally
+# Jenkins Account Management/Sign-up App
+[![Build Status](http://ci.jenkins-ci.org/view/Infrastructure/job/infra_accountapp/badge/icon)](http://ci.jenkins-ci.org/view/Infrastructure/job/infra_accountapp/)
+
+## Testing locally
 First, set up a tunnel to Jenkins LDAP server. Run the following command and keep the terminal open:
 
     ssh -L 9389:localhost:389 cucumber.jenkins-ci.org
@@ -22,7 +25,7 @@ Finally, run the application with Jetty, then access `http://localhost:8080/`:
 is real.
 
 
-# Packaging
+## Packaging
 For deploying to production, this app gets containerized. The container expects to see `/etc/accountapp` mounted
 from outside that contains the abovementioned `config.properties`
 
