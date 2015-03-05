@@ -9,6 +9,7 @@ import org.kohsuke.stapler.*;
 import org.kohsuke.stapler.config.ConfigurationLoader;
 import org.kohsuke.stopforumspam.Answer;
 import org.kohsuke.stopforumspam.StopForumSpam;
+import org.xml.sax.SAXException;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
@@ -127,7 +128,7 @@ public class Application {
 
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
-            if (a.isAppears() || email.equals("kk+spamtest@kohsuke.org")) {
+            if (a.isAppears() || email.equals("kk+spamtest@kohsuke.org") || email.toLowerCase(Locale.ENGLISH).contains("@yahoo.co.id")) {
                 String text = String.format(
                         "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s",
                         a, ip, email, userid, lastName, firstName);
