@@ -129,25 +129,7 @@ public class Application {
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears() || email.equals("kk+spamtest@kohsuke.org") || email.toLowerCase(Locale.ENGLISH).contains("@yahoo.co.id")) {
-                String text = String.format(
-                        "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s",
-                        a, ip, email, userid, lastName, firstName);
-                LOGGER.warning(text);
-
-                // send an e-mail to the admins
-                Session s = createJavaMailSession();
-                MimeMessage msg = new MimeMessage(s);
-                msg.setSubject("Rejection of a new account creation");
-                msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
-                msg.setRecipient(RecipientType.TO, new InternetAddress("jenkinsci-account-admins@googlegroups.com"));
-                msg.setContent(
-                        text+"\n\n"+
-                        "To allow this account to be created, click the following link:\n"+
-                        "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+enc(firstName)+"&lastName="+enc(lastName)+"&email="+enc(email)+"\n",
-                        "text/plain");
-                Transport.send(msg);
-
-                throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
+                return maybeSpammer(userid, firstName, lastName, email, ip, a);
             }
         }
 
@@ -155,7 +137,7 @@ public class Application {
         String lm = email.toLowerCase(Locale.ENGLISH);
         for (String fragment : EMAIL_BLACKLIST) {
             if (lm.contains(fragment))
-                throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
+                return maybeSpammer(userid, firstName, lastName, email, ip, null);
         }
 
         String password = createRecord(userid, firstName, lastName, email);
@@ -164,6 +146,28 @@ public class Application {
         new User(userid,email).mailPassword(password);
 
         return new HttpRedirect("doneMail");
+    }
+
+    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, Answer a) throws MessagingException, UnsupportedEncodingException {
+        String text = String.format(
+                "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s",
+                a, ip, email, userid, lastName, firstName);
+        LOGGER.warning(text);
+
+        // send an e-mail to the admins
+        Session s = createJavaMailSession();
+        MimeMessage msg = new MimeMessage(s);
+        msg.setSubject("Rejection of a new account creation");
+        msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
+        msg.setRecipient(RecipientType.TO, new InternetAddress("jenkinsci-account-admins@googlegroups.com"));
+        msg.setContent(
+                text+"\n\n"+
+                "To allow this account to be created, click the following link:\n"+
+                "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+enc(firstName)+"&lastName="+enc(lastName)+"&email="+enc(email)+"\n",
+                "text/plain");
+        Transport.send(msg);
+
+        throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
     }
 
     /**
