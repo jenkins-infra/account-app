@@ -128,7 +128,7 @@ public class Application {
 
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
-            if (a.isAppears() || email.equals("kk+spamtest@kohsuke.org") || email.toLowerCase(Locale.ENGLISH).contains("@yahoo.co.id")) {
+            if (a.isAppears()) {
                 return maybeSpammer(userid, firstName, lastName, email, ip, a);
             }
         }
@@ -456,6 +456,9 @@ public class Application {
     private static final Pattern VALID_ID = Pattern.compile("[a-z0-9_]+");
 
     public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
-        "@mailnesia.com"
+        "@mailnesia.com",
+        "@yahoo.co.id",
+        "obat@",
+        "kk+spamtest@kohsuke.org"
     );
 }
