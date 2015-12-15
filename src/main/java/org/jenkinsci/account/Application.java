@@ -141,7 +141,7 @@ public class Application {
                 return maybeSpammer(userid, firstName, lastName, email, ip, null);
         }
 
-        checkCircuitBreakerOn();
+        checkCircuitBreakerOn(userid);
 
         String password = createRecord(userid, firstName, lastName, email);
         LOGGER.info("User "+userid+" is from "+ip);
@@ -154,11 +154,12 @@ public class Application {
     /**
      * We allow ourselves to temporarily shut down the sign up, primarily to combat spam.
      */
-    private void checkCircuitBreakerOn() throws IOException {
+    private void checkCircuitBreakerOn(String userid) throws IOException {
         String f = params.circuitBreakerFile();
         if (f!=null) {
             File breaker = new File(f);
             if (System.currentTimeMillis() < breaker.lastModified()) {
+                LOGGER.info("Rejecting sign up for "+userid+" due to circuit breaker");
                 throw new UserError(FileUtils.readFileToString(breaker));
             }
         }
