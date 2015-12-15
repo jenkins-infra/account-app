@@ -155,9 +155,12 @@ public class Application {
      * We allow ourselves to temporarily shut down the sign up, primarily to combat spam.
      */
     private void checkCircuitBreakerOn() throws IOException {
-        File breaker = new File(params.circuitBreakerFile());
-        if (System.currentTimeMillis() < breaker.lastModified()) {
-            throw new UserError(FileUtils.readFileToString(breaker));
+        String f = params.circuitBreakerFile();
+        if (f!=null) {
+            File breaker = new File(f);
+            if (System.currentTimeMillis() < breaker.lastModified()) {
+                throw new UserError(FileUtils.readFileToString(breaker));
+            }
         }
     }
 
