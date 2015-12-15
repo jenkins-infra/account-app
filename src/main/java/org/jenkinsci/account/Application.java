@@ -4,6 +4,7 @@ import jiraldapsyncer.ServiceLocator;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
+import org.apache.commons.io.FileUtils;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.*;
 import org.kohsuke.stapler.config.ConfigurationLoader;
@@ -140,12 +141,24 @@ public class Application {
                 return maybeSpammer(userid, firstName, lastName, email, ip, null);
         }
 
+        checkCircuitBreakerOn();
+
         String password = createRecord(userid, firstName, lastName, email);
         LOGGER.info("User "+userid+" is from "+ip);
 
         new User(userid,email).mailPassword(password);
 
         return new HttpRedirect("doneMail");
+    }
+
+    /**
+     * We allow ourselves to temporarily shut down the sign up, primarily to combat spam.
+     */
+    private void checkCircuitBreakerOn() throws IOException {
+        File breaker = new File(params.circuitBreakerFile());
+        if (System.currentTimeMillis() < breaker.lastModified()) {
+            throw new UserError(FileUtils.readFileToString(breaker));
+        }
     }
 
     private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, Answer a) throws MessagingException, UnsupportedEncodingException {

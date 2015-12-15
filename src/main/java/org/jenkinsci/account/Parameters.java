@@ -27,4 +27,9 @@ public interface Parameters {
      * HTTP URL that this application is running. Something like 'http://jenkins-ci.org/account/'. Must end with '/'.
      */
     String url();
+
+    /**
+     * File that activates a circuit breaker, a temporary shutdown of a sign-up service.
+     */
+    String circuitBreakerFile();
 }
