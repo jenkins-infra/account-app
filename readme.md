@@ -16,6 +16,8 @@ but it should look something like the following:
     recaptchaPublicKey=6Ld--8ASAAAAANHmHaM1sdSYshtmXTin1BNtaw86
     recaptchaPrivateKey=*****
     managerPassword=*****
+    circuitBreakerFile=./circuitBreaker.txt
+    url=http://localhost:8080/account/
 
 Finally, run the application with Jetty, then access `http://localhost:8080/`:
 

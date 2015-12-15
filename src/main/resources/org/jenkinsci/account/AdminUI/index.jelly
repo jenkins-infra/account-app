@@ -1,11 +1,30 @@
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/backend/taglib/layout">
   <t:layout title="Administration">
+    <h1>Manage Users</h1>
     <p>
       Type the user name or the e-mail address to find the user.
     </p>
     <form method="post" action="search">
       <h5>Username/email address</h5>
       <input type="text" name="word" class="text"/>
+
+      <input type="submit" style="margin-top:2em; display:block"/>
+    </form>
+
+    <h1 style="margin-top:2em">Set Circuit Breaker</h1>
+    <p>
+      Temporarily disable sign-up to fight spam until a certain time.
+      All times are in US Eastern Time, where the server is.
+    </p>
+    <j:if test="${it.circuitBreaker.isOn()}">
+      <p>
+        Circuit breaker is currently on until ${it.circuitBreaker.date}.
+        To disable it, set it to the time in the past, such as 2000/01/01 00:00.
+      </p>
+    </j:if>
+    <form method="post" action="circuitBreaker/set">
+      <h5>Circuit breaker is on until when? (YYYY/MM/DD HH:MM)</h5>
+      <input type="text" name="time" class="text"/>
 
       <input type="submit" style="margin-top:2em; display:block"/>
     </form>

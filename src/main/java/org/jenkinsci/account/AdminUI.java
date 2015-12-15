@@ -29,6 +29,13 @@ public class AdminUI {
         this.app = app;
     }
 
+    /**
+     * Exposes the circuit breaker to UI.
+     */
+    public CircuitBreaker getCircuitBreaker() {
+        return app.circuitBreaker;
+    }
+
     public HttpResponse doSearch(@QueryParameter String word) throws NamingException {
         List<User> all = new ArrayList<User>();
         LdapContext con = app.connect();

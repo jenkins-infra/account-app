@@ -68,9 +68,13 @@ public class Application {
      */
     public final JenkinsOpenIDServer openid;
 
+    // not exposing this to UI
+    /*package*/ final CircuitBreaker circuitBreaker;
+
     public Application(Parameters params) throws IOException {
         this.params = params;
         this.openid = new JenkinsOpenIDServer(this);
+        this.circuitBreaker = new CircuitBreaker(params);
     }
 
     public Application(Properties config) throws IOException {
@@ -141,7 +145,7 @@ public class Application {
                 return maybeSpammer(userid, firstName, lastName, email, ip, null);
         }
 
-        checkCircuitBreakerOn(userid);
+        circuitBreaker.check();
 
         String password = createRecord(userid, firstName, lastName, email);
         LOGGER.info("User "+userid+" is from "+ip);
@@ -149,20 +153,6 @@ public class Application {
         new User(userid,email).mailPassword(password);
 
         return new HttpRedirect("doneMail");
-    }
-
-    /**
-     * We allow ourselves to temporarily shut down the sign up, primarily to combat spam.
-     */
-    private void checkCircuitBreakerOn(String userid) throws IOException {
-        String f = params.circuitBreakerFile();
-        if (f!=null) {
-            File breaker = new File(f);
-            if (System.currentTimeMillis() < breaker.lastModified()) {
-                LOGGER.info("Rejecting sign up for "+userid+" due to circuit breaker");
-                throw new UserError(FileUtils.readFileToString(breaker));
-            }
-        }
     }
 
     private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, Answer a) throws MessagingException, UnsupportedEncodingException {
