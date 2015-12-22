@@ -13,6 +13,8 @@ import javax.naming.ldap.LdapContext;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import static org.jenkinsci.account.LdapAbuse.*;
+
 /**
  * Represents the current user logged in and operations on it.
  *
@@ -35,8 +37,8 @@ public class Myself {
         lastName = getAttribute(attributes,"sn");
         email = getAttribute(attributes,"mail");
         userId = getAttribute(attributes,"cn");
-        githubId = getAttribute(attributes,"employeeNumber");
-        sshKeys = getAttribute(attributes,"preferredLanguage");
+        githubId = getAttribute(attributes, GITHUB_ID);
+        sshKeys = getAttribute(attributes, SSH_KEYS);
     }
 
     /**
@@ -67,8 +69,8 @@ public class Myself {
         attrs.put("givenName", fixEmpty(firstName));
         attrs.put("sn", fixEmpty(lastName));
         attrs.put("mail", email);
-        attrs.put("employeeNumber",fixEmpty(githubId));
-        attrs.put("preferredLanguage",fixEmpty(sshKeys)); // hack since I find it too hard to add custom attributes to LDAP
+        attrs.put(GITHUB_ID,fixEmpty(githubId));
+        attrs.put(SSH_KEYS,fixEmpty(sshKeys)); // hack since I find it too hard to add custom attributes to LDAP
 
         LdapContext context = parent.connect();
         try {
