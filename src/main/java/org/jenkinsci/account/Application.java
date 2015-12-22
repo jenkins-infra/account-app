@@ -51,7 +51,7 @@ import java.util.regex.Pattern;
 import static javax.naming.directory.DirContext.*;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.jenkinsci.account.LdapAbuse.REGISTRATION_DATE;
+import static org.jenkinsci.account.LdapAbuse.*;
 
 /**
  * Root of the account application.
@@ -204,6 +204,7 @@ public class Application {
         String password = PasswordUtil.generateRandomPassword();
         attrs.put("userPassword", PasswordUtil.hashPassword(password));
         attrs.put(REGISTRATION_DATE, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+        attrs.put(SENIOR_STATUS, "N");
 
         final DirContext con = connect();
         try {
