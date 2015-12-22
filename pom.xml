@@ -13,7 +13,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>2.4</version>
-      <scope>provided</scope>
+      <!-- <scope>provided</scope> added as compile scope to make batch process work -->
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.backend</groupId>
