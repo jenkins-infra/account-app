@@ -4,13 +4,11 @@ import jiraldapsyncer.ServiceLocator;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
-import org.apache.commons.io.FileUtils;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.*;
 import org.kohsuke.stapler.config.ConfigurationLoader;
 import org.kohsuke.stopforumspam.Answer;
 import org.kohsuke.stopforumspam.StopForumSpam;
-import org.xml.sax.SAXException;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
@@ -35,7 +33,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
@@ -51,6 +51,7 @@ import java.util.regex.Pattern;
 import static javax.naming.directory.DirContext.*;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.jenkinsci.account.LdapAbuse.REGISTRATION_DATE;
 
 /**
  * Root of the account application.
@@ -202,6 +203,7 @@ public class Application {
         attrs.put("mail", email);
         String password = PasswordUtil.generateRandomPassword();
         attrs.put("userPassword", PasswordUtil.hashPassword(password));
+        attrs.put(REGISTRATION_DATE, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
 
         final DirContext con = connect();
         try {
