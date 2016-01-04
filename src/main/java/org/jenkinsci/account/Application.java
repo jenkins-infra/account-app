@@ -422,7 +422,7 @@ public class Application {
 
     public boolean isAdmin() {
         Myself myself = current();
-        return myself!=null && myself.isAdmin();        
+        return myself!=null && myself.isAdmin();
     }
 
     /**
@@ -470,6 +470,7 @@ public class Application {
         "@mailnesia.com",
         "@yahoo.co.id",
         "obat@",
+        "@mailinator.com",
         "kk+spamtest@kohsuke.org"
     );
 }
