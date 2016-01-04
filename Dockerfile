@@ -1,8 +1,6 @@
-FROM ubuntu:trusty
+FROM anapsix/alpine-java:jre8
 
-RUN apt-get install -y openjdk-6-jre unzip
-
-RUN useradd --create-home accountapp
+RUN adduser -D -h /home/accountapp accountapp
 ADD bin /home/accountapp/bin
 ADD target/accountapp.war /home/accountapp/bin/accountapp.war
 
