@@ -471,6 +471,7 @@ public class Application {
         "@yahoo.co.id",
         "obat@",
         "@mailinator.com",
+        "@thrma.com",
         "watpad6@gmail.com",
         "kk+spamtest@kohsuke.org"
     );
