@@ -473,6 +473,7 @@ public class Application {
         "@mailinator.com",
         "@thrma.com",
         "watpad6@gmail.com",
+        "ncrpoo@gmail.com",
         "kk+spamtest@kohsuke.org"
     );
 }
