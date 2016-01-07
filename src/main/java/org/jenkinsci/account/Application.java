@@ -479,6 +479,7 @@ public class Application {
         "dersttycert101@gmail.com",
         "omprakash7777928298@gmail.com",
         "pintu.gakre@gmail.com",
+        "10viz.michel@gmail.com",
         "kk+spamtest@kohsuke.org"
     );
 }
