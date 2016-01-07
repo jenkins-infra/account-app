@@ -467,21 +467,25 @@ public class Application {
     private static final Pattern VALID_ID = Pattern.compile("[a-z0-9_]+");
 
     public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
-        "@mailnesia.com",
-        "@yahoo.co.id",
-        "obat@",
         "@mailinator.com",
+        "@mailnesia.com",
         "@thrma.com",
-        "watpad6@gmail.com",
+        "@yahoo.co.id",
+        "10viz.michel@gmail.com",
+        "crsgroupindia@gmail.com",
+        "dersttycert101@gmail.com",
+        "folk.zin87@gmail.com",
+        "georgiaaby@gmail.com",
+        "johnmaclan1@gmail.com",
+        "johnseo130@gmail.com",
         "ncrpoo@gmail.com",
         "ncrpoosssss@gmail.com",
-        "folk.zin87@gmail.com",
-        "johnseo130@gmail.com",
-        "georgiaaby@gmail.com",
-        "dersttycert101@gmail.com",
+        "obat@",
         "omprakash7777928298@gmail.com",
         "pintu.gakre@gmail.com",
-        "10viz.michel@gmail.com",
+        "sunilkundujat@gmail.com",
+        "watpad6@gmail.com",
+        "win.tech1011@gmail.com",
         "kk+spamtest@kohsuke.org"
     );
 }
