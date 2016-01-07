@@ -474,6 +474,11 @@ public class Application {
         "@thrma.com",
         "watpad6@gmail.com",
         "ncrpoo@gmail.com",
+        "johnseo130@gmail.com",
+        "georgiaaby@gmail.com",
+        "dersttycert101@gmail.com",
+        "omprakash7777928298@gmail.com",
+        "pintu.gakre@gmail.com",
         "kk+spamtest@kohsuke.org"
     );
 }
