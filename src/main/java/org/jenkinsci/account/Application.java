@@ -474,6 +474,8 @@ public class Application {
         "@thrma.com",
         "watpad6@gmail.com",
         "ncrpoo@gmail.com",
+        "ncrpoosssss@gmail.com",
+        "folk.zin87@gmail.com",
         "johnseo130@gmail.com",
         "georgiaaby@gmail.com",
         "dersttycert101@gmail.com",
