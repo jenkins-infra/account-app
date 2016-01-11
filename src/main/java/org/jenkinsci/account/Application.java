@@ -478,12 +478,14 @@ public class Application {
         "folk.zin87@gmail.com",
         "georgiaaby@gmail.com",
         "huin.lisko097@gmail.com",
+        "janes6521@gmail.com ",
         "janessmith899@gmail.com",
         "jksadnhk@gmail.com",
         "johngarry227@gmail.com",
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
         "johnseo130@gmail.com",
+        "kumar.uma420@gmail.com",
         "ncrpoo@gmail.com",
         "ncrpoosssss@gmail.com",
         "obat@",
@@ -492,7 +494,7 @@ public class Application {
         "poonamkamalpatel@gmail.com",
         "sunilkundujat@gmail.com",
         "watpad6@gmail.com",
-        "win.tech1011@gmail.com",
+        "win.tech",
         "kk+spamtest@kohsuke.org"
     );
 }
