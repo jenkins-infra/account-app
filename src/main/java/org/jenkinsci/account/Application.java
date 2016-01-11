@@ -494,7 +494,7 @@ public class Application {
         "poonamkamalpatel@gmail.com",
         "sunilkundujat@gmail.com",
         "watpad6@gmail.com",
-        "win.tech1011@gmail.com",
+        "win.tech",
         "kk+spamtest@kohsuke.org"
     );
 }
