@@ -59,6 +59,7 @@ import static org.jenkinsci.account.LdapAbuse.*;
  * @author Kohsuke Kawaguchi
  */
 public class Application {
+    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com";
     /**
      * Configuration parameter.
      */
@@ -135,7 +136,7 @@ public class Application {
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, a);
+                return maybeSpammer(userid, firstName, lastName, email, ip, a.toString());
             }
         }
 
@@ -143,23 +144,26 @@ public class Application {
         String lm = email.toLowerCase(Locale.ENGLISH);
         for (String fragment : EMAIL_BLACKLIST) {
             if (lm.contains(fragment))
-                return maybeSpammer(userid, firstName, lastName, email, ip, null);
+                return maybeSpammer(userid, firstName, lastName, email, ip, "Blacklist");
         }
 
         circuitBreaker.check();
+        try {
+            String password = createRecord(userid, firstName, lastName, email);
+            LOGGER.info("User "+userid+" is from "+ip);
 
-        String password = createRecord(userid, firstName, lastName, email);
-        LOGGER.info("User "+userid+" is from "+ip);
-
-        new User(userid,email).mailPassword(password);
+            new User(userid,email).mailPassword(password);
+        } catch (UserError ex) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, "Existing email in system");
+        }
 
         return new HttpRedirect("doneMail");
     }
 
-    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, Answer a) throws MessagingException, UnsupportedEncodingException {
+    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String reason) throws MessagingException, UnsupportedEncodingException {
         String text = String.format(
                 "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s",
-                a, ip, email, userid, lastName, firstName);
+                reason, ip, email, userid, lastName, firstName);
         LOGGER.warning(text);
 
         // send an e-mail to the admins
@@ -175,7 +179,7 @@ public class Application {
                 "text/plain");
         Transport.send(msg);
 
-        throw new UserError("Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com");
+        throw new UserError(SPAM_MESSAGE);
     }
 
     /**
@@ -208,6 +212,12 @@ public class Application {
 
         final DirContext con = connect();
         try {
+
+            final NamingEnumeration<SearchResult> emailSearch = con.search(params.newUserBaseDN(), "(|(mail={0}))", new Object[]{email}, new SearchControls());
+            if(emailSearch.hasMore()) {
+                throw new UserError(SPAM_MESSAGE);
+            }
+
             String fullDN = "cn=" + userid + "," + params.newUserBaseDN();
             con.createSubcontext(fullDN, attrs).close();
 
