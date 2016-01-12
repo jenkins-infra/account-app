@@ -59,7 +59,6 @@ import static org.jenkinsci.account.LdapAbuse.*;
  * @author Kohsuke Kawaguchi
  */
 public class Application {
-    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com";
     /**
      * Configuration parameter.
      */
@@ -507,4 +506,6 @@ public class Application {
         "win.tech",
         "kk+spamtest@kohsuke.org"
     );
+
+    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com";
 }
