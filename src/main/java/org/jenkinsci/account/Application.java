@@ -212,7 +212,7 @@ public class Application {
         final DirContext con = connect();
         try {
 
-            final NamingEnumeration<SearchResult> emailSearch = con.search(params.newUserBaseDN(), "(|(mail={0}))", new Object[]{email}, new SearchControls());
+            final NamingEnumeration<SearchResult> emailSearch = con.search(params.newUserBaseDN(), "(mail={0})", new Object[]{email}, new SearchControls());
             if(emailSearch.hasMore()) {
                 throw new UserError(SPAM_MESSAGE);
             }
