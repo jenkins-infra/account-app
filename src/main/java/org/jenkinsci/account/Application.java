@@ -488,7 +488,7 @@ public class Application {
         "georgiaaby@gmail.com",
         "huin.lisko097@gmail.com",
         "janes6521@gmail.com ",
-        "janessmith899@gmail.com",
+        "janessmith",
         "jksadnhk@gmail.com",
         "johngarry227@gmail.com",
         "johnmaclan1@gmail.com",
