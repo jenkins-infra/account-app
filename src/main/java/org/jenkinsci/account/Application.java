@@ -476,6 +476,7 @@ public class Application {
     private static final Pattern VALID_ID = Pattern.compile("[a-z0-9_]+");
 
     public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
+        "@guerrillamail.com",
         "@mailinator.com",
         "@mailnesia.com",
         "@thrma.com",
