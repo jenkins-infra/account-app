@@ -507,6 +507,7 @@ public class Application {
         "omprakash7777928298@gmail.com",
         "pintu.gakre@gmail.com",
         "poonamkamalpatel@gmail.com",
+        "seo01@gmail.com",
         "sunilkundujat@gmail.com",
         "watpad6@gmail.com",
         "win.tech",
