@@ -212,6 +212,10 @@ public class Application {
         final DirContext con = connect();
         try {
 
+            final NamingEnumeration<SearchResult> userSearch = con.search(params.newUserBaseDN(), "(id={0})", new Object[]{userid}, new SearchControls());
+            if(userSearch.hasMore()) {
+                throw new UserError("ID "+userid+" is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
+            }
             final NamingEnumeration<SearchResult> emailSearch = con.search(params.newUserBaseDN(), "(mail={0})", new Object[]{email}, new SearchControls());
             if(emailSearch.hasMore()) {
                 throw new UserError(SPAM_MESSAGE);
