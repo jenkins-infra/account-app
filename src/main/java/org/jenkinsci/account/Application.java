@@ -483,6 +483,7 @@ public class Application {
         "@guerrillamail.com",
         "@mailinator.com",
         "@mailnesia.com",
+        "@sharklasers.com",
         "@thrma.com",
         "@yahoo.co.id",
         "adreahilton@gmail.com",
