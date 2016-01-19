@@ -158,7 +158,10 @@ public class Application {
                 return maybeSpammer(userid, firstName, lastName, email, ip, "Blacklist");
         }
 
-        circuitBreaker.check();
+        if(circuitBreaker.check()) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, "circuitBreaker");
+        }
+
         try {
             String password = createRecord(userid, firstName, lastName, email);
             LOGGER.info("User "+userid+" is from "+ip);

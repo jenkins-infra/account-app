@@ -40,11 +40,12 @@ public class CircuitBreaker {
     /**
      * Throws an exception if the circuit breaker is on.
      */
-    public void check() throws IOException {
+    public boolean check() throws IOException {
         if (isOn()) {
             LOGGER.info("Rejecting sign up due to circuit breaker");
-            throw new UserError(FileUtils.readFileToString(file));
+            return true;
         }
+        return false;
     }
 
     @RequirePOST
