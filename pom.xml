@@ -31,9 +31,9 @@
       <version>1.4</version>
     </dependency>
     <dependency>
-      <groupId>net.tanesha.recaptcha4j</groupId>
-      <artifactId>recaptcha4j</artifactId>
-      <version>0.0.8-kohsuke-1</version>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>1.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.kohsuke.stapler</groupId>

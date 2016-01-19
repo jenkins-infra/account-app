@@ -1,15 +1,15 @@
 package org.jenkinsci.account;
 import jiraldapsyncer.JiraLdapSyncer;
 import jiraldapsyncer.ServiceLocator;
-import net.tanesha.recaptcha.ReCaptcha;
-import net.tanesha.recaptcha.ReCaptchaFactory;
-import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.*;
 import org.kohsuke.stapler.config.ConfigurationLoader;
 import org.kohsuke.stopforumspam.Answer;
 import org.kohsuke.stopforumspam.StopForumSpam;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -29,10 +29,17 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.Cookie;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -87,8 +94,8 @@ public class Application {
         this(ConfigurationLoader.from(config).as(Parameters.class));
     }
 
-    public ReCaptcha createRecaptcha() {
-        return ReCaptchaFactory.newSecureReCaptcha(params.recaptchaPublicKey(), params.recaptchaPrivateKey(), false);
+    public String captchaPublicKey() {
+        return params.recaptchaPublicKey();
     }
 
     public String getUrl() {
@@ -111,15 +118,10 @@ public class Application {
 
         ip = extractFirst(ip);
 
-        ReCaptcha reCaptcha = createRecaptcha();
+        String uresponse = request.getParameter("g-recaptcha-response");
+        if (uresponse==null)    throw new Error("captcha missing");
 
-        String challenge = request.getParameter("recaptcha_challenge_field");
-        if (challenge==null)    throw new Error("challenge missing");
-        String uresponse = request.getParameter("recaptcha_response_field");
-        if (uresponse==null)    throw new Error("uresponse missing");
-        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(request.getRemoteAddr(), challenge, uresponse);
-
-        if (!reCaptchaResponse.isValid()) {
+        if (!verifyCaptcha(uresponse, ip)) {
             throw new UserError("Captcha mismatch. Please try again and retry a captcha to prove that you are a human");
         }
 
@@ -172,6 +174,54 @@ public class Application {
         }
 
         return new HttpRedirect("doneMail");
+    }
+
+    private boolean verifyCaptcha(String uresponse, String ip) {
+        String postParams = "secret=" + URLEncoder.encode(params.recaptchaPrivateKey()) +
+                           "&remoteip=" + URLEncoder.encode(ip) +
+                           "&response=" + URLEncoder.encode(uresponse);
+        try {
+            URL obj = new URL("https://www.google.com/recaptcha/api/siteverify");
+            HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0");
+            conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(postParams);
+            wr.flush();
+            wr.close();
+
+            int responseCode = conn.getResponseCode();
+//            System.out.println("\nSending 'POST' request to URL : https://www.google.com/recaptcha/api/siteverify");
+//            System.out.println("Post parameters : " + postParams);
+//            System.out.println("Response Code : " + responseCode);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // print result
+//            System.out.println(response.toString());
+
+            //parse JSON response and return 'success' value
+            JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
+            JsonObject jsonObject = jsonReader.readObject();
+            jsonReader.close();
+            return jsonObject.getBoolean("success");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private boolean checkCookie(StaplerRequest request, String x) {

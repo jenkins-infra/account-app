@@ -19,8 +19,9 @@
       <input type="text" name="email" class="text"/>
 
       <h5>Captcha</h5>
-      ${it.createRecaptcha().createRecaptchaHtml(null,null)}
-
+      <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"></script>
+      <div class="g-recaptcha" data-sitekey="${it.captchaPublicKey()}"></div>
+      <br/>
       <input type="submit" style="margin-top:2em; display:block"/>
     </form>
   </t:layout>
