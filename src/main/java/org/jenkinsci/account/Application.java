@@ -29,6 +29,7 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
+import javax.servlet.http.Cookie;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -99,6 +100,7 @@ public class Application {
      */
     public HttpResponse doDoSignup(
             StaplerRequest request,
+            StaplerResponse response,
             @QueryParameter String userid,
             @QueryParameter String firstName,
             @QueryParameter String lastName,
@@ -132,6 +134,16 @@ public class Application {
         if (isEmpty(email))
             throw new UserError("e-mail is required");
 
+        if(checkCookie(request, ALREADY_SIGNED_UP)) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, "Cookie");
+        } else {
+            Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
+            cookie.setDomain("jenkins-ci.org");
+            cookie.setPath("/account");
+            cookie.setMaxAge(24 * 60 * 60);
+            response.addCookie(cookie);
+        }
+
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
@@ -157,6 +169,15 @@ public class Application {
         }
 
         return new HttpRedirect("doneMail");
+    }
+
+    private boolean checkCookie(StaplerRequest request, String x) {
+        for (Cookie cookie: request.getCookies()) {
+            if(cookie.getName().equals(ALREADY_SIGNED_UP)) {
+                return "1".equals(cookie.getValue());
+            }
+        }
+        return false;
     }
 
     private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String reason) throws MessagingException, UnsupportedEncodingException {
@@ -514,5 +535,9 @@ public class Application {
         "kk+spamtest@kohsuke.org"
     );
 
+
     public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com";
+
+    // Somewhat cryptic name for cookie, so prying eyes don't know its use.
+    public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
 }
