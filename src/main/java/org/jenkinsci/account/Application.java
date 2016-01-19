@@ -151,6 +151,11 @@ public class Application {
             }
         }
 
+        for (String fragment : IP_BLACKLIST) {
+            if(fragment.equals(ip)) {
+                return maybeSpammer(userid, firstName, lastName, email, ip, "IP Blacklist");
+            }
+        }
         // domain black list
         String lm = email.toLowerCase(Locale.ENGLISH);
         for (String fragment : EMAIL_BLACKLIST) {
@@ -538,6 +543,11 @@ public class Application {
         "kk+spamtest@kohsuke.org"
     );
 
+    public static final List<String> IP_BLACKLIST = Arrays.asList(
+        "122.177.170.96",
+        "111.93.63.62",
+        "180.151.76.66"
+    );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com";
 
