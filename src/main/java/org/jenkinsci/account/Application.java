@@ -510,6 +510,7 @@ public class Application {
 
     public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
         "@guerrillamail.com",
+        "@maildx.com",
         "@mailinator.com",
         "@mailnesia.com",
         "@sharklasers.com",
@@ -538,8 +539,10 @@ public class Application {
         "poonamkamalpatel@gmail.com",
         "seo01@gmail.com",
         "sunilkundujat@gmail.com",
+        "Sweenypar210@gmail.com",
         "watpad6@gmail.com",
         "win.tech",
+        "yadavqs@gmail.com",
         "kk+spamtest@kohsuke.org"
     );
 
