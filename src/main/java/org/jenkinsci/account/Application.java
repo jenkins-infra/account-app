@@ -514,6 +514,7 @@ public class Application {
         "@mailnesia.com",
         "@sharklasers.com",
         "@thrma.com",
+        "@yandex.com",
         "@yahoo.co.id",
         "adreahilton@gmail.com",
         "viz.michel@gmail.com",
