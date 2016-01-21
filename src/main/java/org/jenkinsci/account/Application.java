@@ -156,15 +156,15 @@ public class Application {
                 return maybeSpammer(userid, firstName, lastName, email, ip, "Blacklist");
         }
 
+        if(circuitBreaker.check()) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, "circuitBreaker");
+        }
+
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
         cookie.setDomain("jenkins-ci.org");
         cookie.setPath("/account");
         cookie.setMaxAge(24 * 60 * 60);
         response.addCookie(cookie);
-
-        if(circuitBreaker.check()) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, "circuitBreaker");
-        }
 
         try {
             String password = createRecord(userid, firstName, lastName, email);
