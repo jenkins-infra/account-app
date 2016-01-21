@@ -603,10 +603,11 @@ public class Application {
         "103.245.118.90",
         "182.68.161.166",
         "103.192.65.146",
-        "180.151.246.3"
+        "180.151.246.3",
+        "61.12.72.244"
     );
 
-    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com";
+    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com (Requires <a href='http://groups.google.com/group/jenkinsci-dev/subscribe'>subscription</a>)";
 
     // Somewhat cryptic name for cookie, so prying eyes don't know its use.
     public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
