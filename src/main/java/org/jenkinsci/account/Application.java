@@ -136,14 +136,7 @@ public class Application {
 
         if(checkCookie(request, ALREADY_SIGNED_UP)) {
             return maybeSpammer(userid, firstName, lastName, email, ip, "Cookie");
-        } else {
-            Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
-            cookie.setDomain("jenkins-ci.org");
-            cookie.setPath("/account");
-            cookie.setMaxAge(24 * 60 * 60);
-            response.addCookie(cookie);
         }
-
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
@@ -162,6 +155,12 @@ public class Application {
             if (lm.contains(fragment))
                 return maybeSpammer(userid, firstName, lastName, email, ip, "Blacklist");
         }
+
+        Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
+        cookie.setDomain("jenkins-ci.org");
+        cookie.setPath("/account");
+        cookie.setMaxAge(24 * 60 * 60);
+        response.addCookie(cookie);
 
         if(circuitBreaker.check()) {
             return maybeSpammer(userid, firstName, lastName, email, ip, "circuitBreaker");
@@ -509,6 +508,7 @@ public class Application {
     private static final Pattern VALID_ID = Pattern.compile("[a-z0-9_]+");
 
     public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
+        "@clrmail.com",
         "@guerrillamail.com",
         "@maildx.com",
         "@mailinator.com",
@@ -516,6 +516,7 @@ public class Application {
         "@sharklasers.com",
         "@thrma.com",
         "@yahoo.co.id",
+        "@zetmail.com",
         "adreahilton@gmail.com",
         "viz.michel@gmail.com",
         "crsgroupindia@gmail.com",
@@ -549,7 +550,10 @@ public class Application {
     public static final List<String> IP_BLACKLIST = Arrays.asList(
         "122.177.170.96",
         "111.93.63.62",
-        "180.151.76.66"
+        "103.245.118.90",
+        "182.68.161.166",
+        "103.192.65.146",
+        "180.151.246.3"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com";
