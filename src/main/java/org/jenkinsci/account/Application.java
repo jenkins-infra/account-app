@@ -137,8 +137,10 @@ public class Application {
             throw new UserError("e-mail is required");
 
         if(checkCookie(request, ALREADY_SIGNED_UP)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, "Cookie");
+//            return maybeSpammer(userid, firstName, lastName, email, ip, "Cookie");
+            throw new UserError(SPAM_MESSAGE);
         }
+
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
@@ -197,9 +199,6 @@ public class Application {
             wr.close();
 
             int responseCode = conn.getResponseCode();
-//            System.out.println("\nSending 'POST' request to URL : https://www.google.com/recaptcha/api/siteverify");
-//            System.out.println("Post parameters : " + postParams);
-//            System.out.println("Response Code : " + responseCode);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     conn.getInputStream()));
@@ -210,9 +209,6 @@ public class Application {
                 response.append(inputLine);
             }
             in.close();
-
-            // print result
-//            System.out.println(response.toString());
 
             //parse JSON response and return 'success' value
             JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
