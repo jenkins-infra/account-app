@@ -4,3 +4,4 @@
 target
 config.properties
 bin/jetty-runner.jar
+.idea

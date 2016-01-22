@@ -160,6 +160,10 @@ public class Application {
                 return maybeSpammer(userid, firstName, lastName, email, ip, "Blacklist");
         }
 
+        if(badUserId(userid)) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, "badUserId");
+        }
+
         if(circuitBreaker.check()) {
             return maybeSpammer(userid, firstName, lastName, email, ip, "circuitBreaker");
         }
@@ -180,6 +184,10 @@ public class Application {
         }
 
         return new HttpRedirect("doneMail");
+    }
+
+    private boolean badUserId(String userid) {
+        return Pattern.matches("^[sdfg]+$", userid.toLowerCase());
     }
 
     private boolean verifyCaptcha(String uresponse, String ip) {
@@ -556,6 +564,7 @@ public class Application {
     public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
         "@clrmail.com",
         "@guerrillamail.com",
+        "@mailcatch.com",
         "@maildx.com",
         "@mailinator.com",
         "@mailnesia.com",
