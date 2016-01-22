@@ -137,8 +137,10 @@ public class Application {
             throw new UserError("e-mail is required");
 
         if(checkCookie(request, ALREADY_SIGNED_UP)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, "Cookie");
+//            return maybeSpammer(userid, firstName, lastName, email, ip, "Cookie");
+            throw new UserError(SPAM_MESSAGE);
         }
+
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
@@ -197,9 +199,6 @@ public class Application {
             wr.close();
 
             int responseCode = conn.getResponseCode();
-//            System.out.println("\nSending 'POST' request to URL : https://www.google.com/recaptcha/api/siteverify");
-//            System.out.println("Post parameters : " + postParams);
-//            System.out.println("Response Code : " + responseCode);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     conn.getInputStream()));
@@ -210,9 +209,6 @@ public class Application {
                 response.append(inputLine);
             }
             in.close();
-
-            // print result
-//            System.out.println(response.toString());
 
             //parse JSON response and return 'success' value
             JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
@@ -603,10 +599,11 @@ public class Application {
         "103.245.118.90",
         "182.68.161.166",
         "103.192.65.146",
-        "180.151.246.3"
+        "180.151.246.3",
+        "61.12.72.244"
     );
 
-    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com";
+    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com (Requires <a href='http://groups.google.com/group/jenkinsci-dev/subscribe'>subscription</a>)";
 
     // Somewhat cryptic name for cookie, so prying eyes don't know its use.
     public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
