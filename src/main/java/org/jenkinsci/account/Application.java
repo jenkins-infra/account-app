@@ -160,8 +160,8 @@ public class Application {
                 return maybeSpammer(userid, firstName, lastName, email, ip, "Blacklist");
         }
 
-        if(badUserId(userid)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, "badUserId");
+        if(badNameElement(userid) || badNameElement(firstName) || badNameElement(lastName)) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, "bad name element");
         }
 
         if(circuitBreaker.check()) {
@@ -186,8 +186,8 @@ public class Application {
         return new HttpRedirect("doneMail");
     }
 
-    private boolean badUserId(String userid) {
-        return Pattern.matches("^[sdfg]+$", userid.toLowerCase());
+    private boolean badNameElement(String userid) {
+        return Pattern.matches("^[sdfghrt]+$", userid.toLowerCase());
     }
 
     private boolean verifyCaptcha(String uresponse, String ip) {
