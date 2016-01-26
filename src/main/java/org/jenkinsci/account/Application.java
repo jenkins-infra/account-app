@@ -615,7 +615,10 @@ public class Application {
         "61.12.72.244"
     );
 
-    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com (Requires subscription)";
+    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. " +
+            "Please contact jenkinsci-dev@googlegroups.com (Requires subscription)" +
+            "Please provide as precisely as possible which Jenkins/plugin version you're using, which problem you're having and so on " +
+            "so that we can confirm more quickly you are not a spammer.";
 
     // Somewhat cryptic name for cookie, so prying eyes don't know its use.
     public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
