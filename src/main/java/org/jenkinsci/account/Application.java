@@ -141,13 +141,6 @@ public class Application {
             throw new UserError(SPAM_MESSAGE);
         }
 
-        // spam check
-        for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
-            if (a.isAppears()) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, a.toString());
-            }
-        }
-
         for (String fragment : IP_BLACKLIST) {
             if(fragment.equals(ip)) {
                 return maybeSpammer(userid, firstName, lastName, email, ip, "IP Blacklist");
@@ -166,6 +159,13 @@ public class Application {
 
         if(circuitBreaker.check()) {
             return maybeSpammer(userid, firstName, lastName, email, ip, "circuitBreaker");
+        }
+
+        // spam check
+        for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
+            if (a.isAppears()) {
+                return maybeSpammer(userid, firstName, lastName, email, ip, a.toString());
+            }
         }
 
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
@@ -187,7 +187,7 @@ public class Application {
     }
 
     private boolean badNameElement(String userid) {
-        return Pattern.matches("^[sdfghrt]+$", userid.toLowerCase());
+        return Pattern.matches("^[sdfghrt0-9]+$", userid.toLowerCase());
     }
 
     private boolean verifyCaptcha(String uresponse, String ip) {
@@ -250,7 +250,7 @@ public class Application {
         // send an e-mail to the admins
         Session s = createJavaMailSession();
         MimeMessage msg = new MimeMessage(s);
-        msg.setSubject("Rejection of a new account creation");
+        msg.setSubject("Rejection of a new account creation for " + enc(firstName) + " " + enc(lastName));
         msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
         msg.setRecipient(RecipientType.TO, new InternetAddress("jenkinsci-account-admins@googlegroups.com"));
         msg.setContent(
@@ -595,6 +595,8 @@ public class Application {
         "pintu.gakre@gmail.com",
         "poonamkamalpatel@gmail.com",
         "seo01@gmail.com",
+        "seo02@gmail.com",
+        "seo03@gmail.com",
         "sunilkundujat@gmail.com",
         "Sweenypar210@gmail.com",
         "watpad6@gmail.com",
@@ -613,7 +615,7 @@ public class Application {
         "61.12.72.244"
     );
 
-    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com (Requires <a href='http://groups.google.com/group/jenkinsci-dev/subscribe'>subscription</a>)";
+    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com (Requires subscription)";
 
     // Somewhat cryptic name for cookie, so prying eyes don't know its use.
     public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
