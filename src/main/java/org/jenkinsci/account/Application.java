@@ -112,7 +112,7 @@ public class Application {
             @QueryParameter String firstName,
             @QueryParameter String lastName,
             @QueryParameter String email,
-
+            @QueryParameter String reason,
             @Header("X-Forwarded-For") String ip    // client IP
     ) throws Exception {
 
@@ -143,28 +143,28 @@ public class Application {
 
         for (String fragment : IP_BLACKLIST) {
             if(fragment.equals(ip)) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, "IP Blacklist");
+                return maybeSpammer(userid, firstName, lastName, email, ip, reason, "IP Blacklist");
             }
         }
         // domain black list
         String lm = email.toLowerCase(Locale.ENGLISH);
         for (String fragment : EMAIL_BLACKLIST) {
             if (lm.contains(fragment))
-                return maybeSpammer(userid, firstName, lastName, email, ip, "Blacklist");
+                return maybeSpammer(userid, firstName, lastName, email, ip, reason, "Blacklist");
         }
 
         if(badNameElement(userid) || badNameElement(firstName) || badNameElement(lastName)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, "bad name element");
+            return maybeSpammer(userid, firstName, lastName, email, ip, reason, "bad name element");
         }
 
         if(circuitBreaker.check()) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, "circuitBreaker");
+            return maybeSpammer(userid, firstName, lastName, email, ip, reason, "circuitBreaker");
         }
 
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, a.toString());
+                return maybeSpammer(userid, firstName, lastName, email, ip, reason, a.toString());
             }
         }
 
@@ -180,7 +180,7 @@ public class Application {
 
             new User(userid,email).mailPassword(password);
         } catch (UserError ex) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, "Existing email in system");
+            return maybeSpammer(userid, firstName, lastName, email, ip, reason, "Existing email in system");
         }
 
         return new HttpRedirect("doneMail");
@@ -241,10 +241,10 @@ public class Application {
         return false;
     }
 
-    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String reason) throws MessagingException, UnsupportedEncodingException {
+    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String reason, String blockReason) throws MessagingException, UnsupportedEncodingException {
         String text = String.format(
-                "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s",
-                reason, ip, email, userid, lastName, firstName);
+                "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s\nreason=%s",
+                blockReason, ip, email, userid, lastName, firstName, reason);
         LOGGER.warning(text);
 
         // send an e-mail to the admins
@@ -256,7 +256,7 @@ public class Application {
         msg.setContent(
                 text+"\n\n"+
                 "To allow this account to be created, click the following link:\n"+
-                "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+enc(firstName)+"&lastName="+enc(lastName)+"&email="+enc(email)+"\n",
+                "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+firstName+"&lastName="+lastName+"&email="+enc(email)+"\n",
                 "text/plain");
         Transport.send(msg);
 
