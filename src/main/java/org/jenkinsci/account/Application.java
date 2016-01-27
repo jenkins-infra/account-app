@@ -605,7 +605,6 @@ public class Application {
         "omprakash7777928298@gmail.com",
         "pintu.gakre@gmail.com",
         "poonamkamalpatel@gmail.com",
-        "ravikumar.clearpath@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
         "seo03@gmail.com",
@@ -620,11 +619,11 @@ public class Application {
     public static final List<String> IP_BLACKLIST = Arrays.asList(
         "122.177.170.96",
         "111.93.63.62",
+        "103.245.118.60",
         "103.245.118.90",
         "182.68.161.166",
         "103.192.65.146",
         "180.151.246.3",
-        "50.31.252.31",
         "61.12.72.244"
     );
 
@@ -633,10 +632,12 @@ public class Application {
         "google",
         "seo",
         "no",
-        "love"
+        "love",
+        "wiki"
     );
 
-    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. Please contact jenkinsci-dev@googlegroups.com (Requires subscription)";
+    public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
+            "More details are found on <a href='https://wiki.jenkins-ci.org/display/JENKINS/User+Account+on+Jenkins'>our wiki</a> on how to get your account created.";
 
     // Somewhat cryptic name for cookie, so prying eyes don't know its use.
     public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
