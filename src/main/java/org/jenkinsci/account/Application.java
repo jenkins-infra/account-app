@@ -112,7 +112,7 @@ public class Application {
             @QueryParameter String firstName,
             @QueryParameter String lastName,
             @QueryParameter String email,
-            @QueryParameter String reason,
+            @QueryParameter String usedFor,
             @Header("X-Forwarded-For") String ip    // client IP
     ) throws Exception {
 
@@ -143,28 +143,28 @@ public class Application {
 
         for (String fragment : IP_BLACKLIST) {
             if(fragment.equals(ip)) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, reason, "IP Blacklist");
+                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
             }
         }
         // domain black list
         String lm = email.toLowerCase(Locale.ENGLISH);
         for (String fragment : EMAIL_BLACKLIST) {
             if (lm.contains(fragment))
-                return maybeSpammer(userid, firstName, lastName, email, ip, reason, "Blacklist");
+                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Blacklist");
         }
 
         if(badNameElement(userid) || badNameElement(firstName) || badNameElement(lastName)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, reason, "bad name element");
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "bad name element");
         }
 
         if(circuitBreaker.check()) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, reason, "circuitBreaker");
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "circuitBreaker");
         }
 
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, reason, a.toString());
+                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, a.toString());
             }
         }
 
@@ -180,7 +180,7 @@ public class Application {
 
             new User(userid,email).mailPassword(password);
         } catch (UserError ex) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, reason, "Existing email in system");
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Existing email in system");
         }
 
         return new HttpRedirect("doneMail");
@@ -241,10 +241,10 @@ public class Application {
         return false;
     }
 
-    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String reason, String blockReason) throws MessagingException, UnsupportedEncodingException {
+    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String usedFor, String blockReason) throws MessagingException, UnsupportedEncodingException {
         String text = String.format(
                 "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s\nreason=%s",
-                blockReason, ip, email, userid, lastName, firstName, reason);
+                blockReason, ip, email, userid, lastName, firstName, usedFor);
         LOGGER.warning(text);
 
         // send an e-mail to the admins
@@ -588,18 +588,18 @@ public class Application {
         "johnmatty55@gmail.com",
         "johnseo130@gmail.com",
         "kumar.uma420@gmail.com",
-        "ncrpoo@gmail.com",
-        "ncrpoosssss@gmail.com",
+        "ncrpoo",
         "obat@",
         "omprakash7777928298@gmail.com",
         "pintu.gakre@gmail.com",
         "poonamkamalpatel@gmail.com",
+        "ravikumar.clearpath@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
         "seo03@gmail.com",
         "sunilkundujat@gmail.com",
         "Sweenypar210@gmail.com",
-        "watpad6@gmail.com",
+        "watpad",
         "win.tech",
         "yadavqs@gmail.com",
         "kk+spamtest@kohsuke.org"
@@ -612,6 +612,7 @@ public class Application {
         "182.68.161.166",
         "103.192.65.146",
         "180.151.246.3",
+        "50.31.252.31",
         "61.12.72.244"
     );
 
