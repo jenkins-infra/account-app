@@ -141,6 +141,18 @@ public class Application {
             throw new UserError(SPAM_MESSAGE);
         }
 
+        for(String fragment : USE_BLACKLIST) {
+            if(usedFor != null || usedFor.trim().isEmpty()) {
+                if (usedFor.trim().equalsIgnoreCase(fragment)) {
+                    return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Blacklisted Use");
+                }
+            }
+        }
+
+        if(badNameElement(usedFor)) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Garbled Use");
+        }
+
         for (String fragment : IP_BLACKLIST) {
             if(fragment.equals(ip)) {
                 return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
@@ -243,7 +255,7 @@ public class Application {
 
     private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String usedFor, String blockReason) throws MessagingException, UnsupportedEncodingException {
         String text = String.format(
-                "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s\nreason=%s",
+                "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s\nuse=%s",
                 blockReason, ip, email, userid, lastName, firstName, usedFor);
         LOGGER.warning(text);
 
@@ -593,7 +605,6 @@ public class Application {
         "omprakash7777928298@gmail.com",
         "pintu.gakre@gmail.com",
         "poonamkamalpatel@gmail.com",
-        "ravikumar.clearpath@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
         "seo03@gmail.com",
@@ -608,18 +619,25 @@ public class Application {
     public static final List<String> IP_BLACKLIST = Arrays.asList(
         "122.177.170.96",
         "111.93.63.62",
+        "103.245.118.60",
         "103.245.118.90",
         "182.68.161.166",
         "103.192.65.146",
         "180.151.246.3",
-        "50.31.252.31",
         "61.12.72.244"
     );
 
-    public static final String SPAM_MESSAGE = "Due to the spam problem, we need additional verification for your sign-up request. " +
-            "Please contact jenkinsci-dev@googlegroups.com (Requires subscription)" +
-            "Please provide as precisely as possible which Jenkins/plugin version you're using, which problem you're having and so on " +
-            "so that we can confirm more quickly you are not a spammer.";
+    public static final List<String> USE_BLACKLIST = Arrays.asList(
+        "marketing",
+        "google",
+        "seo",
+        "no",
+        "love",
+        "wiki"
+    );
+
+    public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
+            "More details are found on <a href='https://wiki.jenkins-ci.org/display/JENKINS/User+Account+on+Jenkins'>our wiki</a> on how to get your account created.";
 
     // Somewhat cryptic name for cookie, so prying eyes don't know its use.
     public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
