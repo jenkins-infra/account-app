@@ -158,7 +158,7 @@ public class Application {
         }
 
         for (String fragment : IP_BLACKLIST) {
-            if(fragment.startsWith(ip)) {
+            if(ip.startsWith(fragment)) {
                 return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
             }
         }
