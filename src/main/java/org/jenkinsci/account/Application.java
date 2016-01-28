@@ -153,6 +153,10 @@ public class Application {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Garbled Use");
         }
 
+        if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(lastName) || lastName.equalsIgnoreCase(firstName)) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "use same as name");
+        }
+
         for (String fragment : IP_BLACKLIST) {
             if(fragment.startsWith(ip)) {
                 return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
@@ -262,13 +266,13 @@ public class Application {
         // send an e-mail to the admins
         Session s = createJavaMailSession();
         MimeMessage msg = new MimeMessage(s);
-        msg.setSubject("Rejection of a new account creation for " + enc(firstName) + " " + enc(lastName));
+        msg.setSubject("Rejection of a new account creation for " + firstName + " " + lastName);
         msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
         msg.setRecipient(RecipientType.TO, new InternetAddress("jenkinsci-account-admins@googlegroups.com"));
         msg.setContent(
                 text+"\n\n"+
                 "To allow this account to be created, click the following link:\n"+
-                "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+firstName+"&lastName="+lastName+"&email="+enc(email)+"\n",
+                "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+enc(firstName)+"&lastName="+enc(lastName)+"&email="+enc(email)+"\n",
                 "text/plain");
         Transport.send(msg);
 
@@ -585,9 +589,11 @@ public class Application {
         "@yahoo.co.id",
         "@zetmail.com",
         "adreahilton@gmail.com",
+        "andorclifs@gmail.com",
         "crsgroupindia@gmail.com",
         "dasdasdsas32@gmail.com",
         "dersttycert101@gmail.com",
+        "donallakarpissaa@gmail.com",
         "folk.zin87@gmail.com",
         "georgiaaby@gmail.com",
         "hsharish",
@@ -600,6 +606,7 @@ public class Application {
         "johnmatty55@gmail.com",
         "johnseo130@gmail.com",
         "kumar.uma420@gmail.com",
+        "mohankeeded",
         "ncrpoo",
         "obat@",
         "omprakash",
@@ -628,6 +635,7 @@ public class Application {
         "122.177.170.96",
         "122.177.31.12",
         "122.177.90.163",
+        "123.254.107.229",
         "180.151.246.3",
         "182.68.161.166",
         "203.122.41.130",
@@ -639,9 +647,12 @@ public class Application {
         "articles",
         "blog",
         "bloging",
+        "bussiness",
         "forum post",
         "game",
+        "get informaion",
         "google",
+        "helpline and support",
         "information",
         "knowledge",
         "love",
