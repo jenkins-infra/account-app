@@ -633,7 +633,17 @@ public class Application {
         "seo",
         "no",
         "love",
-        "wiki"
+        "wiki",
+        "meet jenkins",
+        "post",
+        "posting",
+        "blog",
+        "bloging",
+        "share info",
+        "reading",
+        "game",
+        "news",
+        "studies"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
