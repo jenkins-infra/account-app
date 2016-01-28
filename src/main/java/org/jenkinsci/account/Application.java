@@ -154,7 +154,7 @@ public class Application {
         }
 
         for (String fragment : IP_BLACKLIST) {
-            if(fragment.equals(ip)) {
+            if(fragment.startsWith(ip)) {
                 return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
             }
         }
@@ -585,12 +585,12 @@ public class Application {
         "@yahoo.co.id",
         "@zetmail.com",
         "adreahilton@gmail.com",
-        "viz.michel@gmail.com",
         "crsgroupindia@gmail.com",
+        "dasdasdsas32@gmail.com",
         "dersttycert101@gmail.com",
         "folk.zin87@gmail.com",
         "georgiaaby@gmail.com",
-        "hsharish100@gmail.com",
+        "hsharish",
         "huin.lisko097@gmail.com",
         "janes6521@gmail.com ",
         "janessmith",
@@ -602,14 +602,18 @@ public class Application {
         "kumar.uma420@gmail.com",
         "ncrpoo",
         "obat@",
-        "omprakash7777928298@gmail.com",
+        "omprakash",
         "pintu.gakre@gmail.com",
         "poonamkamalpatel@gmail.com",
+        "rahul4cool2003@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
         "seo03@gmail.com",
+        "Spyvikash",
+        "sunflowerrosy@outlook.com",
         "sunilkundujat@gmail.com",
         "Sweenypar210@gmail.com",
+        "viz.michel@gmail.com",
         "watpad",
         "win.tech",
         "yadavqs@gmail.com",
@@ -617,33 +621,44 @@ public class Application {
     );
 
     public static final List<String> IP_BLACKLIST = Arrays.asList(
-        "122.177.170.96",
-        "111.93.63.62",
-        "103.245.118.60",
-        "103.245.118.90",
-        "182.68.161.166",
+        "103.10.197.194",
         "103.192.65.146",
+        "103.245.118.",
+        "111.93.63.62",
+        "122.177.170.96",
+        "122.177.31.12",
+        "122.177.90.163",
         "180.151.246.3",
+        "182.68.161.166",
+        "203.122.41.130",
         "61.12.72.244"
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
-        "marketing",
-        "google",
-        "seo",
-        "no",
-        "love",
-        "wiki",
-        "meet jenkins",
-        "post",
-        "posting",
+        "add page",
+        "articles",
         "blog",
         "bloging",
-        "share info",
-        "reading",
+        "forum post",
         "game",
+        "google",
+        "information",
+        "knowledge",
+        "love",
+        "marketing",
+        "meet jenkins",
+        "networking",
         "news",
-        "studies"
+        "no",
+        "page",
+        "post",
+        "posting",
+        "reading",
+        "seo",
+        "share info",
+        "studies",
+        "surfing",
+        "wiki"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
