@@ -141,6 +141,18 @@ public class Application {
             throw new UserError(SPAM_MESSAGE);
         }
 
+        for (String fragment : IP_BLACKLIST) {
+            if(ip.startsWith(fragment)) {
+                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
+            }
+        }
+        // domain black list
+        String lm = email.toLowerCase(Locale.ENGLISH);
+        for (String fragment : EMAIL_BLACKLIST) {
+            if (lm.contains(fragment))
+                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Blacklist");
+        }
+
         for(String fragment : USE_BLACKLIST) {
             if(usedFor != null || usedFor.trim().isEmpty()) {
                 if (usedFor.trim().equalsIgnoreCase(fragment)) {
@@ -155,18 +167,6 @@ public class Application {
 
         if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(lastName) || lastName.equalsIgnoreCase(firstName)) {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "use same as name");
-        }
-
-        for (String fragment : IP_BLACKLIST) {
-            if(ip.startsWith(fragment)) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
-            }
-        }
-        // domain black list
-        String lm = email.toLowerCase(Locale.ENGLISH);
-        for (String fragment : EMAIL_BLACKLIST) {
-            if (lm.contains(fragment))
-                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Blacklist");
         }
 
         if(badNameElement(userid) || badNameElement(firstName) || badNameElement(lastName)) {
@@ -591,6 +591,7 @@ public class Application {
         "adreahilton@gmail.com",
         "andorclifs@gmail.com",
         "angthpofphilip@gmail.com",
+        "ashwanikumar",
         "crsgroupindia@gmail.com",
         "dasdasdsas32@gmail.com",
         "dersttycert101@gmail.com",
@@ -601,22 +602,28 @@ public class Application {
         "huin.lisko097@gmail.com",
         "janes6521@gmail.com ",
         "janessmith",
+        "jayshown81@gmail.com",
         "jksadnhk@gmail.com",
         "johngarry227@gmail.com",
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
         "johnseo130@gmail.com",
         "kumar.uma420@gmail.com",
+        "kumarsujit",
         "mohankeeded",
         "ncrpoo",
         "obat@",
         "omprakash",
+        "pankaj",
         "pintu.gakre@gmail.com",
         "poonamkamalpatel@gmail.com",
+        "rajdsky7@gmail.com",
         "rahul4cool2003@gmail.com",
+        "righttechnical",
         "seo01@gmail.com",
         "seo02@gmail.com",
         "seo03@gmail.com",
+        "smithmartin919@gmail.com",
         "Spyvikash",
         "sunflowerrosy@outlook.com",
         "sunilkundujat@gmail.com",
@@ -630,8 +637,11 @@ public class Application {
     );
 
     public static final List<String> IP_BLACKLIST = Arrays.asList(
+        "101.59.76.223",
         "103.10.197.194",
         "103.192.65.",
+        "103.226.202.171",
+        "103.226.202.211",
         "103.245.118.",
         "103.55.60.253",
         "110.172.140.98",
@@ -640,7 +650,10 @@ public class Application {
         "116.203.79.79",
         "122.173.91.166",
         "122.173.95.142",
+        "122.177.126.64",
+        "122.177.132.197",
         "122.177.141.81",
+        "122.177.150.248",
         "122.177.170.96",
         "122.177.2.147",
         "122.177.31.12",
@@ -648,16 +661,24 @@ public class Application {
         "122.177.90.163",
         "123.254.107.229",
         "138.128.180.74",
+        "14.96.149.46",
+        "14.98.26.128",
         "14.98.9.61",
         "171.48.38.188",
+        "180.151.228.235",
         "180.151.246.3",
+        "180.151.30.243",
         "182.64.131.32",
         "182.68.161.166",
         "182.68.174.212",
         "182.68.192.172",
+        "182.68.193.27",
         "203.122.41.130",
         "27.7.210.21",
+        "43.251.84.22",
+        "43.252.27.52",
         "45.115.143.128",
+        "45.127.42.63",
         "49.15.149.23",
         "61.12.72.244"
     );
@@ -675,6 +696,7 @@ public class Application {
         "google",
         "helpline and support",
         "information",
+        "internet",
         "knowledge",
         "love",
         "marketing",
@@ -687,8 +709,10 @@ public class Application {
         "posting",
         "problem solved",
         "reading",
+        "robot",
         "seo",
         "share info",
+        "sharing",
         "social",
         "solve problem",
         "student",
