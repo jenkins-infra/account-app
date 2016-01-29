@@ -141,6 +141,18 @@ public class Application {
             throw new UserError(SPAM_MESSAGE);
         }
 
+        for (String fragment : IP_BLACKLIST) {
+            if(ip.startsWith(fragment)) {
+                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
+            }
+        }
+        // domain black list
+        String lm = email.toLowerCase(Locale.ENGLISH);
+        for (String fragment : EMAIL_BLACKLIST) {
+            if (lm.contains(fragment))
+                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Blacklist");
+        }
+
         for(String fragment : USE_BLACKLIST) {
             if(usedFor != null || usedFor.trim().isEmpty()) {
                 if (usedFor.trim().equalsIgnoreCase(fragment)) {
@@ -153,20 +165,8 @@ public class Application {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Garbled Use");
         }
 
-        if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(lastName) || lastName.equalsIgnoreCase(firstName)) {
+        if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(usedFor) || lastName.equalsIgnoreCase(usedFor)) {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "use same as name");
-        }
-
-        for (String fragment : IP_BLACKLIST) {
-            if(ip.startsWith(fragment)) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
-            }
-        }
-        // domain black list
-        String lm = email.toLowerCase(Locale.ENGLISH);
-        for (String fragment : EMAIL_BLACKLIST) {
-            if (lm.contains(fragment))
-                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Blacklist");
         }
 
         if(badNameElement(userid) || badNameElement(firstName) || badNameElement(lastName)) {
@@ -591,6 +591,9 @@ public class Application {
         "adreahilton@gmail.com",
         "andorclifs@gmail.com",
         "angthpofphilip@gmail.com",
+        "ashishkumar",
+        "ashwanikumar",
+        "ciodsjiocxjosa@yandex.com",
         "crsgroupindia@gmail.com",
         "dasdasdsas32@gmail.com",
         "dersttycert101@gmail.com",
@@ -599,29 +602,45 @@ public class Application {
         "georgiaaby@gmail.com",
         "hsharish",
         "huin.lisko097@gmail.com",
-        "janes6521@gmail.com ",
+        "janes6521@gmail.com",
         "janessmith",
+        "jayshown81@gmail.com",
         "jksadnhk@gmail.com",
         "johngarry227@gmail.com",
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
         "johnseo130@gmail.com",
         "kumar.uma420@gmail.com",
+        "kumarsujit",
+        "litawilliam36@gmail.com",
+        "macden",
+        "maohinseeeeeee@outlook.com",
         "mohankeeded",
         "ncrpoo",
+        "nishanoor32",
         "obat@",
         "omprakash",
-        "pintu.gakre@gmail.com",
+        "pankaj",
+        "pintu",
+        "printerhelplinenumber@gmail.com",
+        "porterquines@gmail.com",
         "poonamkamalpatel@gmail.com",
+        "rajdsky7@gmail.com",
         "rahul4cool2003@gmail.com",
+        "rehel55rk@gmail.com",
+        "righttechnical",
+        "sandysharmja121@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
         "seo03@gmail.com",
+        "skprajapaty@gmail.com",
+        "smithmartin919@gmail.com",
         "Spyvikash",
         "sunflowerrosy@outlook.com",
         "sunilkundujat@gmail.com",
         "sunjara10@gmail.com",
         "Sweenypar210@gmail.com",
+        "toren55rk@gmail.com",
         "viz.michel@gmail.com",
         "watpad",
         "win.tech",
@@ -630,52 +649,106 @@ public class Application {
     );
 
     public static final List<String> IP_BLACKLIST = Arrays.asList(
+        "1.187.126.76",
+        "101.59.76.223",
+        "101.60.156.69",
+        "101.60.191.128",
         "103.10.197.194",
         "103.192.65.",
+        "103.226.202.171",
+        "103.226.202.211",
         "103.245.118.",
         "103.55.60.253",
         "110.172.140.98",
         "111.93.63.62",
+        "115.184.102.129",
+        "115.184.86.74",
         "116.203.73.135",
         "116.203.79.79",
+        "120.57.86.248",
+        "121.242.77.200",
         "122.173.91.166",
         "122.173.95.142",
+        "122.177.126.64",
+        "122.177.132.197",
         "122.177.141.81",
+        "122.177.150.248",
         "122.177.170.96",
         "122.177.2.147",
         "122.177.31.12",
         "122.177.88.46",
         "122.177.90.163",
+        "122.180.219.45",
+        "123.136.209.119",
         "123.254.107.229",
+        "125.63.107.204",
+        "138.128.180.194",
         "138.128.180.74",
+        "14.141.51.5",
+        "14.96.149.46",
+        "14.98.26.128",
         "14.98.9.61",
         "171.48.38.188",
+        "180.151.228.235",
         "180.151.246.3",
+        "180.151.30.243",
+        "180.151.7.42",
+        "180.151.84.234",
+        "182.156.72.162",
         "182.64.131.32",
+        "182.64.53.132",
         "182.68.161.166",
+        "182.68.161.193",
         "182.68.174.212",
+        "182.68.181.84",
         "182.68.192.172",
+        "182.68.193.27",
+        "182.68.227.182",
+        "182.73.182.170",
+        "202.91.76.82",
         "203.122.41.130",
         "27.7.210.21",
+        "27.7.213.175",
+        "43.230.198.228",
+        "43.251.84.",
+        "43.252.27.52",
+        "45.115.104.163",
         "45.115.143.128",
+        "45.122.123.47",
+        "45.127.42.63",
+        "45.55.3.174",
+        "45.56.154.150",
         "49.15.149.23",
         "61.12.72.244"
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
         "add page",
+        "advertisement",
+        "article",
         "articles",
         "blog",
         "bloging",
         "bussiness",
+        "capturing",
+        "creating",
+        "content marketing",
+        "discussion",
+        "edit",
         "for wiki and jira use",
         "forum post",
         "game",
         "get informaion",
         "google",
+        "group discussion",
+        "helpline",
         "helpline and support",
         "information",
+        "internet",
+        "jira",
+        "keyword promotion",
         "knowledge",
+        "learn",
         "love",
         "marketing",
         "meet jenkins",
@@ -686,16 +759,27 @@ public class Application {
         "post",
         "posting",
         "problem solved",
+        "publish",
+        "read",
         "reading",
+        "robot",
         "seo",
         "share info",
+        "sharing",
         "social",
         "solve problem",
+        "spam",
         "student",
         "studies",
+        "study",
+        "submit page",
         "surfing",
         "tech support",
         "technical support",
+        "tutorial",
+        "tutorials",
+        "want to study",
+        "website",
         "wiki",
         "yes"
     );
