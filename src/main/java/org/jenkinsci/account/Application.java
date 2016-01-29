@@ -165,7 +165,7 @@ public class Application {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Garbled Use");
         }
 
-        if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(lastName) || lastName.equalsIgnoreCase(firstName)) {
+        if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(usedFor) || lastName.equalsIgnoreCase(usedFor)) {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "use same as name");
         }
 
@@ -612,6 +612,7 @@ public class Application {
         "kumarsujit",
         "mohankeeded",
         "ncrpoo",
+        "nishanoor32",
         "obat@",
         "omprakash",
         "pankaj",
@@ -629,6 +630,7 @@ public class Application {
         "sunilkundujat@gmail.com",
         "sunjara10@gmail.com",
         "Sweenypar210@gmail.com",
+        "toren55rk@gmail.com",
         "viz.michel@gmail.com",
         "watpad",
         "win.tech",
@@ -671,14 +673,17 @@ public class Application {
         "182.64.131.32",
         "182.68.161.166",
         "182.68.174.212",
+        "182.68.181.84",
         "182.68.192.172",
         "182.68.193.27",
         "203.122.41.130",
         "27.7.210.21",
         "43.251.84.22",
         "43.252.27.52",
+        "45.115.104.163",
         "45.115.143.128",
         "45.127.42.63",
+        "45.55.3.174",
         "49.15.149.23",
         "61.12.72.244"
     );
@@ -689,6 +694,8 @@ public class Application {
         "blog",
         "bloging",
         "bussiness",
+        "capturing",
+        "edit",
         "for wiki and jira use",
         "forum post",
         "game",
@@ -697,6 +704,7 @@ public class Application {
         "helpline and support",
         "information",
         "internet",
+        "jira",
         "knowledge",
         "love",
         "marketing",
