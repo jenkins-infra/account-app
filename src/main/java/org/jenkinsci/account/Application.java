@@ -126,6 +126,7 @@ public class Application {
         }
 
         userid = userid.toLowerCase();
+
         if (!VALID_ID.matcher(userid).matches())
             throw new UserError("Invalid user name: "+userid);
 
@@ -171,6 +172,13 @@ public class Application {
 
         if(badNameElement(userid) || badNameElement(firstName) || badNameElement(lastName)) {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "bad name element");
+        }
+
+        final DirContext con = connect();
+        try {
+            ldapObjectExists(con, "(id={0})", userid, "ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
+        } finally {
+            con.close();
         }
 
         if(circuitBreaker.check()) {
@@ -310,14 +318,8 @@ public class Application {
         final DirContext con = connect();
         try {
 
-            final NamingEnumeration<SearchResult> userSearch = con.search(params.newUserBaseDN(), "(id={0})", new Object[]{userid}, new SearchControls());
-            if(userSearch.hasMore()) {
-                throw new UserError("ID "+userid+" is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
-            }
-            final NamingEnumeration<SearchResult> emailSearch = con.search(params.newUserBaseDN(), "(mail={0})", new Object[]{email}, new SearchControls());
-            if(emailSearch.hasMore()) {
-                throw new UserError(SPAM_MESSAGE);
-            }
+            ldapObjectExists(con, "(id={0})", userid, "ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
+            ldapObjectExists(con, "(mail={0})", email, SPAM_MESSAGE);
 
             String fullDN = "cn=" + userid + "," + params.newUserBaseDN();
             con.createSubcontext(fullDN, attrs).close();
@@ -345,6 +347,13 @@ public class Application {
 
         LOGGER.info("User "+userid+" signed up: "+email);
         return password;
+    }
+
+    private void ldapObjectExists(DirContext con, String filterExpr, Object filterArgs, String message) throws NamingException {
+        final NamingEnumeration<SearchResult> userSearch = con.search(params.newUserBaseDN(), filterExpr, new Object[]{filterArgs}, new SearchControls());
+        if (userSearch.hasMore()) {
+            throw new UserError(message);
+        }
     }
 
     /**
