@@ -142,6 +142,12 @@ public class Application {
             throw new UserError(SPAM_MESSAGE);
         }
 
+        for (String fragment : USERID_BLACKLIST) {
+            if(userid.contains(fragment)) {
+                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Userid Blacklist");
+            }
+        }
+
         for (String fragment : IP_BLACKLIST) {
             if(ip.startsWith(fragment)) {
                 return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
@@ -698,6 +704,7 @@ public class Application {
         "116.202.36.107",
         "116.203.72.64",
         "116.203.73.135",
+        "116.203.78.121",
         "116.203.79.79",
         "117.198.131.26",
         "117.198.136.221",
@@ -768,6 +775,7 @@ public class Application {
         "27.7.210.21",
         "27.7.213.175",
         "43.230.198.228",
+        "43.230.198.9",
         "43.245.149.107",
         "43.251.84.",
         "43.252.27.52",
@@ -858,6 +866,10 @@ public class Application {
         "wiki page",
         "wiki",
         "yes"
+    );
+
+    public static final List<String> USERID_BLACKLIST = Arrays.asList(
+        "quickbook"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
