@@ -126,6 +126,7 @@ public class Application {
         }
 
         userid = userid.toLowerCase();
+
         if (!VALID_ID.matcher(userid).matches())
             throw new UserError("Invalid user name: "+userid);
 
@@ -139,6 +140,12 @@ public class Application {
         if(checkCookie(request, ALREADY_SIGNED_UP)) {
 //            return maybeSpammer(userid, firstName, lastName, email, ip, "Cookie");
             throw new UserError(SPAM_MESSAGE);
+        }
+
+        for (String fragment : USERID_BLACKLIST) {
+            if(userid.contains(fragment)) {
+                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Userid Blacklist");
+            }
         }
 
         for (String fragment : IP_BLACKLIST) {
@@ -171,6 +178,13 @@ public class Application {
 
         if(badNameElement(userid) || badNameElement(firstName) || badNameElement(lastName)) {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "bad name element");
+        }
+
+        final DirContext con = connect();
+        try {
+            ldapObjectExists(con, "(id={0})", userid, "ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
+        } finally {
+            con.close();
         }
 
         if(circuitBreaker.check()) {
@@ -310,14 +324,8 @@ public class Application {
         final DirContext con = connect();
         try {
 
-            final NamingEnumeration<SearchResult> userSearch = con.search(params.newUserBaseDN(), "(id={0})", new Object[]{userid}, new SearchControls());
-            if(userSearch.hasMore()) {
-                throw new UserError("ID "+userid+" is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
-            }
-            final NamingEnumeration<SearchResult> emailSearch = con.search(params.newUserBaseDN(), "(mail={0})", new Object[]{email}, new SearchControls());
-            if(emailSearch.hasMore()) {
-                throw new UserError(SPAM_MESSAGE);
-            }
+            ldapObjectExists(con, "(id={0})", userid, "ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
+            ldapObjectExists(con, "(mail={0})", email, SPAM_MESSAGE);
 
             String fullDN = "cn=" + userid + "," + params.newUserBaseDN();
             con.createSubcontext(fullDN, attrs).close();
@@ -345,6 +353,13 @@ public class Application {
 
         LOGGER.info("User "+userid+" signed up: "+email);
         return password;
+    }
+
+    private void ldapObjectExists(DirContext con, String filterExpr, Object filterArgs, String message) throws NamingException {
+        final NamingEnumeration<SearchResult> userSearch = con.search(params.newUserBaseDN(), filterExpr, new Object[]{filterArgs}, new SearchControls());
+        if (userSearch.hasMore()) {
+            throw new UserError(message);
+        }
     }
 
     /**
@@ -579,6 +594,7 @@ public class Application {
 
     public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
         "@clrmail.com",
+        "@grandmamail.com",
         "@guerrillamail.com",
         "@mailcatch.com",
         "@maildx.com",
@@ -591,15 +607,19 @@ public class Application {
         "adreahilton@gmail.com",
         "andorclifs@gmail.com",
         "angthpofphilip@gmail.com",
+        "ankit",
         "ashishkumar",
         "ashwanikumar",
+        "bidupan12@gmail.com",
         "ciodsjiocxjosa@yandex.com",
         "crsgroupindia@gmail.com",
         "dasdasdsas32@gmail.com",
         "dersttycert101@gmail.com",
         "donallakarpissaa@gmail.com",
+        "drruytuyj@gmail.com",
         "folk.zin87@gmail.com",
         "georgiaaby@gmail.com",
+        "hrrbanga",
         "hsharish",
         "huin.lisko097@gmail.com",
         "intelomedia02@gmail.com",
@@ -620,22 +640,26 @@ public class Application {
         "maohinseeeeeee@outlook.com",
         "mohankeeded",
         "ncrpoo",
+        "ncrsona",
         "nishanoor32",
         "obat@",
         "omprakash",
         "pankaj",
         "pintu",
-        "printerhelplinenumber@gmail.com",
-        "porterquines@gmail.com",
         "poonamkamalpatel@gmail.com",
-        "rajdsky7@gmail.com",
+        "porterquines@gmail.com",
+        "printerhelplinenumber@gmail.com",
+        "quickbook",
+        "r.onysokha@gmail.com",
         "rahul4cool2003@gmail.com",
+        "rajdsky7@gmail.com",
         "rehel55rk@gmail.com",
         "righttechnical",
         "sandysharmja121@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
         "seo03@gmail.com",
+        "seosupport",
         "skprajapaty@gmail.com",
         "smithmartin919@gmail.com",
         "spyvikash",
@@ -654,6 +678,7 @@ public class Application {
     );
 
     public static final List<String> IP_BLACKLIST = Arrays.asList(
+        "1.186.172.187",
         "1.187.126.76",
         "101.59.76.223",
         "101.60.156.69",
@@ -662,11 +687,14 @@ public class Application {
         "103.10.197.194",
         "103.192.64.",
         "103.192.65.",
+        "103.204.168.18",
         "103.226.202.171",
         "103.226.202.211",
         "103.245.118.",
         "103.254.154.229",
         "103.55.60.253",
+        "103.192.65.248",
+        "106.76.167.41",
         "110.172.140.98",
         "111.93.63.62",
         "114.143.173.139",
@@ -675,24 +703,37 @@ public class Application {
         "115.184.54.205",
         "115.184.86.74",
         "115.184.88.205",
+        "116.202.36.107",
         "116.203.72.64",
         "116.203.73.135",
+        "116.203.78.121",
         "116.203.79.79",
+        "117.198.131.26",
         "117.198.136.221",
         "119.81.230.137",
+        "119.82.95.142",
         "120.57.86.248",
         "121.242.77.200",
+        "122.162.88.67",
         "122.173.91.166",
+        "122.173.94.215",
         "122.173.95.142",
+        "122.175.221.219",
         "122.177.126.64",
         "122.177.132.197",
+        "122.177.139.5",
+        "122.177.140.176",
         "122.177.141.169",
         "122.177.141.81",
         "122.177.150.248",
+        "122.177.167.163",
         "122.177.170.96",
+        "122.177.191.109",
         "122.177.2.147",
         "122.177.23.223",
+        "122.177.238.218",
         "122.177.31.12",
+        "122.177.49.252",
         "122.177.88.46",
         "122.177.90.163",
         "122.180.219.45",
@@ -723,15 +764,22 @@ public class Application {
         "182.68.181.84",
         "182.68.192.172",
         "182.68.193.27",
+        "182.68.201.38",
         "182.68.227.182",
         "182.68.245.175",
+        "182.69.198.155",
+        "182.69.212.79",
+        "182.69.225.109",
         "182.73.182.170",
         "182.75.144.58",
+        "202.91.134.66",
         "202.91.76.82",
         "203.122.41.130",
         "27.7.210.21",
         "27.7.213.175",
         "43.230.198.228",
+        "43.230.198.9",
+        "43.245.149.107",
         "43.251.84.",
         "43.252.27.52",
         "45.115.104.163",
@@ -739,6 +787,7 @@ public class Application {
         "45.115.143.128",
         "45.115.143.40",
         "45.115.189.227",
+        "45.121.188.46",
         "45.122.123.47",
         "45.127.42.63",
         "45.55.3.174",
@@ -767,10 +816,12 @@ public class Application {
         "for using wiki and jira",
         "for wiki and jira use",
         "forum post",
+        "funtime",
         "game",
         "get informaion",
         "google",
         "group discussion",
+        "help support",
         "helpline and support",
         "helpline",
         "information",
@@ -784,8 +835,10 @@ public class Application {
         "material",
         "meet jenkins",
         "networking",
+        "news update",
         "news",
         "no",
+        "nothing",
         "page",
         "post",
         "posting",
@@ -808,14 +861,20 @@ public class Application {
         "support",
         "surfing",
         "tech support",
+        "technical help",
         "technical support",
         "tutorial",
         "tutorials",
         "want to study",
         "website",
-        "wiki",
+        "wiki page",
         "wiki submission",
+        "wiki",
         "yes"
+    );
+
+    public static final List<String> USERID_BLACKLIST = Arrays.asList(
+        "quickbook"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
