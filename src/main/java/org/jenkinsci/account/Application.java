@@ -161,7 +161,7 @@ public class Application {
         }
 
         for(String fragment : USE_BLACKLIST) {
-            if(usedFor != null || usedFor.trim().isEmpty()) {
+            if(usedFor != null && usedFor.trim().isEmpty()) {
                 if (usedFor.trim().equalsIgnoreCase(fragment)) {
                     return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Blacklisted Use");
                 }
@@ -563,7 +563,6 @@ public class Application {
             StringBuilder from = new StringBuilder(req.getRequestURI());
             if (req.getQueryString()!=null)
                 from.append('?').append(req.getQueryString());
-
             try {
                 throw HttpResponses.redirectViaContextPath("login?from="+ URLEncoder.encode(from.toString(),"UTF-8"));
             } catch (UnsupportedEncodingException e) {
@@ -632,8 +631,10 @@ public class Application {
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
         "johnseo130@gmail.com",
+        "kalidass34212@gmail.com",
         "kumar.uma420@gmail.com",
         "kumarsujit",
+        "kumarprem",
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
         "macden",
@@ -660,7 +661,9 @@ public class Application {
         "seo02@gmail.com",
         "seo03@gmail.com",
         "seosupport",
+        "seoxpertchandan@gmail.com",
         "skprajapaty@gmail.com",
+        "smartsolution3000@gmail.com",
         "smithmartin919@gmail.com",
         "spyvikash",
         "stybesto13",
@@ -708,6 +711,7 @@ public class Application {
         "116.203.73.135",
         "116.203.78.121",
         "116.203.79.79",
+        "117.198.129.242",
         "117.198.131.26",
         "117.198.136.221",
         "119.81.230.137",
@@ -719,6 +723,7 @@ public class Application {
         "122.173.94.215",
         "122.173.95.142",
         "122.175.221.219",
+        "122.177.125.181",
         "122.177.126.64",
         "122.177.132.197",
         "122.177.139.5",
@@ -736,15 +741,16 @@ public class Application {
         "122.177.49.252",
         "122.177.88.46",
         "122.177.90.163",
+        "122.177.91.154",
         "122.180.219.45",
         "123.136.209.119",
         "123.254.107.229",
         "125.63.107.204",
-        "138.128.180.194",
-        "138.128.180.74",
+        "138.128.180.",
         "14.141.51.5",
         "14.96.129.112",
         "14.96.149.46",
+        "14.96.203.42",
         "14.98.26.128",
         "14.98.9.61",
         "14.98.84.225",
@@ -757,6 +763,8 @@ public class Application {
         "180.151.84.234",
         "182.156.72.162",
         "182.64.131.32",
+        "182.64.145.236",
+        "182.64.167.161",
         "182.64.53.132",
         "182.68.161.166",
         "182.68.161.193",
@@ -800,6 +808,8 @@ public class Application {
     public static final List<String> USE_BLACKLIST = Arrays.asList(
         "add a page",
         "add page",
+        "admin",
+        "admins",
         "advertisement",
         "advertising",
         "article",
@@ -807,11 +817,14 @@ public class Application {
         "asdf",
         "blog",
         "bloging",
+        "business",
+        "businessman",
         "bussiness",
         "capturing",
         "content marketing",
         "creating",
         "discussion",
+        "donation",
         "edit",
         "for using wiki and jira",
         "for wiki and jira use",
@@ -854,6 +867,7 @@ public class Application {
         "social",
         "solve problem",
         "spam",
+        "spread information",
         "student",
         "studies",
         "study",
@@ -861,6 +875,7 @@ public class Application {
         "support",
         "surfing",
         "tech support",
+        "technical help support",
         "technical help",
         "technical support",
         "tutorial",
