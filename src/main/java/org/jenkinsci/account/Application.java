@@ -606,6 +606,7 @@ public class Application {
         "@sharklasers.com",
         "@thrma.com",
         "@yahoo.co.id",
+        "@yopmail.com",
         "@zetmail.com",
         "adreahilton@gmail.com",
         "ajayrudelee@gmail.com",
@@ -634,12 +635,14 @@ public class Application {
         "Hauptnuo214@gmail.com",
         "hcuiodsciodso@yandex.com",
         "HenryMullins",
+        "hontpojpatricia",
         "HounchpowJohn@gmail.com",
         "HowerpofHarold@gmail.com",
         "hrrbanga",
         "hsharish",
         "huin.lisko097@gmail.com",
         "intelomedia02@gmail.com",
+        "intuitphonenumber",
         "iqinfotech",
         "janes6521@gmail.com",
         "janessmith",
@@ -648,6 +651,7 @@ public class Application {
         "johngarry227@gmail.com",
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
+        "JohnnyColvin428@gmail.com",
         "johnseo130@gmail.com",
         "kalidass34212@gmail.com",
         "kk+spamtest@kohsuke.org",
@@ -659,6 +663,8 @@ public class Application {
         "loksabha100@gmail.com",
         "macden",
         "maohinseeeeeee@outlook.com",
+        "mmmarsh12@gmail.com ",
+        "mohandaerer",
         "mohankeeded",
         "ncrpoo",
         "ncrsona",
@@ -689,6 +695,7 @@ public class Application {
         "smithmartin919@gmail.com",
         "snjbisth8@gmail.com",
         "spyvikash",
+        "stephanflorian1@gmail.com",
         "stybesto13",
         "sundeepsa123@gmail.com",
         "sunflowerrosy@outlook.com",
@@ -834,6 +841,8 @@ public class Application {
         "post",
         "posting",
         "problem solved",
+        "profile",
+        "promotion",
         "publish",
         "question",
         "read",
@@ -853,6 +862,7 @@ public class Application {
         "submit page",
         "support",
         "surfing",
+        "teacher",
         "tech support",
         "technical help support",
         "technical help",
@@ -868,9 +878,11 @@ public class Application {
     );
 
     public static final List<String> USERID_BLACKLIST = Arrays.asList(
+        "intuitphonenumber",
         "jamesbond",
         "larrysilva",
-        "quickbook"
+        "quickbook",
+        "watpad"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
