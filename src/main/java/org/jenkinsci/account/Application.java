@@ -608,12 +608,16 @@ public class Application {
         "@yahoo.co.id",
         "@zetmail.com",
         "adreahilton@gmail.com",
+        "ajayrudelee@gmail.com",
+        "ajymaansingh@gmail.com",
         "AndentspouRita@gmail.com",
         "andorclifs@gmail.com",
         "angthpofphilip@gmail.com",
+        "anilkandpal0@gmail.com",
         "ankit",
         "ashishkumar",
         "ashwanikumar",
+        "bcmdsbncskj@yandex.com",
         "bidupan12@gmail.com",
         "ciodsjiocxjosa@yandex.com",
         "cooperdavidd@gmail.com",
@@ -624,8 +628,12 @@ public class Application {
         "donallakarpissaa@gmail.com",
         "drruytuyj@gmail.com",
         "folk.zin87@gmail.com",
+        "gamblerbhaijaan@gmail.com",
         "georgiaaby@gmail.com",
+        "Hauptnuo214@gmail.com",
+        "hcuiodsciodso@yandex.com",
         "HenryMullins",
+        "HounchpowJohn@gmail.com",
         "HowerpofHarold@gmail.com",
         "hrrbanga",
         "hsharish",
@@ -645,6 +653,7 @@ public class Application {
         "kumar.uma420@gmail.com",
         "kumarprem",
         "kumarsujit",
+        "LarrySilva",
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
         "macden",
@@ -654,6 +663,7 @@ public class Application {
         "ncrsona",
         "nishanoor32",
         "obat@",
+        "OllouretypotIda@gmail.com",
         "omprakash",
         "pankaj",
         "pintu",
@@ -676,6 +686,7 @@ public class Application {
         "skprajapaty@gmail.com",
         "smartsolution3000@gmail.com",
         "smithmartin919@gmail.com",
+        "snjbisth8@gmail.com",
         "spyvikash",
         "stybesto13",
         "sunflowerrosy@outlook.com",
@@ -785,6 +796,7 @@ public class Application {
         "182.64.167.161",
         "182.64.53.132",
         "182.68.102.212",
+        "182.68.105.220",
         "182.68.161.166",
         "182.68.161.193",
         "182.68.174.212",
@@ -797,6 +809,7 @@ public class Application {
         "182.69.198.155",
         "182.69.198.198",
         "182.69.211.60",
+        "182.69.211.60 ",
         "182.69.212.79",
         "182.69.225.109",
         "182.69.228.122",
@@ -919,8 +932,9 @@ public class Application {
     );
 
     public static final List<String> USERID_BLACKLIST = Arrays.asList(
-        "quickbook",
-        "jamesbond"
+        "jamesbond",
+        "larrysilva",
+        "quickbook"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
