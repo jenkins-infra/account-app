@@ -142,6 +142,10 @@ public class Application {
             throw new UserError(SPAM_MESSAGE);
         }
 
+        if(Pattern.matches("^jb\\d+@gmail.com", email)) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Email blacklist");
+        }
+
         for (String fragment : USERID_BLACKLIST) {
             if(userid.contains(fragment)) {
                 return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Userid Blacklist");
@@ -604,6 +608,7 @@ public class Application {
         "@yahoo.co.id",
         "@zetmail.com",
         "adreahilton@gmail.com",
+        "AndentspouRita@gmail.com",
         "andorclifs@gmail.com",
         "angthpofphilip@gmail.com",
         "ankit",
@@ -611,13 +616,17 @@ public class Application {
         "ashwanikumar",
         "bidupan12@gmail.com",
         "ciodsjiocxjosa@yandex.com",
+        "cooperdavidd@gmail.com",
         "crsgroupindia@gmail.com",
         "dasdasdsas32@gmail.com",
+        "deepakkumar02singh@gmail.com",
         "dersttycert101@gmail.com",
         "donallakarpissaa@gmail.com",
         "drruytuyj@gmail.com",
         "folk.zin87@gmail.com",
         "georgiaaby@gmail.com",
+        "HenryMullins",
+        "HowerpofHarold@gmail.com",
         "hrrbanga",
         "hsharish",
         "huin.lisko097@gmail.com",
@@ -632,9 +641,10 @@ public class Application {
         "johnmatty55@gmail.com",
         "johnseo130@gmail.com",
         "kalidass34212@gmail.com",
+        "kk+spamtest@kohsuke.org",
         "kumar.uma420@gmail.com",
-        "kumarsujit",
         "kumarprem",
+        "kumarsujit",
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
         "macden",
@@ -657,12 +667,12 @@ public class Application {
         "rehel55rk@gmail.com",
         "righttechnical",
         "sandysharmja121@gmail.com",
+        "sandysharmja121@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
         "seo03@gmail.com",
         "seosupport",
         "seoxpertchandan@gmail.com",
-        "sandysharmja121@gmail.com",
         "skprajapaty@gmail.com",
         "smartsolution3000@gmail.com",
         "smithmartin919@gmail.com",
@@ -677,8 +687,7 @@ public class Application {
         "viz.michel@gmail.com",
         "watpad",
         "win.tech",
-        "yadavqs@gmail.com",
-        "kk+spamtest@kohsuke.org"
+        "yadavqs@gmail.com"
     );
 
     public static final List<String> IP_BLACKLIST = Arrays.asList(
@@ -692,21 +701,24 @@ public class Application {
         "103.10.197.194",
         "103.192.64.",
         "103.192.65.",
+        "103.192.65.248",
         "103.204.168.18",
         "103.226.202.171",
         "103.226.202.211",
         "103.245.118.",
         "103.254.154.229",
         "103.55.60.253",
-        "103.192.65.248",
+        "103.55.61.149",
         "106.76.167.41",
         "110.172.140.98",
+        "110.227.181.55",
         "111.93.63.62",
         "114.143.173.139",
         "115.184.102.129",
         "115.184.45.15",
         "115.184.54.205",
         "115.184.86.74",
+        "115.184.87.75",
         "115.184.88.205",
         "116.202.36.107",
         "116.203.72.64",
@@ -742,6 +754,7 @@ public class Application {
         "122.177.238.218",
         "122.177.31.12",
         "122.177.49.252",
+        "122.177.65.181",
         "122.177.88.46",
         "122.177.90.163",
         "122.177.91.154",
@@ -757,8 +770,8 @@ public class Application {
         "14.96.203.42",
         "14.98.26.128",
         "14.98.66.69",
-        "14.98.9.61",
         "14.98.84.225",
+        "14.98.9.61",
         "171.48.38.188",
         "171.50.146.100",
         "180.151.228.235",
@@ -771,6 +784,7 @@ public class Application {
         "182.64.145.236",
         "182.64.167.161",
         "182.64.53.132",
+        "182.68.102.212",
         "182.68.161.166",
         "182.68.161.193",
         "182.68.174.212",
@@ -792,9 +806,9 @@ public class Application {
         "202.91.134.66",
         "202.91.76.82",
         "203.122.41.130",
+        "27.60.131.203",
         "27.7.210.21",
         "27.7.213.175",
-        "27.60.131.203",
         "43.230.198.228",
         "43.230.198.9",
         "43.245.149.107",
@@ -806,6 +820,7 @@ public class Application {
         "45.115.143.128",
         "45.115.143.40",
         "45.115.189.227",
+        "45.120.56.65",
         "45.121.188.46",
         "45.122.123.47",
         "45.127.42.63",
@@ -826,6 +841,7 @@ public class Application {
         "article",
         "articles",
         "asdf",
+        "blog submit",
         "blog",
         "bloging",
         "business",
@@ -840,6 +856,7 @@ public class Application {
         "for using wiki and jira",
         "for wiki and jira use",
         "forum post",
+        "forum",
         "funtime",
         "game",
         "get informaion",
@@ -902,7 +919,8 @@ public class Application {
     );
 
     public static final List<String> USERID_BLACKLIST = Arrays.asList(
-        "quickbook"
+        "quickbook",
+        "jamesbond"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
