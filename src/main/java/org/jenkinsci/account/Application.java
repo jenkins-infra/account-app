@@ -224,6 +224,21 @@ public class Application {
         return Pattern.matches("^[sdfghrt0-9]+$", userid.toLowerCase());
     }
 
+    public String geoIp(String ip) {
+
+        try {
+            URL url = new URL("http://freegeoip.net/csv/" + ip);
+            BufferedReader reader = new BufferedReader( new InputStreamReader(url.openStream()));
+            return reader.readLine();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+
     private boolean verifyCaptcha(String uresponse, String ip) {
         String postParams = "secret=" + URLEncoder.encode(params.recaptchaPrivateKey()) +
                            "&remoteip=" + URLEncoder.encode(ip) +
@@ -289,6 +304,7 @@ public class Application {
         msg.setRecipient(RecipientType.TO, new InternetAddress("jenkinsci-account-admins@googlegroups.com"));
         msg.setContent(
                 text+"\n\n"+
+                    "GeoIP info: " + geoIp(ip) +"\n\n" +
                 "To allow this account to be created, click the following link:\n"+
                 "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+enc(firstName)+"&lastName="+enc(lastName)+"&email="+enc(email)+"\n",
                 "text/plain");
@@ -788,6 +804,7 @@ public class Application {
         "202.91.134.66",
         "202.91.76.82",
         "203.122.41.130",
+        "203.122.7.236",
         "27.60.131.203",
         "27.7.210.21",
         "27.7.213.175",
