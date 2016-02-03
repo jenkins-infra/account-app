@@ -176,7 +176,7 @@ public class Application {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Garbled Use");
         }
 
-        if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(usedFor) || lastName.equalsIgnoreCase(usedFor)) {
+        if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(usedFor) || lastName.equalsIgnoreCase(usedFor) || email.equalsIgnoreCase(usedFor)) {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "use same as name");
         }
 
@@ -669,7 +669,7 @@ public class Application {
         "loksabha100@gmail.com",
         "macden",
         "maohinseeeeeee@outlook.com",
-        "mmmarsh12@gmail.com ",
+        "mmmarsh12@gmail.com",
         "mohandaerer",
         "mohankeeded",
         "ncrpoo",
@@ -682,6 +682,7 @@ public class Application {
         "paroccepoytamarac@gmail.com",
         "paulseanseo91@gmail.com",
         "pintu",
+        "pogogames483@gmail.com",
         "poonamkamalpatel@gmail.com",
         "porterquines@gmail.com",
         "pranay4job@gmail.com",
@@ -732,6 +733,7 @@ public class Application {
         "1.39.50.144",
         "101.59.76.223",
         "101.60.",
+        "101.63.200.188",
         "103.10.197.194",
         "103.19.153.130",
         "103.192.64.",
@@ -741,8 +743,7 @@ public class Application {
         "103.226.202.211",
         "103.245.118.",
         "103.254.154.229",
-        "103.55.60.253",
-        "103.55.61.149",
+        "103.55.",
         "106.76.167.41",
         "110.172.140.98",
         "110.227.181.55",
@@ -759,13 +760,13 @@ public class Application {
         "119.82.95.142",
         "120.57.17.65",
         "120.57.86.248",
+        "120.59.205.205",
         "121.242.77.200",
         "122.162.88.67",
         "122.173.",
         "122.175.221.219",
         "122.177.",
-        "122.180.219.45",
-        "122.180.235.140",
+        "122.180.",
         "123.136.209.119",
         "123.254.107.229",
         "124.41.241.203",
@@ -813,6 +814,7 @@ public class Application {
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
+        "ad",
         "add a page",
         "add page",
         "admin",
@@ -834,12 +836,13 @@ public class Application {
         "creating",
         "discussion",
         "donation",
-        "edit",
         "edit page",
+        "edit",
         "for using wiki and jira",
         "for wiki and jira use",
         "forum post",
         "forum",
+        "Fun Wiki",
         "funtime",
         "game",
         "get informaion",
@@ -865,6 +868,7 @@ public class Application {
         "no",
         "nothing",
         "office",
+        "other",
         "page",
         "post",
         "posting",
@@ -874,8 +878,8 @@ public class Application {
         "promotion",
         "publish",
         "question",
-        "read",
         "read and write",
+        "read",
         "reading",
         "robot",
         "seo",
@@ -899,7 +903,9 @@ public class Application {
         "technical support",
         "tutorial",
         "tutorials",
+        "useful",
         "want to study",
+        "web page",
         "website",
         "what",
         "wiki page",
