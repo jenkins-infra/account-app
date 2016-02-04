@@ -1,4 +1,6 @@
 package org.jenkinsci.account;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import jiraldapsyncer.JiraLdapSyncer;
 import jiraldapsyncer.ServiceLocator;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
@@ -21,10 +23,12 @@ import javax.naming.Context;
 import javax.naming.NameAlreadyBoundException;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
 import javax.naming.directory.AttributeInUseException;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
@@ -41,6 +45,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -202,6 +207,14 @@ public class Application {
             }
         }
 
+        // IP Reputation Checks
+        String rblHost = "rbl.megarbl.net";
+        String reversedIp = String.join(".", Lists.reverse(Arrays.asList(ip.split("\\."))));
+        String txt = getTxtRecord(reversedIp + "." + rblHost);
+        if(!Strings.isNullOrEmpty(txt)) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, txt);
+        }
+
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
         cookie.setDomain("jenkins-ci.org");
         cookie.setPath("/account");
@@ -225,7 +238,6 @@ public class Application {
     }
 
     public String geoIp(String ip) {
-
         try {
             URL url = new URL("http://freegeoip.net/csv/" + ip);
             BufferedReader reader = new BufferedReader( new InputStreamReader(url.openStream()));
@@ -238,6 +250,26 @@ public class Application {
         return "";
     }
 
+    public static String getTxtRecord(String hostName) {
+        // Get the first TXT record
+
+        Hashtable<String, String> env = new Hashtable<String, String>();
+        env.put("java.naming.factory.initial", "com.sun.jndi.dns.DnsContextFactory");
+
+        try {
+            DirContext dirContext = new InitialDirContext(env);
+            Attributes attrs = dirContext.getAttributes(hostName, new String[] { "TXT" });
+            Attribute attr = attrs.get("TXT");
+            String txtRecord = "";
+            if(attr != null) {
+                txtRecord = attr.get().toString();
+            }
+            return txtRecord;
+        } catch (javax.naming.NamingException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
     private boolean verifyCaptcha(String uresponse, String ip) {
         String postParams = "secret=" + URLEncoder.encode(params.recaptchaPrivateKey()) +
@@ -814,12 +846,14 @@ public class Application {
         "182.68.",
         "182.69.",
         "182.73.182.170",
+        "182.74.88.42",
         "182.75.144.58",
         "202.53.94.4",
         "202.91.134.66",
         "202.91.76.82",
         "203.122.41.130",
         "203.122.7.236",
+        "223.176.159.235",
         "223.225.42.57",
         "27.56.47.65",
         "27.60.131.203",
@@ -828,11 +862,11 @@ public class Application {
         "43.230.198.228",
         "43.230.198.9",
         "43.245.149.107",
+        "43.245.151.156",
         "43.251.84.",
         "43.252.27.52",
         "43.252.29.202",
         "43.252.33.70",
-        "43.245.151.156",
         "45.115.",
         "45.120.56.65",
         "45.121.188.46",
