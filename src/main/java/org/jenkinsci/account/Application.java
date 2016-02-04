@@ -677,6 +677,7 @@ public class Application {
         "johnseo130@gmail.com",
         "kalidass34212@gmail.com",
         "kk+spamtest@kohsuke.org",
+        "kripalsingh446@gmail.com",
         "kumar.uma420@gmail.com",
         "kumarprem",
         "kumarsujit",
@@ -789,6 +790,7 @@ public class Application {
         "125.16.2.102",
         "125.63.107.204",
         "138.128.180.",
+        "14.141.148.206",
         "14.141.51.5",
         "14.96.",
         "14.98.",
@@ -805,6 +807,7 @@ public class Application {
         "202.91.76.82",
         "203.122.41.130",
         "203.122.7.236",
+        "27.56.47.65",
         "27.60.131.203",
         "27.7.210.21",
         "27.7.213.175",
@@ -827,7 +830,8 @@ public class Application {
         "49.204.252.214",
         "49.244.214.39",
         "59.180.132.51",
-        "61.12.72.244"
+        "61.12.72.244",
+        "61.12.72.246"
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
