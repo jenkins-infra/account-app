@@ -1,4 +1,5 @@
 package org.jenkinsci.account;
+import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import jiraldapsyncer.JiraLdapSyncer;
@@ -45,7 +46,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -142,11 +142,6 @@ public class Application {
         if (isEmpty(email))
             throw new UserError("e-mail is required");
 
-        if(checkCookie(request, ALREADY_SIGNED_UP)) {
-//            return maybeSpammer(userid, firstName, lastName, email, ip, "Cookie");
-            throw new UserError(SPAM_MESSAGE);
-        }
-
         if(Pattern.matches("^jb\\d+@gmail.com", email)) {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Email blacklist");
         }
@@ -196,6 +191,10 @@ public class Application {
             con.close();
         }
 
+        if(checkCookie(request, ALREADY_SIGNED_UP)) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Cookie");
+        }
+
         if(circuitBreaker.check()) {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "circuitBreaker");
         }
@@ -209,17 +208,11 @@ public class Application {
 
         // IP Reputation Checks
         String rblHost = "rbl.megarbl.net";
-        String reversedIp = String.join(".", Lists.reverse(Arrays.asList(ip.split("\\."))));
+        String reversedIp = Joiner.on(".").join(Lists.reverse(Arrays.asList(ip.split("\\."))));
         String txt = getTxtRecord(reversedIp + "." + rblHost);
         if(!Strings.isNullOrEmpty(txt)) {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, txt);
         }
-
-        Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
-        cookie.setDomain("jenkins-ci.org");
-        cookie.setPath("/account");
-        cookie.setMaxAge(24 * 60 * 60);
-        response.addCookie(cookie);
 
         try {
             String password = createRecord(userid, firstName, lastName, email);
@@ -227,8 +220,14 @@ public class Application {
 
             new User(userid,email).mailPassword(password);
         } catch (UserError ex) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Existing email in system");
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Error creating account " + ex.getMessage());
         }
+
+        Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
+        cookie.setDomain("jenkins-ci.org");
+        cookie.setPath("/account");
+        cookie.setMaxAge(24 * 60 * 60);
+        response.addCookie(cookie);
 
         return new HttpRedirect("doneMail");
     }
@@ -250,7 +249,7 @@ public class Application {
         return "";
     }
 
-    public static String getTxtRecord(String hostName) {
+    public String getTxtRecord(String hostName) {
         // Get the first TXT record
 
         Hashtable<String, String> env = new Hashtable<String, String>();
@@ -647,25 +646,32 @@ public class Application {
         "@anappthat.com",
         "@clrmail.com",
         "@dodsi.com",
+        "@getairmail.com",
         "@grandmamail.com",
         "@grandmasmail.com",
         "@guerrillamail.com",
+        "@imgof.com",
         "@mailcatch.com",
         "@maildx.com",
         "@mailinator.com",
         "@mailnesia.com",
         "@sharklasers.com",
         "@thrma.com",
+        "@tryalert.com",
+        "@vomoto.com",
         "@webtrackker.com",
         "@yahoo.co.id",
         "@yopmail.com",
         "@zetmail.com",
+        "abdhesh090@gmail.com",
         "abdheshnir.vipra@gmail.com",
         "adreahilton@gmail.com",
         "ajayrudelee@gmail.com",
         "ajymaansingh@gmail.com",
         "AndentspouRita@gmail.com",
         "andorclifs@gmail.com",
+        "andrusmith010@gmail.com",
+        "andrusmith013@gmail.com",
         "angthpofphilip@gmail.com",
         "anilkandpal0@gmail.com",
         "anilsingh7885945@gmail.com",
@@ -683,6 +689,8 @@ public class Application {
         "dersttycert101@gmail.com",
         "donallakarpissaa@gmail.com",
         "drruytuyj@gmail.com",
+        "ethanluna635@gmail.com",
+        "FishepoeMary@gmail.com",
         "folk.zin87@gmail.com",
         "gamblerbhaijaan@gmail.com",
         "georgegallego.com@gmail.com",
@@ -690,6 +698,7 @@ public class Application {
         "Hauptnuo214@gmail.com",
         "hcuiodsciodso@yandex.com",
         "HenryMullins",
+        "HerstpopEnriqued@gmail.com",
         "hontpojpatricia",
         "HounchpowJohn@gmail.com",
         "HowerpofHarold@gmail.com",
@@ -699,15 +708,19 @@ public class Application {
         "intelomedia02@gmail.com",
         "intuitphonenumber",
         "iqinfotech",
+        "Jamersonnvy309@gmail.com",
         "janes6521@gmail.com",
         "janessmith",
         "jayshown81@gmail.com",
+        "jim.cook2681@gmail.com",
         "jksadnhk@gmail.com",
         "johngarry227@gmail.com",
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
         "JohnnyColvin428@gmail.com",
         "johnseo130@gmail.com",
+        "johnsinha2807@gmail.com",
+        "johnydeep0712@gmail.com",
         "kalidass34212@gmail.com",
         "kk+spamtest@kohsuke.org",
         "kripalsingh446@gmail.com",
@@ -718,6 +731,7 @@ public class Application {
         "LarrySilva",
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
+        "mac2help@outlook.com",
         "macden",
         "maohinseeeeeee@outlook.com",
         "masmartin71@gmail.com",
@@ -725,6 +739,7 @@ public class Application {
         "mohandaerer",
         "mohankeeded",
         "morrisonjohn293@gmail.com",
+        "msofficeservices13@gmail.com",
         "ncrpoo",
         "ncrsona",
         "nishanoor32",
@@ -734,11 +749,13 @@ public class Application {
         "pankaj",
         "paroccepoytamarac@gmail.com",
         "paulseanseo91@gmail.com",
+        "pawankundu99@gmail.com",
         "pintu",
         "pogogames483@gmail.com",
         "poonamkamalpatel@gmail.com",
         "porterquines@gmail.com",
         "pranay4job@gmail.com",
+        "premk258@gmail.com",
         "printerhelplinenumber@gmail.com",
         "priturpocdickr@gmail.com",
         "quickbook",
@@ -747,18 +764,22 @@ public class Application {
         "rajdsky7@gmail.com",
         "rehel55rk@gmail.com",
         "righttechnical",
+        "Rodriquesnuv728@gmail.com",
         "rohitsona121090@gmail.com",
-        "sandysharmja121@gmail.com",
+        "sajankaur5@gmail.com",
         "sandysharmja121@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
         "seo03@gmail.com",
         "seosupport",
         "seoxpertchandan@gmail.com",
+        "service.thepc@yandex.com",
         "skprajapaty@gmail.com",
         "smartsolution3000@gmail.com",
         "smithmartin919@gmail.com",
         "snjbisth8@gmail.com",
+        "Sorianonvy291@gmail.com",
+        "spyindia",
         "spyvikash",
         "stephanflorian1@gmail.com",
         "stybesto13",
@@ -776,6 +797,8 @@ public class Application {
         "webdevelopera@gmail.com",
         "win.tech",
         "yadavqs@gmail.com",
+        "ytdeqwduqwy@yandex.com",
+        "zebakhan.ssit@gmail.com",
         "zozojams11@gmail.com"
     );
 
@@ -785,9 +808,11 @@ public class Application {
         "1.187.126.76",
         "1.187.162.39",
         "1.22.164.227",
+        "1.22.38.186",
         "1.22.39.244",
         "1.39.101.93",
         "1.39.32.111",
+        "1.39.33.190",
         "1.39.34.120",
         "1.39.34.181",
         "1.39.50.144",
@@ -799,21 +824,30 @@ public class Application {
         "103.19.153.130",
         "103.192.64.",
         "103.192.65.",
+        "103.192.66.163",
         "103.204.168.18",
         "103.226.202.171",
         "103.226.202.211",
+        "103.233.118.222",
         "103.245.118.",
         "103.254.154.229",
         "103.44.18.221",
         "103.49.49.49",
         "103.55.",
+        "104.156.228.84", // http://www.ipvoid.com/scan/104.156.228.84
+        "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
         "106.67.113.167",
         "106.76.167.41",
+        "106.204.236.224",
+        "109.163.234.8", // http://www.ipvoid.com/scan/109.163.234.8
         "110.172.140.98",
         "110.227.181.55",
         "110.227.183.246",
+        "110.227.183.36",
         "111.93.63.62",
+        "112.196.141.78",
         "112.196.160.122",
+        "112.196.170.8",
         "114.143.173.139",
         "115.160.250.34",
         "115.184.",
@@ -821,6 +855,7 @@ public class Application {
         "116.203.",
         "117.198.",
         "117.201.159.73",
+        "117.242.5.201",
         "119.81.230.137",
         "119.82.95.142",
         "120.57.17.65",
@@ -846,8 +881,12 @@ public class Application {
         "14.141.51.5",
         "14.96.",
         "14.98.",
+        "169.57.0.235", // http://www.ipvoid.com/scan/169.57.0.235
         "171.48.38.188",
         "171.50.146.100",
+        "172.98.67.25", // http://www.ipvoid.com/scan/172.98.67.25
+        "172.98.67.71", // http://www.ipvoid.com/scan/172.98.67.71
+        "177.154.139.203", // http://www.ipvoid.com/scan/177.154.139.203
         "180.151.",
         "182.156.72.162",
         "182.64.",
@@ -856,20 +895,23 @@ public class Application {
         "182.73.182.170",
         "182.74.88.42",
         "182.75.144.58",
+        "182.75.176.202",
         "202.53.94.4",
         "202.91.134.66",
         "202.91.76.82",
         "203.122.41.130",
         "203.122.7.236",
         "203.99.192.210",
+        "223.176.152.27",
         "223.176.159.235",
         "223.225.42.57",
         "27.56.47.65",
         "27.60.131.203",
         "27.7.210.21",
         "27.7.213.175",
-        "43.230.198.228",
-        "43.230.198.9",
+        "38.95.108.245", // http://www.ipvoid.com/scan/38.95.108.245
+        "38.95.109.67", // http://www.ipvoid.com/scan/38.95.109.67
+        "43.230.198.",
         "43.245.149.107",
         "43.245.151.156",
         "43.251.84.",
@@ -886,15 +928,20 @@ public class Application {
         "45.127.42.63",
         "45.55.3.174",
         "45.56.154.150",
+        "45.120.162.172",
+        "46.165.208.207", // http://www.ipvoid.com/scan/46.165.208.207
         "49.15.149.23",
         "49.156.150.242",
         "49.204.252.214",
         "49.244.214.39",
+        "5.62.5.71", // http://www.ipvoid.com/scan/5.62.5.71
         "59.180.132.51",
         "59.180.25.215",
+        "59.180.27.191",
         "61.12.72.244",
         "61.12.72.246",
-        "62.210.139.80" // proxy? twice an Indian spammer jumped to this IP
+        "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
+        "69.65.43.205" // http://www.ipvoid.com/scan/69.65.43.205
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
@@ -913,11 +960,12 @@ public class Application {
         "blog user",
         "blog writing",
         "blog",
-        "blogs",
         "bloging",
+        "blogs",
         "business",
         "businessman",
         "bussiness",
+        "captcha",
         "capturing",
         "content marketing",
         "creating",
@@ -931,6 +979,7 @@ public class Application {
         "forum post",
         "forum",
         "Fun Wiki",
+        "fun",
         "funtime",
         "game",
         "get informaion",
@@ -940,9 +989,11 @@ public class Application {
         "help support",
         "helpline and support",
         "helpline",
+        "https://jenkins-ci.org",
         "https://jenkins-ci.org/account/signup",
         "information",
         "internet",
+        "jenkins-ci.org",
         "jira",
         "keyword promotion",
         "knowledge",
@@ -966,12 +1017,15 @@ public class Application {
         "problem solved",
         "profile",
         "promotion",
+        "Publicity",
         "publish",
         "question",
         "read and write",
         "read",
         "reading",
+        "research",
         "robot",
+        "searching",
         "seo",
         "share info",
         "share post",
