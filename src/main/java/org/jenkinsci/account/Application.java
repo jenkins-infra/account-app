@@ -214,14 +214,10 @@ public class Application {
             return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, txt);
         }
 
-        try {
-            String password = createRecord(userid, firstName, lastName, email);
-            LOGGER.info("User "+userid+" is from "+ip);
+        String password = createRecord(userid, firstName, lastName, email);
+        LOGGER.info("User "+userid+" is from "+ip);
 
-            new User(userid,email).mailPassword(password);
-        } catch (UserError ex) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Error creating account " + ex.getMessage());
-        }
+        new User(userid,email).mailPassword(password);
 
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
         cookie.setDomain("jenkins-ci.org");
@@ -682,6 +678,7 @@ public class Application {
         "bidupan12@gmail.com",
         "billydoch021@gmail.com",
         "ciodsjiocxjosa@yandex.com",
+        "ClarencePatterson570@gmail.com",
         "cooperdavidd@gmail.com",
         "crsgroupindia@gmail.com",
         "dasdasdsas32@gmail.com",
@@ -858,6 +855,7 @@ public class Application {
         "117.201.159.73",
         "117.242.5.201",
         "119.81.230.137",
+        "119.81.253.243", // http://www.ipvoid.com/scan/119.81.253.243
         "119.82.95.142",
         "120.57.17.65",
         "120.57.86.248",
