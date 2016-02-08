@@ -142,6 +142,8 @@ public class Application {
             throw new UserError("First name is required");
         if (isEmpty(email))
             throw new UserError("e-mail is required");
+        if(!email.contains("@"))
+            throw new UserError("Need a valid e-mail address.");
         List<String> blockReasons = new ArrayList<String>();
 
         if(Pattern.matches("^jb\\d+@gmail.com", email)) {
@@ -214,18 +216,29 @@ public class Application {
         }
 
         // IP Reputation Checks
+
         String reversedIp = Joiner.on(".").join(Lists.reverse(Arrays.asList(ip.split("\\."))));
-        for(String txt : getTxtRecord(reversedIp + "." + "rbl.megarbl.net")) {
-            blockReasons.add("rbl.megarbl.net: " + txt);
+        for(String rblHost : Arrays.asList("rbl.megarbl.net", "zen.spamhaus.org")) {
+            for (String txt : getTxtRecord(reversedIp + "." + rblHost)) {
+                blockReasons.add("RBL " + rblHost + ": " + txt);
+            }
         }
 
+        String userDetails = userDetails(userid, firstName, lastName, email, ip, usedFor);
         if(blockReasons.size() > 0) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, blockReasons);
+            String body = "Rejecting, likely spam:\n\n" + userDetails + "\n\n" +
+                "===Block Reasons===\n"
+                + Joiner.on("\n").join(blockReasons) + "\n===================" + "\n\n" +
+                "To allow this account to be created, click the following link:\n" +
+                "https://jenkins-ci.org/account/admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
+            mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "Rejection of a new account creation for " + firstName + " " + lastName, body, "text/plain");
+            throw new UserError(SPAM_MESSAGE);
         }
 
         String password = createRecord(userid, firstName, lastName, email);
         LOGGER.info("User "+userid+" is from "+ip);
-
+        mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
+            userDetails + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
         new User(userid,email).mailPassword(password);
 
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
@@ -326,29 +339,20 @@ public class Application {
         return false;
     }
 
-    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String usedFor, List<String> blockReasons) throws MessagingException, UnsupportedEncodingException {
-        String text = String.format(
-            "Rejecting, likely spam:\n\nip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s",
-            ip, email, userid, lastName, firstName, usedFor);
-        LOGGER.warning(text);
-
-        // send an e-mail to the admins
+    private void mail(String from, String to, String subject, String body, String encoding) throws MessagingException {
         Session s = createJavaMailSession();
         MimeMessage msg = new MimeMessage(s);
-        msg.setSubject("Rejection of a new account creation for " + firstName + " " + lastName);
-        msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
-        msg.setRecipient(RecipientType.TO, new InternetAddress("jenkinsci-account-admins@googlegroups.com"));
-        msg.setContent(
-                text+"\n\n"+
-                    "===Block Reasons===\n"
-                    + Joiner.on("\n").join(blockReasons) + "\n===================" +
-                    "\n\nGeoIP info: " + geoIp(ip) +"\n\n" +
-                "To allow this account to be created, click the following link:\n"+
-                "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+enc(firstName)+"&lastName="+enc(lastName)+"&email="+enc(email)+"\n",
-                "text/plain");
+        msg.setSubject(subject);
+        msg.setFrom(new InternetAddress(from));
+        msg.setRecipient(RecipientType.TO, new InternetAddress(to));
+        msg.setContent(body, encoding);
         Transport.send(msg);
+    }
 
-        throw new UserError(SPAM_MESSAGE);
+    private String userDetails(String userid, String firstName, String lastName, String email, String ip, String usedFor) {
+        return String.format(
+            "ip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s\nGeoIp:=%s",
+            ip, email, userid, lastName, firstName, usedFor, geoIp(ip));
     }
 
     /**
@@ -481,18 +485,10 @@ public class Application {
          * Sends a new password to this user.
          */
         public void mailPassword(String password) throws MessagingException {
-            Session s = createJavaMailSession();
-            MimeMessage msg = new MimeMessage(s);
-            msg.setSubject("Your access to jenkins-ci.org");
-            msg.setFrom(new InternetAddress("Admin <admin@jenkins-ci.org>"));
-            msg.setRecipient(RecipientType.TO, new InternetAddress(mail));
-            msg.setContent(
-                    "Your userid is "+id+"\n"+
-                    "Your temporary password is "+password+" \n"+
-                    "\n"+
-                    "Please visit http://jenkins-ci.org/account and update your password and profile\n",
-                    "text/plain");
-            Transport.send(msg);
+            mail("Admin <admin@jenkins-ci.org>", mail, "Your access to jenkins-ci.org", "Your userid is " + id + "\n" +
+                "Your temporary password is " + password + " \n" +
+                "\n" +
+                "Please visit http://jenkins-ci.org/account and update your password and profile\n", "text/plain");
         }
 
         public void delete(DirContext con) throws NamingException {
@@ -683,6 +679,7 @@ public class Application {
         "bcmdsbncskj@yandex.com",
         "bidupan12@gmail.com",
         "billydoch021@gmail.com",
+        "boleshahuja88@gmail.com",
         "ciodsjiocxjosa@yandex.com",
         "ClarencePatterson570@gmail.com",
         "cooperdavidd@gmail.com",
@@ -693,6 +690,7 @@ public class Application {
         "donallakarpissaa@gmail.com",
         "drruytuyj@gmail.com",
         "ethanluna635@gmail.com",
+        "fifixtpoqpatrickh@gmail.com",
         "FishepoeMary@gmail.com",
         "folk.zin87@gmail.com",
         "gamblerbhaijaan@gmail.com",
@@ -702,6 +700,7 @@ public class Application {
         "hcuiodsciodso@yandex.com",
         "HenryMullins",
         "HerstpopEnriqued@gmail.com",
+        "hipearspodarthurd@gmail.com",
         "hontpojpatricia",
         "HounchpowJohn@gmail.com",
         "HowerpofHarold@gmail.com",
@@ -733,6 +732,7 @@ public class Application {
         "kumarprem",
         "kumarsujit",
         "LarrySilva",
+        "litagray931@gmail.com",
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
         "mac2help@outlook.com",
@@ -769,7 +769,9 @@ public class Application {
         "rajdsky7@gmail.com",
         "rehel55rk@gmail.com",
         "righttechnical",
+        "rikybhel23@gmail.com",
         "Rodriquesnuv728@gmail.com",
+        "rohitsharma7294@outlook.com",
         "rohitsona121090@gmail.com",
         "sajankaur5@gmail.com",
         "sandysharmja121@gmail.com",
@@ -779,6 +781,7 @@ public class Application {
         "seosupport",
         "seoxpertchandan@gmail.com",
         "service.thepc@yandex.com",
+        "simon.ken7@gmail.com",
         "skprajapaty@gmail.com",
         "smartsolution3000@gmail.com",
         "smithmartin919@gmail.com",
@@ -803,7 +806,10 @@ public class Application {
         "watpad",
         "webdevelopera@gmail.com",
         "win.tech",
+        "wittepepobjustina@gmail.com",
         "yadavqs@gmail.com",
+        "yashraj_one@outlook.com",
+        "YoultaspocDonald@gmail.com",
         "ytdeqwduqwy@yandex.com",
         "zebakhan.ssit@gmail.com",
         "zozojams11@gmail.com"
@@ -812,6 +818,7 @@ public class Application {
     public static final List<String> IP_BLACKLIST = Arrays.asList(
         "1.186.172.",
         "1.187.118.175",
+        "1.187.123.123",
         "1.187.126.76",
         "1.187.162.39",
         "1.22.164.227",
@@ -845,8 +852,12 @@ public class Application {
         "104.156.228.84", // http://www.ipvoid.com/scan/104.156.228.84
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
         "106.204.236.224",
+        "106.205.188.247",
+        "106.67.102.143",
         "106.67.113.167",
         "106.67.118.250",
+        "106.67.28.163",
+        "106.67.46.209",
         "106.76.167.41",
         "109.163.234.8", // http://www.ipvoid.com/scan/109.163.234.8
         "110.172.140.98",
@@ -918,6 +929,9 @@ public class Application {
         "203.99.192.210",
         "223.176.152.27",
         "223.176.159.235",
+        "223.176.178.24",
+        "223.176.176.254",
+        "223.180.245.176",
         "223.183.67.247",
         "223.225.42.57",
         "27.56.47.65",
@@ -941,6 +955,7 @@ public class Application {
         "45.121.189.236",
         "45.122.120.178",
         "45.122.123.47",
+        "45.127.40.20",
         "45.127.42.63",
         "45.55.3.174",
         "45.56.154.150",
@@ -983,6 +998,7 @@ public class Application {
         "bussiness",
         "captcha",
         "capturing",
+        "company",
         "content marketing",
         "content",
         "creating",
@@ -994,6 +1010,7 @@ public class Application {
         "food",
         "For Bloging",
         "for jenkins information",
+        "for news",
         "for using wiki and jira",
         "for wiki and jira use",
         "forum post",
@@ -1069,6 +1086,7 @@ public class Application {
         "tutorial",
         "tutorials",
         "useful",
+        "user blog",
         "want to study",
         "web page",
         "website",
