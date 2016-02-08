@@ -1,9 +1,9 @@
 package org.jenkinsci.account;
 import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import jiraldapsyncer.JiraLdapSyncer;
 import jiraldapsyncer.ServiceLocator;
+import org.apache.commons.collections.EnumerationUtils;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.*;
 import org.kohsuke.stapler.config.ConfigurationLoader;
@@ -47,6 +47,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -141,77 +142,85 @@ public class Application {
             throw new UserError("First name is required");
         if (isEmpty(email))
             throw new UserError("e-mail is required");
+        List<String> blockReasons = new ArrayList<String>();
 
         if(Pattern.matches("^jb\\d+@gmail.com", email)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Email blacklist");
+            blockReasons.add("BL: email (custom)");
         }
 
         for (String fragment : USERID_BLACKLIST) {
             if(userid.contains(fragment)) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Userid Blacklist");
+                blockReasons.add("BL: userid");
             }
         }
 
         for (String fragment : IP_BLACKLIST) {
             if(ip.startsWith(fragment)) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "IP Blacklist");
+                blockReasons.add("BL: IP");
             }
         }
         // domain black list
         String lm = email.toLowerCase(Locale.ENGLISH);
         for (String fragment : EMAIL_BLACKLIST) {
             if (lm.contains(fragment))
-                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Blacklist");
+                blockReasons.add("BL: email");
         }
 
         for(String fragment : USE_BLACKLIST) {
             if(usedFor != null && usedFor.trim().isEmpty()) {
                 if (usedFor.trim().equalsIgnoreCase(fragment)) {
-                    return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Blacklisted Use");
+                    blockReasons.add("BL: use");
                 }
             }
         }
 
         if(badNameElement(usedFor)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Garbled Use");
+            blockReasons.add("Garbled use");
         }
 
         if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(usedFor) || lastName.equalsIgnoreCase(usedFor) || email.equalsIgnoreCase(usedFor)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "use same as name");
+            blockReasons.add("Use same as name");
         }
 
         if(badNameElement(userid) || badNameElement(firstName) || badNameElement(lastName)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "bad name element");
+            blockReasons.add("Bad name element");
         }
 
         final DirContext con = connect();
         try {
-            ldapObjectExists(con, "(id={0})", userid, "ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
+            if(ldapObjectExists(con, "(id={0})", userid)) {
+                throw new UserError("ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
+            }
+            if(ldapObjectExists(con, "(mail={0})", email)) {
+                blockReasons.add("Existing email in system");
+            }
         } finally {
             con.close();
         }
 
         if(checkCookie(request, ALREADY_SIGNED_UP)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "Cookie");
+            blockReasons.add("Cookie");
         }
 
         if(circuitBreaker.check()) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, "circuitBreaker");
+            blockReasons.add("circuit breaker");
         }
 
         // spam check
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
-                return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, a.toString());
+                blockReasons.add("Stopforumspam: " + a.toString());
             }
         }
 
         // IP Reputation Checks
-        String rblHost = "rbl.megarbl.net";
         String reversedIp = Joiner.on(".").join(Lists.reverse(Arrays.asList(ip.split("\\."))));
-        String txt = getTxtRecord(reversedIp + "." + rblHost);
-        if(!Strings.isNullOrEmpty(txt)) {
-            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, txt);
+        for(String txt : getTxtRecord(reversedIp + "." + "rbl.megarbl.net")) {
+            blockReasons.add("rbl.megarbl.net: " + txt);
+        }
+
+        if(blockReasons.size() > 0) {
+            return maybeSpammer(userid, firstName, lastName, email, ip, usedFor, blockReasons);
         }
 
         String password = createRecord(userid, firstName, lastName, email);
@@ -245,24 +254,24 @@ public class Application {
         return "";
     }
 
-    public String getTxtRecord(String hostName) {
-        // Get the first TXT record
+    public List<String> getTxtRecord(String hostName) {
 
         Hashtable<String, String> env = new Hashtable<String, String>();
         env.put("java.naming.factory.initial", "com.sun.jndi.dns.DnsContextFactory");
-
+        List<String> txtRecords = new ArrayList<String>();
         try {
             DirContext dirContext = new InitialDirContext(env);
             Attributes attrs = dirContext.getAttributes(hostName, new String[] { "TXT" });
             Attribute attr = attrs.get("TXT");
-            String txtRecord = "";
-            if(attr != null) {
-                txtRecord = attr.get().toString();
+            for(Object txt: EnumerationUtils.toList(attr.getAll())) {
+                if(txt != null) {
+                    txtRecords.add(txt.toString());
+                }
             }
-            return txtRecord;
+            return txtRecords;
         } catch (javax.naming.NamingException e) {
             e.printStackTrace();
-            return "";
+            return txtRecords;
         }
     }
 
@@ -317,10 +326,10 @@ public class Application {
         return false;
     }
 
-    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String usedFor, String blockReason) throws MessagingException, UnsupportedEncodingException {
+    private HttpResponse maybeSpammer(String userid, String firstName, String lastName, String email, String ip, String usedFor, List<String> blockReasons) throws MessagingException, UnsupportedEncodingException {
         String text = String.format(
-                "Rejecting, likely spam: %s / ip=%s email=%s userId=%s lastName=%s firstName=%s\nuse=%s",
-                blockReason, ip, email, userid, lastName, firstName, usedFor);
+            "Rejecting, likely spam:\n\nip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s",
+            ip, email, userid, lastName, firstName, usedFor);
         LOGGER.warning(text);
 
         // send an e-mail to the admins
@@ -331,7 +340,9 @@ public class Application {
         msg.setRecipient(RecipientType.TO, new InternetAddress("jenkinsci-account-admins@googlegroups.com"));
         msg.setContent(
                 text+"\n\n"+
-                    "GeoIP info: " + geoIp(ip) +"\n\n" +
+                    "===Block Reasons===\n"
+                    + Joiner.on("\n").join(blockReasons) + "\n===================" +
+                    "\n\nGeoIP info: " + geoIp(ip) +"\n\n" +
                 "To allow this account to be created, click the following link:\n"+
                 "https://jenkins-ci.org/account/admin/signup?userId="+enc(userid)+"&firstName="+enc(firstName)+"&lastName="+enc(lastName)+"&email="+enc(email)+"\n",
                 "text/plain");
@@ -370,10 +381,6 @@ public class Application {
 
         final DirContext con = connect();
         try {
-
-            ldapObjectExists(con, "(id={0})", userid, "ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
-            ldapObjectExists(con, "(mail={0})", email, SPAM_MESSAGE);
-
             String fullDN = "cn=" + userid + "," + params.newUserBaseDN();
             con.createSubcontext(fullDN, attrs).close();
 
@@ -402,11 +409,8 @@ public class Application {
         return password;
     }
 
-    private void ldapObjectExists(DirContext con, String filterExpr, Object filterArgs, String message) throws NamingException {
-        final NamingEnumeration<SearchResult> userSearch = con.search(params.newUserBaseDN(), filterExpr, new Object[]{filterArgs}, new SearchControls());
-        if (userSearch.hasMore()) {
-            throw new UserError(message);
-        }
+    private boolean ldapObjectExists(DirContext con, String filterExpr, Object filterArgs) throws NamingException {
+        return con.search(params.newUserBaseDN(), filterExpr, new Object[]{filterArgs}, new SearchControls()).hasMore();
     }
 
     /**
@@ -732,8 +736,8 @@ public class Application {
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
         "mac2help@outlook.com",
-        "macden",
         "mac2help@outlook.com",
+        "macden",
         "maohinseeeeeee@outlook.com",
         "masmartin71@gmail.com",
         "mmmarsh12@gmail.com",
@@ -790,6 +794,7 @@ public class Application {
         "sunilkundujat@gmail.com",
         "sunjara10@gmail.com",
         "Sweenypar210@gmail.com",
+        "telemarket3004",
         "thjyt@yandex.com",
         "tomcopper6@gmail.com",
         "toren55rk@gmail.com",
@@ -839,10 +844,10 @@ public class Application {
         "103.55.",
         "104.156.228.84", // http://www.ipvoid.com/scan/104.156.228.84
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
+        "106.204.236.224",
         "106.67.113.167",
         "106.67.118.250",
         "106.76.167.41",
-        "106.204.236.224",
         "109.163.234.8", // http://www.ipvoid.com/scan/109.163.234.8
         "110.172.140.98",
         "110.227.181.55",
@@ -869,8 +874,8 @@ public class Application {
         "120.57.17.65",
         "120.57.86.248",
         "120.59.205.205",
-        "121.245.126.7",
         "121.242.77.200",
+        "121.245.126.7",
         "122.162.88.67",
         "122.169.130.19",
         "122.173.",
@@ -930,6 +935,7 @@ public class Application {
         "43.252.33.70",
         "45.114.63.184",
         "45.115.",
+        "45.120.162.172",
         "45.120.56.65",
         "45.121.188.46",
         "45.121.189.236",
@@ -938,7 +944,6 @@ public class Application {
         "45.127.42.63",
         "45.55.3.174",
         "45.56.154.150",
-        "45.120.162.172",
         "46.165.208.207", // http://www.ipvoid.com/scan/46.165.208.207
         "49.15.149.23",
         "49.15.158.7",
