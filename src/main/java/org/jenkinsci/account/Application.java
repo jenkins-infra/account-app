@@ -169,7 +169,7 @@ public class Application {
         }
 
         for(String fragment : USE_BLACKLIST) {
-            if(usedFor != null && usedFor.trim().isEmpty()) {
+            if(usedFor != null && !usedFor.trim().isEmpty()) {
                 if (usedFor.trim().equalsIgnoreCase(fragment)) {
                     blockReasons.add("BL: use");
                 }
@@ -674,12 +674,15 @@ public class Application {
         "anilsingh7885945@gmail.com",
         "ankit",
         "apwebs7012@yahoo.com",
+        "arena.wilson91@gmail.com",
         "ashishkumar",
         "ashwanikumar",
         "bcmdsbncskj@yandex.com",
+        "besto.sty@yandex.com",
         "bidupan12@gmail.com",
         "billydoch021@gmail.com",
         "boleshahuja88@gmail.com",
+        "choutpoyjenniferm@gmail.com",
         "ciodsjiocxjosa@yandex.com",
         "ClarencePatterson570@gmail.com",
         "cooperdavidd@gmail.com",
@@ -693,6 +696,8 @@ public class Application {
         "fifixtpoqpatrickh@gmail.com",
         "FishepoeMary@gmail.com",
         "folk.zin87@gmail.com",
+        "fragendpotmauriciok@gmail.com",
+        "GallifingspoyJoannel@gmail.com",
         "gamblerbhaijaan@gmail.com",
         "georgegallego.com@gmail.com",
         "georgiaaby@gmail.com",
@@ -700,6 +705,7 @@ public class Application {
         "hcuiodsciodso@yandex.com",
         "HenryMullins",
         "HerstpopEnriqued@gmail.com",
+        "himeshsinghiq@gmail.com",
         "hipearspodarthurd@gmail.com",
         "hontpojpatricia",
         "HounchpowJohn@gmail.com",
@@ -735,6 +741,7 @@ public class Application {
         "litagray931@gmail.com",
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
+        "lutherorea2807@gmail.com",
         "mac2help@outlook.com",
         "mac2help@outlook.com",
         "macden",
@@ -745,6 +752,7 @@ public class Application {
         "mohankeeded",
         "morrisonjohn293@gmail.com",
         "msofficeservices13@gmail.com",
+        "nalspoibarbarab@gmail.com",
         "ncrpoo",
         "ncrsona",
         "nishanoor32",
@@ -784,6 +792,7 @@ public class Application {
         "simon.ken7@gmail.com",
         "skprajapaty@gmail.com",
         "smartsolution3000@gmail.com",
+        "smithlora912@gmail.com",
         "smithmartin919@gmail.com",
         "Sneharajput931@gmail.com",
         "snjbisth8@gmail.com",
@@ -929,8 +938,8 @@ public class Application {
         "203.99.192.210",
         "223.176.152.27",
         "223.176.159.235",
-        "223.176.178.24",
         "223.176.176.254",
+        "223.176.178.24",
         "223.180.245.176",
         "223.183.67.247",
         "223.225.42.57",
@@ -972,7 +981,8 @@ public class Application {
         "61.12.72.244",
         "61.12.72.246",
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
-        "69.65.43.205" // http://www.ipvoid.com/scan/69.65.43.205
+        "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
+        "81.218.235.170" // http://www.ipvoid.com/scan/81.218.235.170
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
