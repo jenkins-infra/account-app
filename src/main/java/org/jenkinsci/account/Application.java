@@ -164,7 +164,7 @@ public class Application {
         // domain black list
         String lm = email.toLowerCase(Locale.ENGLISH);
         for (String fragment : EMAIL_BLACKLIST) {
-            if (lm.contains(fragment))
+            if (lm.contains(fragment.toLowerCase()))
                 blockReasons.add("BL: email");
         }
 
