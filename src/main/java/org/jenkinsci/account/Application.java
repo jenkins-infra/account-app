@@ -748,6 +748,7 @@ public class Application {
         "mac2help@outlook.com",
         "mac2help@outlook.com",
         "macden",
+        "madeleineforsyth290@gmail.com",
         "maohinseeeeeee@outlook.com",
         "masmartin71@gmail.com",
         "mmmarsh12@gmail.com",
@@ -787,6 +788,7 @@ public class Application {
         "rohitsharma7294@outlook.com",
         "rohitsona121090@gmail.com",
         "sajankaur5@gmail.com",
+        "sandy@voip4callcenters.com",
         "sandysharmja121@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
@@ -987,7 +989,8 @@ public class Application {
         "61.12.72.246",
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
         "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
-        "81.218.235.170" // http://www.ipvoid.com/scan/81.218.235.170
+        "81.218.235.170", // http://www.ipvoid.com/scan/81.218.235.170
+        "93.115.92.169" // http://www.ipvoid.com/scan/93.115.92.169
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
@@ -1051,6 +1054,7 @@ public class Application {
         "keyword promotion",
         "knowledge",
         "learn",
+        "looking for voip solutions",
         "love",
         "marketing",
         "material",
