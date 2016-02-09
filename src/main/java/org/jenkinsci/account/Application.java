@@ -229,6 +229,7 @@ public class Application {
             String body = "Rejecting, likely spam:\n\n" + userDetails + "\n\n" +
                 "===Block Reasons===\n"
                 + Joiner.on("\n").join(blockReasons) + "\n===================" + "\n\n" +
+                "IP Void link: http://ipvoid.com/scan/" + ip + "\n\n" +
                 "To allow this account to be created, click the following link:\n" +
                 "https://jenkins-ci.org/account/admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
             mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "Rejection of a new account creation for " + firstName + " " + lastName, body, "text/plain");
@@ -691,6 +692,7 @@ public class Application {
         "deepakkumar02singh@gmail.com",
         "dersttycert101@gmail.com",
         "donallakarpissaa@gmail.com",
+        "dr74402@gmail.com",
         "drruytuyj@gmail.com",
         "ethanluna635@gmail.com",
         "fifixtpoqpatrickh@gmail.com",
@@ -723,6 +725,7 @@ public class Application {
         "jhonsinha",
         "jim.cook2681@gmail.com",
         "jksadnhk@gmail.com",
+        "jmike7162@gmail.com",
         "johngarry227@gmail.com",
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
@@ -745,6 +748,7 @@ public class Application {
         "mac2help@outlook.com",
         "mac2help@outlook.com",
         "macden",
+        "madeleineforsyth290@gmail.com",
         "maohinseeeeeee@outlook.com",
         "masmartin71@gmail.com",
         "mmmarsh12@gmail.com",
@@ -754,6 +758,7 @@ public class Application {
         "msofficeservices13@gmail.com",
         "nalspoibarbarab@gmail.com",
         "ncrpoo",
+        "ncrrohit",
         "ncrsona",
         "nishanoor32",
         "obat@",
@@ -763,6 +768,7 @@ public class Application {
         "paroccepoytamarac@gmail.com",
         "paulseanseo91@gmail.com",
         "pawankundu99@gmail.com",
+        "petersmith2331@gmail.com",
         "pintu",
         "pogogames483@gmail.com",
         "poonamkamalpatel@gmail.com",
@@ -782,6 +788,7 @@ public class Application {
         "rohitsharma7294@outlook.com",
         "rohitsona121090@gmail.com",
         "sajankaur5@gmail.com",
+        "sandy@voip4callcenters.com",
         "sandysharmja121@gmail.com",
         "seo01@gmail.com",
         "seo02@gmail.com",
@@ -982,7 +989,8 @@ public class Application {
         "61.12.72.246",
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
         "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
-        "81.218.235.170" // http://www.ipvoid.com/scan/81.218.235.170
+        "81.218.235.170", // http://www.ipvoid.com/scan/81.218.235.170
+        "93.115.92.169" // http://www.ipvoid.com/scan/93.115.92.169
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
@@ -1030,6 +1038,7 @@ public class Application {
         "funtime",
         "game",
         "get informaion",
+        "get more information",
         "good",
         "google",
         "group discussion",
@@ -1045,6 +1054,7 @@ public class Application {
         "keyword promotion",
         "knowledge",
         "learn",
+        "looking for voip solutions",
         "love",
         "marketing",
         "material",
