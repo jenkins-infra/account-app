@@ -20,7 +20,12 @@
 
       <h5>What do you use Jenkins for?</h5>
       <input type="text" name="usedFor" class="text"/>
-
+      <input id="hp" type="text" name="hp"/>
+      <script>
+      <![CDATA[
+        document.getElementById("hp").style.display = "none";
+      ]]>
+      </script>
       <h5>Captcha</h5>
       <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"></script>
       <div class="g-recaptcha" data-sitekey="${it.captchaPublicKey()}"></div>

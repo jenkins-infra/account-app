@@ -119,6 +119,7 @@ public class Application {
             @QueryParameter String lastName,
             @QueryParameter String email,
             @QueryParameter String usedFor,
+            @QueryParameter String hp,
             @Header("X-Forwarded-For") String ip    // client IP
     ) throws Exception {
 
@@ -148,6 +149,8 @@ public class Application {
             throw new UserError("Please fill what you use Jenkins for.");
 
         List<String> blockReasons = new ArrayList<String>();
+        if(!isEmpty(hp))
+            blockReasons.add("Honeypot");
 
         if(Pattern.matches("^jb\\d+@gmail.com", email)) {
             blockReasons.add("BL: email (custom)");
