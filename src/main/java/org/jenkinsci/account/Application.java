@@ -144,6 +144,9 @@ public class Application {
             throw new UserError("e-mail is required");
         if(!email.contains("@"))
             throw new UserError("Need a valid e-mail address.");
+        if(isEmpty(usedFor))
+            throw new UserError("Please fill what you use Jenkins for.");
+
         List<String> blockReasons = new ArrayList<String>();
 
         if(Pattern.matches("^jb\\d+@gmail.com", email)) {
@@ -839,6 +842,7 @@ public class Application {
 
     public static final List<String> IP_BLACKLIST = Arrays.asList(
         "1.186.172.",
+        "1.187.114.172",
         "1.187.118.175",
         "1.187.123.123",
         "1.187.126.76",
@@ -855,6 +859,7 @@ public class Application {
         "1.39.35.33",
         "1.39.50.144",
         "1.39.51.63",
+        "101.212.67.25",
         "101.59.76.223",
         "101.60.",
         "101.63.200.188",
@@ -866,6 +871,7 @@ public class Application {
         "103.204.168.18",
         "103.226.202.171",
         "103.226.202.211",
+        "103.233.116.124",
         "103.233.118.222",
         "103.245.118.",
         "103.254.154.229",
@@ -910,6 +916,7 @@ public class Application {
         "120.57.86.248",
         "120.59.205.205",
         "121.242.77.200",
+        "121.244.181.162",
         "121.245.126.7",
         "121.245.137.28",
         "122.162.88.67",
@@ -948,7 +955,6 @@ public class Application {
         "182.75.144.58",
         "182.75.176.202",
         "182.77.8.92",
-        "194.11.254.132", // http://www.ipvoid.com/scan/194.11.254.132
         "202.159.213.10",
         "202.53.94.4",
         "202.91.134.66",
@@ -1002,6 +1008,7 @@ public class Application {
         "59.180.132.51",
         "59.180.25.215",
         "59.180.27.191",
+        "61.0.85.206",
         "61.12.72.244",
         "61.12.72.246",
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
@@ -1068,6 +1075,7 @@ public class Application {
         "internet",
         "jenkins-ci.org",
         "jira",
+        "join group",
         "keyword promotion",
         "knowledge",
         "learn",
