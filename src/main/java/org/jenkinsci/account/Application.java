@@ -119,6 +119,7 @@ public class Application {
             @QueryParameter String lastName,
             @QueryParameter String email,
             @QueryParameter String usedFor,
+            @QueryParameter String hp,
             @Header("X-Forwarded-For") String ip    // client IP
     ) throws Exception {
 
@@ -144,7 +145,12 @@ public class Application {
             throw new UserError("e-mail is required");
         if(!email.contains("@"))
             throw new UserError("Need a valid e-mail address.");
+        if(isEmpty(usedFor))
+            throw new UserError("Please fill what you use Jenkins for.");
+
         List<String> blockReasons = new ArrayList<String>();
+        if(!isEmpty(hp))
+            blockReasons.add("Honeypot: " + hp);
 
         if(Pattern.matches("^jb\\d+@gmail.com", email)) {
             blockReasons.add("BL: email (custom)");
@@ -720,10 +726,12 @@ public class Application {
         "intelomedia02@gmail.com",
         "intuitphonenumber",
         "iqinfotech",
+        "italygroupspecialist@gmail.com",
         "Jamersonnvy309@gmail.com",
         "janes6521@gmail.com",
         "janessmith",
         "jayshown81@gmail.com",
+        "jecksonmike1512@gmail.com",
         "jhonsinha",
         "jim.cook2681@gmail.com",
         "jksadnhk@gmail.com",
@@ -827,6 +835,8 @@ public class Application {
         "vr4vikasrastogi@gmail.com",
         "watpad",
         "webdevelopera@gmail.com",
+        "webtracker",
+        "webtrackker",
         "win.tech",
         "wittepepobjustina@gmail.com",
         "yadavqs@gmail.com",
@@ -839,10 +849,12 @@ public class Application {
 
     public static final List<String> IP_BLACKLIST = Arrays.asList(
         "1.186.172.",
+        "1.187.114.172",
         "1.187.118.175",
         "1.187.123.123",
         "1.187.126.76",
         "1.187.162.39",
+        "1.22.131.140",
         "1.22.164.227",
         "1.22.38.186",
         "1.22.39.244",
@@ -853,12 +865,15 @@ public class Application {
         "1.39.33.254",
         "1.39.34.",
         "1.39.35.33",
+        "1.39.40.26",
         "1.39.50.144",
         "1.39.51.63",
+        "101.212.67.25",
         "101.59.76.223",
         "101.60.",
         "101.63.200.188",
         "103.10.197.194",
+        "103.18.72.91",
         "103.19.153.130",
         "103.192.64.",
         "103.192.65.",
@@ -866,6 +881,7 @@ public class Application {
         "103.204.168.18",
         "103.226.202.171",
         "103.226.202.211",
+        "103.233.116.124",
         "103.233.118.222",
         "103.245.118.",
         "103.254.154.229",
@@ -882,6 +898,7 @@ public class Application {
         "106.67.118.250",
         "106.67.28.163",
         "106.67.46.209",
+        "106.67.89.196",
         "106.76.167.41",
         "109.163.234.8", // http://www.ipvoid.com/scan/109.163.234.8
         "110.172.140.98",
@@ -899,6 +916,7 @@ public class Application {
         "115.184.",
         "116.202.36.",
         "116.203.",
+        "117.193.130.11",
         "117.198.",
         "117.201.159.73",
         "117.242.5.201",
@@ -910,6 +928,7 @@ public class Application {
         "120.57.86.248",
         "120.59.205.205",
         "121.242.77.200",
+        "121.244.181.162",
         "121.245.126.7",
         "121.245.137.28",
         "122.162.88.67",
@@ -925,6 +944,7 @@ public class Application {
         "125.16.2.102",
         "125.63.107.204",
         "125.63.73.249",
+        "125.63.99.102",
         "136.185.192.239",
         "138.128.180.",
         "14.141.148.206",
@@ -948,7 +968,7 @@ public class Application {
         "182.75.144.58",
         "182.75.176.202",
         "182.77.8.92",
-        "194.11.254.132", // http://www.ipvoid.com/scan/194.11.254.132
+        "196.207.106.219",
         "202.159.213.10",
         "202.53.94.4",
         "202.91.134.66",
@@ -963,6 +983,7 @@ public class Application {
         "223.176.159.235",
         "223.176.176.254",
         "223.176.178.24",
+        "223.176.189.144",
         "223.180.245.176",
         "223.183.67.247",
         "223.225.42.57",
@@ -1002,6 +1023,7 @@ public class Application {
         "59.180.132.51",
         "59.180.25.215",
         "59.180.27.191",
+        "61.0.85.206",
         "61.12.72.244",
         "61.12.72.246",
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
@@ -1068,6 +1090,7 @@ public class Application {
         "internet",
         "jenkins-ci.org",
         "jira",
+        "join group",
         "keyword promotion",
         "knowledge",
         "learn",
@@ -1084,8 +1107,10 @@ public class Application {
         "office",
         "other",
         "page",
+        "pcsupport",
         "permotions",
         "post profile",
+        "post something",
         "post",
         "posting",
         "pratice",
@@ -1132,9 +1157,11 @@ public class Application {
         "what",
         "wiki and jira",
         "wiki page",
+        "wiki pages",
         "wiki submission",
         "wiki",
-        "yes"
+        "yes",
+        "zira"
     );
 
     public static final List<String> USERID_BLACKLIST = Arrays.asList(
