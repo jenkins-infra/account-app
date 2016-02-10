@@ -150,7 +150,7 @@ public class Application {
 
         List<String> blockReasons = new ArrayList<String>();
         if(!isEmpty(hp))
-            blockReasons.add("Honeypot");
+            blockReasons.add("Honeypot: " + hp);
 
         if(Pattern.matches("^jb\\d+@gmail.com", email)) {
             blockReasons.add("BL: email (custom)");
@@ -833,6 +833,8 @@ public class Application {
         "vr4vikasrastogi@gmail.com",
         "watpad",
         "webdevelopera@gmail.com",
+        "webtracker",
+        "webtrackker",
         "win.tech",
         "wittepepobjustina@gmail.com",
         "yadavqs@gmail.com",
@@ -891,6 +893,7 @@ public class Application {
         "106.67.118.250",
         "106.67.28.163",
         "106.67.46.209",
+        "106.67.89.196",
         "106.76.167.41",
         "109.163.234.8", // http://www.ipvoid.com/scan/109.163.234.8
         "110.172.140.98",
@@ -972,6 +975,7 @@ public class Application {
         "223.176.159.235",
         "223.176.176.254",
         "223.176.178.24",
+        "223.176.189.144",
         "223.180.245.176",
         "223.183.67.247",
         "223.225.42.57",
@@ -1145,7 +1149,8 @@ public class Application {
         "wiki page",
         "wiki submission",
         "wiki",
-        "yes"
+        "yes",
+        "zira"
     );
 
     public static final List<String> USERID_BLACKLIST = Arrays.asList(
