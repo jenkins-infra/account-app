@@ -216,6 +216,7 @@ public class Application {
         }
 
         // spam check
+        // TODO, update StopForumSpam to add &notorexit (See http://www.stopforumspam.com/usage)
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
                 blockReasons.add("Stopforumspam: " + a.toString());
@@ -801,6 +802,7 @@ public class Application {
         "poonamkamalpatel@gmail.com",
         "porterquines@gmail.com",
         "pranay4job@gmail.com",
+        "pratik.vipra@gmail.com",
         "premk258@gmail.com",
         "printerhelplinenumber@gmail.com",
         "priturpocdickr@gmail.com",
@@ -894,6 +896,7 @@ public class Application {
         "103.192.65.",
         "103.192.66.163",
         "103.204.168.18",
+        "103.22.172.142",
         "103.226.202.171",
         "103.226.202.211",
         "103.233.116.124",
@@ -921,11 +924,13 @@ public class Application {
         "110.227.183.246",
         "110.227.183.36",
         "111.93.63.62",
+        "112.110.2.245",
         "112.196.147.",
         "112.196.160.122",
         "112.196.170.150",
         "112.196.170.8",
         "114.143.173.139",
+        "115.111.223.43",
         "115.112.159.250",
         "115.160.250.34",
         "115.184.",
@@ -934,6 +939,7 @@ public class Application {
         "117.193.130.11",
         "117.198.",
         "117.201.159.73",
+        "117.201.166.21",
         "117.242.5.201",
         "119.81.230.137",
         "119.81.249.132", // http://www.ipvoid.com/scan/119.81.249.132
@@ -951,6 +957,7 @@ public class Application {
         "122.173.",
         "122.175.221.219",
         "122.176.18.41",
+        "122.176.78.14",
         "122.177.",
         "122.180.",
         "123.136.209.119",
@@ -1083,6 +1090,7 @@ public class Application {
         "drama",
         "edit page",
         "edit",
+        "edu",
         "food",
         "For Bloging",
         "for jenkins information",
