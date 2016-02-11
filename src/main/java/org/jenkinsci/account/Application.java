@@ -50,6 +50,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
@@ -152,7 +153,7 @@ public class Application {
         if(!isEmpty(hp))
             blockReasons.add("Honeypot: " + hp);
 
-        if(Pattern.matches("^jb\\d+@gmail.com", email)) {
+        if(Pattern.matches("(?:^jb\\d+@gmail.com|seo\\d+@)", email)) {
             blockReasons.add("BL: email (custom)");
         }
 
@@ -215,6 +216,8 @@ public class Application {
         }
 
         // spam check
+        // TODO, update StopForumSpam to add &notorexit (See http://www.stopforumspam.com/usage)
+        // TODO, add in http://fspamlist.com/ as well
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
                 blockReasons.add("Stopforumspam: " + a.toString());
@@ -232,7 +235,8 @@ public class Application {
 
         String userDetails = userDetails(userid, firstName, lastName, email, ip, usedFor);
         if(blockReasons.size() > 0) {
-            String body = "Rejecting, likely spam:\n\n" + userDetails + "\n\n" +
+            String body = "Rejecting, likely spam:\n\n" + userDetails + "\n\nHTTP Headers\n" +
+                dumpHeaders(request) + "\n\n" +
                 "===Block Reasons===\n"
                 + Joiner.on("\n").join(blockReasons) + "\n===================" + "\n\n" +
                 "IP Void link: http://ipvoid.com/scan/" + ip + "\n\n" +
@@ -245,7 +249,8 @@ public class Application {
         String password = createRecord(userid, firstName, lastName, email);
         LOGGER.info("User "+userid+" is from "+ip);
         mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
-            userDetails + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
+            userDetails + "\n\nHTTP Headers\n" +
+                dumpHeaders(request) + "\n\n" + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
         new User(userid,email).mailPassword(password);
 
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
@@ -255,6 +260,16 @@ public class Application {
         response.addCookie(cookie);
 
         return new HttpRedirect("doneMail");
+    }
+
+    private String dumpHeaders(StaplerRequest request) {
+        Enumeration headerNames = request.getHeaderNames();
+        StringBuffer buffer = new StringBuffer();
+        while(headerNames.hasMoreElements()) {
+            String headerName = (String)headerNames.nextElement();
+            buffer.append(headerName).append("=").append(request.getHeader(headerName)).append("\n");
+        }
+        return buffer.toString();
     }
 
     private boolean badNameElement(String userid) {
@@ -646,9 +661,12 @@ public class Application {
     private static final Pattern VALID_ID = Pattern.compile("[a-z0-9_]+");
 
     public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
+        // TODO: Integrate with https://github.com/wesbos/burner-email-providers
+        // Also can use this to check if disposable service: http://www.block-disposable-email.com/cms/try/
         "@anappthat.com",
         "@clrmail.com",
         "@dodsi.com",
+        "@eelmail.com",
         "@getairmail.com",
         "@grandmamail.com",
         "@grandmasmail.com",
@@ -740,7 +758,6 @@ public class Application {
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
         "JohnnyColvin428@gmail.com",
-        "johnseo130@gmail.com",
         "johnsinha",
         "johnydeep0712@gmail.com",
         "kalidass34212@gmail.com",
@@ -786,6 +803,7 @@ public class Application {
         "poonamkamalpatel@gmail.com",
         "porterquines@gmail.com",
         "pranay4job@gmail.com",
+        "pratik.vipra@gmail.com",
         "premk258@gmail.com",
         "printerhelplinenumber@gmail.com",
         "priturpocdickr@gmail.com",
@@ -802,9 +820,7 @@ public class Application {
         "sajankaur5@gmail.com",
         "sandy@voip4callcenters.com",
         "sandysharmja121@gmail.com",
-        "seo01@gmail.com",
-        "seo02@gmail.com",
-        "seo03@gmail.com",
+        "sellikepovscotta@gmail.com",
         "seosupport",
         "seoxpertchandan@gmail.com",
         "service.thepc@yandex.com",
@@ -861,6 +877,8 @@ public class Application {
         "1.23.110.86",
         "1.39.101.93",
         "1.39.32.111",
+        "1.39.32.185",
+        "1.39.32.244",
         "1.39.33.190",
         "1.39.33.254",
         "1.39.34.",
@@ -869,6 +887,7 @@ public class Application {
         "1.39.50.144",
         "1.39.51.63",
         "101.212.67.25",
+        "101.212.71.120",
         "101.59.76.223",
         "101.60.",
         "101.63.200.188",
@@ -879,6 +898,7 @@ public class Application {
         "103.192.65.",
         "103.192.66.163",
         "103.204.168.18",
+        "103.22.172.142",
         "103.226.202.171",
         "103.226.202.211",
         "103.233.116.124",
@@ -888,6 +908,7 @@ public class Application {
         "103.43.33.101",
         "103.44.18.221",
         "103.49.49.49",
+        "103.50.151.68",
         "103.55.",
         "104.156.228.84", // http://www.ipvoid.com/scan/104.156.228.84
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
@@ -906,11 +927,13 @@ public class Application {
         "110.227.183.246",
         "110.227.183.36",
         "111.93.63.62",
+        "112.110.2.245",
         "112.196.147.",
         "112.196.160.122",
         "112.196.170.150",
         "112.196.170.8",
         "114.143.173.139",
+        "115.111.223.43",
         "115.112.159.250",
         "115.160.250.34",
         "115.184.",
@@ -919,6 +942,7 @@ public class Application {
         "117.193.130.11",
         "117.198.",
         "117.201.159.73",
+        "117.201.166.21",
         "117.242.5.201",
         "119.81.230.137",
         "119.81.249.132", // http://www.ipvoid.com/scan/119.81.249.132
@@ -936,6 +960,7 @@ public class Application {
         "122.173.",
         "122.175.221.219",
         "122.176.18.41",
+        "122.176.78.14",
         "122.177.",
         "122.180.",
         "123.136.209.119",
@@ -963,6 +988,7 @@ public class Application {
         "182.64.",
         "182.68.",
         "182.69.",
+        "182.71.71.102",
         "182.73.182.170",
         "182.74.88.42",
         "182.75.144.58",
@@ -972,14 +998,18 @@ public class Application {
         "202.159.213.10",
         "202.53.94.4",
         "202.91.134.66",
+        "202.91.76.164",
         "202.91.76.82",
         "203.122.16.168",
         "203.122.41.130",
         "203.122.7.236",
         "203.99.192.210",
         "212.83.165.204", // http://www.ipvoid.com/scan/212.83.165.204/
+        "216.185.103.139", // http://www.ipvoid.com/scan/216.185.103.139
         "223.176.141.173",
+        "223.176.143.154",
         "223.176.152.27",
+        "223.176.156.193",
         "223.176.159.235",
         "223.176.176.254",
         "223.176.178.24",
@@ -992,6 +1022,7 @@ public class Application {
         "27.7.210.21",
         "27.7.213.175",
         "38.95.108.245", // http://www.ipvoid.com/scan/38.95.108.245
+        "38.95.109.37", // http://www.ipvoid.com/scan/38.95.109.37
         "38.95.109.67", // http://www.ipvoid.com/scan/38.95.109.67
         "43.230.198.",
         "43.245.149.107",
@@ -1029,6 +1060,7 @@ public class Application {
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
         "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
         "81.218.235.170", // http://www.ipvoid.com/scan/81.218.235.170
+        "92.114.94.106", // http://www.ipvoid.com/scan/92.114.94.106/
         "93.115.92.169" // http://www.ipvoid.com/scan/93.115.92.169
     );
 
@@ -1064,6 +1096,7 @@ public class Application {
         "drama",
         "edit page",
         "edit",
+        "edu",
         "food",
         "For Bloging",
         "for jenkins information",
@@ -1071,6 +1104,7 @@ public class Application {
         "for using wiki and jira",
         "for wiki and jira use",
         "forum post",
+        "Forum posting",
         "forum",
         "Fun Wiki",
         "fun",
@@ -1112,6 +1146,7 @@ public class Application {
         "post profile",
         "post something",
         "post",
+        "posting for information",
         "posting",
         "pratice",
         "problem solved",
@@ -1121,6 +1156,7 @@ public class Application {
         "publish",
         "question",
         "Quora",
+        "read a forum",
         "read and write",
         "read",
         "reading",
