@@ -992,6 +992,7 @@ public class Application {
         "171.50.146.100",
         "172.98.67.25", // http://www.ipvoid.com/scan/172.98.67.25
         "172.98.67.71", // http://www.ipvoid.com/scan/172.98.67.71
+        "176.67.86.12", // laptoprepair gmail guy
         "177.154.139.203", // http://www.ipvoid.com/scan/177.154.139.203
         "180.151.",
         "182.156.72.162",
