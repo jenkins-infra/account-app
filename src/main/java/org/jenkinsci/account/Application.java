@@ -1029,6 +1029,7 @@ public class Application {
         "38.95.108.245", // http://www.ipvoid.com/scan/38.95.108.245
         "38.95.109.37", // http://www.ipvoid.com/scan/38.95.109.37
         "38.95.109.67", // http://www.ipvoid.com/scan/38.95.109.67
+        "41.215.241.114", // Persistent spammer IP
         "43.230.198.",
         "43.245.149.107",
         "43.245.151.156",
@@ -1133,6 +1134,7 @@ public class Application {
         "jenkins-ci.org",
         "jira",
         "join group",
+        "just",
         "keyword promotion",
         "knowledge",
         "learn",
