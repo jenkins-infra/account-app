@@ -250,7 +250,7 @@ public class Application {
         LOGGER.info("User "+userid+" is from "+ip);
         mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
             userDetails + "\n\nHTTP Headers\n" +
-                dumpHeaders(request) + "\n\n" + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
+                dumpHeaders(request) + "\n\n" + "Account page: https://jenkins-ci.org/account/admin/search?word=" + userid + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
         new User(userid,email).mailPassword(password);
 
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
@@ -373,7 +373,7 @@ public class Application {
 
     private String userDetails(String userid, String firstName, String lastName, String email, String ip, String usedFor) {
         return String.format(
-            "ip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s\nGeoIp:=%s",
+            "ip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s\nGeoIp=%s",
             ip, email, userid, lastName, firstName, usedFor, geoIp(ip));
     }
 
@@ -676,6 +676,7 @@ public class Application {
         "@maildx.com",
         "@mailinator.com",
         "@mailnesia.com",
+        "@rediffmail.com",
         "@sharklasers.com",
         "@thrma.com",
         "@tryalert.com",
@@ -771,6 +772,7 @@ public class Application {
         "kumarprem",
         "kumarsujit",
         "LarrySilva",
+        "laptoprepair",
         "litagray931@gmail.com",
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
@@ -962,6 +964,7 @@ public class Application {
         "121.245.126.7",
         "121.245.137.28",
         "122.162.88.67",
+        "122.167.104.9",
         "122.169.130.19",
         "122.173.",
         "122.175.221.219",
@@ -989,6 +992,7 @@ public class Application {
         "171.50.146.100",
         "172.98.67.25", // http://www.ipvoid.com/scan/172.98.67.25
         "172.98.67.71", // http://www.ipvoid.com/scan/172.98.67.71
+        "176.67.86.12", // laptoprepair gmail guy
         "177.154.139.203", // http://www.ipvoid.com/scan/177.154.139.203
         "180.151.",
         "182.156.72.162",
@@ -1142,6 +1146,7 @@ public class Application {
         "just",
         "keyword promotion",
         "knowledge",
+        "knowledge sharing",
         "learn",
         "looking for voip solutions",
         "love",
