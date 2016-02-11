@@ -250,7 +250,7 @@ public class Application {
         LOGGER.info("User "+userid+" is from "+ip);
         mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
             userDetails + "\n\nHTTP Headers\n" +
-                dumpHeaders(request) + "\n\n" + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
+                dumpHeaders(request) + "\n\n" + "Account page: https://jenkins-ci.org/account/admin/search?word=" + userid + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
         new User(userid,email).mailPassword(password);
 
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
@@ -373,7 +373,7 @@ public class Application {
 
     private String userDetails(String userid, String firstName, String lastName, String email, String ip, String usedFor) {
         return String.format(
-            "ip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s\nGeoIp:=%s",
+            "ip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s\nGeoIp=%s",
             ip, email, userid, lastName, firstName, usedFor, geoIp(ip));
     }
 
