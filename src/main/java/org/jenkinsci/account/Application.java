@@ -980,8 +980,7 @@ public class Application {
         "14.141.51.5",
         "14.96.",
         "14.98.",
-        "155.254.246.62",
-        "155.254.246.75",
+        "155.254.246.",
         "169.57.0.235", // http://www.ipvoid.com/scan/169.57.0.235
         "171.48.38.188",
         "171.50.146.100",
@@ -1149,6 +1148,7 @@ public class Application {
         "news update",
         "news",
         "no",
+        "none",
         "nothing",
         "office",
         "on upload",
