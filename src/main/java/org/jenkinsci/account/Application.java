@@ -860,7 +860,7 @@ public class Application {
         "win.tech",
         "wittepepobjustina@gmail.com",
         "yadavqs@gmail.com",
-        "yashraj_one@outlook.com",
+        "yashraj_one",
         "YoultaspocDonald@gmail.com",
         "ytdeqwduqwy@yandex.com",
         "zebakhan.ssit@gmail.com",
