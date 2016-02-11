@@ -217,6 +217,7 @@ public class Application {
 
         // spam check
         // TODO, update StopForumSpam to add &notorexit (See http://www.stopforumspam.com/usage)
+        // TODO, add in http://fspamlist.com/ as well
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
                 blockReasons.add("Stopforumspam: " + a.toString());
@@ -876,6 +877,7 @@ public class Application {
         "1.23.110.86",
         "1.39.101.93",
         "1.39.32.111",
+        "1.39.32.185",
         "1.39.32.244",
         "1.39.33.190",
         "1.39.33.254",
@@ -906,6 +908,7 @@ public class Application {
         "103.43.33.101",
         "103.44.18.221",
         "103.49.49.49",
+        "103.50.151.68",
         "103.55.",
         "104.156.228.84", // http://www.ipvoid.com/scan/104.156.228.84
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
@@ -1004,7 +1007,9 @@ public class Application {
         "212.83.165.204", // http://www.ipvoid.com/scan/212.83.165.204/
         "216.185.103.139", // http://www.ipvoid.com/scan/216.185.103.139
         "223.176.141.173",
+        "223.176.143.154",
         "223.176.152.27",
+        "223.176.156.193",
         "223.176.159.235",
         "223.176.176.254",
         "223.176.178.24",
@@ -1055,6 +1060,7 @@ public class Application {
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
         "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
         "81.218.235.170", // http://www.ipvoid.com/scan/81.218.235.170
+        "92.114.94.106", // http://www.ipvoid.com/scan/92.114.94.106/
         "93.115.92.169" // http://www.ipvoid.com/scan/93.115.92.169
     );
 
@@ -1140,8 +1146,8 @@ public class Application {
         "post profile",
         "post something",
         "post",
-        "posting",
         "posting for information",
+        "posting",
         "pratice",
         "problem solved",
         "profile",
@@ -1150,6 +1156,7 @@ public class Application {
         "publish",
         "question",
         "Quora",
+        "read a forum",
         "read and write",
         "read",
         "reading",
