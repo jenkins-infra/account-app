@@ -717,6 +717,7 @@ public class Application {
         "donallakarpissaa@gmail.com",
         "dr74402@gmail.com",
         "drruytuyj@gmail.com",
+        "dutchess.meethi@gmail.com",
         "ethanluna635@gmail.com",
         "fifixtpoqpatrickh@gmail.com",
         "FishepoeMary@gmail.com",
@@ -974,6 +975,7 @@ public class Application {
         "125.63.107.204",
         "125.63.73.249",
         "125.63.99.102",
+        "128.199.242.223", // persistent spammer
         "136.185.192.239",
         "138.128.180.",
         "14.141.148.206",
@@ -1132,6 +1134,7 @@ public class Application {
         "information",
         "internet",
         "jenkins",
+        "jenkins for",
         "jenkins-ci.org",
         "jira",
         "join group",
@@ -1159,6 +1162,7 @@ public class Application {
         "post profile",
         "post something",
         "post",
+        "posting for feedback",
         "posting for information",
         "posting",
         "pratice",
@@ -1220,6 +1224,7 @@ public class Application {
         "larrysilva",
         "macden",
         "quickbook",
+        "smartjane",
         "watpad"
     );
 
