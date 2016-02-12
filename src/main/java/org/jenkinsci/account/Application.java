@@ -841,6 +841,7 @@ public class Application {
         "shobha.kachhap23@gmail.com",
         "simon.ken7@gmail.com",
         "skprajapaty@gmail.com",
+        "sman33935@gmail.com",
         "smartsolution3000@gmail.com",
         "smithlora912@gmail.com",
         "smithmartin919@gmail.com",
@@ -1078,6 +1079,7 @@ public class Application {
         "45.42.243.83",
         "45.55.3.174",
         "45.56.154.150",
+        "46.101.245.193", // Persistent spammers
         "46.165.208.207", // http://www.ipvoid.com/scan/46.165.208.207
         "46.21.149.10", // jamesthomas (manasfirdose@gmail.com)
         "49.15.149.23",
