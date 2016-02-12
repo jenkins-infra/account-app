@@ -929,6 +929,7 @@ public class Application {
         "103.55.",
         "104.156.228.84", // http://www.ipvoid.com/scan/104.156.228.84
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
+        "106.204.124.188",
         "106.204.236.224",
         "106.204.50.214",
         "106.205.188.247",
@@ -1003,6 +1004,7 @@ public class Application {
         "169.57.0.235", // http://www.ipvoid.com/scan/169.57.0.235
         "171.48.38.188",
         "171.50.146.100",
+        "171.50.42.142",
         "172.98.67.25", // http://www.ipvoid.com/scan/172.98.67.25
         "172.98.67.71", // http://www.ipvoid.com/scan/172.98.67.71
         "176.67.86.12", // laptoprepair gmail guy
