@@ -936,6 +936,7 @@ public class Application {
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
         "106.204.124.188",
         "106.204.236.224",
+        "106.204.246.196",
         "106.204.50.214",
         "106.205.188.247",
         "106.67.102.143",
@@ -1016,6 +1017,7 @@ public class Application {
         "176.53.21.213", // http://www.ipvoid.com/scan/176.53.21.213
         "176.67.85.1", // http://www.ipvoid.com/scan/176.67.85.1
         "176.67.86.12", // laptoprepair gmail guy
+        "176.67.86.36", // Persistent spammer
         "177.154.139.203", // http://www.ipvoid.com/scan/177.154.139.203
         "180.151.",
         "180.254.96.177", // http://www.ipvoid.com/scan/180.254.96.177
@@ -1059,12 +1061,14 @@ public class Application {
         "27.60.131.203",
         "27.7.210.21",
         "27.7.213.175",
+        "27.7.231.16",
         "38.132.106.132", // http://www.ipvoid.com/scan/38.132.106.132
         "38.95.108.245", // http://www.ipvoid.com/scan/38.95.108.245
         "38.95.109.37", // http://www.ipvoid.com/scan/38.95.109.37
         "38.95.109.67", // http://www.ipvoid.com/scan/38.95.109.67
         "41.215.241.114", // Persistent spammer IP
         "43.230.198.",
+        "43.239.204.41",
         "43.245.149.107",
         "43.245.151.156",
         "43.245.211.71",
@@ -1105,6 +1109,7 @@ public class Application {
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
         "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
         "81.218.235.170", // http://www.ipvoid.com/scan/81.218.235.170
+        "93.114.44.187", // http://www.ipvoid.com/scan/93.114.44.187
         "92.114.94.106", // http://www.ipvoid.com/scan/92.114.94.106/
         "93.115.92.169" // http://www.ipvoid.com/scan/93.115.92.169
     );
@@ -1161,6 +1166,7 @@ public class Application {
         "good",
         "google",
         "group discussion",
+        "gui",
         "help support",
         "help",
         "helpline and support",
