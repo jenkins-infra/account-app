@@ -684,6 +684,7 @@ public class Application {
         "@vomoto.com",
         "@webtrackker.com",
         "@yahoo.co.id",
+        "@yeslifecyclemarketing.com",
         "@yopmail.com",
         "@zetmail.com",
         "abdhesh090@gmail.com",
@@ -782,6 +783,7 @@ public class Application {
         "litagray931@gmail.com",
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
+        "lovebhaiseo@gmail.com",
         "lutherorea2807@gmail.com",
         "mac2help@outlook.com",
         "mac2help@outlook.com",
@@ -929,6 +931,8 @@ public class Application {
         "103.254.154.229",
         "103.43.33.101",
         "103.44.18.221",
+        "103.47.168.57",
+        "103.47.169.7",
         "103.49.49.49",
         "103.50.151.68",
         "103.55.",
@@ -957,11 +961,13 @@ public class Application {
         "112.110.2.245",
         "112.196.147.",
         "112.196.160.122",
+        "112.196.160.61",
         "112.196.170.150",
         "112.196.170.8",
         "114.143.173.139",
         "115.111.223.43",
         "115.112.159.250",
+        "115.115.131.166",
         "115.160.250.34",
         "115.184.",
         "116.202.36.",
@@ -980,6 +986,7 @@ public class Application {
         "120.59.205.205",
         "121.242.77.200",
         "121.244.181.162",
+        "121.244.95.1",
         "121.245.126.7",
         "121.245.137.28",
         "122.162.88.67",
@@ -1027,13 +1034,16 @@ public class Application {
         "182.68.",
         "182.69.",
         "182.71.71.102",
+        "182.73.117.142",
         "182.73.182.170",
         "182.74.88.42",
         "182.75.144.58",
         "182.75.176.202",
         "182.77.8.92",
+        "183.82.199.55",
         "185.22.232.91", // Persistent spammer
         "196.207.106.219",
+        "198.8.80.172", // http://www.ipvoid.com/scan/198.8.80.172
         "202.159.213.10",
         "202.53.94.4",
         "202.91.134.66",
@@ -1047,10 +1057,12 @@ public class Application {
         "212.83.165.204", // http://www.ipvoid.com/scan/212.83.165.204/
         "216.185.103.139", // http://www.ipvoid.com/scan/216.185.103.139
         "223.176.141.173",
+        "223.176.142.230",
         "223.176.143.154",
         "223.176.152.27",
         "223.176.156.193",
         "223.176.159.235",
+        "223.176.165.11",
         "223.176.176.254",
         "223.176.178.24",
         "223.176.189.144",
@@ -1062,6 +1074,7 @@ public class Application {
         "27.7.210.21",
         "27.7.213.175",
         "27.7.231.16",
+        "27.255.252.28",
         "38.132.106.132", // http://www.ipvoid.com/scan/38.132.106.132
         "38.95.108.245", // http://www.ipvoid.com/scan/38.95.108.245
         "38.95.109.37", // http://www.ipvoid.com/scan/38.95.109.37
@@ -1069,6 +1082,8 @@ public class Application {
         "41.215.241.114", // Persistent spammer IP
         "43.230.198.",
         "43.239.204.41",
+        "43.239.68.7",
+        "43.239.68.202",
         "43.245.149.107",
         "43.245.151.156",
         "43.245.211.71",
@@ -1109,8 +1124,10 @@ public class Application {
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
         "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
         "81.218.235.170", // http://www.ipvoid.com/scan/81.218.235.170
-        "93.114.44.187", // http://www.ipvoid.com/scan/93.114.44.187
+        "91.121.219.236", // http://www.ipvoid.com/scan/91.121.219.236
+        "91.205.175.34", // http://www.ipvoid.com/scan/91.205.175.34
         "92.114.94.106", // http://www.ipvoid.com/scan/92.114.94.106/
+        "93.114.44.187", // http://www.ipvoid.com/scan/93.114.44.187
         "93.115.92.169" // http://www.ipvoid.com/scan/93.115.92.169
     );
 
@@ -1207,6 +1224,7 @@ public class Application {
         "post profile",
         "post something",
         "post",
+        "posting for facebook",
         "posting for feedback",
         "posting for information",
         "posting",
@@ -1215,6 +1233,7 @@ public class Application {
         "printers",
         "problem solved",
         "profile",
+        "Promote our website",
         "promotion",
         "Publicity",
         "publish",
@@ -1224,6 +1243,7 @@ public class Application {
         "read and write",
         "read",
         "reading",
+        "reCAPTCHA",
         "research",
         "robot",
         "search",
