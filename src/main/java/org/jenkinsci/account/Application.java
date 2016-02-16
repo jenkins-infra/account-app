@@ -782,6 +782,7 @@ public class Application {
         "litagray931@gmail.com",
         "litawilliam36@gmail.com",
         "loksabha100@gmail.com",
+        "lovebhaiseo@gmail.com",
         "lutherorea2807@gmail.com",
         "mac2help@outlook.com",
         "mac2help@outlook.com",
@@ -929,6 +930,7 @@ public class Application {
         "103.254.154.229",
         "103.43.33.101",
         "103.44.18.221",
+        "103.47.169.7",
         "103.49.49.49",
         "103.50.151.68",
         "103.55.",
@@ -1034,6 +1036,7 @@ public class Application {
         "182.77.8.92",
         "185.22.232.91", // Persistent spammer
         "196.207.106.219",
+        "198.8.80.172", // http://www.ipvoid.com/scan/198.8.80.172
         "202.159.213.10",
         "202.53.94.4",
         "202.91.134.66",
@@ -1109,8 +1112,10 @@ public class Application {
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
         "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
         "81.218.235.170", // http://www.ipvoid.com/scan/81.218.235.170
-        "93.114.44.187", // http://www.ipvoid.com/scan/93.114.44.187
+        "91.121.219.236", // http://www.ipvoid.com/scan/91.121.219.236
+        "91.205.175.34", // http://www.ipvoid.com/scan/91.205.175.34
         "92.114.94.106", // http://www.ipvoid.com/scan/92.114.94.106/
+        "93.114.44.187", // http://www.ipvoid.com/scan/93.114.44.187
         "93.115.92.169" // http://www.ipvoid.com/scan/93.115.92.169
     );
 
