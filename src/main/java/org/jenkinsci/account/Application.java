@@ -915,6 +915,7 @@ public class Application {
         "1.39.34.",
         "1.39.35.",
         "1.39.40.26",
+        "1.39.40.30",
         "1.39.50.144",
         "1.39.51.63",
         "101.212.67.25",
@@ -951,6 +952,7 @@ public class Application {
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
         "104.236.123.17", // persistent spammer
         "106.201.144.243",
+        "106.201.196.70",
         "106.204.124.188",
         "106.204.142.176",
         "106.204.236.224",
@@ -1227,6 +1229,7 @@ public class Application {
         "information",
         "interest",
         "internet",
+        "JDBC",
         "jenkins for",
         "jenkins",
         "jenkins-ci.org",
@@ -1249,6 +1252,7 @@ public class Application {
         "no",
         "none",
         "nothing",
+        "ODBC",
         "office use",
         "office",
         "on upload",
