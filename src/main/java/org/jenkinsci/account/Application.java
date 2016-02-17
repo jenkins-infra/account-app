@@ -681,6 +681,7 @@ public class Application {
     public static final List<String> EMAIL_BLACKLIST = Arrays.asList(
         // TODO: Integrate with https://github.com/wesbos/burner-email-providers
         // Also can use this to check if disposable service: http://www.block-disposable-email.com/cms/try/
+        "@akglsgroup.com",
         "@anappthat.com",
         "@boximail.com",
         "@clrmail.com",
@@ -936,6 +937,7 @@ public class Application {
         "101.222.175.13",
         "101.56.2.232",
         "101.57.198.190",
+        "101.57.198.22",
         "101.59.76.223",
         "101.60.",
         "101.63.200.188",
@@ -955,6 +957,7 @@ public class Application {
         "103.254.154.229",
         "103.43.33.101",
         "103.44.18.221",
+        "103.47.168.129",
         "103.47.168.57",
         "103.47.169.7",
         "103.49.49.49",
@@ -1035,6 +1038,7 @@ public class Application {
         "124.41.241.203",
         "125.16.2.102",
         "125.63.104.53",
+        "125.63.107.141",
         "125.63.107.204",
         "125.63.73.249",
         "125.63.96.184",
@@ -1060,6 +1064,7 @@ public class Application {
         "176.53.21.213", // http://www.ipvoid.com/scan/176.53.21.213
         "176.67.85.1", // http://www.ipvoid.com/scan/176.67.85.1
         "176.67.86.12", // laptoprepair gmail guy
+        "176.67.86.136", // Persistent spammer
         "176.67.86.36", // Persistent spammer
         "177.154.139.203", // http://www.ipvoid.com/scan/177.154.139.203
         "180.151.",
@@ -1108,12 +1113,12 @@ public class Application {
         "223.180.245.176",
         "223.183.67.247",
         "223.225.42.57",
+        "27.255.252.28",
         "27.56.47.65",
         "27.60.131.203",
         "27.7.210.21",
         "27.7.213.175",
         "27.7.231.16",
-        "27.255.252.28",
         "38.132.106.132", // http://www.ipvoid.com/scan/38.132.106.132
         "38.95.108.245", // http://www.ipvoid.com/scan/38.95.108.245
         "38.95.109.37", // http://www.ipvoid.com/scan/38.95.109.37
@@ -1121,8 +1126,8 @@ public class Application {
         "41.215.241.114", // Persistent spammer IP
         "43.230.198.",
         "43.239.204.41",
-        "43.239.68.7",
         "43.239.68.202",
+        "43.239.68.7",
         "43.245.149.107",
         "43.245.151.",
         "43.245.211.71",
@@ -1354,8 +1359,9 @@ public class Application {
     );
 
     public static final List<String> NAUGHTY_BLACKLIST = Arrays.asList(
-        "fuck",
-        "asshole"
+        "asshole",
+        "bastard",
+        "fuck"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
