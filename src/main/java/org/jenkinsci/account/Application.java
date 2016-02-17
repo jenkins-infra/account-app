@@ -178,10 +178,20 @@ public class Application {
         }
 
         for(String fragment : USE_BLACKLIST) {
-            if(usedFor != null && !usedFor.trim().isEmpty()) {
+            if(!usedFor.trim().isEmpty()) {
                 if (usedFor.trim().equalsIgnoreCase(fragment)) {
                     blockReasons.add("BL: use");
                 }
+            }
+        }
+
+        for(String fragment : NAUGHTY_BLACKLIST) {
+            if(userid.toLowerCase().contains(fragment.toLowerCase())
+                || firstName.toLowerCase().contains(fragment.toLowerCase())
+                || lastName.toLowerCase().contains(fragment.toLowerCase())
+                || usedFor.toLowerCase().contains(fragment.toLowerCase())
+                ) {
+                blockReasons.add("BL: naughty");
             }
         }
 
@@ -1341,6 +1351,11 @@ public class Application {
         "quickbook",
         "smartjane",
         "watpad"
+    );
+
+    public static final List<String> NAUGHTY_BLACKLIST = Arrays.asList(
+        "fuck",
+        "asshole"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
