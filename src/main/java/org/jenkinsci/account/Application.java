@@ -1,6 +1,8 @@
 package org.jenkinsci.account;
 import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.common.net.InetAddresses;
 import jiraldapsyncer.JiraLdapSyncer;
 import jiraldapsyncer.ServiceLocator;
 import org.apache.commons.collections.EnumerationUtils;
@@ -383,7 +385,13 @@ public class Application {
     private String extractFirst(String ip) {
         if (ip==null)   return "127.0.0.1";
         int idx = ip.indexOf(",");
-        if (idx>0)  return ip.substring(0,idx);
+        if(idx>0) {
+            for (String xForwardedFor : ip.split(",")) {
+                if (!Strings.isNullOrEmpty(xForwardedFor) && !InetAddresses.forString(xForwardedFor).isSiteLocalAddress()) {
+                    return ip;
+                }
+            }
+        }
         return ip;
     }
 
@@ -830,6 +838,7 @@ public class Application {
         "rajdsky7@gmail.com",
         "randyortam68@gmail.com",
         "ravirknayak@gmail.com",
+        "rawatsonam",
         "rehel55rk@gmail.com",
         "righttechnical",
         "rikybhel23@gmail.com",
@@ -873,6 +882,7 @@ public class Application {
         "vcb@gmail.com",
         "viz.michel@gmail.com",
         "vr4vikasrastogi@gmail.com",
+        "vvicky4001@gmail.com",
         "watpad",
         "webdevelopera@gmail.com",
         "webtracker",
@@ -903,8 +913,7 @@ public class Application {
         "1.39.32.",
         "1.39.33.",
         "1.39.34.",
-        "1.39.35.150",
-        "1.39.35.33",
+        "1.39.35.",
         "1.39.40.26",
         "1.39.50.144",
         "1.39.51.63",
@@ -912,6 +921,7 @@ public class Application {
         "101.212.69.213",
         "101.212.71.120",
         "101.222.175.13",
+        "101.56.2.232",
         "101.59.76.223",
         "101.60.",
         "101.63.200.188",
@@ -938,7 +948,10 @@ public class Application {
         "103.55.",
         "104.156.228.84", // http://www.ipvoid.com/scan/104.156.228.84
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
+        "104.236.123.17", // persistent spammer
+        "106.201.144.243",
         "106.204.124.188",
+        "106.204.142.176",
         "106.204.236.224",
         "106.204.246.196",
         "106.204.50.214",
@@ -984,6 +997,7 @@ public class Application {
         "120.57.17.65",
         "120.57.86.248",
         "120.59.205.205",
+        "121.242.40.15",
         "121.242.77.200",
         "121.244.181.162",
         "121.244.95.1",
@@ -999,16 +1013,19 @@ public class Application {
         "122.177.",
         "122.180.",
         "123.136.209.119",
+        "123.239.77.189",
         "123.254.107.229",
         "124.41.241.203",
         "125.16.2.102",
         "125.63.104.53",
         "125.63.107.204",
         "125.63.73.249",
+        "125.63.96.184",
         "125.63.99.102",
         "128.199.242.223", // persistent spammer
         "136.185.192.239",
         "138.128.180.",
+        "14.141.1.58",
         "14.141.148.206",
         "14.141.148.222",
         "14.141.51.5",
@@ -1016,7 +1033,9 @@ public class Application {
         "14.98.",
         "155.254.246.",
         "169.57.0.235", // http://www.ipvoid.com/scan/169.57.0.235
+        "171.48.32.3",
         "171.48.38.188",
+        "171.50.131.221",
         "171.50.146.100",
         "171.50.42.142",
         "172.98.67.25", // http://www.ipvoid.com/scan/172.98.67.25
@@ -1039,14 +1058,17 @@ public class Application {
         "182.74.88.42",
         "182.75.144.58",
         "182.75.176.202",
+        "182.77.14.159",
         "182.77.8.92",
         "183.82.199.55",
         "185.22.232.91", // Persistent spammer
         "196.207.106.219",
+        "196.207.107.56",
         "198.8.80.172", // http://www.ipvoid.com/scan/198.8.80.172
         "202.159.213.10",
         "202.53.94.4",
         "202.91.134.66",
+        "202.91.134.67",
         "202.91.76.164",
         "202.91.76.82",
         "203.110.83.66",
@@ -1085,22 +1107,28 @@ public class Application {
         "43.239.68.7",
         "43.239.68.202",
         "43.245.149.107",
+        "43.245.151.144",
         "43.245.151.156",
         "43.245.211.71",
         "43.251.84.",
+        "43.252.24.155",
         "43.252.27.52",
         "43.252.29.202",
+        "43.252.30.93",
         "43.252.31.138",
         "43.252.33.70",
+        "43.252.35.80",
         "45.114.63.184",
         "45.115.",
         "45.120.162.172",
         "45.120.56.65",
         "45.121.188.46",
         "45.121.189.236",
+        "45.121.191.78",
         "45.122.120.178",
         "45.122.123.47",
         "45.127.40.20",
+        "45.127.40.231",
         "45.127.42.63",
         "45.127.43.154",
         "45.42.243.83",
@@ -1149,6 +1177,7 @@ public class Application {
         "blog",
         "bloging",
         "blogs",
+        "bug tracker",
         "business",
         "businessman",
         "bussiness",
@@ -1190,8 +1219,10 @@ public class Application {
         "helpline",
         "https://jenkins-ci.org",
         "https://jenkins-ci.org/account/signup",
+        "i love this site",
         "info",
         "information",
+        "interest",
         "internet",
         "jenkins for",
         "jenkins",
@@ -1203,6 +1234,7 @@ public class Application {
         "knowledge sharing",
         "knowledge",
         "learn",
+        "linux tips",
         "looking for voip solutions",
         "love",
         "marketing",
@@ -1223,9 +1255,11 @@ public class Application {
         "permotions",
         "post profile",
         "post something",
+        "post submission",
         "post",
         "posting for facebook",
         "posting for feedback",
+        "posting for gmail",
         "posting for information",
         "posting",
         "pratice",
@@ -1252,9 +1286,11 @@ public class Application {
         "seo",
         "service",
         "share info",
+        "share my knowledge",
         "share post",
         "sharing",
         "social",
+        "software information",
         "solve problem",
         "spam",
         "spread information",
