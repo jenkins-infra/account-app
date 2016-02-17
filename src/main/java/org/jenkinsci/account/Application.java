@@ -275,7 +275,7 @@ public class Application {
     }
 
     private boolean badNameElement(String userid) {
-        return Pattern.matches("^[sdfghrt0-9]+$", userid.toLowerCase());
+        return Pattern.matches("^[sdfghrtbvd0-9]+$", userid.toLowerCase());
     }
 
     public String geoIp(String ip) {
@@ -826,6 +826,7 @@ public class Application {
         "pogogames483@gmail.com",
         "poonamkamalpatel@gmail.com",
         "porterquines@gmail.com",
+        "PoweltpowWilliamm@gmail.com",
         "pranay4job@gmail.com",
         "pratik.vipra@gmail.com",
         "premk258@gmail.com",
@@ -855,6 +856,7 @@ public class Application {
         "shilpikispotta2508@gmail.com",
         "shobha.kachhap23@gmail.com",
         "simon.ken7@gmail.com",
+        "singhmukul",
         "skprajapaty@gmail.com",
         "sman33935@gmail.com",
         "smartsolution3000@gmail.com",
@@ -1112,8 +1114,7 @@ public class Application {
         "43.239.68.7",
         "43.239.68.202",
         "43.245.149.107",
-        "43.245.151.144",
-        "43.245.151.156",
+        "43.245.151.",
         "43.245.211.71",
         "43.251.84.",
         "43.252.24.155",
@@ -1121,6 +1122,7 @@ public class Application {
         "43.252.29.202",
         "43.252.30.93",
         "43.252.31.138",
+        "43.252.32.181",
         "43.252.33.70",
         "43.252.35.80",
         "45.114.63.184",
@@ -1315,6 +1317,7 @@ public class Application {
         "technical support",
         "tutorial",
         "tutorials",
+        "use",
         "useful",
         "user blog",
         "want to study",
