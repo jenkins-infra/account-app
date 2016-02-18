@@ -216,18 +216,6 @@ public class Application {
             blockReasons.add("Bad name element");
         }
 
-        final DirContext con = connect();
-        try {
-            if(ldapObjectExists(con, "(id={0})", userid)) {
-                throw new UserError("ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
-            }
-            if(ldapObjectExists(con, "(mail={0})", email)) {
-                blockReasons.add("Existing email in system");
-            }
-        } finally {
-            con.close();
-        }
-
         if(checkCookie(request, ALREADY_SIGNED_UP)) {
             blockReasons.add("Cookie");
         }
@@ -252,6 +240,22 @@ public class Application {
             for (String txt : getTxtRecord(reversedIp + "." + rblHost)) {
                 blockReasons.add("RBL " + rblHost + ": " + txt);
             }
+        }
+
+        final DirContext con = connect();
+        try {
+            if(ldapObjectExists(con, "(id={0})", userid)) {
+                throw new UserError("ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
+            }
+            if(ldapObjectExists(con, "(mail={0})", email)) {
+                if(!blockReasons.isEmpty()) {
+                    blockReasons.add("Existing email in system");
+                } else {
+                    throw new UserError("You already have an account with that email address associated with it.");
+                }
+            }
+        } finally {
+            con.close();
         }
 
         String userDetails = userDetails(userid, firstName, lastName, email, ip, usedFor);
@@ -807,6 +811,7 @@ public class Application {
         "johngarry227@gmail.com",
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
+        "johnmikulis8",
         "JohnnyColvin428@gmail.com",
         "johnprashar1@gmail.com",
         "johnsinha",
