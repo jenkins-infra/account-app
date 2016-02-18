@@ -732,6 +732,7 @@ public class Application {
         "anilsingh7885945@gmail.com",
         "anjilojilo@gmail.com",
         "ankit",
+        "April.caword1589@gmail.com",
         "apwebs7012@yahoo.com",
         "apwebs70@gmail.com",
         "arena.wilson91@gmail.com",
@@ -744,13 +745,14 @@ public class Application {
         "bcmdsbncskj@yandex.com",
         "besto.sty@yandex.com",
         "bidupan12@gmail.com",
-        "billydoch021@gmail.com",
         "bill.cardy1366@gmail.com",
+        "billydoch021@gmail.com",
         "boleshahuja88@gmail.com",
         "choutpoyjenniferm@gmail.com",
         "ciodsjiocxjosa@yandex.com",
         "ClarencePatterson570@gmail.com",
         "CoatseardeaspozWilliamb",
+        "cooktimseo@gmail.com",
         "cooperdavidd@gmail.com",
         "crsgroupindia@gmail.com",
         "dasdasdsas32@gmail.com",
@@ -875,6 +877,7 @@ public class Application {
         "rahul4cool2003@gmail.com",
         "rahuldheere@gmail.com",
         "rajdsky7@gmail.com",
+        "rajkumarskbd@gmail.com",
         "ramlakhaann@gmail.com",
         "randyortam68@gmail.com",
         "RasidegingpofLaceyz@gmail.com",
@@ -1023,6 +1026,7 @@ public class Application {
         "106.67.76.237",
         "106.67.89.196",
         "106.76.167.41",
+        "106.79.57.84",
         "109.163.234.8", // http://www.ipvoid.com/scan/109.163.234.8
         "110.172.140.98",
         "110.227.181.55",
@@ -1092,6 +1096,7 @@ public class Application {
         "14.141.1.58",
         "14.141.148.206",
         "14.141.148.222",
+        "14.141.49.210",
         "14.141.51.5",
         "14.96.",
         "14.98.",
@@ -1146,6 +1151,7 @@ public class Application {
         "203.122.41.130",
         "203.122.7.236",
         "203.99.192.210",
+        "212.7.220.136", // aprilcowardy
         "212.83.165.204", // http://www.ipvoid.com/scan/212.83.165.204/
         "213.183.56.51", // Persistent spammer IP
         "216.185.103.139", // http://www.ipvoid.com/scan/216.185.103.139
@@ -1161,6 +1167,7 @@ public class Application {
         "223.176.188.147",
         "223.176.189.144",
         "223.180.245.176",
+        "223.183.100.179",
         "223.183.67.247",
         "223.225.42.57",
         "27.255.252.28",
@@ -1203,8 +1210,8 @@ public class Application {
         "45.122.120.178",
         "45.122.123.47",
         "45.127.40.",
-        "45.127.42.63",
         "45.127.42.219",
+        "45.127.42.63",
         "45.127.43.154",
         "45.42.243.83",
         "45.55.3.174",
@@ -1232,7 +1239,8 @@ public class Application {
         "91.205.175.34", // http://www.ipvoid.com/scan/91.205.175.34
         "92.114.94.106", // http://www.ipvoid.com/scan/92.114.94.106/
         "93.114.44.187", // http://www.ipvoid.com/scan/93.114.44.187
-        "93.115.92.169" // http://www.ipvoid.com/scan/93.115.92.169
+        "93.115.92.169", // http://www.ipvoid.com/scan/93.115.92.169
+        "95.211.171.164" // http://www.ipvoid.com/scan/95.211.171.164
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
@@ -1402,6 +1410,7 @@ public class Application {
         "user blog",
         "want to study",
         "web page",
+        "website promotion",
         "website",
         "what",
         "wiki and jira",
