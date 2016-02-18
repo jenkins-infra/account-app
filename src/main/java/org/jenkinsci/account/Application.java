@@ -1023,6 +1023,7 @@ public class Application {
         "106.204.142.176",
         "106.204.236.224",
         "106.204.246.196",
+        "106.204.46.93",
         "106.204.50.214",
         "106.205.188.247",
         "106.215.176.34",
@@ -1122,8 +1123,7 @@ public class Application {
         "172.98.67.71", // http://www.ipvoid.com/scan/172.98.67.71
         "176.53.21.213", // http://www.ipvoid.com/scan/176.53.21.213
         "176.67.85.1", // http://www.ipvoid.com/scan/176.67.85.1
-        "176.67.86.12", // laptoprepair gmail guy
-        "176.67.86.136", // Persistent spammer
+        "176.67.86.", // laptoprepair gmail guy and Persistent spammers
         "176.67.86.36", // Persistent spammer
         "177.154.139.203", // http://www.ipvoid.com/scan/177.154.139.203
         "180.151.",
