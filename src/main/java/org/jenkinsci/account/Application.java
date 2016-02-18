@@ -745,6 +745,7 @@ public class Application {
         "besto.sty@yandex.com",
         "bidupan12@gmail.com",
         "billydoch021@gmail.com",
+        "bill.cardy1366@gmail.com",
         "boleshahuja88@gmail.com",
         "choutpoyjenniferm@gmail.com",
         "ciodsjiocxjosa@yandex.com",
@@ -1130,6 +1131,7 @@ public class Application {
         "183.82.199.55",
         "185.22.232.91", // Persistent spammer
         "185.61.148.226", // Persistent spammer
+        "188.116.36.188", // Persistent spammer
         "196.207.106.219",
         "196.207.107.56",
         "198.8.80.172", // http://www.ipvoid.com/scan/198.8.80.172
@@ -1234,7 +1236,10 @@ public class Application {
     );
 
     public static final List<String> USE_BLACKLIST = Arrays.asList(
+        "abc",
+        "abcd",
         "About Jenkins CI",
+        "acbd",
         "ad",
         "add a page",
         "add page",
