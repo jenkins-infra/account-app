@@ -159,6 +159,10 @@ public class Application {
             blockReasons.add("BL: email (custom)");
         }
 
+        if(firstName.equalsIgnoreCase("help") && lastName.equalsIgnoreCase("desk")) {
+            blockReasons.add("BL: name (custom)");
+        }
+
         if((Pattern.matches("\\w{2,6}\\d{3,}@gmail.com", email) || Pattern.matches("\\w{2,6}\\d{3,}", userid)) &&
             usedFor.equalsIgnoreCase("automation")) {
             blockReasons.add("BL: email|userid and use custom");
@@ -719,6 +723,7 @@ public class Application {
         "ajymaansingh@gmail.com",
         "albertthomas",
         "aliskimis@gmail.com",
+        "allymptedpokdebraj@gmail.com",
         "AndentspouRita@gmail.com",
         "andorclifs@gmail.com",
         "andrusmith",
@@ -798,6 +803,7 @@ public class Application {
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
         "JohnnyColvin428@gmail.com",
+        "johnprashar1@gmail.com",
         "johnsinha",
         "johnydeep0712@gmail.com",
         "kalidass34212@gmail.com",
@@ -866,6 +872,7 @@ public class Application {
         "rajdsky7@gmail.com",
         "ramlakhaann@gmail.com",
         "randyortam68@gmail.com",
+        "RasidegingpofLaceyz@gmail.com",
         "ravi1991allahabaduniversity@gmail.com",
         "ravirknayak@gmail.com",
         "rawatsonam",
@@ -899,6 +906,7 @@ public class Application {
         "spyindia",
         "spyvikash",
         "stephanflorian1@gmail.com",
+        "stuartbinny12021996@gmail.com",
         "sty.besto",
         "stybesto13",
         "sundeepsa123@gmail.com",
@@ -1051,6 +1059,7 @@ public class Application {
         "122.162.88.67",
         "122.167.104.9",
         "122.169.130.19",
+        "122.172.222.232",
         "122.173.",
         "122.175.221.219",
         "122.176.18.41",
@@ -1112,6 +1121,7 @@ public class Application {
         "182.77.8.92",
         "183.82.199.55",
         "185.22.232.91", // Persistent spammer
+        "185.61.148.226", // Persistent spammer
         "196.207.106.219",
         "196.207.107.56",
         "198.8.80.172", // http://www.ipvoid.com/scan/198.8.80.172
@@ -1127,6 +1137,7 @@ public class Application {
         "203.122.7.236",
         "203.99.192.210",
         "212.83.165.204", // http://www.ipvoid.com/scan/212.83.165.204/
+        "213.183.56.51", // Persistent spammer IP
         "216.185.103.139", // http://www.ipvoid.com/scan/216.185.103.139
         "223.176.141.173",
         "223.176.142.230",
@@ -1137,6 +1148,7 @@ public class Application {
         "223.176.165.11",
         "223.176.176.254",
         "223.176.178.24",
+        "223.176.188.147",
         "223.176.189.144",
         "223.180.245.176",
         "223.183.67.247",
@@ -1361,6 +1373,7 @@ public class Application {
         "submit page",
         "support",
         "surfing",
+        "talk",
         "teacher",
         "tech support",
         "technical help support",
