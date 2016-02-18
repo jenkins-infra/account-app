@@ -248,11 +248,7 @@ public class Application {
                 throw new UserError("ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
             }
             if(ldapObjectExists(con, "(mail={0})", email)) {
-                if(!blockReasons.isEmpty()) {
-                    blockReasons.add("Existing email in system");
-                } else {
-                    throw new UserError("You already have an account with that email address associated with it.");
-                }
+                blockReasons.add("Existing email in system");
             }
         } finally {
             con.close();
@@ -752,6 +748,7 @@ public class Application {
         "bidupan12@gmail.com",
         "bill.cardy1366@gmail.com",
         "billydoch021@gmail.com",
+        "biodotlab",
         "boleshahuja88@gmail.com",
         "choutpoyjenniferm@gmail.com",
         "ciodsjiocxjosa@yandex.com",
@@ -767,7 +764,9 @@ public class Application {
         "dr74402@gmail.com",
         "drruytuyj@gmail.com",
         "dutchess.meethi@gmail.com",
+        "emaxico13@gmail.com",
         "ethanluna635@gmail.com",
+        "evagreen277@gmail.com",
         "fifixtpoqpatrickh@gmail.com",
         "FishepoeMary@gmail.com",
         "flustpozwilliamp@gmail.com",
@@ -881,6 +880,7 @@ public class Application {
         "printerhelplinenumber@gmail.com",
         "priturpocdickr@gmail.com",
         "quickbook",
+        "qukenservicess",
         "r.onysokha@gmail.com",
         "rahul4cool2003@gmail.com",
         "rahuldheere@gmail.com",
@@ -955,6 +955,7 @@ public class Application {
         "yadavshalini501@gmail.com",
         "yashraj_one",
         "YoultaspocDonald@gmail.com",
+        "youmint.lav@gmail.com",
         "ytdeqwduqwy@yandex.com",
         "zebakhan.ssit@gmail.com",
         "zozojams11@gmail.com"
@@ -978,8 +979,7 @@ public class Application {
         "1.39.33.",
         "1.39.34.",
         "1.39.35.",
-        "1.39.40.26",
-        "1.39.40.30",
+        "1.39.40.",
         "1.39.50.144",
         "1.39.51.63",
         "101.212.67.25",
@@ -1128,6 +1128,7 @@ public class Application {
         "177.154.139.203", // http://www.ipvoid.com/scan/177.154.139.203
         "180.151.",
         "180.254.96.177", // http://www.ipvoid.com/scan/180.254.96.177
+        "181.41.197.63", // Persistent spammer
         "182.156.72.162",
         "182.156.89.34",
         "182.64.",
@@ -1136,6 +1137,7 @@ public class Application {
         "182.71.71.102",
         "182.73.117.142",
         "182.73.182.170",
+        "182.74.135.26",
         "182.74.88.42",
         "182.75.144.58",
         "182.75.176.202",
@@ -1193,8 +1195,7 @@ public class Application {
         "41.215.241.114", // Persistent spammer IP
         "43.230.198.",
         "43.239.204.41",
-        "43.239.68.202",
-        "43.239.68.7",
+        "43.239.68.",
         "43.245.149.107",
         "43.245.151.",
         "43.245.211.71",
@@ -1295,6 +1296,7 @@ public class Application {
         "edu",
         "food",
         "For Bloging",
+        "for java",
         "for jenkins information",
         "for news",
         "for sahring information",
