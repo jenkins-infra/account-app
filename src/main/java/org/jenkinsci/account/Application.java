@@ -159,7 +159,10 @@ public class Application {
             blockReasons.add("BL: email (custom)");
         }
 
-        if(firstName.equalsIgnoreCase("help") && lastName.equalsIgnoreCase("desk")) {
+        if(
+            (firstName.equalsIgnoreCase("help") && lastName.equalsIgnoreCase("desk")) ||
+                (firstName.contains("quickbook") || lastName.contains("quickbook"))
+            ) {
             blockReasons.add("BL: name (custom)");
         }
 
@@ -757,6 +760,7 @@ public class Application {
         "billydoch021@gmail.com",
         "biodotlab",
         "boleshahuja88@gmail.com",
+        "boymorpoupamm@gmail.com",
         "caulnurearkporjohnh@gmail.com",
         "choutpoyjenniferm@gmail.com",
         "ciodsjiocxjosa@yandex.com",
@@ -770,11 +774,13 @@ public class Application {
         "deal4udeal4me@gmail.com",
         "deepakkumar02singh@gmail.com",
         "dersttycert101@gmail.com",
+        "devilr724",
         "doetpouernestp@gmail.com",
         "donallakarpissaa@gmail.com",
         "dr74402@gmail.com",
         "drruytuyj@gmail.com",
         "dutchess.meethi@gmail.com",
+        "dwari.hdyr528@gmail.com",
         "emaxico",
         "ethanluna635@gmail.com",
         "evagreen277@gmail.com",
@@ -931,10 +937,12 @@ public class Application {
         "sawanjha17@gmail.com",
         "sbabita149@gmail.com",
         "sellikepovscotta@gmail.com",
+        "seo@gmail.com",
         "seosupport",
         "seoxpertchandan@gmail.com",
         "service.thepc@yandex.com",
         "shashisemraha@gmail.com",
+        "shichpodlakeisha@gmail.com",
         "shilpikispotta2508@gmail.com",
         "shobha.kachhap23@gmail.com",
         "shyamtengo91@gmail.com",
@@ -985,6 +993,7 @@ public class Application {
         "yadavqs@gmail.com",
         "yadavshalini501@gmail.com",
         "yashraj_one",
+        "yetwallpoudonnal@gmail.com",
         "youltaspocdonald@gmail.com",
         "youmint.lav@gmail.com",
         "ytdeqwduqwy@yandex.com",
@@ -1059,6 +1068,7 @@ public class Application {
         "104.236.123.17", // persistent spammer
         "106.201.144.243",
         "106.201.196.70",
+        "106.201.33.175",
         "106.204.124.188",
         "106.204.142.176",
         "106.204.236.224",
@@ -1235,6 +1245,7 @@ public class Application {
         "223.183.67.247",
         "223.225.42.57",
         "27.255.252.28",
+        "27.4.184.217",
         "27.56.47.65",
         "27.60.131.203",
         "27.7.210.21",
@@ -1261,6 +1272,7 @@ public class Application {
         "43.252.27.35",
         "43.252.27.52",
         "43.252.29.202",
+        "43.252.29.206",
         "43.252.30.93",
         "43.252.31.138",
         "43.252.32.181",
@@ -1296,8 +1308,10 @@ public class Application {
         "49.204.252.214",
         "49.207.188.57",
         "49.244.214.39",
+        "5.62.21.", // Anonymous proxy
         "5.62.5.71", // http://www.ipvoid.com/scan/5.62.5.71
         "50.31.252.31", // Persistent spammers
+        "54.84.8.145", // Persistent spammers
         "59.180.132.51",
         "59.180.25.215",
         "59.180.27.191",
@@ -1305,6 +1319,8 @@ public class Application {
         "61.12.72.244",
         "61.12.72.246",
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
+        "69.28.83.89", // Persistent spammers
+        "69.31.101.3", // Persistent spammers
         "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
         "74.120.223.151", // petersenk509
         "81.218.235.170", // http://www.ipvoid.com/scan/81.218.235.170
@@ -1340,6 +1356,7 @@ public class Application {
         "blog",
         "bloging",
         "blogs",
+        "bog",
         "bug tracker",
         "business",
         "businessman",
@@ -1396,8 +1413,10 @@ public class Application {
         "interest",
         "internet",
         "java net beans",
+        "java script",
         "jbm",
         "jdbc",
+        "jde",
         "jenkins for",
         "jenkins",
         "jenkins-ci.org",
@@ -1493,6 +1512,7 @@ public class Application {
         "technical support",
         "tutorial",
         "tutorials",
+        "use for page submission",
         "use",
         "useful",
         "user blog",
@@ -1526,7 +1546,10 @@ public class Application {
         "asshole",
         "bastard",
         "bitches",
-        "fuck"
+        "dicksuck",
+        "fuck",
+        "pussy",
+        "vagina"
     );
 
     public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
