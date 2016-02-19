@@ -1,7 +1,7 @@
 #!groovy
 
 /* Only keep the X most recent builds. */
-properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator',
+properties([[$class: 'jenkins.model.BuildDiscarderProperty', strategy: [$class: 'LogRotator',
                                                           numToKeepStr: '50',
                                                           artifactNumToKeepStr: '20']]])
 
