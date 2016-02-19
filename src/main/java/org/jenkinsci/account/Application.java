@@ -741,6 +741,7 @@ public class Application {
         "arena.wilson91@gmail.com",
         "arth.smith@yandex.com",
         "asadk7856",
+        "asadkiller2@gmail.com",
         "asadwoz@gmail.com",
         "ashishkumar",
         "ashwanikumar",
