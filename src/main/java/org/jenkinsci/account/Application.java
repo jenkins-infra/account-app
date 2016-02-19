@@ -722,6 +722,7 @@ public class Application {
         "ajayrudelee@gmail.com",
         "ajit86153@gmail.com",
         "ajymaansingh@gmail.com",
+        "akleshnirala@gmail.com",
         "alamsarfaraz791@gmail.com",
         "albertthomas",
         "aliskimis@gmail.com",
@@ -739,6 +740,7 @@ public class Application {
         "apwebs70@gmail.com",
         "arena.wilson91@gmail.com",
         "arth.smith@yandex.com",
+        "asadk7856",
         "ashishkumar",
         "ashwanikumar",
         "avanrajput5@gmail.com",
@@ -752,6 +754,7 @@ public class Application {
         "billydoch021@gmail.com",
         "biodotlab",
         "boleshahuja88@gmail.com",
+        "caulnurearkporjohnh@gmail.com",
         "choutpoyjenniferm@gmail.com",
         "ciodsjiocxjosa@yandex.com",
         "clarencepatterson570@gmail.com",
@@ -797,6 +800,7 @@ public class Application {
         "huin.lisko097@gmail.com",
         "hwayne2812",
         "ik96550@gmail.com",
+        "inchestoacres@gmail.com",
         "intelomedia02@gmail.com",
         "intuitphonenumber",
         "iqinfotech",
@@ -813,9 +817,11 @@ public class Application {
         "jim.cook2681@gmail.com",
         "jksadnhk@gmail.com",
         "jmike7162@gmail.com",
+        "jmtechnosolve@gmail.com",
         "johngarry227@gmail.com",
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
+        "johnmcclan009@gmail.com",
         "johnmikulis8",
         "johnnycolvin428@gmail.com",
         "johnprashar1@gmail.com",
@@ -912,10 +918,12 @@ public class Application {
         "sandy@voip4callcenters.com",
         "sandysharmja121@gmail.com",
         "sawanjha17@gmail.com",
+        "sbabita149@gmail.com",
         "sellikepovscotta@gmail.com",
         "seosupport",
         "seoxpertchandan@gmail.com",
         "service.thepc@yandex.com",
+        "shashisemraha@gmail.com",
         "shilpikispotta2508@gmail.com",
         "shobha.kachhap23@gmail.com",
         "simon.ken7@gmail.com",
@@ -942,6 +950,7 @@ public class Application {
         "sunjara10@gmail.com",
         "sweenypar210@gmail.com",
         "telemarket3004",
+        "teresarothschild198@gmail.com",
         "therewpoxjamix",
         "thjyt@yandex.com",
         "tinku8384@gmail.com",
@@ -996,6 +1005,8 @@ public class Application {
         "101.212.69.213",
         "101.212.71.120",
         "101.222.175.13",
+        "101.56.169.183",
+        "101.56.181.69",
         "101.56.2.232",
         "101.57.198.190",
         "101.57.198.22",
@@ -1014,6 +1025,7 @@ public class Application {
         "103.226.202.211",
         "103.233.116.124",
         "103.233.118.222",
+        "103.233.118.230",
         "103.245.118.",
         "103.254.154.229",
         "103.43.33.101",
@@ -1025,6 +1037,7 @@ public class Application {
         "103.50.151.68",
         "103.55.",
         "104.156.228.84", // http://www.ipvoid.com/scan/104.156.228.84
+        "104.156.240.140", // http://www.ipvoid.com/scan/104.156.240.140
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
         "104.236.123.17", // persistent spammer
         "106.201.144.243",
@@ -1036,6 +1049,7 @@ public class Application {
         "106.204.46.93",
         "106.204.50.214",
         "106.205.188.247",
+        "106.208.183.157",
         "106.215.176.34",
         "106.67.102.143",
         "106.67.113.167",
@@ -1056,6 +1070,7 @@ public class Application {
         "111.125.137.83",
         "111.93.63.62",
         "112.110.2.245",
+        "112.110.22.229",
         "112.196.147.",
         "112.196.160.122",
         "112.196.160.61",
@@ -1104,6 +1119,7 @@ public class Application {
         "123.239.77.189",
         "123.254.107.229",
         "124.41.241.203",
+        "124.42.12.77",
         "125.16.2.102",
         "125.63.104.53",
         "125.63.107.141",
@@ -1117,12 +1133,14 @@ public class Application {
         "14.141.1.58",
         "14.141.148.206",
         "14.141.148.222",
+        "14.141.163.58",
         "14.141.49.210",
         "14.141.51.5",
         "14.96.",
         "14.98.",
         "155.254.246.",
         "158.255.208.72",
+        "167.114.159.186", // Persistent spammer
         "169.57.0.235", // http://www.ipvoid.com/scan/169.57.0.235
         "171.48.32.3",
         "171.48.38.188",
@@ -1131,6 +1149,7 @@ public class Application {
         "171.50.42.142",
         "172.98.67.25", // http://www.ipvoid.com/scan/172.98.67.25
         "172.98.67.71", // http://www.ipvoid.com/scan/172.98.67.71
+        "176.222.33.42", // imistupidtammy
         "176.53.21.213", // http://www.ipvoid.com/scan/176.53.21.213
         "176.67.85.1", // http://www.ipvoid.com/scan/176.67.85.1
         "176.67.86.", // laptoprepair gmail guy and Persistent spammers
@@ -1189,6 +1208,7 @@ public class Application {
         "223.176.178.24",
         "223.176.188.147",
         "223.176.189.144",
+        "223.176.190.59",
         "223.180.245.176",
         "223.183.100.179",
         "223.183.67.247",
@@ -1210,6 +1230,8 @@ public class Application {
         "43.239.68.",
         "43.245.149.107",
         "43.245.151.",
+        "43.245.158.5",
+        "43.245.211.130",
         "43.245.211.71",
         "43.251.84.",
         "43.252.24.155",
@@ -1243,10 +1265,13 @@ public class Application {
         "46.165.208.207", // http://www.ipvoid.com/scan/46.165.208.207
         "46.166.179.59", // Persistent spammers
         "46.21.149.10", // jamesthomas (manasfirdose@gmail.com)
+        "46.218.58.138", // http://www.ipvoid.com/scan/46.218.58.138/
+        "49.14.126.20",
         "49.15.149.23",
         "49.15.158.7",
         "49.156.150.242",
         "49.204.252.214",
+        "49.207.188.57",
         "49.244.214.39",
         "5.62.5.71", // http://www.ipvoid.com/scan/5.62.5.71
         "50.31.252.31", // Persistent spammers
@@ -1265,6 +1290,7 @@ public class Application {
         "92.114.94.106", // http://www.ipvoid.com/scan/92.114.94.106/
         "93.114.44.187", // http://www.ipvoid.com/scan/93.114.44.187
         "93.115.92.169", // http://www.ipvoid.com/scan/93.115.92.169
+        "95.141.31.7", // http://www.ipvoid.com/scan/95.141.31.7
         "95.211.101.216", // makbaldwin1
         "95.211.171.164" // http://www.ipvoid.com/scan/95.211.171.164
     );
@@ -1344,6 +1370,7 @@ public class Application {
         "information",
         "interest",
         "internet",
+        "jbm",
         "jdbc",
         "jenkins for",
         "jenkins",
@@ -1351,6 +1378,7 @@ public class Application {
         "jira",
         "join group",
         "just",
+        "jvm",
         "keyword promotion",
         "knowledge sharing",
         "knowledge",
@@ -1379,10 +1407,12 @@ public class Application {
         "post something",
         "post submission",
         "post",
+        "posting article",
         "posting for facebook",
         "posting for feedback",
         "posting for gmail",
         "posting for information",
+        "posting knowledge",
         "posting",
         "pratice",
         "printers classified",
@@ -1390,6 +1420,7 @@ public class Application {
         "problem solved",
         "profile",
         "promote our website",
+        "promote",
         "promotion",
         "publicity",
         "publish",
@@ -1413,6 +1444,7 @@ public class Application {
         "sharing",
         "site promotion",
         "social",
+        "softer",
         "software information",
         "solve problem",
         "spam",
@@ -1446,6 +1478,8 @@ public class Application {
         "wiki pages",
         "wiki submission",
         "wiki",
+        "wikipedia knowledge",
+        "Wikipedia",
         "yes",
         "zira"
     );
@@ -1463,6 +1497,7 @@ public class Application {
     public static final List<String> NAUGHTY_BLACKLIST = Arrays.asList(
         "asshole",
         "bastard",
+        "bitches",
         "fuck"
     );
 
