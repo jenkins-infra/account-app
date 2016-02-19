@@ -741,6 +741,7 @@ public class Application {
         "arena.wilson91@gmail.com",
         "arth.smith@yandex.com",
         "asadk7856",
+        "asadwoz@gmail.com",
         "ashishkumar",
         "ashwanikumar",
         "avanrajput5@gmail.com",
@@ -863,6 +864,7 @@ public class Application {
         "mohandaerer",
         "mohankeeded",
         "monubhardwaj12451@gmail.com",
+        "monurobert",
         "morrisonjohn293@gmail.com",
         "msofficeservices13@gmail.com",
         "nalspoibarbarab@gmail.com",
@@ -1039,6 +1041,7 @@ public class Application {
         "104.156.228.84", // http://www.ipvoid.com/scan/104.156.228.84
         "104.156.240.140", // http://www.ipvoid.com/scan/104.156.240.140
         "104.200.154.4", // http://www.ipvoid.com/scan/104.200.154.4
+        "104.224.35.122", // http://www.ipvoid.com/scan/104.224.35.122/
         "104.236.123.17", // persistent spammer
         "106.201.144.243",
         "106.201.196.70",
@@ -1149,6 +1152,7 @@ public class Application {
         "171.50.42.142",
         "172.98.67.25", // http://www.ipvoid.com/scan/172.98.67.25
         "172.98.67.71", // http://www.ipvoid.com/scan/172.98.67.71
+        "174.140.170.121", // monurobert
         "176.222.33.42", // imistupidtammy
         "176.53.21.213", // http://www.ipvoid.com/scan/176.53.21.213
         "176.67.85.1", // http://www.ipvoid.com/scan/176.67.85.1
@@ -1233,6 +1237,7 @@ public class Application {
         "43.245.158.5",
         "43.245.211.130",
         "43.245.211.71",
+        "43.249.38.69", // Persistent spammer IP
         "43.251.84.",
         "43.252.24.155",
         "43.252.25.45",
@@ -1389,6 +1394,7 @@ public class Application {
         "marketing",
         "material",
         "meet jenkins",
+        "meet",
         "networking",
         "news update",
         "news",
