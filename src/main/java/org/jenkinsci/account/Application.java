@@ -765,6 +765,7 @@ public class Application {
         "cooktimseo@gmail.com",
         "cooperdavidd@gmail.com",
         "crsgroupindia@gmail.com",
+        "daduajiggy@gmail.com",
         "dasdasdsas32@gmail.com",
         "deal4udeal4me@gmail.com",
         "deepakkumar02singh@gmail.com",
@@ -1279,6 +1280,7 @@ public class Application {
         "45.127.42.219",
         "45.127.42.63",
         "45.127.43.154",
+        "45.32.226.36", // daduajiggy
         "45.42.243.83",
         "45.55.3.174",
         "45.56.154.150",
