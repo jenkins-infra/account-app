@@ -823,6 +823,7 @@ public class Application {
         "johnmaclan1@gmail.com",
         "johnmatty55@gmail.com",
         "johnmcclan009@gmail.com",
+        "johnmclean278@gmail.com",
         "johnmikulis8",
         "johnnycolvin428@gmail.com",
         "johnprashar1@gmail.com",
@@ -860,6 +861,7 @@ public class Application {
         "masmartin71@gmail.com",
         "mehrabharat137@gmail.com",
         "michelbavan@gmail.com",
+        "mk2434990@gmail.com",
         "mmmarsh12@gmail.com",
         "mohandaerer",
         "mohankeeded",
@@ -1182,6 +1184,7 @@ public class Application {
         "185.22.232.91", // Persistent spammer
         "185.61.148.226", // Persistent spammer
         "188.116.36.188", // Persistent spammer
+        "188.172.220.71", // johnmclean007
         "193.182.144.106", // Persistent spammer
         "196.207.106.219",
         "196.207.107.56",
@@ -1357,6 +1360,7 @@ public class Application {
         "gain some knowledge",
         "game",
         "get informaion",
+        "get information",
         "get more information",
         "god",
         "good",
