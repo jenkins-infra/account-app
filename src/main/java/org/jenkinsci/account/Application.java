@@ -166,13 +166,8 @@ public class Application {
             blockReasons.add("BL: name (custom)");
         }
 
-        if((Pattern.matches("\\w{2,6}\\d{3,}@gmail.com", email) || Pattern.matches("\\w{2,6}\\d{3,}", userid)) &&
-            usedFor.equalsIgnoreCase("automation")) {
-            blockReasons.add("BL: email|userid and use custom");
-        }
-
         for (String fragment : USERID_BLACKLIST) {
-            if(userid.contains(fragment)) {
+            if(userid.toLowerCase().contains(fragment.toLowerCase())) {
                 blockReasons.add("BL: userid");
             }
         }
@@ -195,6 +190,14 @@ public class Application {
                     blockReasons.add("BL: use");
                 }
             }
+        }
+        for (String fragment : PARTIAL_USE_BLACKLIST) {
+            if(!usedFor.trim().isEmpty()) {
+                if(usedFor.trim().toLowerCase().contains(fragment.toLowerCase())) {
+                    blockReasons.add("BL: use partial");
+                }
+            }
+
         }
 
         for(String fragment : NAUGHTY_BLACKLIST) {
@@ -739,6 +742,7 @@ public class Application {
         "anilsingh7885945@gmail.com",
         "anjilojilo@gmail.com",
         "ankit",
+        "anshikaescorts@gmail.com",
         "april.caword1589@gmail.com",
         "apwebs7012@yahoo.com",
         "apwebs70@gmail.com",
@@ -746,7 +750,7 @@ public class Application {
         "arth.smith@yandex.com",
         "asadk7856",
         "asadkiller2@gmail.com",
-        "asadwoz@gmail.com",
+        "asadwoz",
         "ashishkumar",
         "ashwanikumar",
         "avanrajput5@gmail.com",
@@ -880,12 +884,14 @@ public class Application {
         "monurobert",
         "morrisonjohn293@gmail.com",
         "msofficeservices13@gmail.com",
+        "mujafer@yandex.com",
         "nalspoibarbarab@gmail.com",
         "ncrpoo",
         "ncrraanisapna@gmail.com",
         "ncrradha@gmail.com",
         "ncrrohit",
         "ncrsona",
+        "nextgenwebstore@gmail.com",
         "nishanoor32",
         "nishuyadav257@gmail.com",
         "obat@",
@@ -916,11 +922,14 @@ public class Application {
         "rahuldheere@gmail.com",
         "rajdsky7@gmail.com",
         "rajkumarskbd@gmail.com",
+        "rajuk0838@gmail.com",
         "ramlakhaann@gmail.com",
         "randyortam68@gmail.com",
+        "ransonfreeman@gmail.com",
         "rasidegingpoflaceyz@gmail.com",
         "ravi1991allahabaduniversity@gmail.com",
         "ravirknayak@gmail.com",
+        "ravis70291@gmail.com",
         "rawatmeenakshi12123s",
         "rawatsonam",
         "rehel55rk@gmail.com",
@@ -964,6 +973,7 @@ public class Application {
         "stuartbinny12021996@gmail.com",
         "sty.besto",
         "stybesto13",
+        "sujitkumarthakur8@gmail.com",
         "sundeepsa123@gmail.com",
         "sunflowerrosy@outlook.com",
         "sunilkundujat@gmail.com",
@@ -1011,6 +1021,7 @@ public class Application {
         "1.22.131.140",
         "1.22.164.211",
         "1.22.164.227",
+        "1.22.212.209",
         "1.22.38.186",
         "1.22.39.244",
         "1.23.110.86",
@@ -1029,10 +1040,13 @@ public class Application {
         "101.56.169.183",
         "101.56.181.69",
         "101.56.2.232",
+        "101.57.173.94",
         "101.57.198.190",
         "101.57.198.201",
         "101.57.198.22",
+        "101.57.7.41",
         "101.59.227.148",
+        "101.59.72.90",
         "101.59.76.223",
         "101.60.",
         "101.63.200.188",
@@ -1088,6 +1102,7 @@ public class Application {
         "106.67.89.196",
         "106.76.167.41",
         "106.79.57.84",
+        "107.168.18.212", // mujafer_l
         "108.61.184.146", // adnanishami28
         "109.163.234.8", // http://www.ipvoid.com/scan/109.163.234.8
         "109.201.137.46", // tomhanks1121
@@ -1097,11 +1112,11 @@ public class Application {
         "110.227.183.36",
         "111.125.137.83",
         "111.93.63.62",
+        "112.110.118.56",
         "112.110.2.245",
         "112.110.22.229",
         "112.196.147.",
-        "112.196.160.122",
-        "112.196.160.61",
+        "112.196.160.",
         "112.196.170.150",
         "112.196.170.8",
         "114.143.173.139",
@@ -1228,6 +1243,7 @@ public class Application {
         "212.83.165.204", // http://www.ipvoid.com/scan/212.83.165.204/
         "213.183.56.51", // Persistent spammer
         "216.185.103.139", // http://www.ipvoid.com/scan/216.185.103.139
+        "217.114.211.246", // http://www.ipvoid.com/scan/106.51.27.106
         "223.176.141.173",
         "223.176.142.230",
         "223.176.143.154",
@@ -1235,6 +1251,7 @@ public class Application {
         "223.176.156.193",
         "223.176.159.235",
         "223.176.165.11",
+        "223.176.170.100",
         "223.176.176.254",
         "223.176.178.24",
         "223.176.188.147",
@@ -1257,11 +1274,13 @@ public class Application {
         "38.95.109.37", // http://www.ipvoid.com/scan/38.95.109.37
         "38.95.109.67", // http://www.ipvoid.com/scan/38.95.109.67
         "41.215.241.114", // Persistent spammer IP
+        "43.225.195.92",
         "43.230.198.",
         "43.239.204.41",
         "43.239.68.",
         "43.245.149.107",
         "43.245.151.",
+        "43.245.156.239",
         "43.245.158.5",
         "43.245.211.130",
         "43.245.211.71",
@@ -1274,8 +1293,10 @@ public class Application {
         "43.252.29.202",
         "43.252.29.206",
         "43.252.30.93",
+        "43.252.31.133",
         "43.252.31.138",
         "43.252.32.181",
+        "43.252.33.2",
         "43.252.33.70",
         "43.252.34.9",
         "43.252.35.80",
@@ -1283,6 +1304,7 @@ public class Application {
         "45.115.",
         "45.120.162.172",
         "45.120.56.65",
+        "45.120.59.232",
         "45.121.188.46",
         "45.121.189.236",
         "45.121.191.78",
@@ -1315,6 +1337,8 @@ public class Application {
         "59.180.132.51",
         "59.180.25.215",
         "59.180.27.191",
+        "59.91.216.88",
+        "59.92.74.170",
         "61.0.85.206",
         "61.12.72.244",
         "61.12.72.246",
@@ -1334,14 +1358,23 @@ public class Application {
         "95.211.171.164" // http://www.ipvoid.com/scan/95.211.171.164
     );
 
+    public static final List<String> PARTIAL_USE_BLACKLIST = Arrays.asList(
+        "blog",
+        "page",
+        "post",
+        "promote",
+        "share",
+        "submission",
+        "submit",
+        "wiki"
+
+    );
     public static final List<String> USE_BLACKLIST = Arrays.asList(
         "abc",
         "abcd",
         "about jenkins ci",
         "acbd",
         "ad",
-        "add a page",
-        "add page",
         "admin",
         "admins",
         "advertisement",
@@ -1350,12 +1383,7 @@ public class Application {
         "article",
         "articles",
         "asdf",
-        "blog submit",
-        "blog user",
-        "blog writing",
-        "blog",
-        "bloging",
-        "blogs",
+        "automation",
         "bog",
         "bug tracker",
         "business",
@@ -1367,27 +1395,19 @@ public class Application {
         "content marketing",
         "content",
         "cooking",
-        "create my page",
-        "create page",
         "creating",
         "discussion",
         "donation",
         "drama",
-        "edit page",
         "edit",
         "edu",
+        "education",
         "food",
-        "for bloging",
         "for java",
         "for jenkins information",
         "for news",
         "for sahring information",
-        "for using wiki and jira",
-        "for wiki and jira use",
-        "forum post",
-        "forum posting",
         "forum",
-        "fun wiki",
         "fun",
         "funtime",
         "gain some knowledge",
@@ -1412,8 +1432,11 @@ public class Application {
         "information",
         "interest",
         "internet",
+        "java beans",
+        "java function",
         "java net beans",
         "java script",
+        "java virtual machine",
         "jbm",
         "jdbc",
         "jde",
@@ -1446,27 +1469,13 @@ public class Application {
         "office",
         "on upload",
         "other",
-        "page",
         "pcsupport",
         "permotions",
-        "post profile",
-        "post something",
-        "post submission",
-        "post",
-        "posting article",
-        "posting for facebook",
-        "posting for feedback",
-        "posting for gmail",
-        "posting for information",
-        "posting knowledge",
-        "posting",
         "pratice",
         "printers classified",
         "printers",
         "problem solved",
         "profile",
-        "promote our website",
-        "promote",
         "promotion",
         "publicity",
         "publish",
@@ -1484,9 +1493,6 @@ public class Application {
         "see",
         "seo",
         "service",
-        "share info",
-        "share my knowledge",
-        "share post",
         "sharing",
         "site promotion",
         "social",
@@ -1499,9 +1505,6 @@ public class Application {
         "studies",
         "study of forum communities",
         "study",
-        "submission",
-        "submissions",
-        "submit page",
         "support",
         "surfing",
         "talk",
@@ -1512,22 +1515,12 @@ public class Application {
         "technical support",
         "tutorial",
         "tutorials",
-        "use for page submission",
         "use",
         "useful",
-        "user blog",
         "want to study",
-        "web page",
         "website promotion",
         "website",
         "what",
-        "wiki and jira",
-        "wiki page",
-        "wiki pages",
-        "wiki submission",
-        "wiki",
-        "wikipedia knowledge",
-        "wikipedia",
         "yes",
         "zira"
     );
@@ -1539,6 +1532,7 @@ public class Application {
         "macden",
         "quickbook",
         "smartjane",
+        "turbotax",
         "watpad"
     );
 
