@@ -735,6 +735,7 @@ public class Application {
         "albertthomas",
         "aliskimis@gmail.com",
         "allymptedpokdebraj@gmail.com",
+        "amiteshku12@gmail.com",
         "andentspourita@gmail.com",
         "andorclifs@gmail.com",
         "andrusmith",
@@ -979,6 +980,7 @@ public class Application {
         "stuartbinny12021996@gmail.com",
         "sty.besto",
         "stybesto13",
+        "sujatakumari8236@gmail.com",
         "sujitkumarthakur8@gmail.com",
         "sundeepsa123@gmail.com",
         "sunflowerrosy@outlook.com",
@@ -1298,6 +1300,7 @@ public class Application {
         "43.249.38.69", // Persistent spammer IP
         "43.251.84.",
         "43.252.24.155",
+        "43.252.25.153",
         "43.252.25.45",
         "43.252.27.35",
         "43.252.27.52",
@@ -1342,6 +1345,7 @@ public class Application {
         "49.204.252.214",
         "49.207.188.57",
         "49.244.214.39",
+        "49.40.2.224",
         "5.62.21.", // Anonymous proxy
         "5.62.5.71", // http://www.ipvoid.com/scan/5.62.5.71
         "50.31.252.31", // Persistent spammers
