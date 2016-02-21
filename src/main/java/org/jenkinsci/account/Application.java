@@ -848,6 +848,7 @@ public class Application {
         "joshuahurst928@gmail.com",
         "jusbabyespowbobby@gmail.com",
         "kalidass34212@gmail.com",
+        "kashyap.kashyap07@yahoo.in",
         "kaveribhardwaj@outlook.com",
         "kevin24by7@gmail.com",
         "kisamar7@gmail.com",
@@ -857,12 +858,14 @@ public class Application {
         "ks0449452@gmail.com",
         "kumar.raghavendra84@gmail.com",
         "kumar.uma420@gmail.com",
+        "kumar0121@yahoo.com",
         "kumarprem",
         "kumarsujit",
         "laptoprepair",
         "larrysilva",
         "litagray931@gmail.com",
         "litawilliam36@gmail.com",
+        "loefflerpay462@gmail.com",
         "loksabha100@gmail.com",
         "lovebhaiseo@gmail.com",
         "lutherorea2807@gmail.com",
@@ -986,6 +989,7 @@ public class Application {
         "teresarothschild198@gmail.com",
         "therewpoxjamix",
         "thjyt@yandex.com",
+        "thornestedpokrodneyn@gmail.com",
         "tinku8384@gmail.com",
         "tomcopper6@gmail.com",
         "tomhanks1121@gmail.com",
@@ -1209,6 +1213,7 @@ public class Application {
         "182.156.72.162",
         "182.156.89.34",
         "182.64.",
+        "182.65.32.63",
         "182.68.",
         "182.69.",
         "182.71.71.102",
@@ -1223,6 +1228,7 @@ public class Application {
         "182.77.8.24",
         "182.77.8.92",
         "183.82.199.55",
+        "185.108.128.12", // http://www.ipvoid.com/scan/185.108.128.12
         "185.22.232.91", // Persistent spammer
         "185.61.148.226", // Persistent spammer
         "188.116.36.188", // Persistent spammer
@@ -1232,6 +1238,7 @@ public class Application {
         "196.207.107.56",
         "198.8.80.172", // http://www.ipvoid.com/scan/198.8.80.172
         "202.159.213.10",
+        "202.3.120.6",
         "202.53.94.4",
         "202.91.134.66",
         "202.91.134.67",
@@ -1322,6 +1329,7 @@ public class Application {
         "45.42.243.83",
         "45.55.3.174",
         "45.56.154.150",
+        "45.59.185.104", // alishalal
         "46.101.245.193", // Persistent spammers
         "46.165.208.207", // http://www.ipvoid.com/scan/46.165.208.207
         "46.166.179.59", // Persistent spammers
@@ -1339,6 +1347,7 @@ public class Application {
         "50.31.252.31", // Persistent spammers
         "54.84.8.145", // Persistent spammers
         "59.180.132.51",
+        "59.180.155.34",
         "59.180.25.215",
         "59.180.27.191",
         "59.91.216.88",
@@ -1472,6 +1481,7 @@ public class Application {
         "office use",
         "office",
         "on upload",
+        "online software",
         "other",
         "pcsupport",
         "permotions",
