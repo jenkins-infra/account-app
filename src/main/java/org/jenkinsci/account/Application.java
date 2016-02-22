@@ -751,6 +751,7 @@ public class Application {
         "amiteshku12@gmail.com",
         "andentspourita@gmail.com",
         "andorclifs@gmail.com",
+        "andrewd@ghostmail.com",
         "andrusmith",
         "angthpofphilip@gmail.com",
         "anilkandpal0@gmail.com",
@@ -876,11 +877,13 @@ public class Application {
         "kripalsingh446@gmail.com",
         "krishgail30@yahoo.com",
         "ks0449452@gmail.com",
+        "kukurkutta9@gmail.com",
         "kumar.raghavendra84@gmail.com",
         "kumar.uma420@gmail.com",
         "kumar0121@yahoo.com",
         "kumarprem",
         "kumarsujit",
+        "kumarsujit899@gmail.com",
         "laptoprepair",
         "larrysilva",
         "leonard.freddie@yandex.com",
@@ -918,6 +921,7 @@ public class Application {
         "ncrradha@gmail.com",
         "ncrrohit",
         "ncrsona",
+        "nelsonnelsen11021992@gmail.com",
         "newellnewallne56@gmail.com",
         "nextgenwebstore@gmail.com",
         "nirajsinghrawat12@gmail.com",
@@ -1027,13 +1031,13 @@ public class Application {
         "viz.michel@gmail.com",
         "vr4vikasrastogi@gmail.com",
         "vvicky4001@gmail.com",
-        "nelsonnelsen11021992@gmail.com",
         "vvicky4003@gmail.com",
         "watpad",
         "webdevelopera@gmail.com",
         "webtracker",
         "webtrackker",
         "win.tech",
+        "winstond@tutanota.com",
         "wittepepobjustina@gmail.com",
         "yadavqs@gmail.com",
         "yadavshalini501@gmail.com",
@@ -1209,6 +1213,7 @@ public class Application {
         "124.41.241.203",
         "124.42.12.77",
         "125.16.2.102",
+        "125.63.101.236",
         "125.63.104.53",
         "125.63.107.141",
         "125.63.107.204",
@@ -1272,7 +1277,9 @@ public class Application {
         "185.61.148.226", // Persistent spammer
         "188.116.36.188", // Persistent spammer
         "188.172.220.71", // johnmclean007
+        "192.171.254.207", // andrewd
         "192.200.23.16", // anital
+        "192.230.49.120", // winstond
         "193.182.144.106", // Persistent spammer
         "196.207.106.219",
         "196.207.107.56",
@@ -1339,12 +1346,12 @@ public class Application {
         "43.245.149.107",
         "43.245.149.205",
         "43.245.151.",
+        "43.245.156.94",
         "43.245.156.239",
         "43.245.158.172",
         "43.245.158.5",
         "43.245.209.170",
-        "43.245.211.130",
-        "43.245.211.71",
+        "43.245.211.",
         "43.249.38.69", // Persistent spammer IP
         "43.251.84.",
         "43.252.24.155",
