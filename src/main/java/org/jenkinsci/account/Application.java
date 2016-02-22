@@ -1,4 +1,5 @@
 package org.jenkinsci.account;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -7,7 +8,14 @@ import jiraldapsyncer.JiraLdapSyncer;
 import jiraldapsyncer.ServiceLocator;
 import org.apache.commons.collections.EnumerationUtils;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
-import org.kohsuke.stapler.*;
+import org.kohsuke.stapler.Header;
+import org.kohsuke.stapler.HttpRedirect;
+import org.kohsuke.stapler.HttpResponse;
+import org.kohsuke.stapler.HttpResponses;
+import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.Stapler;
+import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerResponse;
 import org.kohsuke.stapler.config.ConfigurationLoader;
 import org.kohsuke.stopforumspam.Answer;
 import org.kohsuke.stopforumspam.StopForumSpam;
@@ -48,13 +56,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.rmi.RemoteException;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -65,10 +73,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import static javax.naming.directory.DirContext.*;
+import static javax.naming.directory.DirContext.ADD_ATTRIBUTE;
+import static javax.naming.directory.DirContext.REMOVE_ATTRIBUTE;
+import static javax.naming.directory.DirContext.REPLACE_ATTRIBUTE;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.jenkinsci.account.LdapAbuse.*;
+import static org.jenkinsci.account.LdapAbuse.REGISTRATION_DATE;
+import static org.jenkinsci.account.LdapAbuse.SENIOR_STATUS;
 
 /**
  * Root of the account application.
@@ -779,7 +790,9 @@ public class Application {
         "crsgroupindia@gmail.com",
         "daduajiggy@gmail.com",
         "dasdasdsas32@gmail.com",
+        "davidtech46@gmail.com",
         "deal4udeal4me@gmail.com",
+        "deepak19795up@gmail.com",
         "deepakkumar02singh@gmail.com",
         "dersttycert101@gmail.com",
         "devilr724",
@@ -790,6 +803,7 @@ public class Application {
         "dutchess.meethi@gmail.com",
         "dwari.hdyr528@gmail.com",
         "emaxico",
+        "estherj@ghostmail.com",
         "ethanluna635@gmail.com",
         "evagreen277@gmail.com",
         "fievepowgeorgeg@gmail.com",
@@ -827,6 +841,7 @@ public class Application {
         "iscopedigital11@gmail.com",
         "italygroupspecialist@gmail.com",
         "jamersonnvy309@gmail.com",
+        "jamesdelvin2@gmail.com",
         "janes6521@gmail.com",
         "janessmith",
         "jayshown81@gmail.com",
@@ -867,6 +882,7 @@ public class Application {
         "kumarsujit",
         "laptoprepair",
         "larrysilva",
+        "leonard.freddie@yandex.com",
         "litagray931@gmail.com",
         "litawilliam36@gmail.com",
         "loefflerpay462@gmail.com",
@@ -975,6 +991,7 @@ public class Application {
         "smartsolution3000@gmail.com",
         "smithlora912@gmail.com",
         "smithmartin919@gmail.com",
+        "smithmaxseo@gmail.com",
         "sneharajput931@gmail.com",
         "snjbisth8@gmail.com",
         "sonu70251",
@@ -1002,6 +1019,7 @@ public class Application {
         "tomhanks1121@gmail.com",
         "toren55rk@gmail.com",
         "uma.shank122451ddsds@gmail.com",
+        "updateursoftware2016@gmail.com",
         "useenpofchristopherc@gmail.com",
         "vcb@gmail.com",
         "viz.michel@gmail.com",
@@ -1032,6 +1050,7 @@ public class Application {
         "1.187.123.123",
         "1.187.126.76",
         "1.187.162.39",
+        "1.22.130.142",
         "1.22.131.140",
         "1.22.164.211",
         "1.22.164.227",
@@ -1081,6 +1100,7 @@ public class Application {
         "103.251.61.50",
         "103.254.154.229",
         "103.43.33.101",
+        "103.43.35.42",
         "103.44.18.221",
         "103.47.168.129",
         "103.47.168.57",
@@ -1103,6 +1123,7 @@ public class Application {
         "106.202.84.222",
         "106.204.124.188",
         "106.204.142.176",
+        "106.204.194.124",
         "106.204.236.224",
         "106.204.246.196",
         "106.204.46.93",
@@ -1121,6 +1142,7 @@ public class Application {
         "106.76.167.41",
         "106.79.57.84",
         "107.168.18.212", // mujafer_l
+        "107.191.53.51", // persistent spammer
         "108.61.184.146", // adnanishami28
         "109.163.234.8", // http://www.ipvoid.com/scan/109.163.234.8
         "109.201.137.46", // tomhanks1121
@@ -1146,6 +1168,7 @@ public class Application {
         "115.160.250.34",
         "115.184.",
         "115.249.46.242",
+        "116.202.32.38",
         "116.202.36.",
         "116.203.",
         "117.193.130.11",
@@ -1202,6 +1225,7 @@ public class Application {
         "154.127.63.33", // saundraclogston
         "155.254.246.",
         "158.255.208.72",
+        "162.245.144.142", // jamesdevlin
         "167.114.159.186", // Persistent spammer
         "169.57.0.235", // http://www.ipvoid.com/scan/169.57.0.235
         "171.48.32.3",
@@ -1249,6 +1273,7 @@ public class Application {
         "196.207.107.56",
         "198.203.29.123", // winstond
         "198.8.80.172", // http://www.ipvoid.com/scan/198.8.80.172
+        "202.122.134.254",
         "202.159.213.10",
         "202.3.120.6",
         "202.53.94.4",
@@ -1261,6 +1286,7 @@ public class Application {
         "203.122.41.130",
         "203.122.7.236",
         "203.99.192.210",
+        "211.79.127.11", // Persistent spammer
         "212.7.220.136", // aprilcowardy
         "212.83.165.204", // http://www.ipvoid.com/scan/212.83.165.204/
         "213.183.56.51", // Persistent spammer
@@ -1284,6 +1310,8 @@ public class Application {
         "223.183.100.179",
         "223.183.67.247",
         "223.225.42.57",
+        "223.229.99.61",
+        "23.81.47.235", // leonard_freddie
         "27.255.252.28",
         "27.4.184.217",
         "27.56.47.65",
@@ -1301,6 +1329,8 @@ public class Application {
         "43.230.198.",
         "43.239.204.41",
         "43.239.68.",
+        "43.242.36.56",
+        "43.245.138.109",
         "43.245.149.107",
         "43.245.149.205",
         "43.245.151.",
@@ -1333,11 +1363,13 @@ public class Application {
         "45.120.162.172",
         "45.120.56.65",
         "45.120.59.232",
+        "45.120.59.9",
         "45.121.188.46",
         "45.121.189.236",
         "45.121.191.78",
         "45.122.120.178",
         "45.122.123.47",
+        "45.122.123.81",
         "45.127.40.",
         "45.127.42.219",
         "45.127.42.63",
@@ -1360,10 +1392,12 @@ public class Application {
         "49.204.252.214",
         "49.207.188.57",
         "49.244.214.39",
+        "49.248.212.18",
         "49.40.2.224",
         "5.62.21.", // Anonymous proxy
         "5.62.5.71", // http://www.ipvoid.com/scan/5.62.5.71
         "50.31.252.31", // Persistent spammers
+        "54.193.91.83", // guru123qbji
         "54.84.8.145", // Persistent spammers
         "59.180.132.51",
         "59.180.155.34",
@@ -1464,6 +1498,7 @@ public class Application {
         "information",
         "interest",
         "internet",
+        "java applets",
         "java beans",
         "java function",
         "java net beans",
