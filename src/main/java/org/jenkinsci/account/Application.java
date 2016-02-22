@@ -1272,6 +1272,7 @@ public class Application {
         "185.61.148.226", // Persistent spammer
         "188.116.36.188", // Persistent spammer
         "188.172.220.71", // johnmclean007
+        "192.200.23.16", // anital
         "193.182.144.106", // Persistent spammer
         "196.207.106.219",
         "196.207.107.56",
