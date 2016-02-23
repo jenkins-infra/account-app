@@ -722,6 +722,7 @@ public class Application {
         "@maildx.com",
         "@mailinator.com",
         "@mailnesia.com",
+        "@my10minutemail.com",
         "@rediffmail.com",
         "@sharklasers.com",
         "@thrma.com",
@@ -842,6 +843,7 @@ public class Application {
         "iqinfotech",
         "iscopedigital11@gmail.com",
         "italygroupspecialist@gmail.com",
+        "jacobshown1@gmail.com",
         "jamersonnvy309@gmail.com",
         "jamesdelvin2@gmail.com",
         "janes6521@gmail.com",
@@ -884,6 +886,7 @@ public class Application {
         "kumarprem",
         "kumarsujit",
         "kumarsujit899@gmail.com",
+        "laknerickman@gmail.com",
         "laptoprepair",
         "larrysilva",
         "leonard.freddie@yandex.com",
@@ -1137,6 +1140,7 @@ public class Application {
         "106.204.46.93",
         "106.204.50.214",
         "106.205.188.247",
+        "106.205.56.253",
         "106.208.183.157",
         "106.215.176.34",
         "106.67.102.143",
@@ -1151,6 +1155,7 @@ public class Application {
         "106.79.57.84",
         "107.168.18.212", // mujafer_l
         "107.191.53.51", // persistent spammer
+        "108.59.10.141", // http://www.ipvoid.com/scan/108.59.10.141
         "108.61.184.146", // adnanishami28
         "109.163.234.8", // http://www.ipvoid.com/scan/109.163.234.8
         "109.201.137.46", // tomhanks1121
@@ -1162,6 +1167,7 @@ public class Application {
         "111.93.63.62",
         "112.110.118.56",
         "112.110.2.245",
+        "112.110.21.8",
         "112.110.22.229",
         "112.196.147.",
         "112.196.160.",
@@ -1191,6 +1197,7 @@ public class Application {
         "120.57.17.65",
         "120.57.86.248",
         "120.59.205.205",
+        "121.241.96.5",
         "121.242.40.15",
         "121.242.77.200",
         "121.244.181.162",
@@ -1285,6 +1292,7 @@ public class Application {
         "196.207.107.56",
         "198.203.29.123", // winstond
         "198.8.80.172", // http://www.ipvoid.com/scan/198.8.80.172
+        "200.80.48.34", // babhy
         "202.122.134.254",
         "202.159.213.10",
         "202.3.120.6",
@@ -1343,6 +1351,7 @@ public class Application {
         "43.239.68.",
         "43.242.36.56",
         "43.245.138.109",
+        "43.245.139.203",
         "43.245.149.107",
         "43.245.149.205",
         "43.245.151.",
@@ -1418,6 +1427,7 @@ public class Application {
         "59.91.216.88",
         "59.92.74.170",
         "61.0.85.206",
+        "61.12.36.234",
         "61.12.72.244",
         "61.12.72.246",
         "62.210.139.80", // proxy? twice an Indian spammer jumped to this IP
@@ -1438,6 +1448,7 @@ public class Application {
 
     public static final List<String> PARTIAL_USE_BLACKLIST = Arrays.asList(
         "blog",
+        "love",
         "page",
         "post",
         "promote",
@@ -1448,6 +1459,7 @@ public class Application {
 
     );
     public static final List<String> USE_BLACKLIST = Arrays.asList(
+        "2016",
         "abc",
         "abcd",
         "about jenkins ci",
@@ -1505,7 +1517,6 @@ public class Application {
         "https://jenkins-ci.org",
         "https://jenkins-ci.org/account/signup",
         "i like it",
-        "i love this site",
         "info",
         "information",
         "interest",
@@ -1532,7 +1543,6 @@ public class Application {
         "learn",
         "linux tips",
         "looking for voip solutions",
-        "love",
         "marketing",
         "material",
         "meet jenkins",
@@ -1606,6 +1616,7 @@ public class Application {
     );
 
     public static final List<String> USERID_BLACKLIST = Arrays.asList(
+        "babhy",
         "intuitphonenumber",
         "jamesbond",
         "larrysilva",
