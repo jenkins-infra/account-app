@@ -311,7 +311,7 @@ public class Application {
     }
 
     private boolean badNameElement(String userid) {
-        return Pattern.matches("^[sdfghrtbvd0-9]+$", userid.toLowerCase());
+        return Pattern.matches("^[sdfghrtbvd0-9]{2,}$", userid.toLowerCase());
     }
 
     public String geoIp(String ip) {
@@ -1153,7 +1153,9 @@ public class Application {
         "106.67.89.196",
         "106.76.167.41",
         "106.79.57.84",
+        "106.79.59.178",
         "107.168.18.212", // mujafer_l
+        "107.191.46.37", // williamthousus35
         "107.191.53.51", // persistent spammer
         "108.59.10.141", // http://www.ipvoid.com/scan/108.59.10.141
         "108.61.184.146", // adnanishami28
@@ -1240,6 +1242,7 @@ public class Application {
         "14.98.",
         "154.127.63.33", // saundraclogston
         "155.254.246.",
+        "155.94.183.102", // grantp
         "158.255.208.72",
         "162.245.144.142", // jamesdevlin
         "167.114.159.186", // Persistent spammer
@@ -1355,8 +1358,8 @@ public class Application {
         "43.245.149.107",
         "43.245.149.205",
         "43.245.151.",
-        "43.245.156.94",
         "43.245.156.239",
+        "43.245.156.94",
         "43.245.158.172",
         "43.245.158.5",
         "43.245.209.170",
@@ -1408,6 +1411,7 @@ public class Application {
         "46.218.58.138", // http://www.ipvoid.com/scan/46.218.58.138/
         "49.14.126.20",
         "49.15.149.23",
+        "49.15.150.57",
         "49.15.158.7",
         "49.156.150.242",
         "49.204.252.214",
@@ -1435,6 +1439,7 @@ public class Application {
         "69.31.101.3", // Persistent spammers
         "69.65.43.205", // http://www.ipvoid.com/scan/69.65.43.205
         "74.120.223.151", // petersenk509
+        "78.110.165.187", // robin24by7
         "81.218.235.170", // http://www.ipvoid.com/scan/81.218.235.170
         "91.121.219.236", // http://www.ipvoid.com/scan/91.121.219.236
         "91.205.175.34", // http://www.ipvoid.com/scan/91.205.175.34
@@ -1452,6 +1457,7 @@ public class Application {
         "page",
         "post",
         "promote",
+        "research course",
         "share",
         "submission",
         "submit",
@@ -1530,6 +1536,7 @@ public class Application {
         "jbm",
         "jdbc",
         "jde",
+        "jdk",
         "jenkins for",
         "jenkins",
         "jenkins-ci.org",
