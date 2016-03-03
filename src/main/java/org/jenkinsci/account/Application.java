@@ -2,7 +2,6 @@ package org.jenkinsci.account;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import com.google.common.net.InetAddresses;
 import jiraldapsyncer.JiraLdapSyncer;
 import jiraldapsyncer.ServiceLocator;
@@ -247,15 +246,6 @@ public class Application {
         for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
             if (a.isAppears()) {
                 blockReasons.add("Stopforumspam: " + a.toString());
-            }
-        }
-
-        // IP Reputation Checks
-
-        String reversedIp = Joiner.on(".").join(Lists.reverse(Arrays.asList(ip.split("\\."))));
-        for(String rblHost : Arrays.asList("rbl.megarbl.net", "zen.spamhaus.org")) {
-            for (String txt : getTxtRecord(reversedIp + "." + rblHost)) {
-                blockReasons.add("RBL " + rblHost + ": " + txt);
             }
         }
 
