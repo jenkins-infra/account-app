@@ -1,0 +1,63 @@
+apply plugin: 'java'
+apply plugin: 'jetty'
+apply plugin: 'maven'
+apply plugin: 'war'
+
+group = 'org.jenkins-ci'
+description = 'User self-service account management app'
+version = '2.5'
+
+
+repositories {
+    jcenter()
+    maven { url 'https://repo.jenkins-ci.org/public' }
+}
+
+configurations {
+    /* Docker jars are additional components we should copy into the container
+     */
+    dockerJars
+}
+
+dependencies {
+    compile 'javax.servlet:servlet-api:2.4'
+
+    compile 'org.glassfish:javax.json:[1.0.2,2.0)'
+    compile 'org.kohsuke:stopforumspam:[1.0,2.0)'
+    compile 'commons-codec:commons-codec:1.4'
+
+    compile 'org.kohsuke.stapler:stapler:[1.233,2.0)'
+    compile('org.kohsuke.stapler:stapler-jelly:[1.203,2.0)')
+    compile 'org.kohsuke.stapler:stapler-openid-server:[1.0,2.0)'
+
+    compile 'javax.mail:mail:[1.4,2.0)'
+    compile 'javax.activation:activation:1.1.1'
+
+    /* needed for the app skin */
+    compile 'org.jenkins-ci.backend:jenkins-ci.org-theme:1.0'
+
+    compile('org.jenkins-ci.backend:jira-ldap-syncer:1.0') {
+        exclude module: 'javamail'
+    }
+
+    testCompile 'junit:junit:[4.8.1,5.0)'
+
+    dockerJars 'org.mortbay.jetty:jetty-runner:[8.1.15,)'
+}
+
+jettyRun {
+    contextPath '/account'
+    httpPort 8081
+}
+
+task copyRunner(type: Copy) {
+    description 'Grab the jetty-runner to execute our war in the container'
+    destinationDir = file('bin')
+    /* Only grab the jetty-runner jar */
+    from configurations.dockerJars.files.find { it.name.matches ~/jetty-runner-(.*).jar/ }
+}
+
+
+war {
+    dependsOn check, copyRunner
+}
