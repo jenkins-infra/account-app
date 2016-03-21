@@ -22,7 +22,6 @@ node('docker') {
 node('docker') {
     stage 'Package'
     unarchive mapping: ['build/' : 'build/']
-    sh 'ls ; ls build; ls build/libs'
 
     sh 'git rev-parse HEAD > GIT_COMMIT'
     shortCommit = readFile('GIT_COMMIT').take(6)
