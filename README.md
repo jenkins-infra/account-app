@@ -25,7 +25,7 @@ following:
 
 Finally, run the application with Jetty, then access `http://localhost:8080/`:
 
-    mvn jetty:run
+    ./gradlew jettyRun
 
 (As you can see above, this connects your test instance to the actual LDAP
 server, so the data you'll be seeing is real.
