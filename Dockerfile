@@ -1,10 +1,14 @@
-FROM anapsix/alpine-java:jre8
+FROM jetty:jre8
 
-RUN adduser -D -h /home/accountapp accountapp
-ADD bin /home/accountapp/bin
-ADD build/libs/accountapp*.war /home/accountapp/bin/accountapp.war
+ADD build/libs/accountapp*.war /var/lib/jetty/webapps/account.war
+
+# This is apparently needed by Stapler for some weird reason. O_O
+RUN mkdir -p /home/jetty/.app
+
+RUN mkdir -p /etc/accountapp
 
 EXPOSE 8080
-USER accountapp
 
-ENTRYPOINT /home/accountapp/bin/run.sh
+# Overriding the CMD from our parent to make it easier to tell it about
+# our config.properties which the app needs
+CMD java -DCONFIG=/etc/accountapp/config.properties -jar "$JETTY_HOME/start.jar"
