@@ -36,3 +36,8 @@ server, so the data you'll be seeing is real.
 For deploying to production, this app gets containerized. The container expects
 to see `/etc/accountapp` mounted from outside that contains the abovementioned
 `config.properties`
+
+
+To run the container locally, build it then:
+
+    docker run -ti --net=host  -v `pwd`:/etc/accountapp jenkinsciinfra/account-app:latest
