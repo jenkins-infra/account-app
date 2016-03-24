@@ -11,6 +11,7 @@ version = '2.5'
 repositories {
     jcenter()
     maven { url 'https://repo.jenkins-ci.org/public' }
+    mavenLocal()
 }
 
 dependencies {
