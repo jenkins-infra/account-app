@@ -1,6 +1,6 @@
 FROM jetty:jre8
 
-ADD build/libs/accountapp*.war /var/lib/jetty/webapps/account.war
+ADD build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
 
 # This is apparently needed by Stapler for some weird reason. O_O
 RUN mkdir -p /home/jetty/.app
