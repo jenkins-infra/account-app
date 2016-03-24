@@ -29,7 +29,7 @@ dependencies {
     compile 'javax.activation:activation:1.1.1'
 
     /* needed for the app skin */
-    compile 'org.jenkins-ci.backend:jenkins-ci.org-theme:1.0'
+    compile 'org.jenkins-ci.backend:jenkins-ci.org-theme:1.2'
 
     compile('org.jenkins-ci.backend:jira-ldap-syncer:1.0') {
         exclude module: 'javamail'
