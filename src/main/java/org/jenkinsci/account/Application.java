@@ -269,7 +269,7 @@ public class Application {
                 + Joiner.on("\n").join(blockReasons) + "\n===================" + "\n\n" +
                 "IP Void link: http://ipvoid.com/scan/" + ip + "\n\n" +
                 "To allow this account to be created, click the following link:\n" +
-                "https://jenkins-ci.org/account/admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
+                getUrl() + "/admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
             mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "Rejection of a new account creation for " + firstName + " " + lastName, body, "text/plain");
             throw new UserError(SPAM_MESSAGE);
         }
@@ -278,12 +278,12 @@ public class Application {
         LOGGER.info("User "+userid+" is from "+ip);
         mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
             userDetails + "\n\nHTTP Headers\n" +
-                dumpHeaders(request) + "\n\n" + "Account page: https://jenkins-ci.org/account/admin/search?word=" + userid + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
+                dumpHeaders(request) + "\n\n" + "Account page: " + getUrl() + "/admin/search?word=" + userid + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
         new User(userid,email).mailPassword(password);
 
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
-        cookie.setDomain("jenkins-ci.org");
-        cookie.setPath("/account");
+        cookie.setDomain("accounts.jenkins.io");
+        cookie.setPath("/");
         cookie.setMaxAge(24 * 60 * 60);
         response.addCookie(cookie);
 
@@ -541,10 +541,10 @@ public class Application {
          * Sends a new password to this user.
          */
         public void mailPassword(String password) throws MessagingException {
-            mail("Admin <admin@jenkins-ci.org>", mail, "Your access to jenkins-ci.org", "Your userid is " + id + "\n" +
+            mail("Admin <admin@jenkins-ci.org>", mail, "Your access to Jenkins resources", "Your userid is " + id + "\n" +
                 "Your temporary password is " + password + " \n" +
                 "\n" +
-                "Please visit http://jenkins-ci.org/account and update your password and profile\n", "text/plain");
+                "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
         }
 
         public void delete(DirContext con) throws NamingException {
