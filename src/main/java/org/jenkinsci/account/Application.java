@@ -220,18 +220,6 @@ public class Application {
             }
         }
 
-        if(badNameElement(usedFor)) {
-            blockReasons.add("Garbled use");
-        }
-
-        if(userid.equalsIgnoreCase(usedFor) || firstName.equalsIgnoreCase(usedFor) || lastName.equalsIgnoreCase(usedFor) || email.equalsIgnoreCase(usedFor)) {
-            blockReasons.add("Use same as name");
-        }
-
-        if(badNameElement(userid) || badNameElement(firstName) || badNameElement(lastName)) {
-            blockReasons.add("Bad name element");
-        }
-
         if(checkCookie(request, ALREADY_SIGNED_UP)) {
             blockReasons.add("Cookie");
         }
@@ -298,10 +286,6 @@ public class Application {
             buffer.append(headerName).append("=").append(request.getHeader(headerName)).append("\n");
         }
         return buffer.toString();
-    }
-
-    private boolean badNameElement(String userid) {
-        return Pattern.matches("^[sdfghrtbvd0-9]{2,}$", userid.toLowerCase());
     }
 
     public String geoIp(String ip) {
