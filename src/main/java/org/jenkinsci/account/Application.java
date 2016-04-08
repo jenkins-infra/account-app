@@ -5,7 +5,6 @@ import com.google.common.base.Strings;
 import com.google.common.net.InetAddresses;
 import jiraldapsyncer.JiraLdapSyncer;
 import jiraldapsyncer.ServiceLocator;
-import org.apache.commons.collections.EnumerationUtils;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.Header;
 import org.kohsuke.stapler.HttpRedirect;
@@ -16,8 +15,6 @@ import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 import org.kohsuke.stapler.config.ConfigurationLoader;
-import org.kohsuke.stopforumspam.Answer;
-import org.kohsuke.stopforumspam.StopForumSpam;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -33,12 +30,10 @@ import javax.naming.Context;
 import javax.naming.NameAlreadyBoundException;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
-import javax.naming.directory.Attribute;
 import javax.naming.directory.AttributeInUseException;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
@@ -228,15 +223,6 @@ public class Application {
             blockReasons.add("circuit breaker");
         }
 
-        // spam check
-        // TODO, update StopForumSpam to add &notorexit (See http://www.stopforumspam.com/usage)
-        // TODO, add in http://fspamlist.com/ as well
-        for (Answer a : new StopForumSpam().build().ip(ip).email(email).query()) {
-            if (a.isAppears()) {
-                blockReasons.add("Stopforumspam: " + a.toString());
-            }
-        }
-
         final DirContext con = connect();
         try {
             if(ldapObjectExists(con, "(id={0})", userid)) {
@@ -286,40 +272,6 @@ public class Application {
             buffer.append(headerName).append("=").append(request.getHeader(headerName)).append("\n");
         }
         return buffer.toString();
-    }
-
-    public String geoIp(String ip) {
-        try {
-            URL url = new URL("http://freegeoip.net/csv/" + ip);
-            BufferedReader reader = new BufferedReader( new InputStreamReader(url.openStream()));
-            return reader.readLine();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    public List<String> getTxtRecord(String hostName) {
-
-        Hashtable<String, String> env = new Hashtable<String, String>();
-        env.put("java.naming.factory.initial", "com.sun.jndi.dns.DnsContextFactory");
-        List<String> txtRecords = new ArrayList<String>();
-        try {
-            DirContext dirContext = new InitialDirContext(env);
-            Attributes attrs = dirContext.getAttributes(hostName, new String[] { "TXT" });
-            Attribute attr = attrs.get("TXT");
-            for(Object txt: EnumerationUtils.toList(attr.getAll())) {
-                if(txt != null) {
-                    txtRecords.add(txt.toString());
-                }
-            }
-            return txtRecords;
-        } catch (javax.naming.NamingException e) {
-            e.printStackTrace();
-            return txtRecords;
-        }
     }
 
     private boolean verifyCaptcha(String uresponse, String ip) {
@@ -385,8 +337,8 @@ public class Application {
 
     private String userDetails(String userid, String firstName, String lastName, String email, String ip, String usedFor) {
         return String.format(
-            "ip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s\nGeoIp=%s",
-            ip, email, userid, lastName, firstName, usedFor, geoIp(ip));
+            "ip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s",
+            ip, email, userid, lastName, firstName, usedFor);
     }
 
     /**
