@@ -226,10 +226,12 @@ public class Application {
         final DirContext con = connect();
         try {
             if(ldapObjectExists(con, "(id={0})", userid)) {
-                throw new UserError("ID " + userid + " is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
+                throw new UserError("ID " + userid + " is already taken. Perhaps you already have an account imported " +
+                    "from legacy java.net? You may try resetting the password.");
             }
             if(ldapObjectExists(con, "(mail={0})", email)) {
-                blockReasons.add("Existing email in system");
+                throw new UserError("Mail " + email + " is already used for an account. If you have forgotten your " +
+                    "password, you may try resetting it <a href='https://accounts.jenkins.io/passwordReset'>here</a>.");
             }
         } finally {
             con.close();
@@ -1407,9 +1409,7 @@ public class Application {
         "asdf",
         "bog",
         "bug tracker",
-        "business",
         "businessman",
-        "bussiness",
         "captcha",
         "capturing",
         "company",
@@ -1471,7 +1471,6 @@ public class Application {
         "keyword promotion",
         "knowledge sharing",
         "knowledge",
-        "learn",
         "linux tips",
         "looking for voip solutions",
         "marketing",
@@ -1529,7 +1528,6 @@ public class Application {
         "teacher",
         "tech support",
         "technical help support",
-        "technical help",
         "technical support",
         "tutorial",
         "tutorials",
