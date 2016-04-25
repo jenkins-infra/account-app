@@ -223,20 +223,6 @@ public class Application {
             blockReasons.add("circuit breaker");
         }
 
-        final DirContext con = connect();
-        try {
-            if(ldapObjectExists(con, "(id={0})", userid)) {
-                throw new UserError("ID " + userid + " is already taken. Perhaps you already have an account imported " +
-                    "from legacy java.net? You may try resetting the password.");
-            }
-            if(ldapObjectExists(con, "(mail={0})", email)) {
-                throw new UserError("Mail " + email + " is already used for an account. If you have forgotten your " +
-                    "password, you may try resetting it <a href='https://accounts.jenkins.io/passwordReset'>here</a>.");
-            }
-        } finally {
-            con.close();
-        }
-
         String userDetails = userDetails(userid, firstName, lastName, email, ip, usedFor);
         if(blockReasons.size() > 0) {
             String body = "Rejecting, likely spam:\n\n" + userDetails + "\n\nHTTP Headers\n" +
@@ -405,10 +391,6 @@ public class Application {
 
         LOGGER.info("User "+userid+" signed up: "+email);
         return password;
-    }
-
-    private boolean ldapObjectExists(DirContext con, String filterExpr, Object filterArgs) throws NamingException {
-        return con.search(params.newUserBaseDN(), filterExpr, new Object[]{filterArgs}, new SearchControls()).hasMore();
     }
 
     /**
