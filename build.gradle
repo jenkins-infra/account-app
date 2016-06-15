@@ -30,7 +30,7 @@ dependencies {
     /* needed for the app skin */
     compile 'org.jenkins-ci.backend:jenkins-ci.org-theme:1.3'
 
-    compile('io.jenkins.backend:jira-rest-ldap-syncer:1.0') {
+    compile('io.jenkins.backend:jira-rest-ldap-syncer:1.1') {
         exclude module: 'javamail'
     }
 
