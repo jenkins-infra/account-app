@@ -5,7 +5,7 @@
 First, set up a tunnel to Jenkins LDAP server. Run the following command and
 keep the terminal open:
 
-    ssh -L 9389:localhost:389 ldap.jenkins.io
+    ssh -L 9389:localhost:389 cucumber.jenkins-ci.org
 
 Create `config.properties` in the same directory as `pom.xml`. See the
 `Parameters` class for the details, but it should look something like the
@@ -15,6 +15,8 @@ following:
     managerDN=cn=admin,dc=jenkins-ci,dc=org
     newUserBaseDN=ou=people,dc=jenkins-ci,dc=org
     smtpServer=localhost
+    recaptchaPublicKey=6Ld--8ASAAAAANHmHaM1sdSYshtmXTin1BNtaw86
+    recaptchaPrivateKey=*****
     managerPassword=*****
     circuitBreakerFile=./circuitBreaker.txt
     url=http://localhost:8080/account/
