@@ -1,7 +1,5 @@
 # Jenkins Account Management/Sign-up App
 
-[![Build Status](http://ci.jenkins-ci.org/view/Infrastructure/job/infra_accountapp/badge/icon)](http://ci.jenkins-ci.org/view/Infrastructure/job/infra_accountapp/)
-
 ## Testing locally
 
 First, set up a tunnel to Jenkins LDAP server. Run the following command and
