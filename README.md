@@ -21,10 +21,13 @@ following:
 
 Finally, run the application with Jetty, then access `http://localhost:8080/`:
 
-    ./gradlew jettyRun
+    ./gradlew -Djira.url=https://issues.jenkins-ci.org/ -Djira.username=kohsuke -Djira.password=... -Durl=ldap://localhost:9389 -Dpassword=... jettyRun
 
 (As you can see above, this connects your test instance to the actual LDAP
 server, so the data you'll be seeing is real.
+
+The command line system properties are for JIRA LDAP sync tool. JIRA user account you are providing has to have the system admin access to JIRA.
+TODO: feed this data from config.properties
 
 
 ## Packaging
