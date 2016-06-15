@@ -134,10 +134,13 @@ public class Application {
         ip = extractFirst(ip);
 
         String uresponse = request.getParameter("g-recaptcha-response");
-        if (uresponse==null)    throw new Error("captcha missing");
 
-        if (!verifyCaptcha(uresponse, ip)) {
-            throw new UserError("Captcha mismatch. Please try again and retry a captcha to prove that you are a human");
+        if (isCaptchaOn()) {
+            if (uresponse == null) throw new Error("captcha missing");
+
+            if (!verifyCaptcha(uresponse, ip)) {
+                throw new UserError("Captcha mismatch. Please try again and retry a captcha to prove that you are a human");
+            }
         }
 
         userid = userid.toLowerCase();
@@ -250,6 +253,10 @@ public class Application {
         response.addCookie(cookie);
 
         return new HttpRedirect("doneMail");
+    }
+
+    private boolean isCaptchaOn() {
+        return params.recaptchaPublicKey()!=null;
     }
 
     private String dumpHeaders(StaplerRequest request) {
