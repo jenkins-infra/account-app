@@ -26,9 +26,11 @@
         document.getElementById("hp").style.display = "none";
       ]]>
       </script>
-      <h5>Captcha</h5>
-      <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"></script>
-      <div class="g-recaptcha" data-sitekey="${it.captchaPublicKey()}"></div>
+      <j:if test="${it.captchaPublicKey()}">
+        <h5>Captcha</h5>
+        <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"></script>
+        <div class="g-recaptcha" data-sitekey="${it.captchaPublicKey()}"></div>
+      </j:if>
       <br/>
       <input type="submit" style="margin-top:2em; display:block"/>
     </form>
