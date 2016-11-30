@@ -469,7 +469,7 @@ public class Application {
          */
         public void mailPassword(String password) throws MessagingException {
             mail("Admin <admin@jenkins-ci.org>", mail, "Your access to Jenkins resources", "Your userid is " + id + "\n" +
-                "Your temporary password is " + password + " \n" +
+                "Your temporary password is " + password + "\n" +
                 "\n" +
                 "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
         }
