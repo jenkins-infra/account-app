@@ -2,11 +2,10 @@
 
 def imageName = 'jenkinsciinfra/account-app'
 
-/* Only keep the X most recent builds. */
-properties([[$class: 'jenkins.model.BuildDiscarderProperty',
-            strategy: [$class: 'LogRotator',
-                        numToKeepStr: '10',
-                        artifactNumToKeepStr: '10']]])
+properties([
+    buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5')),
+    pipelineTriggers([[$class:"SCMTrigger", scmpoll_spec:"H/15 * * * *"]]),
+])
 
 node('docker') {
     stage('Build') {
