@@ -1,4 +1,4 @@
-FROM jetty:jre8
+FROM jetty:jre8-alpine
 
 ADD build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
 
