@@ -1,13 +1,15 @@
-<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/backend/taglib/layout">
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Account self-service app">
-    <p>
-      You can create/manage your user account that you use for accessing
-      <a href="http://wiki.jenkins-ci.org/" target="_top">Wiki</a> and <a href="http://issues.jenkins-ci.org/" target="_top">JIRA</a>,
-    </p>
+    <div style="width: 100%;">
+        <p>
+        You can create/manage your user account that you use for accessing
+        <a href="http://wiki.jenkins-ci.org/" target="_top">Wiki</a> and <a href="http://issues.jenkins-ci.org/" target="_top">JIRA</a>,
+        </p>
+    </div>
 
     <style>
       #account-menu H1 {
-        margin: 0.5em;
+        margin: 1rem;
       }
     </style>
 

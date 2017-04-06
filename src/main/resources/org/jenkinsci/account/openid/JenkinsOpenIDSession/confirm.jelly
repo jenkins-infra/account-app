@@ -1,4 +1,4 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:t="/org/jenkinsci/backend/taglib/layout">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="OpenID">
     <div style="padding-bottom:1em">
       You are trying to login to <b>${it.realm}</b> with your Jenkins ID <b>${it.identity.nick}</b>
