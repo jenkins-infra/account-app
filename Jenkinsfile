@@ -10,6 +10,7 @@ properties([
 node('docker') {
     stage('Build') {
         timestamps {
+            deleteDir()
             checkout scm
             docker.image('java:8').inside {
                 sh './gradlew --no-daemon --info war'

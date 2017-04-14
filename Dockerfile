@@ -11,7 +11,7 @@ RUN mkdir -p /home/jetty/.app
 COPY build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
 
 RUN mkdir -p /etc/accountapp
-COPY etc/config.properties /etc/accountapp/config.properties.example
+COPY config.properties.example /etc/accountapp/config.properties.example
 
 COPY entrypoint.sh /entrypoint.sh
 

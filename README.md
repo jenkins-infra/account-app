@@ -58,3 +58,15 @@ Those two options are mutually exclusive.
 * RECAPTCHA_PUBLIC_KEY
 * RECAPTCHA_PRIVATE_KEY
 * SMTP_SERVER
+
+## Tests
+We can run basic tests
+
+Required:
+  ruby-2.2
+
+Run:
+```
+  bundle install
+  rake test
+```

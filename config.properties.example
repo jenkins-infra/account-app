@@ -1,0 +1,23 @@
+# This file configures the Jenkins project's accounts management application.
+#
+# See: <https://github.com/jenkins-infra/account-app>
+server=LDAP_URL 
+managerDN=LDAP_MANAGER_DN
+managerPassword=LDAP_PASSWORD
+
+newUserBaseDN=LDAP_NEW_USER_BASE_DN
+
+# Host which accountapp can use for sending out password reset and other emails
+smtpServer=SMTP_SERVER
+
+# recaptcha v2 keys from rtyler's google account
+recaptchaPublicKey=RECAPTCHA_PUBLIC_KEY
+recaptchaPrivateKey=RECAPTCHA_PRIVATE_KEY
+
+url=APP_URL
+
+# Create this file on the host machine in order to temporarily disable account
+# creation
+circuitBreakerFile=CIRCUIT_BREAKER_FILE
+
+# vim: ft=conf
