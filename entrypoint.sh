@@ -38,4 +38,3 @@ if [ ! -f /etc/accountapp/config.properties ]; then
 fi
 
 exec java -DCONFIG=/etc/accountapp/config.properties -Durl="$LDAP_URL" -Dpassword="$LDAP_PASSWORD" -Djira.username="$JIRA_USERNAME" -Djira.password="$JIRA_PASSWORD" -Djira.url="$JIRA_URL" -jar "$JETTY_HOME/start.jar"
-
