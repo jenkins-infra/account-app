@@ -19,6 +19,15 @@ node('docker') {
         }
     }
 
+   	stage('Test'){
+        timestamps{
+            docker.image('ruby:2.3').inside('-v /var/run/docker.sock:/var/run/docker.sock --group-add=982') {
+                sh 'bundle install'
+                sh 'rake test'
+            }
+        }
+    }
+
     def container
     stage('Prepare Container') {
         timestamps {
