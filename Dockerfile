@@ -1,5 +1,10 @@
 FROM jetty:jre8-alpine
 
+LABEL \
+  Description="Deploy Jenkins infra account app" \
+  Project="https://github.com/jenkins-infra/account-app" \
+  Maintainer="infra@lists.jenkins-ci.org"
+
 # This is apparently needed by Stapler for some weird reason. O_O
 RUN mkdir -p /home/jetty/.app
 
