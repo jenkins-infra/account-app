@@ -40,3 +40,33 @@ to see `/etc/accountapp` mounted from outside that contains the abovementioned
 To run the container locally, build it then:
 
     docker run -ti --net=host  -v `pwd`:/etc/accountapp jenkinsciinfra/account-app:latest
+
+## Configuration
+Instead of mounting the configuration file from an external volume, 
+we may want to use environment variable.
+Those two options are mutually exclusive.
+
+* APP_URL 
+* CIRCUIT_BREAKER_FILE ('/etc/accountapp/circuitBreaker')
+* JIRA_PASSWORD
+* JIRA_URL
+* JIRA_USERNAME
+* LDAP_MANAGER_DN
+* LDAP_NEW_USER_BASE_DN
+* LDAP_PASSWORD
+* LDAP_URL
+* RECAPTCHA_PUBLIC_KEY
+* RECAPTCHA_PRIVATE_KEY
+* SMTP_SERVER
+
+## Tests
+We can run basic tests
+
+Required:
+  ruby-2.2
+
+Run:
+```
+  bundle install
+  rake test
+```
