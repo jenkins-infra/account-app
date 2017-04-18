@@ -10,10 +10,20 @@ properties([
 node('docker') {
     stage('Build') {
         timestamps {
+            deleteDir()
             checkout scm
             docker.image('java:8').inside {
                 sh './gradlew --no-daemon --info war'
                 archiveArtifacts artifacts: 'build/libs/*.war', fingerprint: true
+            }
+        }
+    }
+
+   	stage('Test'){
+        timestamps{
+            docker.image('ruby:2.3').inside('-v /var/run/docker.sock:/var/run/docker.sock --group-add=982') {
+                sh 'bundle install'
+                sh 'rake test'
             }
         }
     }
