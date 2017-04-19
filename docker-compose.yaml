@@ -1,0 +1,30 @@
+accountapp:
+  build: .
+  environment: 
+    LDAP_URL: 'https://ldap'
+    LDAP_PASSWORD: 'ldap_password'
+    JIRA_USERNAME: 'jira_username'
+    JIRA_PASSWORD: 'jira_password'
+    JIRA_URL: 'https://jira_url'
+    SMTP_SERVER: 'https://smtp_server'
+    RECAPTCHA_PRIVATE_KEY: 'recaptcha_private_key'
+    RECAPTCHA_PUBLIC_KEY: 'recaptcha_public_key'
+    APP_URL: 'https://app_url'
+    LDAP_MANAGER_DN: 'ldap_manager_dn'
+    LDAP_NEW_USER_BASE_DN: 'ldap_new_user_base_dn'
+
+shell:
+  build: .
+  environment: 
+    LDAP_URL: 'https://ldap'
+    LDAP_PASSWORD: 'ldap_password'
+    JIRA_USERNAME: 'jira_username'
+    JIRA_PASSWORD: 'jira_password'
+    JIRA_URL: 'https://jira_url'
+    SMTP_SERVER: 'https://smtp_server'
+    RECAPTCHA_PRIVATE_KEY: 'recaptcha_private_key'
+    RECAPTCHA_PUBLIC_KEY: 'recaptcha_public_key'
+    APP_URL: 'https://app_url'
+    LDAP_MANAGER_DN: 'ldap_manager_dn'
+    LDAP_NEW_USER_BASE_DN: 'ldap_new_user_base_dn'
+  entrypoint: /bin/sh
