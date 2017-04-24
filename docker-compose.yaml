@@ -1,0 +1,15 @@
+version: '3'
+services:
+  accountapp:
+    build: .
+    image: accountapp:latest
+    env_file: .env
+    network_mode: host
+    ports:
+      - '8080:8080'
+  shell:
+    build: .
+    image: accountapp:latest
+    env_file: .env
+    entrypoint: /bin/sh
+    network_mode: host

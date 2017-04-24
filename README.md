@@ -29,14 +29,57 @@ server, so the data you'll be seeing is real.
 The command line system properties are for JIRA LDAP sync tool. JIRA user account you are providing has to have the system admin access to JIRA.
 TODO: feed this data from config.properties
 
+### Docker Compose
+A docker compose file can be used for testing purpose.
+
+_Require ssh tunnel to an ldap server and an WAR archive_
+
+* Create the file ```.env``` used by docker-compose to load configuration
+.env example
+```
+    LDAP_URL=server=ldap://localhost:9389/
+    LDAP_PASSWORD=<insert your ldap password>
+    JIRA_USERNAME=<insert your jira username>
+    JIRA_PASSWORD=<insert your jira password>
+    JIRA_URL=https://issues.jenkins-ci.org
+    SMTP_SERVER=localhost
+    RECAPTCHA_PRIVATE_KEY=recaptcha_private_key
+    RECAPTCHA_PUBLIC_KEY=recaptcha_public_key
+    APP_URL=http://localhost:8080/
+    LDAP_MANAGER_DN=cn=admin,dc=jenkins-ci,dc=org
+    LDAP_NEW_USER_BASE_DN=ou=people,dc=jenkins-ci,dc=org
+```
+* Run docker-compose 
+```docker-compose up --build accountapp```
 
 ## Packaging
 
 For deploying to production, this app gets containerized. The container expects
-to see `/etc/accountapp` mounted from outside that contains the abovementioned
+to see `/etc/accountapp` mounted from outside that contains the above mentioned
 `config.properties`
 
 
 To run the container locally, build it then:
 
     docker run -ti --net=host  -v `pwd`:/etc/accountapp jenkinsciinfra/account-app:latest
+
+## Configuration
+Instead of mounting the configuration file from an external volume,
+we may want to use environment variable.
+
+**Those two options are mutually exclusive.**
+
+```
+* APP_URL
+* CIRCUIT_BREAKER_FILE
+* JIRA_PASSWORD
+* JIRA_URL
+* JIRA_USERNAME
+* LDAP_MANAGER_DN
+* LDAP_NEW_USER_BASE_DN
+* LDAP_PASSWORD
+* LDAP_URL
+* RECAPTCHA_PUBLIC_KEY
+* RECAPTCHA_PRIVATE_KEY
+* SMTP_SERVER
+```
