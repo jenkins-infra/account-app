@@ -3,6 +3,7 @@ package org.jenkinsci.account;
 import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.Stapler;
 
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -13,7 +14,8 @@ import javax.naming.ldap.LdapContext;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import static org.jenkinsci.account.LdapAbuse.*;
+import static org.jenkinsci.account.LdapAbuse.GITHUB_ID;
+import static org.jenkinsci.account.LdapAbuse.SSH_KEYS;
 
 /**
  * Represents the current user logged in and operations on it.
@@ -29,16 +31,30 @@ public class Myself {
     private final Set<String> groups;
 
     public Myself(Application parent, String dn, Attributes attributes, Set<String> groups) throws NamingException {
+        this(parent, dn,
+            getAttribute(attributes,"givenName"),
+            getAttribute(attributes,"sn"),
+            getAttribute(attributes,"mail"),
+            getAttribute(attributes,"cn"),
+            getAttribute(attributes, GITHUB_ID),
+            getAttribute(attributes, SSH_KEYS),
+            groups);
+    }
+
+    public Myself(Application parent, String dn, String firstName, String lastName, String email, String userId, String githubId, String sshKeys, Set<String> groups) {
         this.parent = parent;
         this.dn = dn;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userId = userId;
+        this.githubId = githubId;
+        this.sshKeys = sshKeys;
         this.groups = groups;
+    }
 
-        firstName = getAttribute(attributes,"givenName");
-        lastName = getAttribute(attributes,"sn");
-        email = getAttribute(attributes,"mail");
-        userId = getAttribute(attributes,"cn");
-        githubId = getAttribute(attributes, GITHUB_ID);
-        sshKeys = getAttribute(attributes, SSH_KEYS);
+    public static Myself current() {
+        return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
     }
 
     /**
@@ -48,7 +64,7 @@ public class Myself {
         return groups.contains("admins");
     }
 
-    private String getAttribute(Attributes attributes, String name) throws NamingException {
+    private static String getAttribute(Attributes attributes, String name) throws NamingException {
         Attribute att = attributes.get(name);
         return att!=null ? (String) att.get() : null;
     }

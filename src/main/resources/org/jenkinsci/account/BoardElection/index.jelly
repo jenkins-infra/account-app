@@ -1,0 +1,61 @@
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/backend/taglib/layout">
+  <t:layout title="Board Election">
+
+    <j:choose>
+      <j:when test="${it.open}">
+
+        <h1>Board Election</h1>
+        <p>
+          Use drag and drop to order candidates by your preference for <a href="https://wiki.jenkins-ci.org/display/JENKINS/Board+Election+Process">Board election</a>.
+        </p>
+
+        <link rel="stylesheet" href="https://jenkins.io/assets/bower/jquery-ui/themes/base/jquery-ui.min.css"/>
+        <script src="https://jenkins.io/assets/bower/jquery-ui/jquery-ui.min.js"></script>
+        <script>
+          $( function() {
+          $( "#sortable" ).sortable();
+          $( "#sortable" ).disableSelection();
+          } );
+
+          function vote() {
+          var vote = $.map( $("#sortable > li"), function (element) {
+          return element.id;
+          }).join(",");
+          $("#vote_form > input").val(vote);
+          $("#vote_form").submit();
+          }
+        </script>
+        <style>
+          #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; cursor: move }
+          #sortable li { margin: 0 3px 3px 5px; padding: 2px; padding-left:15px; font-size: 1.4em; height: 60px; }
+        </style>
+
+        <ul id="sortable">
+          <j:forEach var="c" indexVar="i" items="${it.candidates}" >
+            <li id="${i}" class="ui-state-default">
+              ${c}
+              <div style="float:right; font-size:0.8em; cursor:pointer" onclick="this.parentElement.remove()"><i class="fa fa-ban" aria-hidden="true"></i></div>
+            </li>
+          </j:forEach>
+        </ul>
+
+        <p style="width: 60%; text-align:right; margin-top:50px">
+          <form method="post" action="vote" id="vote_form">
+            <input type="hidden" name="vote"/>
+          </form>
+          <button onclick="vote()">Vote</button>
+        </p>
+
+      </j:when>
+      <j:otherwise>
+
+        <h1>Board election is closed.</h1>
+
+      </j:otherwise>
+    </j:choose>
+
+
+
+  </t:layout>
+
+</j:jelly>
