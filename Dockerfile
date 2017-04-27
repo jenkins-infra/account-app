@@ -18,11 +18,12 @@ COPY config.properties.example /etc/accountapp/config.properties.example
 COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
 COPY entrypoint.sh /entrypoint.sh
 
+COPY build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
+
 RUN \
   chmod 0755 /entrypoint.sh &&\
-  chown -R jetty:root /etc/accountapp
-
-COPY build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
+  chown -R jetty:root /etc/accountapp &&\
+  chown -R jetty:root /var/lib/jetty
 
 USER jetty
 
