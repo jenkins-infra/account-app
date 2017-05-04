@@ -1,4 +1,4 @@
-<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/backend/taglib/layout">
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Board Election">
 
     <j:choose>
