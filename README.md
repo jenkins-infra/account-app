@@ -5,7 +5,7 @@
 First, set up a tunnel to Jenkins LDAP server. Run the following command and
 keep the terminal open:
 
-    ssh -L 9389:localhost:389 ldap.jenkins.io
+    ssh -4 -L 9389:localhost:389 ldap.jenkins.io
 
 Create `config.properties` in the same directory as `pom.xml`. See the
 `Parameters` class for the details, but it should look something like the
