@@ -5,14 +5,16 @@ LABEL \
   Project="https://github.com/jenkins-infra/account-app" \
   Maintainer="infra@lists.jenkins-ci.org"
 
+ENV ELECTION_LOGDIR=/var/log/accountapp/elections
+
 EXPOSE 8080
 
 ENV CIRCUIT_BREAKER_FILE /etc/accountapp/circuitBreaker.txt
 
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
-RUN \
-  mkdir -p /home/jetty/.app &&\ 
-  mkdir -p /etc/accountapp
+RUN mkdir -p /home/jetty/.app &&\
+    mkdir -p /etc/accountapp &&\
+    mkdir -p $ELECTION_LOGDIR
 
 COPY config.properties.example /etc/accountapp/config.properties.example
 COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
@@ -20,10 +22,10 @@ COPY entrypoint.sh /entrypoint.sh
 
 COPY build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
 
-RUN \
-  chmod 0755 /entrypoint.sh &&\
-  chown -R jetty:root /etc/accountapp &&\
-  chown -R jetty:root /var/lib/jetty
+RUN chmod 0755 /entrypoint.sh &&\
+    chown -R jetty:root /etc/accountapp &&\
+    chown -R jetty:root /var/lib/jetty &&\
+    chown -R jetty:root $ELECTION_LOGDIR
 
 USER jetty
 

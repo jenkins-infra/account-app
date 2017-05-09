@@ -22,7 +22,14 @@ init_config_properties() {
     : "${ELECTION_CANDIDATES:? Required coma separated list of candidates}"
     : "${ELECTION_CLOSE:? Required date election will close. yyyy/MM/dd}"
     : "${ELECTION_OPEN:? date election will open. yyyy/MM/dd }"
-    : "${ELECTION_LOGFILE:? path to store collected votes. assume this path is well persisted/backup }"
+    : "${ELECTION_LOGDIR:? Require election log directory }"
+
+    #Directory to store collected votes. assume this path is well persisted/backup
+
+    if [ ! -d "${ELECTION_LOGDIR}" ]; then
+        mkdir -p "${ELECTION_LOGDIR}"
+        chown jetty: "$ELECTION_LOGDIR"
+    fi
 
     cp /etc/accountapp/config.properties.example /etc/accountapp/config.properties
 
@@ -39,7 +46,7 @@ init_config_properties() {
     sed -i "s#ELECTION_CANDIDATES#$ELECTION_CANDIDATES#" /etc/accountapp/config.properties
     sed -i "s#ELECTION_OPEN#$ELECTION_OPEN#" /etc/accountapp/config.properties
     sed -i "s#ELECTION_CLOSE#$ELECTION_CLOSE#" /etc/accountapp/config.properties
-    sed -i "s#ELECTION_LOGFILE#$ELECTION_LOGFILE#" /etc/accountapp/config.properties
+    sed -i "s#ELECTION_LOGDIR#$ELECTION_LOGDIR#" /etc/accountapp/config.properties
 }
 
 if [ ! -f /etc/accountapp/config.properties ]; then

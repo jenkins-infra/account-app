@@ -22,6 +22,6 @@ circuitBreakerFile=CIRCUIT_BREAKER_FILE
 electionCandidates=ELECTION_CANDIDATES
 electionClose=ELECTION_CLOSE
 electionOpen= ELECTION_OPEN
-electionLogfile=ELECTION_LOGFILE
+electionLogDir=ELECTION_LOGDIR
 
 # vim: ft=conf
