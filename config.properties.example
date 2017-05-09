@@ -8,20 +8,24 @@ managerPassword=LDAP_PASSWORD
 newUserBaseDN=LDAP_NEW_USER_BASE_DN
 
 # Host which accountapp can use for sending out password reset and other emails
+# Optional: Default value set to localhost
 smtpServer=SMTP_SERVER
 
 recaptchaPublicKey=RECAPTCHA_PUBLIC_KEY
 recaptchaPrivateKey=RECAPTCHA_PRIVATE_KEY
 
+# Optional: Default value set to http://accounts.jenkins.io/
 url=APP_URL
 
 # Create this file on the host machine in order to temporarily disable account
 # creation
+# Optional: Default value set to /etc/accountapp/circuitBreaker.txt
 circuitBreakerFile=CIRCUIT_BREAKER_FILE
 
 electionCandidates=ELECTION_CANDIDATES
 electionClose=ELECTION_CLOSE
 electionOpen= ELECTION_OPEN
+# Optional: Default value set to /var/log/accountapp/elections
 electionLogDir=ELECTION_LOGDIR
 
 # vim: ft=conf
