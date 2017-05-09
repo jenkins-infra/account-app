@@ -6,10 +6,13 @@ LABEL \
   Maintainer="infra@lists.jenkins-ci.org"
 
 ENV ELECTION_LOGDIR=/var/log/accountapp/elections
+ENV CIRCUIT_BREAKER_FILE=/etc/accountapp/circuitBreaker.txt
+ENV SMTP_SERVER=localhost
+ENV JIRA_URL=https://issues.jenkins-ci.org
+ENV APP_URL=http://accounts.jenkins.io/
 
 EXPOSE 8080
 
-ENV CIRCUIT_BREAKER_FILE /etc/accountapp/circuitBreaker.txt
 
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
 RUN mkdir -p /home/jetty/.app &&\
