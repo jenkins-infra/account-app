@@ -554,7 +554,7 @@ public class Application {
         }
 
         // to limit the redirect to this application, require that the from URL starts from '/'
-        if (from==null || !from.startsWith("/")) from="/myself/";
+        if (from==null || !from.startsWith("/")) from="/";
         return HttpResponses.redirectTo(from);
     }
 
