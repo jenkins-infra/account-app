@@ -37,7 +37,7 @@ public interface Parameters {
 
     String electionCandidates();
 
-    String electionLogfile();
+    String electionLogDir();
 
     String electionOpen();
 
