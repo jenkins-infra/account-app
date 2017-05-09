@@ -1,38 +1,56 @@
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Sign up">
-    <h1>Sign up</h1>
+  <div class="row">
+  <div class="col-sm-6 block-center">
+
+    <h1 class="text-center" >Sign up</h1>
 
     <form method="post" action="doSignup">
-      <h5>User ID</h5>
-      <input type="text" name="userid" class="text"/>
-      <p class="description">
-        Only alphabets, numbers, and '_' is allowed.
-      </p>
+      <div class="form-group">
+        <label class="sr-only" for="userid">User ID</label>
+        <input type="text" name="userid" id="userid" class="form-control text" placeholder="Userid"/>
+        <span id="helpBlock" class="help-block text-center">
+          Only alphabets, numbers, and '_' is allowed.
+        </span>
+      </div>
 
-      <h5>First Name</h5>
-      <input type="text" name="firstName" class="text"/>
+      <div class="form-group">
+        <label class="sr-only" for="firstname">First Name</label>
+        <input type="text" name="firstName" id="firstname" class="form-control text" placeholder="First Name"/>
+      </div>
 
-      <h5>Last Name</h5>
-      <input type="text" name="lastName" class="text"/>
+      <div class="form-group">
+        <label class="sr-only" for="lastname" >Last Name</label>
+        <input type="text" id='lastname' name="lastName" class="form-control text" placeholder="Last Name"/>
+      </div>
 
-      <h5>E-mail</h5>
-      <input type="text" name="email" class="text"/>
+      <div class="form-group">
+        <label class="sr-only" for="email">E-mail</label>
+        <input type="email" name="email" id="email" class="form-control text" placeholder="Email"/>
+      </div>
 
-      <h5>What do you use Jenkins for?</h5>
-      <input type="text" name="usedFor" class="text"/>
-      <input id="hp" type="text" name="hp"/>
+      <div class="form-group">
+        <label class="sr-only" for="usedFor">Usage</label>
+        <input type="text" name="usedFor" id="usedfor" class="form-control text" placeholder="What do you use Jenkins for?"/>
+      </div>
+
+      <input id="hp" type="text"  name="hp"/>
       <script>
-      <![CDATA[
-        document.getElementById("hp").style.display = "none";
-      ]]>
+        <![CDATA[document.getElementById("hp").style.display = "none";]]>
       </script>
+
       <j:if test="${it.captchaPublicKey()!=null}">
-        <h5>Captcha</h5>
+        <label class="sr-only" for="captcha">Captcha</label>
         <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"></script>
-        <div class="g-recaptcha" data-sitekey="${it.captchaPublicKey()}"></div>
+        <div class="g-recaptcha" id="captcha" data-sitekey="${it.captchaPublicKey()}"></div>
       </j:if>
       <br/>
-      <input type="submit" style="margin-top:2em; display:block"/>
+      <button type="submit" class="btn btn-default btn-lg btn-block">Sign Up</button>
     </form>
+  </div>
+  <div class="col-sm-6">
+  </div>
+</div>
+
   </t:layout>
 </j:jelly>
