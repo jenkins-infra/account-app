@@ -1,4 +1,4 @@
-.PHONY: build shell prod
+.PHONY: build clean run
 
 current_dir := $(shell pwd)
 current_user := $(shell id -u)
