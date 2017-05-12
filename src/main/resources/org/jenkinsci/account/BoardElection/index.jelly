@@ -26,9 +26,9 @@
           <ul id="sortable" class="list-group">
             <j:forEach var="c" indexVar="i" items="${it.candidates}" >
               <li id="${i}" class="list-group-item text-center text-capitalize" >
-                <span class="glyphicon glyphicon-sort pull-left" aria-hidden="true"></span>
+                <span class="pull-left fa fa-arrows-v" aria-hidden="true"></span>
                 ${c}     
-                <span onclick="this.parentElement.remove()" class="glyphicon glyphicon-remove pull-right"></span>
+                <span onclick="this.parentElement.remove()" class="pull-right fa fa-times"></span>
               </li>
             </j:forEach>
           </ul>
