@@ -1,0 +1,19 @@
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
+  <t:layout title="Board Election">
+
+    <h1>Candidates</h1>
+
+    <ul>
+    <j:forEach var="c" items="${it.candidates}">
+      <li><img src="${c.avatar}"/> ${c.firstName} ${c.lastName} (<a href="https://wiki.jenkins-ci.org/display/~${c.userId}">${c.userId}</a>)</li>
+    </j:forEach>
+    </ul>
+
+    <form method="post" action="addCandidate">
+      <h4>Add candidates by entering user ID</h4>
+      <input type="text" name="userId" placeholed="userId"/>
+      <button type="submit">Add</button>
+    </form>
+
+  </t:layout>
+</j:jelly>

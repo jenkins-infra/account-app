@@ -24,7 +24,7 @@ dependencies {
     compile('org.kohsuke.stapler:stapler-jelly:[1.203,2.0)')
     compile 'org.kohsuke.stapler:stapler-openid-server:[1.0,2.0)'
 
-    compile 'org.jvnet.hudson:commons-jelly-tags-define:1.0.1-hudson-20071021'
+    compile 'commons-jelly:commons-jelly-tags-define:1.0'
 
     compile 'javax.mail:mail:[1.4,2.0)'
     compile 'javax.activation:activation:1.1.1'
@@ -32,6 +32,13 @@ dependencies {
     compile('io.jenkins.backend:jira-rest-ldap-syncer:1.1') {
         exclude module: 'javamail'
     }
+
+    compile 'com.esotericsoftware.yamlbeans:yamlbeans:1.11'
+
+    compile 'org.webjars:webjars-servlet-2.x:1.5'
+    compile 'org.webjars:jquery:3.2.0'
+    compile 'org.webjars:jquery-ui:1.12.1'
+    compile 'org.webjars.bower:fontawesome:4.7.0'
 
     testCompile 'junit:junit:[4.8.1,5.0)'
 }

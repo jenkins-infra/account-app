@@ -1,0 +1,49 @@
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
+  <t:layout title="Board Election">
+    <j:choose>
+      <j:when test="${it.open}">
+
+        <h1>Board Election</h1>
+        <p class="help-block"> Use drag and drop to order candidates by your preference for <a href="https://wiki.jenkins-ci.org/display/JENKINS/Board+Election+Process">Board election</a>. </p>
+
+        <script>
+          $( function() {
+          $( "#sortable" ).sortable();
+          $( "#sortable" ).disableSelection();
+          } );
+
+          function vote() {
+          var vote = $.map( $("#sortable > li"), function (element) {
+          return element.id;
+          }).join(",");
+          $("#vote_form > input").val(vote);
+          $("#vote_form").submit();
+          }
+        </script>
+
+        <form method="post" action="vote" id="vote_form" >
+
+          <ul id="sortable" class="list-group">
+            <j:forEach var="c" indexVar="i" items="${it.candidates}" >
+              <li id="${i}" class="list-group-item text-center text-capitalize" >
+                <span class="pull-left fa fa-arrows-v" aria-hidden="true"></span>
+                ${c}     
+                <span onclick="this.parentElement.remove()" class="pull-right fa fa-times"></span>
+              </li>
+            </j:forEach>
+          </ul>
+
+          <input type="hidden" name="vote"/>
+        </form>
+        <button onclick="vote()" class="btn btn-default btn-lg pull-center center-block">Vote</button>
+
+      </j:when>
+      <j:otherwise>
+
+        <h1>Board election is closed.</h1>
+
+      </j:otherwise>
+    </j:choose>
+  </t:layout>
+
+</j:jelly>

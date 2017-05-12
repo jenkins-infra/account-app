@@ -16,6 +16,7 @@ import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 import org.kohsuke.stapler.config.ConfigurationLoader;
 
+import javax.annotation.CheckForNull;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -51,6 +52,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.rmi.RemoteException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,8 +74,7 @@ import static javax.naming.directory.DirContext.REMOVE_ATTRIBUTE;
 import static javax.naming.directory.DirContext.REPLACE_ATTRIBUTE;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.jenkinsci.account.LdapAbuse.REGISTRATION_DATE;
-import static org.jenkinsci.account.LdapAbuse.SENIOR_STATUS;
+import static org.jenkinsci.account.LdapAbuse.*;
 
 /**
  * Root of the account application.
@@ -94,17 +95,22 @@ public class Application {
     // not exposing this to UI
     /*package*/ final CircuitBreaker circuitBreaker;
 
-    public Application(Parameters params) throws IOException {
+    private BoardElection boardElection;
+
+    public Application(Parameters params) throws Exception {
         this.params = params;
         this.openid = new JenkinsOpenIDServer(this);
         this.circuitBreaker = new CircuitBreaker(params);
+        if (params.electionCandidates() != null) {
+            this.boardElection = new BoardElection(this, params);
+        }
     }
 
-    public Application(Properties config) throws IOException {
+    public Application(Properties config) throws Exception {
         this(ConfigurationLoader.from(config).as(Parameters.class));
     }
 
-    public Application(File config) throws IOException {
+    public Application(File config) throws Exception {
         this(ConfigurationLoader.from(config).as(Parameters.class));
     }
 
@@ -548,7 +554,7 @@ public class Application {
         }
 
         // to limit the redirect to this application, require that the from URL starts from '/'
-        if (from==null || !from.startsWith("/")) from="/myself/";
+        if (from==null || !from.startsWith("/")) from="/";
         return HttpResponses.redirectTo(from);
     }
 
@@ -573,12 +579,12 @@ public class Application {
     }
 
     public boolean isLoggedIn() {
-        return current() !=null;
+        return Myself.current() !=null;
     }
 
     public boolean isAdmin() {
-        Myself myself = current();
-        return myself!=null && myself.isAdmin();
+        Myself myself = Myself.current();
+        return myself !=null && myself.isAdmin();
     }
 
     /**
@@ -586,20 +592,36 @@ public class Application {
      * send the user to the login page.
      */
     public Myself getMyself() {
-        Myself myself = current();
-        if (myself==null) {
-            // needs to login
-            StaplerRequest req = Stapler.getCurrentRequest();
-            StringBuilder from = new StringBuilder(req.getRequestURI());
-            if (req.getQueryString()!=null)
-                from.append('?').append(req.getQueryString());
-            try {
-                throw HttpResponses.redirectViaContextPath("login?from="+ URLEncoder.encode(from.toString(),"UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                throw new AssertionError(e);
-            }
+        Myself myself = Myself.current();
+        if (myself ==null) {
+            needToLogin();
         }
         return myself;
+    }
+
+    private void needToLogin() {
+        // needs to login
+        StaplerRequest req = Stapler.getCurrentRequest();
+        StringBuilder from = new StringBuilder(req.getRequestURI());
+        if (req.getQueryString()!=null)
+            from.append('?').append(req.getQueryString());
+        try {
+            throw HttpResponses.redirectViaContextPath("login?from="+ URLEncoder.encode(from.toString(),"UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new AssertionError(e);
+        }
+    }
+
+    public @CheckForNull BoardElection getBoardElection() {
+        return boardElection;
+    }
+
+    public @CheckForNull BoardElection getElection() {
+        Myself myself = Myself.current();
+        if (myself ==null) {
+            needToLogin();
+        }
+        return boardElection;
     }
 
     /**
@@ -607,10 +629,6 @@ public class Application {
      */
     public HttpResponse doForwardTest(@Header("X-Forwarded-For") String header) {
         return HttpResponses.plainText(header);
-    }
-
-    private Myself current() {
-        return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
     }
 
     public AdminUI getAdmin() {

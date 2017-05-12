@@ -1,5 +1,7 @@
 package org.jenkinsci.account;
 
+import java.util.Date;
+
 /**
  * Configuration of the application that needs to be set outside the application.
  *
@@ -32,4 +34,12 @@ public interface Parameters {
      * File that activates a circuit breaker, a temporary shutdown of a sign-up service.
      */
     String circuitBreakerFile();
+
+    String electionCandidates();
+
+    String electionLogDir();
+
+    String electionOpen();
+
+    String electionClose();
 }

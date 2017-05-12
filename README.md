@@ -5,7 +5,7 @@
 First, set up a tunnel to Jenkins LDAP server. Run the following command and
 keep the terminal open:
 
-    ssh -L 9389:localhost:389 ldap.jenkins.io
+    ssh -4 -L 9389:localhost:389 ldap.jenkins.io
 
 Create `config.properties` in the same directory as `pom.xml`. See the
 `Parameters` class for the details, but it should look something like the
@@ -37,17 +37,20 @@ _Require ssh tunnel to an ldap server and an WAR archive_
 * Create the file ```.env``` used by docker-compose to load configuration
 .env example
 ```
-    LDAP_URL=server=ldap://localhost:9389/
-    LDAP_PASSWORD=<insert your ldap password>
+    APP_URL=http://localhost:8080/
+    ELECTION_CANDIDATES=alice,bob
+    ELECTION_CLOSE=2038/01/19
+    ELECTION_OPEN=1970/01/01
     JIRA_USERNAME=<insert your jira username>
     JIRA_PASSWORD=<insert your jira password>
     JIRA_URL=https://issues.jenkins-ci.org
-    SMTP_SERVER=localhost
-    RECAPTCHA_PRIVATE_KEY=recaptcha_private_key
-    RECAPTCHA_PUBLIC_KEY=recaptcha_public_key
-    APP_URL=http://localhost:8080/
+    LDAP_URL=server=ldap://localhost:9389/
+    LDAP_PASSWORD=<insert your ldap password>
     LDAP_MANAGER_DN=cn=admin,dc=jenkins-ci,dc=org
     LDAP_NEW_USER_BASE_DN=ou=people,dc=jenkins-ci,dc=org
+    RECAPTCHA_PRIVATE_KEY=recaptcha_private_key
+    RECAPTCHA_PUBLIC_KEY=recaptcha_public_key
+    SMTP_SERVER=localhost
 ```
 * Run docker-compose 
 ```docker-compose up --build accountapp```
@@ -72,6 +75,10 @@ we may want to use environment variable.
 ```
 * APP_URL
 * CIRCUIT_BREAKER_FILE
+* ELECTION_CANDIDATES   coma separated list of candidates
+* ELECTION_CLOSE   date election will close. yyyy/MM/dd
+* ELECTION_OPEN    date election will open. yyyy/MM/dd
+* ELECTION_LOGDIR
 * JIRA_PASSWORD
 * JIRA_URL
 * JIRA_USERNAME
@@ -83,3 +90,9 @@ we may want to use environment variable.
 * RECAPTCHA_PRIVATE_KEY
 * SMTP_SERVER
 ```
+
+## Makefile
+
+``` make build```: Build build/libs/accountapp-2.5.war and docker image
+``` make run ```: Run docker container
+``` make clean ```: Clean build environment

@@ -17,6 +17,16 @@
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
 
+  <!--Webjars Servlet-->
+  <servlet>
+    <servlet-name>WebjarsServlet</servlet-name>
+    <servlet-class>org.webjars.servlet.WebjarsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WebjarsServlet</servlet-name>
+    <url-pattern>/webjars/*</url-pattern>
+  </servlet-mapping>
+
   <listener>
     <listener-class>org.jenkinsci.account.WebAppMain</listener-class>
   </listener>

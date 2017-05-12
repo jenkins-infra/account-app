@@ -1,25 +1,35 @@
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Login">
-    <h1>Login</h1>
+<div class="row">
+  <div class="col-sm-6">
+    <h1 class="text-center">Login</h1>
 
     <form method="post" action="doLogin">
-      <h5>User ID</h5>
-      <input type="text" name="userid" class="text" id="userid"/>
+      <div class="form-group">
+        <label class="sr-only" for="userid">Login</label>
+        <input type="text" name="userid" class="form-control text" id="userid" placeholder="Userid"/>
+      </div>
 
-      <h5>Password</h5>
-      <input type="password" name="password" class="text"/>
+      <div class="form-group">
+        <label class="sr-only" for="login_password">Password</label>
+        <input type="password" id="login_password" name="password" placeholder="Password" class="form-control text"/>
+      </div>
 
       <input type="hidden" name="from" value="${request.getParameter('from')}"/>
 
-      <input type="submit" style="margin-top:2em; display:block"/>
+      <button type="submit" class="btn btn-default btn-lg btn-block">Login</button>
     </form>
 
-    (<a href="signup">Want to sign up?</a> or <a href="passwordReset">forgot the password?</a>)
+    <small><a href="signup">Sign up?</a> - <a href="passwordReset">Forgot password</a></small>
 
     <script>
       window.onload = function() {
         document.getElementById('userid').focus();
       }
     </script>
+  </div>
+  <div class="col-sm-6">
+  </div>
+</div>
   </t:layout>
 </j:jelly>

@@ -4,7 +4,7 @@
   </st:documentation>
   <st:contentType value="text/html;charset=UTF-8" />
 
-<html>
+<html style="height: 100%;">
 <head>
 <title>
     ${attrs.title} | Jenkins
@@ -33,6 +33,7 @@
 <meta content='${attrs.title}' property='og:title'/>
 <meta content='article' property='og:type'/>
 <meta content='Jenkins – Continuous Delivery for every team' property='og:description'/>
+<link href='/webjars/fontawesome/4.7.0/css/font-awesome.min.css' media='screen' rel='stylesheet'/>
 <link href='https://jenkins.io/assets/bower/bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet'/>
 <link href='https://jenkins.io/assets/bower/tether/css/tether.min.css' media='screen' rel='stylesheet'/>
 <link href='https://jenkins.io/css/font-icons.css' media='screen' rel='stylesheet'/>
@@ -40,10 +41,10 @@
 <!-- Non-obtrusive CSS styles -->
 <link href='https://jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
 <link href='https://jenkins.io/css/footer.css' media='screen' rel='stylesheet'/>
-<link href='https://jenkins.io/css/font-awesome.min.css' media='screen' rel='stylesheet'/>
+<script src="/webjars/jquery/3.2.0/jquery.js"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.js"></script>
 </head>
-<body>
-<script src='https://jenkins.io/assets/bower/jquery/jquery.js'></script>
+<body style="height: 100%;">
 <!-- starting partial toptoolbar.html.haml -->
 <nav class='navbar navbar-toggleable-md navbar-inverse top bg-inverse fixed-top' id='ji-toolbar'>
 <div class='container'>
@@ -183,12 +184,32 @@ Download
 <!-- ending partial toptoolbar.html.haml -->
 
 
-<div class='container'>
-    <div class='row'>
-        <div class="col-md-12">
-            <d:invokeBody />
-        </div>
+<div class='container' style="height: 60%;overflow: auto;">
+  <div class='row'>
+    <div class="col-sm-3 col-md-3">
+      <div class='sidebar-nav tour'>
+        <j:if test="${app.isLoggedIn() or it.isLoggedIn()}">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="/" class="active">Home</a></li>
+
+          <j:if test="${it.isAdmin() or app.isAdmin()}">
+            <li><a href="/admin">Administration</a></li>
+          </j:if>
+
+          <li><a href="/election">Board Election</a></li>
+          <li><a href="/myself">Profile</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+        </j:if>
+      </div>
     </div>
+    <div class="col-md-9 col-md-offset-3">
+      <div class="main">
+      <d:invokeBody />
+      </div>
+    </div>
+  </div>
 </div>
 
 

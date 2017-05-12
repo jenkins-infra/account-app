@@ -1,6 +1,6 @@
 version: '3'
 services:
-  accountapp:
+  run:
     build: .
     image: accountapp:latest
     env_file: .env
