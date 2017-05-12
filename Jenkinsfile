@@ -11,7 +11,7 @@ node('docker') {
     stage('Build') {
         timestamps {
             checkout scm
-            docker.image('java:8').inside {
+            docker.image('openjdk:8-jdk').inside {
                 sh './gradlew --no-daemon --info war'
                 archiveArtifacts artifacts: 'build/libs/*.war', fingerprint: true
             }
