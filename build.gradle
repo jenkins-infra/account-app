@@ -12,7 +12,6 @@ repositories {
     jcenter()
     maven { url 'https://repo.jenkins-ci.org/public' }
     mavenLocal()
-    mavenCentral()
 }
 
 dependencies {
@@ -39,6 +38,7 @@ dependencies {
     compile 'org.webjars:webjars-servlet-2.x:1.5'
     compile 'org.webjars:jquery:3.2.0'
     compile 'org.webjars:jquery-ui:1.12.1'
+    compile 'org.webjars.bower:fontawesome:4.7.0'
 
     testCompile 'junit:junit:[4.8.1,5.0)'
 }
