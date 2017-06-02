@@ -10,6 +10,9 @@ newUserBaseDN=LDAP_NEW_USER_BASE_DN
 # Host which accountapp can use for sending out password reset and other emails
 # Optional: Default value set to localhost
 smtpServer=SMTP_SERVER
+smtpUser=SMTP_USER
+smtpAuth=SMTP_AUTH
+smtpPassword=SMTP_PASSWORD
 
 recaptchaPublicKey=RECAPTCHA_PUBLIC_KEY
 recaptchaPrivateKey=RECAPTCHA_PRIVATE_KEY

@@ -26,6 +26,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.PasswordAuthentication;
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NameAlreadyBoundException;
@@ -487,9 +488,24 @@ public class Application {
     }
 
     private Session createJavaMailSession() {
+        Session session;
         Properties props = new Properties(System.getProperties());
+        System.out.printf(params.smtpAuth());
         props.put("mail.smtp.host",params.smtpServer());
-        return Session.getInstance(props);
+        if(params.smtpAuth().equals("true")) {
+            props.put("mail.smtp.auth", params.smtpAuth());
+            props.put("mail.smtp.starttls.enable", true);
+            props.put("mail.smtp.port", 587);
+            session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(params.smtpUser(), params.smtpPassword());
+                        }
+                    });
+        } else {
+            session = Session.getInstance(props);
+        }
+        return session;
     }
 
     /**

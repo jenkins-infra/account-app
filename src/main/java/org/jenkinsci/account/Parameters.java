@@ -20,7 +20,16 @@ public interface Parameters {
     String managerPassword();
     String server();
 
+    /**
+     * smtpServer: The SMTP server to connect to.
+     * smtpUser: Default user name for SMTP.
+     * smtpAuth: If true, attempt to authenticate the user using the AUTH command.
+     * smtpPassword: SMTP password for SMTP server.
+     */
     String smtpServer();
+    String smtpUser();
+    String smtpAuth();
+    String smtpPassword();
 
     String recaptchaPublicKey();
     String recaptchaPrivateKey();

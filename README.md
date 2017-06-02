@@ -50,7 +50,10 @@ _Require ssh tunnel to an ldap server and an WAR archive_
     LDAP_NEW_USER_BASE_DN=ou=people,dc=jenkins-ci,dc=org
     RECAPTCHA_PRIVATE_KEY=recaptcha_private_key
     RECAPTCHA_PUBLIC_KEY=recaptcha_public_key
-    SMTP_SERVER=localhost
+    SMTP_SERVER=smtp.jenkins.io
+    SMTP_USER=user@jenkins.io
+    SMTP_AUTH=true
+    SMTP_PASSWORD=password
 ```
 * Run docker-compose 
 ```docker-compose up --build accountapp```
@@ -89,6 +92,9 @@ we may want to use environment variable.
 * RECAPTCHA_PUBLIC_KEY
 * RECAPTCHA_PRIVATE_KEY
 * SMTP_SERVER
+* SMTP_USER
+* SMTP_PASSWORD
+* SMTP_AUTH
 ```
 
 ## Makefile
@@ -96,3 +102,10 @@ we may want to use environment variable.
 ``` make build```: Build build/libs/accountapp-2.5.war and docker image
 ``` make run ```: Run docker container
 ``` make clean ```: Clean build environment
+
+## SMTP
+The accountapp support different types of SMTP configuration to send emails.
+* Nothing is configured, the application try to connect on localhost:25
+* SMTP_AUTH is set to false, the accountapp will connect on  $SMTP_SERVER:25
+* SMTP_AUTH is set to true, the accountapp will connect on $SMTP_SERVER:587 with tls authentication
+  and will use username: $SMTP_USER with password $SMTP_PASSWORD.
