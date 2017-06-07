@@ -490,9 +490,8 @@ public class Application {
     private Session createJavaMailSession() {
         Session session;
         Properties props = new Properties(System.getProperties());
-        System.out.printf(params.smtpAuth());
         props.put("mail.smtp.host",params.smtpServer());
-        if(params.smtpAuth().equals("true")) {
+        if(params.smtpAuth()) {
             props.put("mail.smtp.auth", params.smtpAuth());
             props.put("mail.smtp.starttls.enable", true);
             props.put("mail.smtp.port", 587);

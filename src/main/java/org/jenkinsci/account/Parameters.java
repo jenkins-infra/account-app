@@ -1,5 +1,7 @@
 package org.jenkinsci.account;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.Date;
 
 /**
@@ -26,9 +28,9 @@ public interface Parameters {
      * smtpAuth: If true, attempt to authenticate the user using the AUTH command.
      * smtpPassword: SMTP password for SMTP server.
      */
+    Boolean smtpAuth();
     String smtpServer();
     String smtpUser();
-    String smtpAuth();
     String smtpPassword();
 
     String recaptchaPublicKey();
