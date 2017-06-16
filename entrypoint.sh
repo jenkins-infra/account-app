@@ -11,6 +11,9 @@ init_config_properties() {
 
     # /etc/accountapp/config.properties
     : "${SMTP_SERVER:? SMTP Server required}"
+    : "${SMTP_USER:? SMTP User required}"
+    : "${SMTP_AUTH:? SMTP Auth required}"
+    : "${SMTP_PASSWORD:? SMTP Password required}"
     : "${RECAPTCHA_PUBLIC_KEY:? Recaptcha private key}"
     : "${RECAPTCHA_PRIVATE_KEY:? Recaptcha private key}"
     : "${APP_URL:? Application url required}"
@@ -35,6 +38,9 @@ init_config_properties() {
 
     # Using # as variables may contain / 
     sed -i "s#SMTP_SERVER#$SMTP_SERVER#" /etc/accountapp/config.properties
+    sed -i "s#SMTP_USER#$SMTP_USER#" /etc/accountapp/config.properties
+    sed -i "s#SMTP_AUTH#$SMTP_AUTH#" /etc/accountapp/config.properties
+    sed -i "s#SMTP_PASSWORD#$SMTP_PASSWORD#" /etc/accountapp/config.properties
     sed -i "s#LDAP_URL#$LDAP_URL#" /etc/accountapp/config.properties
     sed -i "s#LDAP_PASSWORD#$LDAP_PASSWORD#" /etc/accountapp/config.properties
     sed -i "s#RECAPTCHA_PUBLIC_KEY#$RECAPTCHA_PUBLIC_KEY#" /etc/accountapp/config.properties
