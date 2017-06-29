@@ -30,7 +30,7 @@ node('docker') {
     }
 
     /* Assuming we're not inside of a pull request or multibranch pipeline */
-    if (!(env.CHANGE_ID || env.BRANCH_NAME)) {
+    if (infra.isTrusted() && (!(env.CHANGE_ID || env.BRANCH_NAME))) {
         stage('Publish container') {
             timestamps { container.push() }
         }
