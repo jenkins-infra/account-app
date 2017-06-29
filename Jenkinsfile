@@ -30,9 +30,9 @@ node('docker') {
     }
 
     /* Assuming we're not inside of a pull request or multibranch pipeline */
-    if (infra.isTrusted() && (!(env.CHANGE_ID || env.BRANCH_NAME))) {
+    if (!(env.CHANGE_ID || env.BRANCH_NAME)) {
         stage('Publish container') {
-            withCredentials([[$class: 'ZipFileBinding', credentialsId: 'jenkins-dockerhub', variable: 'DOCKER_CONFIG']]) {
+            infra.withDockerCredentials {
                 timestamps { container.push() }
             }
         }
