@@ -32,7 +32,9 @@ node('docker') {
     /* Assuming we're not inside of a pull request or multibranch pipeline */
     if (infra.isTrusted() && (!(env.CHANGE_ID || env.BRANCH_NAME))) {
         stage('Publish container') {
-            timestamps { container.push() }
+            withCredentials([file(credentialsId: 'jenkins-dockerhub', variable: 'DOCKER_CONFIG')]) {
+                timestamps { container.push() }
+            }
         }
     }
 }
