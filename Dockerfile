@@ -9,7 +9,7 @@ ENV ELECTION_LOGDIR=/var/log/accountapp/elections
 ENV CIRCUIT_BREAKER_FILE=/etc/accountapp/circuitBreaker.txt
 ENV SMTP_SERVER=localhost
 ENV JIRA_URL=https://issues.jenkins-ci.org
-ENV APP_URL=http://accounts.jenkins.io/
+ENV APP_URL=https://accounts.jenkins.io/
 
 EXPOSE 8080
 
