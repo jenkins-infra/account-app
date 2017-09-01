@@ -1,12 +1,21 @@
-apply plugin: 'java'
-apply plugin: 'jetty'
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'org.akhikhl.gretty:gretty:+'
+  }
+}
+
 apply plugin: 'maven'
+apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
 
 group = 'org.jenkins-ci'
 description = 'User self-service account management app'
-version = '2.5'
-
+version = '3.0'
 
 repositories {
     jcenter()
@@ -43,9 +52,9 @@ dependencies {
     testCompile 'junit:junit:[4.8.1,5.0)'
 }
 
-jettyRun {
-    contextPath '/account'
-    httpPort 8081
+gretty {
+  httpPort = 8081
+  contextPath = '/account'
 }
 
 war {
