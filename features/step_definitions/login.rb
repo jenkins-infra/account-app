@@ -4,7 +4,7 @@ Given(/^that I am unauthenticated$/) do
 end
 
 Given(/^that I am an administrator$/) do
-  set_current 'kohsuke', 'password'
+  set_current DEFAULT_ADMIN, DEFAULT_PASS
 end
 
 Given(/^I do not have an existing user$/) do
@@ -12,7 +12,7 @@ Given(/^I do not have an existing user$/) do
 end
 
 Given(/^that I am an existing user$/) do
-  set_current 'alice', 'password'
+  set_current DEFAULT_USER, DEFAULT_PASS
 end
 
 

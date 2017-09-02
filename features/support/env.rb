@@ -10,6 +10,7 @@ Capybara.default_driver = :poltergeist
 World(AccountHelpers)
 World(ProfileHelpers)
 
-DEFAULT_USER = ENV['DEFAULT_USER'] or 'alice'
-DEFAULT_ADMIN = ENV['DEFAULT_ADMIN'] or 'kohsuke'
-DEFAULT_PASS = ENV['DEFAULT_PASS'] or 'password'
+DEFAULT_USER = ENV['DEFAULT_USER'] || 'alice'
+DEFAULT_ADMIN = ENV['DEFAULT_ADMIN'] || 'kohsuke'
+DEFAULT_PASS = ENV['DEFAULT_PASS'] || 'password'
+DEFAULT_ADMIN_PASS = ENV['DEFAULT_ADMIN_PASS'] || DEFAULT_PASS
