@@ -1,5 +1,3 @@
-
-
 module AccountHelpers
   def login_screen?
     expect(page).to have_css('#userid')
@@ -12,8 +10,8 @@ module AccountHelpers
   end
 
   def authenticate!
-    fill_in('Userid', :with => @user)
-    fill_in('Password', :with => @password)
+    fill_in('userid', :with => @user)
+    fill_in('password', :with => @password)
     click_button('Login')
   end
 
@@ -23,7 +21,13 @@ module AccountHelpers
 
   def reset_password!
     visit '/passwordReset'
-    fill_in('UserId or Email', :with => @user)
+    fill_in('id', :with => @user)
     click_button 'Reset password'
+  end
+end
+
+module ProfileHelpers
+  def visit_profile
+    visit '/myself'
   end
 end
