@@ -15,9 +15,21 @@ Feature: Users should be able to edit their own settings
     When I save my profile
     Then my profile should have the new email
 
+  @wip @bug
   Scenario: Add SSH public keys
 
+      This was broken as of cf20102bef6afaf92c39c885f799830fd71cd050 and needs
+      to be fixed
+
+    Given I have added an SSH public key
+    When I save my profile
+    Then my profile should have the SSH public key
+
+  @wip
   Scenario: Link a GitHub.com Identity
+    Given I have a GitHub.com account
+    When I link my profile
+    Then I should be asked to authorize the application
 
   Scenario: Change password
     Given I have a entered a new password

@@ -17,6 +17,11 @@ Given(/^I have a entered a new password$/) do
   set_current @user, password
 end
 
+Given(/^I have added an SSH public key$/) do
+  @sshKeys =  'foobar is not an SSH key'
+  fill_in('sshKeys', :with => @sshKeys)
+end
+
 
 When(/^I view my profile$/) do
   visit_profile
@@ -54,3 +59,7 @@ Then(/^my password should have been changed$/) do
   click_button 'Update'
 end
 
+
+Then(/^my profile should have the SSH public key$/) do
+  expect(find_field('sshKeys').value).to eql(@sshKeys)
+end
