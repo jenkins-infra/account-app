@@ -3,13 +3,18 @@ Given(/^that I am unauthenticated$/) do
   # Default state
 end
 
+Given(/^that I am an administrator$/) do
+  set_current 'kohsuke', 'password'
+end
+
 Given(/^I do not have an existing user$/) do
   set_current 'notreal', 'notreal'
 end
 
 Given(/^that I am an existing user$/) do
-  set_current 'kohsuke', 'password'
+  set_current 'alice', 'password'
 end
+
 
 
 When(/^I navigate to the home page$/) do
@@ -24,6 +29,11 @@ end
 When(/^I reset a password$/) do
   reset_password!
 end
+
+When(/^I sign up$/) do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
 
 
 Then(/^I should see a login screen$/) do
@@ -42,4 +52,16 @@ end
 
 Then(/^the presence of an account should not be confirmed$/) do
   expect(page).not_to have_content(@user)
+end
+
+Then(/^I should be told to check my email$/) do
+  expect(page).to have_content 'Check your email for a password reset token'
+end
+
+Then(/^I should be given administrative options$/) do
+  expect(page).to have_content 'Administration'
+end
+
+Then(/^I should be able to login$/) do
+  pending # Write code here that turns the phrase above into concrete actions
 end

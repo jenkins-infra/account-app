@@ -29,11 +29,24 @@ Feature: Log into the account app
     When I attempt to login
     Then I should be given an error
 
-
+  @wip
   Scenario: Existing user forgot password
 
-  Scenario: Non-existing user forgot password
+      This scenario needs to be reworked at some point to not reset the same
+      user that we need for other authentication scenarios, as it modifies the
+      state in LDAP
 
+    Given that I am unauthenticated
+    And that I am an existing user
+    When I reset a password
+    Then I should be told to check my email
+
+  @wip
+  Scenario: Non-existing user forgot password
+    Given that I am unauthenticated
+    And I do not have an existing user
+    When I reset a password
+    Then I should be told to check my email
 
   @wip @bug
   Scenario: Attempting to reset a password should not confirm an identity
@@ -48,5 +61,13 @@ Feature: Log into the account app
     And the presence of an account should not be confirmed
 
   Scenario: New user sign up
+    Given that I am unauthenticated
+    And I do not have an existing user
+    When I sign up
+    Then I should be able to login
 
+  @admin
   Scenario: Administrator sign-in
+    Given that I am an administrator
+    When I attempt to login
+    Then I should be given administrative options
