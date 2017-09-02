@@ -7,6 +7,9 @@ Feature: Log into the account app
     Then I should see a login screen
 
   Scenario: Existing user login
+    Given that I am an existing user
+    When I navigate to the home page
+    Then I should be able to login successfully
 
   Scenario: Non-existing user login attempt
 
