@@ -9,3 +9,5 @@ bin/jetty-runner*.jar
 *.sw*
 build/
 .env
+vendor/
+.bundle/
