@@ -60,12 +60,6 @@ Feature: Log into the account app
     Then I should be given an error
     And the presence of an account should not be confirmed
 
-  Scenario: New user sign up
-    Given that I am unauthenticated
-    And I do not have an existing user
-    When I sign up
-    Then I should be able to login
-
   @admin
   Scenario: Administrator sign-in
     Given that I am an administrator
