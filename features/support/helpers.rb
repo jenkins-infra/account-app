@@ -10,4 +10,14 @@ module AccountHelpers
     @user = username
     @password = password
   end
+
+  def authenticate!
+    fill_in('Userid', :with => @user)
+    fill_in('Password', :with => @password)
+    click_button('Login')
+  end
+
+  def logged_in?
+    expect(page).to have_content('Logout')
+  end
 end

@@ -11,7 +11,7 @@ test: prepare
 	./scripts/ruby bundle exec rspec -c spec
 
 integration-test: prepare
-	docker-compose run --rm ruby bundle exec cucumber -c
+	docker-compose run --rm ruby bundle exec cucumber -c --tags ~@wip
 #################################################
 
 
