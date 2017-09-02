@@ -20,4 +20,10 @@ module AccountHelpers
   def logged_in?
     expect(page).to have_content('Logout')
   end
+
+  def reset_password!
+    visit '/passwordReset'
+    fill_in('UserId or Email', :with => @user)
+    click_button 'Reset password'
+  end
 end

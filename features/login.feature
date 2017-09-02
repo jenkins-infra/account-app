@@ -17,7 +17,7 @@ Feature: Log into the account app
     When I attempt to login
     Then I should be given an error
 
-  @wip @regression
+  @wip @bug
   Scenario: Attempting a blank login
 
       Currently the app (stapler/java) does not check
@@ -33,6 +33,19 @@ Feature: Log into the account app
   Scenario: Existing user forgot password
 
   Scenario: Non-existing user forgot password
+
+
+  @wip @bug
+  Scenario: Attempting to reset a password should not confirm an identity
+
+      It's generally bad security practice to confirm/deny the presence of a
+      specific user ID to an unauthenticated user.
+
+    Given that I am unauthenticated
+    And I do not have an existing user
+    When I reset a password
+    Then I should be given an error
+    And the presence of an account should not be confirmed
 
   Scenario: New user sign up
 

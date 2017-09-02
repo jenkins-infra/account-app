@@ -21,6 +21,10 @@ When(/^I attempt to login$/) do
   authenticate!
 end
 
+When(/^I reset a password$/) do
+  reset_password!
+end
+
 
 Then(/^I should see a login screen$/) do
   login_screen?
@@ -34,4 +38,8 @@ end
 
 Then(/^I should be given an error$/) do
   expect(page).to have_content 'Oops!'
+end
+
+Then(/^the presence of an account should not be confirmed$/) do
+  expect(page).not_to have_content(@user)
 end
