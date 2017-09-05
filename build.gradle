@@ -1,12 +1,23 @@
-apply plugin: 'java'
-apply plugin: 'jetty'
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath "com.github.samueltbrown:gradle-cucumber-plugin:[0.9,)"
+    classpath 'org.akhikhl.gretty:gretty:+'
+  }
+}
+
 apply plugin: 'maven'
+apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
+apply plugin: 'com.github.samueltbrown.cucumber'
 
-group = 'org.jenkins-ci'
-description = 'User self-service account management app'
-version = '2.5'
-
+group = 'io.jenkins'
+description = 'LDAP-based self-service account management app'
+version = '3.0'
 
 repositories {
     jcenter()
@@ -41,13 +52,19 @@ dependencies {
     compile 'org.webjars.bower:fontawesome:4.7.0'
 
     testCompile 'junit:junit:[4.8.1,5.0)'
+
+    cucumberCompile 'info.cukes:cucumber-groovy:[1.2.2,2.0)'
 }
 
-jettyRun {
-    contextPath '/account'
-    httpPort 8081
+gretty {
+  httpPort = 8081
+  contextPath = '/account'
 }
 
 war {
     dependsOn check
+}
+
+cucumber {
+    glueDirs = ['src/cucumber/groovy']
 }

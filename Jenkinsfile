@@ -29,6 +29,12 @@ node('docker') {
         }
     }
 
+    stage('Validate') {
+        timestamps {
+            sh 'make check'
+        }
+    }
+
     /* Assuming we're not inside of a pull request or multibranch pipeline */
     if (!(env.CHANGE_ID || env.BRANCH_NAME)) {
         stage('Publish container') {
