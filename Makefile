@@ -1,7 +1,5 @@
-current_dir := $(shell pwd)
-current_user := $(shell id -u)
-
-export UID=$(shell id -u)
+export UID:=$(shell id -u)
+export PWD=$(shell pwd)
 
 ## Testing
 #################################################
@@ -32,11 +30,11 @@ build/phantomjs:
 ## Container management
 #################################################
 build:
-	docker run --rm -v $(current_dir):/opt/accountapp/ -u $(current_user):$(current_user) -w /opt/accountapp --entrypoint ./gradlew openjdk:8-jdk --no-daemon --info war
+	docker run --rm -v $(PWD):/opt/accountapp/ -u $(UID):$(UID) -w /opt/accountapp --entrypoint ./gradlew openjdk:8-jdk --no-daemon --info war
 	docker-compose build run
 
 clean:
-	docker run --rm -v $(current_dir):/opt/accountapp/ -u $(current_user):$(current_user) -w /opt/accountapp --entrypoint ./gradlew openjdk:8-jdk clean
+	docker run --rm -v $(PWD):/opt/accountapp/ -u $(UID):$(UID) -w /opt/accountapp --entrypoint ./gradlew openjdk:8-jdk clean
 	docker-compose rm -f run
 #################################################
 
