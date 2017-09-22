@@ -1,15 +1,24 @@
 version: '3'
 services:
-  run:
+  sandbox:
+    build: .
+    image: accountapp:latest
+    depends_on:
+      - ldap
+    env_file: env.sandbox
+    ports:
+      - '8080:8080'
+
+  ldap:
+    image: jenkinsciinfra/mock-ldap:latest
+    ports:
+        - 636:636
+        - 389:389
+
+  local:
     build: .
     image: accountapp:latest
     env_file: .env
     network_mode: host
     ports:
       - '8080:8080'
-  shell:
-    build: .
-    image: accountapp:latest
-    env_file: .env
-    entrypoint: /bin/sh
-    network_mode: host

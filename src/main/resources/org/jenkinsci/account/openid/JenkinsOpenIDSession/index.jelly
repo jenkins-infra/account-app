@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:t="/org/jenkinsci/account/taglib">
   <!-- this tells the client to get XRDS elsewhere -->
   <st:header name="X-XRDS-Location" value="${it.server.address}xrds"/>

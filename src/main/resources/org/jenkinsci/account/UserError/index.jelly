@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib" xmlns:st="jelly:stapler">
   <st:statusCode value="500" />
   <t:layout title="Error">
