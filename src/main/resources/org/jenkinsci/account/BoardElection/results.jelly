@@ -1,0 +1,46 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
+    <t:layout title="VoteResults">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-default">
+                            <tr>
+                                <th>Name</th>
+                                <th>Result</th>
+                                <th style="width: 100%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <j:forEach var="result" items="${results}">
+                            <tr>
+                                <th scope="row">
+                                    ${result.key}
+                                </th>
+                                <td>
+                                    ${result.value}
+                                </td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar"
+                                             role="progressbar"
+                                             style="width: ${ result.value/ it.total_votes * 100 }%; height: 20px"
+                                             aria-valuenow="${result.value}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="${it.total_votes}">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </j:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t:layout>
+</j:jelly>
+
+
