@@ -1,8 +1,12 @@
 version: '3'
+volumes:
+  elections:
 services:
   sandbox:
     build: .
     image: accountapp:latest
+    volumes:
+      - elections:/var/log/accountapp/elections
     depends_on:
       - ldap
     env_file: env.sandbox
