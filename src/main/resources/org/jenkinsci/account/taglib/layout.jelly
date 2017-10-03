@@ -190,18 +190,26 @@ Download
     <div class="col-sm-3 col-md-3">
       <div class='sidebar-nav tour'>
         <j:if test="${app.isLoggedIn() or it.isLoggedIn()}">
-        <h4>Account</h4>
-        <ul>
-          <li><a href="/" class="active">Home</a></li>
-
-          <j:if test="${it.isAdmin() or app.isAdmin()}">
-            <li><a href="/admin">Administration</a></li>
-          </j:if>
-
-          <li><a href="/election">Board Election</a></li>
-          <li><a href="/myself">Profile</a></li>
-          <li><a href="/logout">Logout</a></li>
-        </ul>
+            <div class="table-reponsive">
+                <table class="table table-hover">
+                    <thead class="thead-default h5">
+                        <tr>
+                            <th>My account</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr><td><a href="/" class="h6">Home</a></td></tr>
+                        <tr>
+                            <j:if test="${it.isAdmin() or app.isAdmin()}">
+                                <td><a href="/admin" class="h6">Administration</a></td>
+                            </j:if>
+                        </tr>
+                        <tr><td><a href="/election" class="h6">Board Election</a></td></tr>
+                        <tr><td><a href="/myself" class="h6">Profile</a></td></tr>
+                        <tr><td><a href="/logout" class="h6">Logout</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </j:if>
       </div>
     </div>

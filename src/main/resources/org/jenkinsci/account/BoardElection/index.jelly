@@ -4,7 +4,7 @@
     <j:choose>
       <j:when test="${it.open}">
 
-        <h1>Board Election</h1>
+        <h3>Board Election</h3>
         <p class="help-block"> Use drag and drop to order candidates by your preference for <a href="https://wiki.jenkins-ci.org/display/JENKINS/Board+Election+Process">Board election</a>. </p>
 
         <script>
