@@ -31,4 +31,7 @@ electionOpen= ELECTION_OPEN
 # Optional: Default value set to /var/log/accountapp/elections
 electionLogDir=ELECTION_LOGDIR
 
+# Criteria in month to be consider as a Senior Jenkins community member.
+seniority=SENIORITY
+
 # vim: ft=conf

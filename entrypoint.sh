@@ -26,6 +26,7 @@ init_config_properties() {
     : "${ELECTION_CLOSE:? Required date election will close. yyyy/MM/dd}"
     : "${ELECTION_OPEN:? date election will open. yyyy/MM/dd }"
     : "${ELECTION_LOGDIR:? Require election log directory }"
+    : "${SENIORITY:? Require seniority criteria in month }"
 
     #Directory to store collected votes. assume this path is well persisted/backup
 
@@ -53,6 +54,7 @@ init_config_properties() {
     sed -i "s#ELECTION_OPEN#$ELECTION_OPEN#" /etc/accountapp/config.properties
     sed -i "s#ELECTION_CLOSE#$ELECTION_CLOSE#" /etc/accountapp/config.properties
     sed -i "s#ELECTION_LOGDIR#$ELECTION_LOGDIR#" /etc/accountapp/config.properties
+    sed -i "s#SENIORITY#$SENIORITY#" /etc/accountapp/config.properties
 }
 
 if [ ! -f /etc/accountapp/config.properties ]; then
