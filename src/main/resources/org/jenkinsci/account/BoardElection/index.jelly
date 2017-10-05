@@ -4,8 +4,28 @@
     <j:choose>
       <j:when test="${it.open}">
 
-        <h3>Board Election</h3>
-        <p class="help-block"> Use drag and drop to order candidates by your preference for <a href="https://wiki.jenkins-ci.org/display/JENKINS/Board+Election+Process">Board election</a>. </p>
+          <div class="row">
+            <div class="col-md-12">
+
+
+        <h3>Board Election - ${it.getElectionDate()}</h3>
+        <h6>Rules</h6>
+        <ul>
+          <li>Drag and drop to order candidates by your preference (first line = first choice)</li>
+          <li>Only first three candidates will be selected</li>
+          <li>Only last vote will be taken into account</li>
+          <li>You can remove candidates from the list( for each candidate, click on <span class="fa fa-times"></span>)</li>
+          <li>Votes are anonymous</li>
+          <li>An account created before ${it.getSeniorityDate()} is required</li>
+        </ul>
+
+        More information about election can be found on the wiki <a href="https://wiki.jenkins.io/display/JENKINS/Board+Election+Process">wiki.jenkins.io</a>
+
+          </div>
+          </div>
+
+        <div class="row center-block text-center">
+        <div class="col-md-4">
 
         <script>
           $( function() {
@@ -28,7 +48,7 @@
             <j:forEach var="c" indexVar="i" items="${it.candidates}" >
               <li id="${i}" class="list-group-item text-center text-capitalize" >
                 <span class="pull-left fa fa-arrows-v" aria-hidden="true"></span>
-                ${c}     
+                <div class="text-center">${c}</div>
                 <span onclick="this.parentElement.remove()" class="pull-right fa fa-times"></span>
               </li>
             </j:forEach>
@@ -37,11 +57,12 @@
           <input type="hidden" name="vote"/>
         </form>
         <button onclick="vote()" class="btn btn-default btn-lg pull-center center-block">Vote</button>
-
+        </div>
+        </div>
       </j:when>
       <j:otherwise>
 
-        <h1>Board election is closed.</h1>
+        <h1 class="text-center">Board election is closed.</h1>
 
       </j:otherwise>
     </j:choose>

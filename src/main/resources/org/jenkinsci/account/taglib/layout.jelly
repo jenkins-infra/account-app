@@ -194,18 +194,26 @@ Download
                 <table class="table table-hover">
                     <thead class="thead-default h5">
                         <tr>
-                            <th>My account</th>
+                            <th>Account</th>
                         </tr>
                     </thead>
                     <tbody >
-                        <tr><td><a href="/" class="h6">Home</a></td></tr>
                         <tr>
                             <j:if test="${it.isAdmin() or app.isAdmin()}">
                                 <td><a href="/admin" class="h6">Administration</a></td>
                             </j:if>
                         </tr>
-                        <tr><td><a href="/election" class="h6">Board Election</a></td></tr>
+                        <tr><td><a href="/" class="h6">Home</a></td></tr>
                         <tr><td><a href="/myself" class="h6">Profile</a></td></tr>
+                        <tr>
+                            <td class="dropdown">
+                                <a class="dropdown-toggle h6" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Election</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/election">Vote</a>
+                                    <a class="dropdown-item" href="/election/results">Results</a>
+                                </div>
+                            </td>
+                        </tr>
                         <tr><td><a href="/logout" class="h6">Logout</a></td></tr>
                     </tbody>
                 </table>

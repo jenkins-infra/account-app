@@ -1,0 +1,6 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
+    <t:layout title="Board Election">
+        <h5>Election are still ongoing be patient</h5>
+    </t:layout>
+</j:jelly>

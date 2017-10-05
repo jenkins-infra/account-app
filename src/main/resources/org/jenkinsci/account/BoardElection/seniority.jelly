@@ -1,0 +1,11 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
+    <t:layout title="Board Election">
+        <h3>Seniority</h3>
+        <p>Only Senior Jenkins community members can vote for Board Election.</p>
+        <p>
+            In order to be considered as "Senior Community Member", you need an account created before ${it.getSeniorityDate()}.
+        </p>
+    </t:layout>
+
+</j:jelly>
