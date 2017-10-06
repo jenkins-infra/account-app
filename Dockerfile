@@ -14,6 +14,10 @@ ENV APP_URL=http://accounts.jenkins.io/
 EXPOSE 8080
 
 USER root
+RUN \
+  apk add --no-cache git python  && \
+  mkdir -p /opt/stv && \
+  git clone https://github.com/louridas/stv.git /opt/stv
 
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
 RUN mkdir -p /home/jetty/.app &&\

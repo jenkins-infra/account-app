@@ -1,10 +1,26 @@
 version: '3'
+volumes:
+    elections:
 services:
   ldap:
     image: jenkinsciinfra/mock-ldap:latest
     ports:
         - 636:636
         - 389:389
+
+  sandbox:
+    build: .
+    image: accountapp:latest
+    volumes:
+      - elections:/var/log/accountapp/elections
+    depends_on:
+      - ldap
+    env_file: env.sandbox
+    environment:
+        - ELECTION_CLOSE=2038/11/23
+        - ELECTION_OPEN=2016/11/01
+    ports:
+      - '8080:8080'
 
   open_election:
     build: .
@@ -32,7 +48,7 @@ services:
         - ELECTION_CLOSE=2016/11/23
         - ELECTION_OPEN=2016/11/01
     ports:
-      - '8090:8080'
+      - '8080:8080'
 
   local:
     build: .

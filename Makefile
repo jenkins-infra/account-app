@@ -14,11 +14,18 @@ generate_data:
 	@if [ ! -d fake_data ]; then mkdir fake_data ;fi
 	@./voteGenerator.py
 
+# Deploy an ldap and the accountapp with election open and fake data
 open_election: generate_data
 	docker-compose up --build open_election
 
+# Deploy an ldap and the accountapp with election closed and fake data
 close_election: generate_data
 	docker-compose up --build close_election
 
+# Deploy a ldap and the accountapp with election open and without fake data
+sandbox:
+	docker-compose up --build sandbox
+
+# Deploy the accountapp on the host network and without ldap
 local:
 	docker-compose up --build local
