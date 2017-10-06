@@ -3,41 +3,29 @@
     <t:layout title="VoteResults">
         <div class="row">
             <div class="col-sm-8 col-sm-offset-4">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead class="thead-default">
-                                    <tr>
-                                        <th>Candidates</th>
-                                        <th>Result</th>
-                                        <th style="width: 100%;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-default">
+                            <tr>
+                                <th>Candidates</th>
+                                <th>Result</th>
+                                <th>Total Votes</th>
+                                <th style="width: 100%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                                    <j:forEach var="result" items="${results}">
-                                        <tr>
-                                            <th scope="row">
-                                                ${result.key}
-                                            </th>
-                                            <td>
-                                                ${ it.convertPercent(result.value, it.total_votes) }%
-                                            </td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar"
-                                                         role="progressbar"
-                                                         style="width: ${ it.convertPercent(result.value, it.total_votes) }%; height: 20px"
-                                                         aria-valuenow="${ it.convertPercent(result.value, it.total_votes) }"
-                                                         aria-valuemin="0"
-                                                         aria-valuemax="100">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </j:forEach>
-                                </tbody>
-                            </table>
-                        </div>
+                            <j:forEach var="result" items="${results}">
+                                <tr>
+                                    <th scope="row">${ result.key }</th>
+                                    <td>${ result.value }</td>
+                                    <td>${ it.totalVotes() }</td>
+                                    <td></td>
+                                </tr>
+                            </j:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </t:layout>

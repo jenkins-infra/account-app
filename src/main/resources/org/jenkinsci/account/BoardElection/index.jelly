@@ -12,11 +12,11 @@
         <h6>Rules</h6>
         <ul>
           <li>Drag and drop to order candidates by your preference (first line = first choice)</li>
-          <li>Only first three candidates will be selected</li>
           <li>Only last vote will be taken into account</li>
           <li>You can remove candidates from the list( for each candidate, click on <span class="fa fa-times"></span>)</li>
           <li>Votes are anonymous</li>
           <li>An account created before ${it.getSeniorityDate()} is required</li>
+          <li>Algorithm used for election is Single Transferable Vote</li>
         </ul>
 
         More information about election can be found on the wiki <a href="https://wiki.jenkins.io/display/JENKINS/Board+Election+Process">wiki.jenkins.io</a>

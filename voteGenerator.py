@@ -29,17 +29,22 @@ for election in elections:
 
     if not os.path.exists(directory):
         os.makedirs(directory)
+        os.chmod(directory,0777)
 
     for i in range(100):
         vote=[]
         c = list(candidates)
-        file = open( os.path.join( dirname, uuid.uuid4().hex),"w" )
+        file = open( os.path.join( dirname, uuid.uuid4().hex + ".csv"),"w" )
         while (len(c) > 0):
             secure_random = random.SystemRandom()
             selected = secure_random.choice(c)
             c.remove(selected)
             vote.append(selected)
-            file.write(selected + "\n")
+            file.write(selected)
+            if len(c) > 0:
+                file.write(",")
+            else:
+                file.write("\n")
         file.close
 
 print "Fake data created"

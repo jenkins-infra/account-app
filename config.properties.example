@@ -33,5 +33,7 @@ electionLogDir=ELECTION_LOGDIR
 
 # Criteria in month to be consider as a Senior Jenkins community member.
 seniority=SENIORITY
+# Number of seats for election
+seats=SEATS
 
 # vim: ft=conf

@@ -58,4 +58,5 @@ public interface Parameters {
      * seniority: Define the age in month to be consider as Senior Jenkins community member.
      */
     Integer seniority();
+    String seats();
 }
