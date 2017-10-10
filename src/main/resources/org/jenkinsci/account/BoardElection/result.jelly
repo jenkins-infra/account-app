@@ -15,11 +15,11 @@
                         </thead>
                         <tbody>
 
-                            <j:forEach var="result" items="${results}">
+                            <j:forEach var="item" items="${it.getResult()}">
                                 <tr>
-                                    <th scope="row">${ result.get("elected") }</th>
-                                    <td>${ result.get("round") }</td>
-                                    <td>${ it.shortNumber(result.get("score")) }</td>
+                                    <th scope="row">${ item.get("elected") }</th>
+                                    <td>${ item.get("round") }</td>
+                                    <td>${ item.get("score") }</td>
                                     <td>${ it.getTotalVotes() }</td>
                                 </tr>
                             </j:forEach>
@@ -28,8 +28,8 @@
 
                     <h5 class="text-center">RAW</h5>
                     <pre>
-                        <j:forEach var="result" items="${ it.getRawResult() }">
-                        <br>${result}</br>
+                        <j:forEach var="line" items="${ it.getRawResult() }">
+                        <br>${line}</br>
                         </j:forEach>
                     </pre>
                 </div>

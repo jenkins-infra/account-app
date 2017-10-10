@@ -11,16 +11,12 @@ clean:
 	rm -Rf ./fake_data
 
 generate_data:
-	@if [ ! -d fake_data ]; then mkdir fake_data ;fi
+	@if [ ! -d fake_data ]; then mkdir fake_data && chmod 0777 fake_data;fi
 	@./voteGenerator.py
 
 # Deploy an ldap and the accountapp with election open and fake data
-open_election: generate_data
-	docker-compose up --build open_election
-
-# Deploy an ldap and the accountapp with election closed and fake data
-close_election: generate_data
-	docker-compose up --build close_election
+fake: generate_data
+	docker-compose up --build fake
 
 # Deploy a ldap and the accountapp with election open and without fake data
 sandbox:

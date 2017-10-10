@@ -20,9 +20,11 @@ RUN \
   git clone https://github.com/louridas/stv.git /opt/stv
 
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
-RUN mkdir -p /home/jetty/.app &&\
-    mkdir -p /etc/accountapp &&\
-    mkdir -p $ELECTION_LOGDIR
+RUN \
+  mkdir -p /opt/stv && \
+  mkdir -p /home/jetty/.app &&\
+  mkdir -p /etc/accountapp &&\
+  mkdir -p $ELECTION_LOGDIR
 
 COPY config.properties.example /etc/accountapp/config.properties.example
 COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
@@ -33,6 +35,7 @@ COPY build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
 RUN chmod 0755 /entrypoint.sh &&\
     chown -R jetty:root /etc/accountapp &&\
     chown -R jetty:root /var/lib/jetty &&\
+    chown -R jetty:root /opt/stv &&\
     chown -R jetty:root $ELECTION_LOGDIR
 
 USER jetty
