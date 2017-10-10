@@ -5,7 +5,7 @@
   </st:documentation>
   <st:contentType value="text/html;charset=UTF-8" />
 
-<html style="height: 100%;">
+<html style="height:100%;min-height:100%;position:relative">
 <head>
 <title>
     ${attrs.title} | Jenkins
@@ -45,7 +45,7 @@
 <script src="/webjars/jquery/3.2.0/jquery.js"></script>
 <script src="/webjars/jquery-ui/1.12.1/jquery-ui.js"></script>
 </head>
-<body style="height: 100%;">
+<body style="min-height:100%; height:100%">
 <!-- starting partial toptoolbar.html.haml -->
 <nav class='navbar navbar-toggleable-md navbar-inverse top bg-inverse fixed-top' id='ji-toolbar'>
 <div class='container'>
@@ -185,7 +185,7 @@ Download
 <!-- ending partial toptoolbar.html.haml -->
 
 
-<div class='container' style="height: 60%;overflow: auto;">
+    <div class='container' style="min-height:55%">
   <div class='row'>
     <div class="col-sm-3 col-md-3">
       <div class='sidebar-nav tour'>
@@ -229,12 +229,10 @@ Download
   </div>
 </div>
 
-
-
 <script src='https://jenkins.io/assets/bower/anchor-js/anchor.min.js'></script>
 <script src='https://jenkins.io/assets/bower/tether/js/tether.min.js'></script>
 <script src='https://jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js'></script>
-<footer id='footer'>
+<footer id='footer' style="position:absolute; width:100%">
 <div class='container'>
 <div class='row'>
 <div class='col-md-4'>
