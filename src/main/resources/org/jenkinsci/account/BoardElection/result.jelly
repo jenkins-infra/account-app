@@ -7,24 +7,31 @@
                     <table class="table table-hover">
                         <thead class="thead-default">
                             <tr>
-                                <th>Candidates</th>
-                                <th>Result</th>
-                                <th>Total Votes</th>
-                                <th style="width: 100%;"></th>
+                                <th>Elected</th>
+                                <th>Round</th>
+                                <th>Score</th>
+                                <th style="width: 100%;">Total Votes</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             <j:forEach var="result" items="${results}">
                                 <tr>
-                                    <th scope="row">${ result.key }</th>
-                                    <td>${ result.value }</td>
-                                    <td>${ it.totalVotes() }</td>
-                                    <td></td>
+                                    <th scope="row">${ result.get("elected") }</th>
+                                    <td>${ result.get("round") }</td>
+                                    <td>${ it.shortNumber(result.get("score")) }</td>
+                                    <td>${ it.getTotalVotes() }</td>
                                 </tr>
                             </j:forEach>
                         </tbody>
                     </table>
+
+                    <h5 class="text-center">RAW</h5>
+                    <pre>
+                        <j:forEach var="result" items="${ it.getRawResult() }">
+                        <br>${result}</br>
+                        </j:forEach>
+                    </pre>
                 </div>
             </div>
         </div>

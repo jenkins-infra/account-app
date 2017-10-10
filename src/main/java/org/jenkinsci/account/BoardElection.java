@@ -26,40 +26,41 @@ public class BoardElection {
     private final Application app;
     private final String[] candidates;
     private final String electionLogDir;
-    private final String resultsDirectory;
+    private final String resultsLogDir;
     private final String seats;
-    private HashMap<String,String> results;
-    private int seniority;
+    private ArrayList<HashMap<String,String>> results;
+    private ArrayList<String> rawResult;
+    private final int seniority;
     private int totalVotes;
 
     public BoardElection(Application application, Parameters params) throws Exception {
         this.app = application;
         seniority = params.seniority();
-        results = new HashMap();
+        results = new ArrayList<HashMap<String, String>>();
         final SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         open = format.parse(params.electionOpen());
         close = format.parse(params.electionClose());
         candidates = params.electionCandidates().split(",");
         electionLogDir = params.electionLogDir();
         seats = params.seats();
+        rawResult = new ArrayList<String>();
 
         LocalDate date = close.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        resultsDirectory = electionLogDir + "/" + date.format(DateTimeFormatter.BASIC_ISO_DATE);
+        resultsLogDir = electionLogDir + "/" + date.format(DateTimeFormatter.BASIC_ISO_DATE);
 
-        File dir = new File( resultsDirectory );
+        File dir = new File(resultsLogDir);
         dir.mkdirs();
     }
 
-    public String anonymizeUser(String userid) throws NoSuchAlgorithmException {
+    public String messageDigest(String s) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(userid.getBytes());
+        md.update(s.getBytes());
         byte[] digest = md.digest();
         return DatatypeConverter.printHexBinary(digest);
     }
 
     public HttpResponse doResults() throws NamingException, IOException {
-        File[] elections = new File(electionLogDir).listFiles(File::isDirectory);
-        return HttpResponses.forwardToView(this,"results.jelly").with("elections",elections);
+        return HttpResponses.forwardToView(this,"results.jelly");
     }
 
     public HttpResponse doResult(@QueryParameter String election) throws NamingException, IOException {
@@ -77,19 +78,14 @@ public class BoardElection {
             return new HttpRedirect("/election/results");
         }
 
-        File[] votes = directory.listFiles();
-
-        for (HashMap.Entry<String,String> entry: results.entrySet()){
-            results.replace(entry.getKey(),"0");
-        }
-
+        File[] votes = directory.listFiles((d,name) -> name.endsWith(".csv"));
 
         String votesFilename =  electionLogDir + "/" + election + "/" + "votes.csv";
+
         // Clean existing votes.csv
         try{
-            File collectedVotes = new File(votesFilename);
-            if(! collectedVotes.delete()){
-                // System.out.println("Delete operation on votes.csv failed.");
+            File votesFile = new File(votesFilename);
+            if(! votesFile.delete()){
                 System.out.format("Delete operation on %s failed.", votesFilename);
             }
 
@@ -97,12 +93,11 @@ public class BoardElection {
             e.printStackTrace();
         }
 
-        int counter = 0;
+        int votesCounter = 0;
         for (File vote : votes){
             if (vote.isFile() && !vote.getName().equals("votes.csv")) {
                 FileReader fr = new FileReader(vote);
                 BufferedReader br = new BufferedReader(fr);
-                StringBuffer sb = new StringBuffer();
                 String line;
                 // We should never have more than one line in a vote file.
                 while (( line = br.readLine()) != null ){
@@ -111,54 +106,28 @@ public class BoardElection {
                     }catch (IOException e) {
                         System.err.println(e);
                     }
-                    counter++;
+                    votesCounter++;
                 }
                 fr.close();
             }
         }
-        totalVotes = counter;
-        runSTV(votesFilename );
+        totalVotes = votesCounter;
+        applySingleTransferableVote( election, votesFilename );
+        parseRawResult(election);
         return HttpResponses.forwardToView(this,"result.jelly").with("results",results);
-    }
-
-    private void runSTV(String votesFile) throws IOException {
-        String[] cmd = {
-                "python",
-                "/opt/stv/stv.py",
-                "-b", votesFile,
-                "-s", seats,
-        };
-        results = new HashMap<String,String>();
-        Process p = Runtime.getRuntime().exec(cmd);
-        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = br.readLine()) != null){
-            if (line.startsWith("(")){
-                // Line example ('tom', 4, 52.0) where tom is the candidate, 4 is the round, and 52 is the score
-                // Remove ( and ) from line on
-                line = line.substring(1, line.length() - 1 );
-                // Remove quote around candidate
-                line = line.replace("'","");
-                List<String> myList = new ArrayList<String>(Arrays.asList(line.split(",")));
-                String candidate = myList.get(0);
-                String score = String.valueOf(Math.round(Float.valueOf(myList.get(2))));
-                results.put(candidate, score);
-            }
-        }
-        br.close();
     }
 
     public HttpResponse doVote(@QueryParameter String vote) throws NamingException, IOException {
 
         if ( isSeniorMember()) {
             final Myself user = Myself.current();
-            String anonymizedUser = null;
+            String voteFileName = null;
             if (user == null) {
                 throw new UserError("Need to be authenticated");
             }
 
             try {
-                anonymizedUser = anonymizeUser(user.userId);
+                voteFileName = messageDigest(user.userId);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -174,8 +143,8 @@ public class BoardElection {
             }
 
             try {
-                String filename = String.format("%s/%s.csv", resultsDirectory.toString(), anonymizedUser);
-                PrintWriter file = new PrintWriter(filename, "UTF-8");
+                String voteFile = String.format("%s/%s.csv", resultsLogDir.toString(), voteFileName);
+                PrintWriter file = new PrintWriter(voteFile, "UTF-8");
                 file.print(String.join(",",selected).concat("\n"));
                 file.close();
             } catch (IOException e) {
@@ -194,7 +163,6 @@ public class BoardElection {
     public String[] getCandidates() {
         return candidates;
     }
-
     public int getSeniority() { return seniority; }
     public int getTotalVotes(){ return totalVotes;}
 
@@ -233,5 +201,89 @@ public class BoardElection {
     public boolean isOpen() {
         final long now = System.currentTimeMillis();
         return open != null && close != null && open.getTime() <= now && close.getTime() >= now;
+    }
+
+    private void applySingleTransferableVote(String election, String votesFile) throws IOException {
+        String[] cmd = {
+                "python",
+                "/opt/stv/stv.py",
+                "-b", votesFile,
+                "-s", seats,
+                "--loglevel", "DEBUG"
+        };
+        String resultFileName = electionLogDir + "/" + election + "/" + "result.stv";
+
+        try{
+            File resultFile = new File(resultFileName);
+            if(! resultFile.delete()){
+                System.out.format("Delete operation on %s failed.", resultFileName);
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        results = new ArrayList<HashMap<String, String>>();
+        Process p = Runtime.getRuntime().exec(cmd);
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        rawResult = new ArrayList<String>();
+        while ((line = br.readLine()) != null){
+            if (line.startsWith("(")){
+                HashMap<String,String> r = new HashMap<String,String>();
+                // Line example ('tom', 4, 52.0) where tom is the candidate, 4 is the round, and 52 is the score
+                // Remove ( and ) from line on
+                line = line.substring(1, line.length() - 1 );
+                // Remove quote around candidate
+                line = line.replace("'","");
+                List<String> myList = new ArrayList<String>(Arrays.asList(line.split(",")));
+                String candidate = myList.get(0);
+                String score = String.valueOf(Math.round(Float.valueOf(myList.get(2))));
+
+                r.put("elected",myList.get(0));
+                r.put("round", myList.get(1));
+                r.put("score", myList.get(2));
+                results.add(r);
+
+                //results.put(candidate, score);
+
+            }
+            // Write result to file
+            rawResult.add(line);
+            try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(resultFileName ,true)))) {
+                out.println(line.toString());
+            }catch (IOException e) {
+                System.err.println(e);
+            }
+        }
+        br.close();
+    }
+
+    public void parseRawResult(String election) throws IOException{
+        String resultFileName = electionLogDir + "/" + election + "/" + "result.stv";
+        File resultFile = new File(resultFileName);
+        if (resultFile.exists()){
+            FileReader fr = new FileReader(resultFile);
+            BufferedReader br = new BufferedReader(fr);
+            // We should never have more than one line in a vote file.
+            String line;
+            while (( line = br.readLine()) != null ){
+                rawResult.add(line);
+            }
+            fr.close();
+        }
+        else{
+            System.out.format("Result file %s not found ", resultFileName);
+        }
+    }
+
+    public ArrayList<String> getRawResult(){
+        return rawResult;
+    }
+    public File[] getElections(){
+        return new File(electionLogDir).listFiles(File::isDirectory);
+    }
+    public String shortNumber(String s){
+        return String.valueOf(Math.round(Float.valueOf(s)));
     }
 }
