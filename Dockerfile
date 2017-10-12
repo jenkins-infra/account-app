@@ -13,7 +13,7 @@ ENV APP_URL=http://accounts.jenkins.io/
 
 EXPOSE 8080
 
-USER ROOT
+USER root
 
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
 RUN mkdir -p /home/jetty/.app &&\
