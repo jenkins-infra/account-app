@@ -243,7 +243,7 @@ public class Application {
                 "To allow this account to be created, click the following link:\n" +
                 getUrl() + "/admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
             mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "Rejection of a new account creation for " + firstName + " " + lastName, body, "text/plain");
-            throw new UserError(SPAM_MESSAGE);
+            throw new SystemError(SPAM_MESSAGE);
         }
 
         String password = createRecord(userid, firstName, lastName, email);

@@ -1,0 +1,7 @@
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib" xmlns:st="jelly:stapler">
+    <st:statusCode value="500" />
+    <t:layout title="Error">
+        <h1>Oops!</h1>
+        <p style="font-size:1.5em">${it.message}</p>
+    </t:layout>
+</j:jelly>

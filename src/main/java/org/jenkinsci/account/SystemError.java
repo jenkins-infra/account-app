@@ -1,5 +1,4 @@
 package org.jenkinsci.account;
-
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.StaplerRequest;
@@ -9,13 +8,12 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 
 /**
- * Indicates a problem in the user given information.
- * Remark: Message are considered as untrusted and therefor are escaped.
- *
- * @author Kohsuke Kawaguchi
+ * Created by Olivier Vernin on 11/10/17.
+ * Indicate an error send from the system which contain trusted information (no xss vulnerability)
+ * and therefor doesn't need to be escaped
  */
-public class UserError extends RuntimeException implements HttpResponse {
-    public UserError(String message) {
+public class SystemError extends RuntimeException implements HttpResponse {
+    public SystemError(String message){
         super(message);
     }
 
