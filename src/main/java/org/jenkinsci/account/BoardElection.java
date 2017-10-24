@@ -37,7 +37,7 @@ public class BoardElection {
         app = application;
         seniority = params.seniority();
         result = new ArrayList<HashMap<String, String>>();
-        final SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         open = format.parse(params.electionOpen());
         close = format.parse(params.electionClose());
         candidates = params.electionCandidates().split(",");

@@ -17,8 +17,8 @@ services:
       - ldap
     env_file: env.sandbox
     environment:
-        - ELECTION_CLOSE=2038/11/23
-        - ELECTION_OPEN=2016/11/01
+        - ELECTION_CLOSE=2038-11-23
+        - ELECTION_OPEN=2016-11-01
     ports:
       - '8080:8080'
 
