@@ -5,6 +5,8 @@ LABEL \
   Project="https://github.com/jenkins-infra/account-app" \
   Maintainer="infra@lists.jenkins-ci.org"
 
+ENV STV_GIT_COMMIT="fdb6dfdbc171d3e91bd98dd85bc2fbcea8aa2a7a"
+ENV STV_GIT_URL="https://github.com/louridas/stv.git"
 ENV ELECTION_LOGDIR=/var/log/accountapp/elections
 ENV CIRCUIT_BREAKER_FILE=/etc/accountapp/circuitBreaker.txt
 ENV SMTP_SERVER=localhost
@@ -17,7 +19,9 @@ USER root
 RUN \
   apk add --no-cache git python  && \
   mkdir -p /opt/stv && \
-  git clone https://github.com/louridas/stv.git /opt/stv
+  git clone $STV_GIT_URL /opt/stv && \
+  cd /opt/stv && \
+  git checkout $STV_GIT_COMMIT
 
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
 RUN \
