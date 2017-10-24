@@ -97,11 +97,11 @@
                             </div>
                         </li>
                         <li class='nav-item dropdown'>
-                            <div aria-expanded='false' aria-haspopup='true' class='active nav-link dropdown-toggle' data-toggle='dropdown' role='button'>
+                            <div aria-expanded='false' aria-haspopup='true' class='nav-link dropdown-toggle' data-toggle='dropdown' role='button'>
                                 Resources
                             </div>
                             <div class='dropdown-menu'>
-                                <a class='active dropdown-item feature' href='https://accounts.jenkins.io/' title='Create/manage your account for accessing wiki, issue tracker, etc'>Account Management</a>
+                                <a class='dropdown-item feature' href='https://accounts.jenkins.io/' title='Create/manage your account for accessing wiki, issue tracker, etc'>Account Management</a>
                                 <a class='dropdown-item' href='https://jenkins.io/chat' title='Chat with the rest of the Jenkins community on IRC'>Chat</a>
                                 <a class='dropdown-item feature' href='https://issues.jenkins-ci.org/'>Issue Tracker</a>
                                 <a class='dropdown-item' href='https://jenkins.io/mailing-lists' title='Browse Jenkins mailing list archives and/or subscribe to lists'>Mailing Lists</a>
@@ -140,24 +140,24 @@
                     <ul class='nav navbar-nav ml-auto'>
                         <j:if test="${it.isAdmin() or app.isAdmin()}">
                             <li class="nav-item">
-                                <a href="/admin" class="nav-link">Admin</a>
+                                <a href="/admin" class="active nav-link">Admin</a>
                             </li>
                         </j:if>
                         <li class="nav-item">
-                            <a href="/myself" class="nav-link">Profile</a>
+                            <a href="/myself" class="active nav-link">Profile</a>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <div aria-expanded='false' aria-haspopup='true' class='nav-link dropdown-toggle' data-toggle='dropdown' role='button'>
+                            <div aria-expanded='false' aria-haspopup='true' class='nav-link dropdown-toggle active' data-toggle='dropdown' role='button'>
                                 Elections
                             </div>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item feature" href="/election">Vote</a>
-                                <a class="dropdown-item feature" href="/election/results">History</a>
+                                <a class="dropdown-item feature" href="/election/results">Results</a>
                             </div>
                         </li>
                         <li clas="nav-item">
-                            <a href="/logout" class="nav-link">
+                            <a href="/logout" class="active nav-link">
                                 Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
                             </a>
                         </li>
