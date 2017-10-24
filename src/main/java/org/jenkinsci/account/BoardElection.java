@@ -4,6 +4,7 @@ import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import javax.naming.NamingException;
 import javax.xml.bind.DatatypeConverter;
@@ -83,8 +84,9 @@ public class BoardElection {
         }
     }
 
+    @RequirePOST
     public HttpResponse doUpdateResult(@QueryParameter String election) throws IOException {
-        if (!isOpen(election)){
+        if (!isOpen(election) && isAdmin()){
             countVotes(election);
             applySingleTransferableVote( election );
         }
@@ -122,6 +124,8 @@ public class BoardElection {
         totalVotes = votesCounter;
     }
 
+
+    @RequirePOST
     public HttpResponse doVote(@QueryParameter String vote) throws NamingException, IOException {
 
         if ( isSeniorMember()) {
