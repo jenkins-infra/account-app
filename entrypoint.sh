@@ -59,4 +59,15 @@ if [ ! -f /etc/accountapp/config.properties ]; then
     init_config_properties
 fi
 
-exec java -DCONFIG=/etc/accountapp/config.properties -Durl="$LDAP_URL" -Dpassword="$LDAP_PASSWORD" -Djira.username="$JIRA_USERNAME" -Djira.password="$JIRA_PASSWORD" -Djira.url="$JIRA_URL" -jar "$JETTY_HOME/start.jar"
+exec java -DCONFIG=/etc/accountapp/config.properties -Durl="$LDAP_URL" \
+    -Dpassword="$LDAP_PASSWORD" \
+    -Djira.username="$JIRA_USERNAME" \
+    -Djira.password="$JIRA_PASSWORD" \
+    -Djira.url="$JIRA_URL" \
+    -Dcom.sun.jndi.ldap.connect.pool=true \
+    -Dcom.sun.jndi.ldap.connect.pool.protocol="plain ssl" \
+    -Dcom.sun.jndi.ldap.connect.pool.maxsize=0 \
+    -Dcom.sun.jndi.ldap.connect.pool.prefsize=10 \
+    -Dcom.sun.jndi.ldap.connect.pool.timeout=180000 \
+    -Dcom.sun.jndi.ldap.connect.timeout=1000 \
+    -jar "$JETTY_HOME/start.jar"
