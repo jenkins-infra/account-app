@@ -3,6 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
+
+  <context-param>
+    <param-name>BDC_soundEnabled</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
   <servlet>
     <servlet-name>Stapler</servlet-name>
     <servlet-class>org.kohsuke.stapler.Stapler</servlet-class>
@@ -25,6 +31,15 @@
   <servlet-mapping>
     <servlet-name>WebjarsServlet</servlet-name>
     <url-pattern>/webjars/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>BotDetect Captcha</servlet-name>
+    <servlet-class>com.captcha.botdetect.web.servlet.CaptchaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BotDetect Captcha</servlet-name>
+    <url-pattern>/botdetectcaptcha</url-pattern>
   </servlet-mapping>
 
   <listener>

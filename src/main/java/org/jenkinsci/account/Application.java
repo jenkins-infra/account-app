@@ -3,6 +3,9 @@ package org.jenkinsci.account;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.net.InetAddresses;
+
+import com.captcha.botdetect.web.servlet.Captcha;
+
 import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
 import io.jenkins.backend.jiraldapsyncer.ServiceLocator;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
@@ -115,12 +118,14 @@ public class Application {
         this(ConfigurationLoader.from(config).as(Parameters.class));
     }
 
-    public String captchaPublicKey() {
-        return params.recaptchaPublicKey();
-    }
-
     public String getUrl() {
         return params.url();
+    }
+
+    public String showCaptcha(String name){
+        Captcha captcha = Captcha.load(Stapler.getCurrentRequest(), name);
+        captcha.setUserInputID("captchaCode");
+        return captcha.getHtml();
     }
 
     /**
@@ -135,30 +140,25 @@ public class Application {
             @QueryParameter String email,
             @QueryParameter String usedFor,
             @QueryParameter String hp,
+            @QueryParameter String captchaCode,
             @Header("X-Forwarded-For") String ip    // client IP
     ) throws Exception {
 
         ip = extractFirst(ip);
 
-        String uresponse = request.getParameter("g-recaptcha-response");
-
-        if (isCaptchaOn()) {
-            if (uresponse == null) throw new Error("captcha missing");
-
-            if (!verifyCaptcha(uresponse, ip)) {
-                throw new UserError("Captcha mismatch. Please try again and retry a captcha to prove that you are a human");
-            }
-        }
-
         userid = userid.toLowerCase();
 
+        Captcha captcha = Captcha.load(request, "signUpCaptcha");
+        boolean isHuman = captcha.validate(request.getParameter("captchaCode"));
+
+        if (!isHuman)
+            throw new UserError("Captcha mismatch. Please try again and retry a captcha to prove that you are a human");
         if (!VALID_ID.matcher(userid).matches())
             throw new UserError("Invalid user name: "+userid);
-
         if (isEmpty(firstName))
             throw new UserError("First name is required");
         if (isEmpty(lastName))
-            throw new UserError("First name is required");
+            throw new UserError("Last name is required");
         if (isEmpty(email))
             throw new UserError("e-mail is required");
         if(!email.contains("@"))
@@ -167,6 +167,7 @@ public class Application {
             throw new UserError("Please fill what you use Jenkins for.");
 
         List<String> blockReasons = new ArrayList<String>();
+
         if(!isEmpty(hp))
             blockReasons.add("Honeypot: " + hp);
 
@@ -212,7 +213,6 @@ public class Application {
                     blockReasons.add("BL: use partial");
                 }
             }
-
         }
 
         for(String fragment : NAUGHTY_BLACKLIST) {
@@ -262,10 +262,6 @@ public class Application {
         return new HttpRedirect("doneMail");
     }
 
-    private boolean isCaptchaOn() {
-        return params.recaptchaPublicKey()!=null;
-    }
-
     private String dumpHeaders(StaplerRequest request) {
         Enumeration headerNames = request.getHeaderNames();
         StringBuffer buffer = new StringBuffer();
@@ -274,48 +270,6 @@ public class Application {
             buffer.append(headerName).append("=").append(request.getHeader(headerName)).append("\n");
         }
         return buffer.toString();
-    }
-
-    private boolean verifyCaptcha(String uresponse, String ip) {
-        String postParams = "secret=" + URLEncoder.encode(params.recaptchaPrivateKey()) +
-                           "&remoteip=" + URLEncoder.encode(ip) +
-                           "&response=" + URLEncoder.encode(uresponse);
-        try {
-            URL obj = new URL("https://www.google.com/recaptcha/api/siteverify");
-            HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("User-Agent", "Mozilla/5.0");
-            conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            conn.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(postParams);
-            wr.flush();
-            wr.close();
-
-            int responseCode = conn.getResponseCode();
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    conn.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            //parse JSON response and return 'success' value
-            JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
-            JsonObject jsonObject = jsonReader.readObject();
-            jsonReader.close();
-            return jsonObject.getBoolean("success");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     private boolean checkCookie(StaplerRequest request, String x) {

@@ -31,9 +31,6 @@ public interface Parameters {
     String smtpUser();
     String smtpPassword();
 
-    String recaptchaPublicKey();
-    String recaptchaPrivateKey();
-
     /**
      * HTTP URL that this application is running. Something like 'http://jenkins-ci.org/account/'. Must end with '/'.
      */

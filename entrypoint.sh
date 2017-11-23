@@ -14,8 +14,6 @@ init_config_properties() {
     : "${SMTP_USER:? SMTP User required}"
     : "${SMTP_AUTH:? SMTP Auth required}"
     : "${SMTP_PASSWORD:? SMTP Password required}"
-    : "${RECAPTCHA_PUBLIC_KEY:? Recaptcha private key}"
-    : "${RECAPTCHA_PRIVATE_KEY:? Recaptcha private key}"
     : "${APP_URL:? Application url required}"
     : "${LDAP_MANAGER_DN:? Require ldap manager_DN}"
     : "${LDAP_NEW_USER_BASE_DN:? Require ldap new user base DN}"
@@ -44,8 +42,6 @@ init_config_properties() {
     sed -i "s#SMTP_PASSWORD#$SMTP_PASSWORD#" /etc/accountapp/config.properties
     sed -i "s#LDAP_URL#$LDAP_URL#" /etc/accountapp/config.properties
     sed -i "s#LDAP_PASSWORD#$LDAP_PASSWORD#" /etc/accountapp/config.properties
-    sed -i "s#RECAPTCHA_PUBLIC_KEY#$RECAPTCHA_PUBLIC_KEY#" /etc/accountapp/config.properties
-    sed -i "s#RECAPTCHA_PRIVATE_KEY#$RECAPTCHA_PRIVATE_KEY#" /etc/accountapp/config.properties
     sed -i "s#APP_URL#$APP_URL#" /etc/accountapp/config.properties
     sed -i "s#LDAP_MANAGER_DN#$LDAP_MANAGER_DN#" /etc/accountapp/config.properties
     sed -i "s#LDAP_NEW_USER_BASE_DN#$LDAP_NEW_USER_BASE_DN#" /etc/accountapp/config.properties

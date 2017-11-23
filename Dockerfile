@@ -1,4 +1,4 @@
-FROM jetty:jre8-alpine
+FROM jetty:jre8
 
 LABEL \
   Description="Deploy Jenkins infra account app" \
@@ -17,8 +17,11 @@ ENV ELECTION_ENABLED=false
 EXPOSE 8080
 
 USER root
+
 RUN \
-  apk add --no-cache git python  && \
+  apt-get update && \
+  apt-get install -y git python && \
+  rm -rf /var/lib/apt/lists/* && \
   mkdir -p /opt/stv && \
   git clone $STV_GIT_URL /opt/stv && \
   cd /opt/stv && \

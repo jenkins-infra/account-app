@@ -11,6 +11,7 @@ version = '2.5'
 repositories {
     jcenter()
     maven { url 'https://repo.jenkins-ci.org/public' }
+    maven { url "https://git.captcha.com/maven.git/blob_plain/HEAD:/" }
     mavenLocal()
 }
 
@@ -37,6 +38,8 @@ dependencies {
     compile 'org.webjars:jquery:3.2.0'
     compile 'org.webjars:jquery-ui:1.12.1'
     compile 'org.webjars.bower:fontawesome:4.7.0'
+
+    compile 'com.captcha:botdetect-jsp20:4.0.beta3'
 
     testCompile 'junit:junit:[4.8.1,5.0)'
 }
