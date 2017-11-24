@@ -6,6 +6,7 @@ import com.google.common.net.InetAddresses;
 
 import com.captcha.botdetect.web.servlet.Captcha;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
 import io.jenkins.backend.jiraldapsyncer.ServiceLocator;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
@@ -58,17 +59,7 @@ import java.net.URLEncoder;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -151,8 +142,24 @@ public class Application {
         Captcha captcha = Captcha.load(request, "signUpCaptcha");
         boolean isHuman = captcha.validate(request.getParameter("captchaCode"));
 
-        if (!isHuman)
-            throw new UserError("Captcha mismatch. Please try again and retry a captcha to prove that you are a human");
+        // Check if userid and email are available before going further
+        final DirContext con = connect();
+        try {
+            if (isEmpty(userid))
+                throw new UserError("UserId is required");
+
+            Iterator<User> a = searchByWord(userid, con);
+            if (a.hasNext())
+                throw new UserError("account "+ getUserById(userid,con).id  + " already exist");
+            a = searchByWord(email, con);
+
+            if (a.hasNext())
+                throw new UserError("email: "+ email + " already exist");
+
+        } finally {
+            con.close();
+        }
+
         if (!VALID_ID.matcher(userid).matches())
             throw new UserError("Invalid user name: "+userid);
         if (isEmpty(firstName))
@@ -165,6 +172,8 @@ public class Application {
             throw new UserError("Need a valid e-mail address.");
         if(isEmpty(usedFor))
             throw new UserError("Please fill what you use Jenkins for.");
+        if (!isHuman)
+            throw new UserError("Captcha mismatch. Please try again and retry a captcha to prove that you are a human");
 
         List<String> blockReasons = new ArrayList<String>();
 
