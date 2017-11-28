@@ -1,7 +1,5 @@
 package org.jenkinsci.account;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.util.Date;
 
 /**
@@ -44,13 +42,22 @@ public interface Parameters {
     /**
      * File that activates a circuit breaker, a temporary shutdown of a sign-up service.
      */
+
     String circuitBreakerFile();
 
     String electionCandidates();
+
+    String electionEnabled();
 
     String electionLogDir();
 
     String electionOpen();
 
     String electionClose();
+
+    /**
+     * seniority: Define the age in month to be consider as Senior Jenkins community member.
+     */
+    Integer seniority();
+    String seats();
 }

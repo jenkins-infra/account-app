@@ -33,8 +33,6 @@ dependencies {
         exclude module: 'javamail'
     }
 
-    compile 'com.esotericsoftware.yamlbeans:yamlbeans:1.11'
-
     compile 'org.webjars:webjars-servlet-2.x:1.5'
     compile 'org.webjars:jquery:3.2.0'
     compile 'org.webjars:jquery-ui:1.12.1'

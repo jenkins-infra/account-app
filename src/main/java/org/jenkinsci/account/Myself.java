@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 
 import static org.jenkinsci.account.LdapAbuse.GITHUB_ID;
 import static org.jenkinsci.account.LdapAbuse.SSH_KEYS;
+import static org.jenkinsci.account.LdapAbuse.REGISTRATION_DATE;
 
 /**
  * Represents the current user logged in and operations on it.
@@ -27,7 +28,7 @@ public class Myself {
     private final Application parent;
     private final String dn;
     public String firstName, lastName, email, userId;
-    public String githubId, sshKeys;
+    public String githubId, sshKeys, registrationDate;
     private final Set<String> groups;
 
     public Myself(Application parent, String dn, Attributes attributes, Set<String> groups) throws NamingException {
@@ -36,12 +37,13 @@ public class Myself {
             getAttribute(attributes,"sn"),
             getAttribute(attributes,"mail"),
             getAttribute(attributes,"cn"),
+            getAttribute(attributes, REGISTRATION_DATE),
             getAttribute(attributes, GITHUB_ID),
             getAttribute(attributes, SSH_KEYS),
             groups);
     }
 
-    public Myself(Application parent, String dn, String firstName, String lastName, String email, String userId, String githubId, String sshKeys, Set<String> groups) {
+    public Myself(Application parent, String dn, String firstName, String lastName, String email, String userId, String registrationDate, String githubId, String sshKeys, Set<String> groups) {
         this.parent = parent;
         this.dn = dn;
         this.firstName = firstName;
@@ -51,6 +53,7 @@ public class Myself {
         this.githubId = githubId;
         this.sshKeys = sshKeys;
         this.groups = groups;
+        this.registrationDate = registrationDate;
     }
 
     public static Myself current() {

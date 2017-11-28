@@ -1,0 +1,41 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
+    <t:layout title="VoteResults">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-default h5">
+                    <tr>
+                        <th>Election</th>
+                        <th class="text-center">Result Published</th>
+                        <j:if test="${it.isAdmin()}" >
+                            <th clas="text-center">Refresh</th>
+                        </j:if>
+                    </tr>
+                </thead>
+                <tbody>
+                    <j:forEach var="election" items="${it.getElections()}">
+                        <tr>
+                            <th scope="row"><a class="btn" role="button" href="/election/result?election=${election.getName()}" >${election.getName()}</a></th>
+                            <j:choose>
+                                <j:when test="${it.isResultExist(election.getName())}">
+                                    <td class="text-center"><i class="fa fa-check" aria-hidden="true"></i></td>
+                                </j:when>
+                                <j:otherwise>
+                                    <td class="text-center"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                </j:otherwise>
+                            </j:choose>
+                            <j:if test="${it.isAdmin()}" >
+                                <td>
+                                    <form method="post" action="updateResult">
+                                        <input type="hidden" name="election" value="${election.getName()}" class="form-control hidden"/>
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                                    </form>
+                                </td>
+                            </j:if>
+                        </tr>
+                    </j:forEach>
+                </tbody>
+            </table>
+        </div>
+    </t:layout>
+</j:jelly>

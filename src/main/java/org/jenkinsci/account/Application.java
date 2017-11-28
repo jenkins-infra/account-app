@@ -627,6 +627,8 @@ public class Application {
         }
     }
 
+    public Boolean isElectionEnabled () { return boardElection.isElectionEnabled() ;}
+
     public @CheckForNull BoardElection getBoardElection() {
         return boardElection;
     }

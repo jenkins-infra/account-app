@@ -3,7 +3,7 @@
   <t:layout title="Your Profile">
   <div class="row">
   <div class="col-sm-6">
-    <h1>Your Profile</h1>
+    <h3>Your Profile</h3>
 
     <form method="post" action="update">
     <div class="form-group">

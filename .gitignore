@@ -9,3 +9,4 @@ bin/jetty-runner*.jar
 *.sw*
 build/
 .env
+fake_data

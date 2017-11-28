@@ -20,12 +20,13 @@ init_config_properties() {
     : "${LDAP_MANAGER_DN:? Require ldap manager_DN}"
     : "${LDAP_NEW_USER_BASE_DN:? Require ldap new user base DN}"
     : "${CIRCUIT_BREAKER_FILE:? Require circuitBreaker file}"
-
     # Elections configurations
     : "${ELECTION_CANDIDATES:? Required coma separated list of candidates}"
     : "${ELECTION_CLOSE:? Required date election will close. yyyy/MM/dd}"
     : "${ELECTION_OPEN:? date election will open. yyyy/MM/dd }"
     : "${ELECTION_LOGDIR:? Require election log directory }"
+    : "${SENIORITY:? Require seniority criteria in month }"
+    : "${SEATS:? Require number of seats for election }"
 
     #Directory to store collected votes. assume this path is well persisted/backup
 
@@ -50,9 +51,12 @@ init_config_properties() {
     sed -i "s#LDAP_NEW_USER_BASE_DN#$LDAP_NEW_USER_BASE_DN#" /etc/accountapp/config.properties
     sed -i "s#CIRCUIT_BREAKER_FILE#$CIRCUIT_BREAKER_FILE#" /etc/accountapp/config.properties
     sed -i "s#ELECTION_CANDIDATES#$ELECTION_CANDIDATES#" /etc/accountapp/config.properties
+    sed -i "s#ELECTION_ENABLED#$ELECTION_ENABLED#" /etc/accountapp/config.properties
     sed -i "s#ELECTION_OPEN#$ELECTION_OPEN#" /etc/accountapp/config.properties
     sed -i "s#ELECTION_CLOSE#$ELECTION_CLOSE#" /etc/accountapp/config.properties
     sed -i "s#ELECTION_LOGDIR#$ELECTION_LOGDIR#" /etc/accountapp/config.properties
+    sed -i "s#SENIORITY#$SENIORITY#" /etc/accountapp/config.properties
+    sed -i "s#SEATS#$SEATS#" /etc/accountapp/config.properties
 }
 
 if [ ! -f /etc/accountapp/config.properties ]; then
