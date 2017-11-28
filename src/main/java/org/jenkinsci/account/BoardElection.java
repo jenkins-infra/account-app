@@ -29,6 +29,7 @@ public class BoardElection {
     private final String electionLogDir;
     private final String resultsLogDir;
     private final String seats;
+    private final Boolean electionEnabled;
     private ArrayList<HashMap<String,String>> result;
     private ArrayList<String> rawResult;
     private final int seniority;
@@ -43,6 +44,7 @@ public class BoardElection {
         close = format.parse(params.electionClose());
         candidates = params.electionCandidates().split(",");
         electionLogDir = params.electionLogDir();
+        electionEnabled = Boolean.valueOf(params.electionEnabled());
         seats = params.seats();
         rawResult = new ArrayList<String>();
 
@@ -53,6 +55,10 @@ public class BoardElection {
         dir.mkdirs();
     }
 
+    public Boolean isElectionEnabled(){
+       return  electionEnabled;
+    }
+
     private String messageDigest(String s) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(s.getBytes());
@@ -61,26 +67,33 @@ public class BoardElection {
     }
 
     public HttpResponse doResults() throws NamingException, IOException {
-        return HttpResponses.forwardToView(this,"results.jelly");
+        if ( isElectionEnabled())
+            return HttpResponses.forwardToView(this,"results.jelly");
+        else
+            return new HttpRedirect("/");
     }
 
     public HttpResponse doResult(@QueryParameter String election) throws NamingException, IOException {
+        if (!isElectionEnabled())
+            return new HttpRedirect("/");
 
-        if ( election.isEmpty() || election.equals(".") || election.equals("..")){
-            return new HttpRedirect("/election/results");
-        }
+        else {
 
-        File directory = new File( electionLogDir + "/" + election );
-        if (!directory.isDirectory() || !directory.exists()){
-            return new HttpRedirect("/election/results");
-        }
+            if (election.isEmpty() || election.equals(".") || election.equals("..")) {
+                return new HttpRedirect("/election/results");
+            }
 
-        if (!isResultExist(election) || isOpen(election)){
-            return new HttpRedirect("/election/ongoing");
-        }
-        else{
-            parseRawResult( election );
-            return HttpResponses.forwardToView(this,"result.jelly");
+            File directory = new File(electionLogDir + "/" + election);
+            if (!directory.isDirectory() || !directory.exists()) {
+                return new HttpRedirect("/election/results");
+            }
+
+            if (!isResultExist(election) || isOpen(election)) {
+                return new HttpRedirect("/election/ongoing");
+            } else {
+                parseRawResult(election);
+                return HttpResponses.forwardToView(this, "result.jelly");
+            }
         }
     }
 

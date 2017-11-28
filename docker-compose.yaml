@@ -17,6 +17,7 @@ services:
       - ldap
     env_file: env.sandbox
     environment:
+        - ELECTION_ENABLED=false
         - ELECTION_CLOSE=2038-11-23
         - ELECTION_OPEN=2016-11-01
     ports:

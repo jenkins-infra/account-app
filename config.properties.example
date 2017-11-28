@@ -27,6 +27,7 @@ circuitBreakerFile=CIRCUIT_BREAKER_FILE
 
 electionCandidates=ELECTION_CANDIDATES
 electionClose=ELECTION_CLOSE
+electionEnabled=ELECTION_ENABLED
 electionOpen= ELECTION_OPEN
 # Optional: Default value set to /var/log/accountapp/elections
 electionLogDir=ELECTION_LOGDIR

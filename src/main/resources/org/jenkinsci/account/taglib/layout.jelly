@@ -147,15 +147,19 @@
                             <a href="/myself" class="active nav-link">Profile</a>
                         </li>
 
-                        <li class="nav-item dropdown">
-                            <div aria-expanded='false' aria-haspopup='true' class='nav-link dropdown-toggle active' data-toggle='dropdown' role='button'>
-                                Elections
-                            </div>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item feature" href="/election">Vote</a>
-                                <a class="dropdown-item feature" href="/election/results">Results</a>
-                            </div>
-                        </li>
+                        <j:if test="${it.isElectionEnabled()}" >
+                            <li class="nav-item dropdown">
+                                <div aria-expanded='false' aria-haspopup='true' class='nav-link dropdown-toggle active' data-toggle='dropdown' role='button'>
+                                    Elections
+
+                                </div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item feature" href="/election">Vote</a>
+                                    <a class="dropdown-item feature" href="/election/results">Results</a>
+                                </div>
+                            </li>
+                        </j:if>
+
                         <li clas="nav-item">
                             <a href="/logout" class="active nav-link">
                                 Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
