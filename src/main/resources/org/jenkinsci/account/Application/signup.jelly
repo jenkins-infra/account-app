@@ -1,5 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
+
   <t:layout title="Sign up">
   <div class="row">
   <div class="col-sm-6 block-center">
@@ -36,15 +37,16 @@
       </div>
 
       <input id="hp" type="text"  name="hp"/>
+
       <script>
         <![CDATA[document.getElementById("hp").style.display = "none";]]>
       </script>
 
-      <j:if test="${it.captchaPublicKey()!=null}">
-        <label class="sr-only" for="captcha">Captcha</label>
-        <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"></script>
-        <div class="g-recaptcha" id="captcha" data-sitekey="${it.captchaPublicKey()}"></div>
-      </j:if>
+      <div class="form-group">
+          <j:out value="${it.showCaptcha('signUpCaptcha')}"/>
+          <input type="text" name="captchaCode" id="captchaCode" class="form-control text"/>
+      </div>
+
       <br/>
       <button type="submit" class="btn btn-default btn-lg btn-block">Sign Up</button>
     </form>
