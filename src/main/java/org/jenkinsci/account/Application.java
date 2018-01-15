@@ -129,6 +129,7 @@ public class Application {
             @QueryParameter String firstName,
             @QueryParameter String lastName,
             @QueryParameter String email,
+            @QueryParameter String emailconfirm,
             @QueryParameter String usedFor,
             @QueryParameter String hp,
             @QueryParameter String captchaCode,
@@ -168,6 +169,8 @@ public class Application {
             throw new UserError("Last name is required");
         if (isEmpty(email))
             throw new UserError("e-mail is required");
+        if (!email.equals(emailconfirm))
+            throw new UserError(String.format("Following emails are not matching: %s - %s", email, emailconfirm));
         if(!email.contains("@"))
             throw new UserError("Need a valid e-mail address.");
         if(isEmpty(usedFor))
