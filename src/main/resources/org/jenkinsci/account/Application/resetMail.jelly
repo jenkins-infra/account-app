@@ -1,0 +1,9 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
+    <t:layout title="Email sent!">
+        <h1>Done!</h1>
+        <p>
+            If your user account or email address exists in our database, you will receive a password at your email address in a few minutes
+        </p>
+    </t:layout>
+</j:jelly>

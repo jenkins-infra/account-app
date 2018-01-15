@@ -377,19 +377,18 @@ public class Application {
         final DirContext con = connect();
         try {
             Iterator<User> a = searchByWord(id, con);
-            if (!a.hasNext())
-                throw new UserError("No such user account found: "+id);
+            if (a.hasNext()) {
+                User u = a.next();
 
-            User u = a.next();
-
-            String p = PasswordUtil.generateRandomPassword();
-            u.modifyPassword(con, p);
-            u.mailPassword(p);
+                String p = PasswordUtil.generateRandomPassword();
+                u.modifyPassword(con, p);
+                u.mailPassword(p);
+            }
         } finally {
             con.close();
         }
 
-        return new HttpRedirect("doneMail");
+        return new HttpRedirect("resetMail");
     }
 
     public User getUserById(String id, DirContext con) throws NamingException {
@@ -528,7 +527,7 @@ public class Application {
                 context.close();
             }
         } catch (AuthenticationException e) {
-            throw new UserError(e.getMessage());
+            throw new UserError(String.format("User \"%s\" not found or password incorrect %n", userid) );
         }
 
         // to limit the redirect to this application, require that the from URL starts from '/'
