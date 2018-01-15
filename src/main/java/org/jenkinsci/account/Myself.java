@@ -120,11 +120,17 @@ public class Myself {
             @QueryParameter String newPassword2
     ) throws Exception {
 
-        if (!newPassword1.equals(newPassword2))
-            throw new Error("Password mismatch");
-
         // verify the current password
-        parent.connect(dn,password).close();
+        try {
+            parent.connect(dn,password).close();
+        } catch (javax.naming.AuthenticationException e) {
+            throw new UserError("Wrong current password");
+        }
+
+        // verify if new password match
+        if (!newPassword1.equals(newPassword2))
+            throw new UserError("Password does not match the confirm password");
+
 
         // then update
         Attributes attrs = new BasicAttributes();
