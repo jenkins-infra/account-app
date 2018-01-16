@@ -7,6 +7,8 @@
 
     <h1 class="text-center" >Sign up</h1>
 
+    <p class="text-center"> ! All fields are required</p>
+
     <form method="post" action="doSignup">
       <div class="form-group">
         <label class="sr-only" for="userid">User ID</label>
