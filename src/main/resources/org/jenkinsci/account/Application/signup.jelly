@@ -29,6 +29,7 @@
       <div class="form-group">
         <label class="sr-only" for="email">E-mail</label>
         <input type="email" name="email" id="email" class="form-control text" placeholder="Email"/>
+        <input type="email" name="emailconfirm" id="emailconfirm" class="form-control text" placeholder="Confirm your email"/>
       </div>
 
       <div class="form-group">
