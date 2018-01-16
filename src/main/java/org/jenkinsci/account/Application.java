@@ -375,6 +375,8 @@ public class Application {
      */
     public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
         final DirContext con = connect();
+        if (id.isEmpty())
+            throw new UserError("No email or user account provided");
         try {
             Iterator<User> a = searchByWord(id, con);
             if (a.hasNext()) {
