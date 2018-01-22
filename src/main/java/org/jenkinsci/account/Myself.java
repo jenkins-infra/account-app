@@ -106,9 +106,7 @@ public class Myself {
 
         LOGGER.info("User "+userId+" updated the profile. email="+email);
 
-        if (fixEmpty(newPassword1)!=null) {
-            doChangePassword(password,newPassword1,newPassword2);
-        }
+        doChangePassword(password,newPassword1,newPassword2);
 
         return new HttpRedirect("done");
     }
@@ -120,17 +118,21 @@ public class Myself {
             @QueryParameter String newPassword2
     ) throws Exception {
 
-        // verify the current password
-        try {
-            parent.connect(dn,password).close();
-        } catch (javax.naming.AuthenticationException e) {
-            throw new UserError("Wrong current password");
-        }
+        if (fixEmpty(password) == null)
+            throw new UserError("Current password is empty");
+
+        if (fixEmpty(newPassword1) == null || fixEmpty(newPassword2) == null)
+            throw new UserError("New password is empty");
 
         // verify if new password match
         if (!newPassword1.equals(newPassword2))
             throw new UserError("Password does not match the confirm password");
 
+        try {
+            parent.connect(dn,password).close();
+        } catch (javax.naming.AuthenticationException e) {
+            throw new UserError("Wrong current password");
+        }
 
         // then update
         Attributes attrs = new BasicAttributes();
