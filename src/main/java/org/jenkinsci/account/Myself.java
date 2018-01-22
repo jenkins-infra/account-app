@@ -118,10 +118,10 @@ public class Myself {
             @QueryParameter String newPassword2
     ) throws Exception {
 
-        if ( "".equals(password))
-            throw new UserError("Wrong current password");
+        if (fixEmpty(password) == null)
+            throw new UserError("Current password is empty");
 
-        if ( "".equals(newPassword1) || "".equals(newPassword2))
+        if (fixEmpty(newPassword1) == null || fixEmpty(newPassword2) == null)
             throw new UserError("New password is empty");
 
         // verify if new password match
