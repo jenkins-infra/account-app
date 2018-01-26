@@ -160,7 +160,7 @@
                             </li>
                         </j:if>
 
-                        <li clas="nav-item">
+                        <li class="nav-item">
                             <a href="/logout" class="active nav-link">
                                 Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
                             </a>

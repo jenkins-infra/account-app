@@ -8,7 +8,7 @@
                         <th>Election</th>
                         <th class="text-center">Result Published</th>
                         <j:if test="${it.isAdmin()}" >
-                            <th clas="text-center">Refresh</th>
+                            <th class="text-center">Refresh</th>
                         </j:if>
                     </tr>
                 </thead>
