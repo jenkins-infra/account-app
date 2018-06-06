@@ -38,13 +38,16 @@ COPY config.properties.example /etc/accountapp/config.properties.example
 COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
 COPY entrypoint.sh /entrypoint.sh
 
+ADD https://search.maven.org/remote_content?g=com.datadoghq&a=dd-java-agent&v=LATEST /home/jetty/dd-java-agent.jar
+
 COPY build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
 
 RUN chmod 0755 /entrypoint.sh &&\
     chown -R jetty:root /etc/accountapp &&\
     chown -R jetty:root /var/lib/jetty &&\
     chown -R jetty:root /opt/stv &&\
-    chown -R jetty:root $ELECTION_LOGDIR
+    chown -R jetty:root $ELECTION_LOGDIR &&\
+    chown -R jetty:root /home/jetty/dd-java-agent.jar
 
 USER jetty
 
