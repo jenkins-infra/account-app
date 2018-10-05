@@ -6,7 +6,6 @@ import com.google.common.net.InetAddresses;
 
 import com.captcha.botdetect.web.servlet.Captcha;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
 import io.jenkins.backend.jiraldapsyncer.ServiceLocator;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
