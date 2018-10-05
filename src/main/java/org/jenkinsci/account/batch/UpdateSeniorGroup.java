@@ -41,7 +41,7 @@ public class UpdateSeniorGroup {
                 if (isQualifiedAsSenior(date)) {
                     try {
                         con.modifyAttributes("cn=seniors,ou=groups,dc=jenkins-ci,dc=org", ADD_ATTRIBUTE, new BasicAttributes("member", dn));
-                    } catch (AttributeInUseException _) {
+                    } catch (AttributeInUseException unused) {
                         // already a member
                     }
                     con.modifyAttributes(dn, REPLACE_ATTRIBUTE, new BasicAttributes(SENIOR_STATUS, "Y"));
