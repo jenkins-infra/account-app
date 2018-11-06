@@ -12,7 +12,7 @@
 </title>
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 <meta content='Jenkins is an open source automation server' name='description'/>
-<link href='/sites/default/files/jenkins_favicon.ico' rel='shortcut icon' type='image/x-icon'/>
+<link href='https://jenkins.io/sites/default/files/jenkins_favicon.ico' rel='shortcut icon' type='image/x-icon'/>
 <meta charset='utf-8'/>
 <meta content='width=device-width, initial-scale=1' name='viewport'/>
 <meta content='ie=edge' http-equiv='x-ua-compatible'/>
@@ -214,17 +214,17 @@ Commons Attribution-ShareAlike 4.0 license.
 <h5>Resources</h5>
 <ul class='resources'>
 <li>
-<a href='/events'>
+<a href='https://jenkins.io/events'>
 Events
 </a>
 </li>
 <li>
-<a href='/doc'>
+<a href='https://jenkins.io/doc'>
 Documentation
 </a>
 </li>
 <li>
-<a href='/node'>
+<a href='https://jenkins.io/node'>
 Blog
 </a>
 </li>
@@ -236,47 +236,47 @@ Blog
 <h5>Solutions</h5>
 <ul>
 <li>
-<a href='/solutions/android'>
+<a href='https://jenkins.io/solutions/android'>
 Android
 </a>
 </li>
 <li>
-<a href='/solutions/c'>
+<a href='https://jenkins.io/solutions/c'>
 C/C++
 </a>
 </li>
 <li>
-<a href='/solutions/docker'>
+<a href='https://jenkins.io/solutions/docker'>
 Docker
 </a>
 </li>
 <li>
-<a href='/solutions/embedded'>
+<a href='https://jenkins.io/solutions/embedded'>
 Embedded
 </a>
 </li>
 <li>
-<a href='/solutions/github'>
+<a href='https://jenkins.io/solutions/github'>
 GitHub
 </a>
 </li>
 <li>
-<a href='/solutions/java'>
+<a href='https://jenkins.io/solutions/java'>
 Java
 </a>
 </li>
 <li>
-<a href='/solutions/pipeline'>
+<a href='https://jenkins.io/solutions/pipeline'>
 Continuous Delivery
 </a>
 </li>
 <li>
-<a href='/solutions/python'>
+<a href='https://jenkins.io/solutions/python'>
 Python
 </a>
 </li>
 <li>
-<a href='/solutions/ruby'>
+<a href='https://jenkins.io/solutions/ruby'>
 Ruby
 </a>
 </li>
