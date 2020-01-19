@@ -502,9 +502,11 @@ public class Application {
             @QueryParameter String userid,
             @QueryParameter String password,
             @QueryParameter String from
-    ) throws Exception {
-        if (userid==null || password==null)
-            throw new UserError("Missing credential");
+    ) {
+        if (userid == null || "".equals(userid))
+            throw new UserError("Missing username");
+        if (password == null || "".equals(password))
+            throw new UserError("Missing password");
 
         String dn = "cn=" + userid + "," + params.newUserBaseDN();
         try {
@@ -515,7 +517,7 @@ public class Application {
             } finally {
                 context.close();
             }
-        } catch (AuthenticationException e) {
+        } catch (Exception e) {
             throw new UserError(String.format("User \"%s\" not found or password incorrect %n", userid) );
         }
 
