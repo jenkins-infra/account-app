@@ -503,10 +503,12 @@ public class Application {
             @QueryParameter String password,
             @QueryParameter String from
     ) {
-        if (userid == null || "".equals(userid))
+        if (Strings.isNullOrEmpty(userid)) {
             throw new UserError("Missing username");
-        if (password == null || "".equals(password))
+        }
+        if (Strings.isNullOrEmpty(password)) {
             throw new UserError("Missing password");
+        }
 
         String dn = "cn=" + userid + "," + params.newUserBaseDN();
         try {
