@@ -519,7 +519,7 @@ public class Application {
             } finally {
                 context.close();
             }
-        } catch (AuthenticationException  e) {
+        } catch (AuthenticationException e) {
             throw new UserError(String.format("User \"%s\" not found or password incorrect %n", userid) );
         } catch (Exception e) {
             String errorId = String.valueOf(Math.round(Math.random() * 1e8));
