@@ -38,7 +38,7 @@ COPY config.properties.example /etc/accountapp/config.properties.example
 COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
 COPY entrypoint.sh /entrypoint.sh
 
-ADD https://search.maven.org/remote_content?g=com.datadoghq&a=dd-java-agent&v=LATEST /home/jetty/dd-java-agent.jar
+ADD https://search.maven.org/remote_content?g=com.datadoghq&a=dd-java-agent&v=0.9.0 /home/jetty/dd-java-agent.jar
 
 COPY build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
 
