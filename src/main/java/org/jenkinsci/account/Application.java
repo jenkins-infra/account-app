@@ -519,8 +519,12 @@ public class Application {
             } finally {
                 context.close();
             }
-        } catch (Exception e) {
+        } catch (AuthenticationException  e) {
             throw new UserError(String.format("User \"%s\" not found or password incorrect %n", userid) );
+        } catch (Exception e) {
+            String errorId = String.valueOf(Math.round(Math.random() * 1e8));
+            LOGGER.log(Level.SEVERE, "Login error " + errorId, e);
+            throw new UserError("Something went wrong. Please try again later.", errorId);
         }
 
         // to limit the redirect to this application, require that the from URL starts from '/'

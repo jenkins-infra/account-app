@@ -4,5 +4,9 @@
   <t:layout title="Error">
     <h1>Oops!</h1>
     <p style="font-size:1.5em">${it.message}</p>
+    <j:if test="${it.id != null}">
+      Please consider reporting this as an <a href="https://issues.jenkins-ci.org/projects/INFRA/issues/">issue in the Jenkins INFRA project</a>.
+      Please mention the following error ID in the ticket: ${it.id}
+    </j:if>
   </t:layout>
 </j:jelly>
