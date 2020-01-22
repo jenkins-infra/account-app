@@ -502,9 +502,13 @@ public class Application {
             @QueryParameter String userid,
             @QueryParameter String password,
             @QueryParameter String from
-    ) throws Exception {
-        if (userid==null || password==null)
-            throw new UserError("Missing credential");
+    ) {
+        if (Strings.isNullOrEmpty(userid)) {
+            throw new UserError("Missing username");
+        }
+        if (Strings.isNullOrEmpty(password)) {
+            throw new UserError("Missing password");
+        }
 
         String dn = "cn=" + userid + "," + params.newUserBaseDN();
         try {
@@ -517,6 +521,10 @@ public class Application {
             }
         } catch (AuthenticationException e) {
             throw new UserError(String.format("User \"%s\" not found or password incorrect %n", userid) );
+        } catch (Exception e) {
+            String errorId = String.valueOf(Math.round(Math.random() * 1e8));
+            LOGGER.log(Level.SEVERE, "Login error " + errorId, e);
+            throw new UserError("Something went wrong. Please try again later.", errorId);
         }
 
         // to limit the redirect to this application, require that the from URL starts from '/'
