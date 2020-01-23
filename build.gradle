@@ -30,7 +30,7 @@ dependencies {
     compile 'javax.mail:mail:[1.4,2.0)'
     compile 'javax.activation:activation:1.1.1'
 
-    compile('io.jenkins.backend:jira-rest-ldap-syncer:1.1') {
+    compile('io.jenkins.backend:jira-rest-ldap-syncer:1.2') {
         exclude module: 'javamail'
     }
 
