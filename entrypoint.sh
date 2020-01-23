@@ -59,7 +59,10 @@ if [ ! -f /etc/accountapp/config.properties ]; then
     init_config_properties
 fi
 
-exec java -DCONFIG=/etc/accountapp/config.properties -Durl="$LDAP_URL" \
+exec java -DCONFIG=/etc/accountapp/config.properties \
+    -Durl="$LDAP_URL" \
+    -Dusername="$LDAP_MANAGER_DN" \
+    -DbaseDN="$LDAP_NEW_USER_BASE_DN" \
     -Dpassword="$LDAP_PASSWORD" \
     -Djira.username="$JIRA_USERNAME" \
     -Djira.password="$JIRA_PASSWORD" \
