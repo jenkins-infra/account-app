@@ -12,7 +12,7 @@
 </title>
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 <meta content='Jenkins is an open source automation server' name='description'/>
-<link href='https://jenkins.io/sites/default/files/jenkins_favicon.ico' rel='shortcut icon' type='image/x-icon'/>
+<link href='https://www.jenkins.io/sites/default/files/jenkins_favicon.ico' rel='shortcut icon' type='image/x-icon'/>
 <meta charset='utf-8'/>
 <meta content='width=device-width, initial-scale=1' name='viewport'/>
 <meta content='ie=edge' http-equiv='x-ua-compatible'/>
@@ -35,13 +35,13 @@
 <meta content='article' property='og:type'/>
 <meta content='Jenkins – Continuous Delivery for every team' property='og:description'/>
 <link href='/webjars/fontawesome/4.7.0/css/font-awesome.min.css' media='screen' rel='stylesheet'/>
-<link href='https://jenkins.io/assets/bower/bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet'/>
-<link href='https://jenkins.io/assets/bower/tether/css/tether.min.css' media='screen' rel='stylesheet'/>
-<link href='https://jenkins.io/css/font-icons.css' media='screen' rel='stylesheet'/>
-<link href='https://jenkins.io/css/jenkins.css' media='screen' rel='stylesheet'/>
+<link href='https://www.jenkins.io/assets/bower/bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet'/>
+<link href='https://www.jenkins.io/assets/bower/tether/css/tether.min.css' media='screen' rel='stylesheet'/>
+<link href='https://www.jenkins.io/css/font-icons.css' media='screen' rel='stylesheet'/>
+<link href='https://www.jenkins.io/css/jenkins.css' media='screen' rel='stylesheet'/>
 <!-- Non-obtrusive CSS styles -->
-<link href='https://jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
-<link href='https://jenkins.io/css/footer.css' media='screen' rel='stylesheet'/>
+<link href='https://www.jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
+<link href='https://www.jenkins.io/css/footer.css' media='screen' rel='stylesheet'/>
 <script src="/webjars/jquery/3.2.0/jquery.js"></script>
 <script src="/webjars/jquery-ui/1.12.1/jquery-ui.js"></script>
 </head>
@@ -54,13 +54,13 @@
                     <i class="fa fa-bars" aria-hidden="true"></i>
                 </button>
                 <div class='collapse navbar-collapse' id='CollapsingNavbar'>
-                    <a class='navbar-brand' href='https://jenkins.io'>Jenkins</a>
+                    <a class='navbar-brand' href='https://www.jenkins.io'>Jenkins</a>
                     <ul class='nav navbar-nav ml-auto'>
                         <li class='nav-item'>
-                            <a class='nav-link' href='https://jenkins.io/node'>Blog</a>
+                            <a class='nav-link' href='https://www.jenkins.io/node'>Blog</a>
                         </li>
                         <li class='nav-item'>
-                            <a class='nav-link' href='https://jenkins.io/doc'>Documentation</a>
+                            <a class='nav-link' href='https://www.jenkins.io/doc'>Documentation</a>
                         </li>
                         <li class='nav-item'>
                             <a class='nav-link' href='https://plugins.jenkins.io/'>Plugins</a>
@@ -70,30 +70,30 @@
                                 Use-cases
                             </div>
                             <div class='dropdown-menu'>
-                                <a class='dropdown-item feature' href='https://jenkins.io/solutions/android'>Android</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io/solutions/c'>C/C++</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io/solutions/docker'>Docker</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io/solutions/embedded'>Embedded</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io/solutions/github'>GitHub</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io/solutions/java'>Java</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io/solutions/pipeline'>Continuous Delivery</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io/solutions/python'>Python</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io/solutions/ruby'>Ruby</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/solutions/android'>Android</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/solutions/c'>C/C++</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/solutions/docker'>Docker</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/solutions/embedded'>Embedded</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/solutions/github'>GitHub</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/solutions/java'>Java</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/solutions/pipeline'>Continuous Delivery</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/solutions/python'>Python</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/solutions/ruby'>Ruby</a>
                             </div>
                         </li>
                         <li class='nav-item'>
-                            <a class='nav-link' href='https://jenkins.io/participate'>Participate</a>
+                            <a class='nav-link' href='https://www.jenkins.io/participate'>Participate</a>
                         </li>
                         <li class='dropdown nav-item'>
                             <div aria-expanded='false' aria-haspopup='true' class='nav-link dropdown-toggle' data-toggle='dropdown' role='button'>
                                 Sub-projects
                             </div>
                             <div class='dropdown-menu'>
-                                <a class='dropdown-item feature' href='https://jenkins.io/projects/'>Overview</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io//projects/blueocean/'>Blue Ocean</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io//projects/gsoc/'>Google Summer of Code</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io//projects/infrastructure/'>Infrastructure</a>
-                                <a class='dropdown-item feature' href='https://jenkins.io//projects/jam/'>Jenkins Area Meetups</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io/projects/'>Overview</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io//projects/blueocean/'>Blue Ocean</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io//projects/gsoc/'>Google Summer of Code</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io//projects/infrastructure/'>Infrastructure</a>
+                                <a class='dropdown-item feature' href='https://www.jenkins.io//projects/jam/'>Jenkins Area Meetups</a>
                             </div>
                         </li>
                         <li class='nav-item dropdown'>
@@ -102,9 +102,9 @@
                             </div>
                             <div class='dropdown-menu'>
                                 <a class='dropdown-item feature' href='https://accounts.jenkins.io/' title='Create/manage your account for accessing wiki, issue tracker, etc'>Account Management</a>
-                                <a class='dropdown-item' href='https://jenkins.io/chat' title='Chat with the rest of the Jenkins community on IRC'>Chat</a>
+                                <a class='dropdown-item' href='https://www.jenkins.io/chat' title='Chat with the rest of the Jenkins community on IRC'>Chat</a>
                                 <a class='dropdown-item feature' href='https://issues.jenkins-ci.org/'>Issue Tracker</a>
-                                <a class='dropdown-item' href='https://jenkins.io/mailing-lists' title='Browse Jenkins mailing list archives and/or subscribe to lists'>Mailing Lists</a>
+                                <a class='dropdown-item' href='https://www.jenkins.io/mailing-lists' title='Browse Jenkins mailing list archives and/or subscribe to lists'>Mailing Lists</a>
                                 <a class='dropdown-item feature' href='https://wiki.jenkins-ci.org/'>Wiki</a>
                             </div>
                         </li>
@@ -113,13 +113,13 @@
                                 About
                             </div>
                             <div class='dropdown-menu'>
-                                <a class='dropdown-item' href='https://jenkins.io/security'>Security</a>
-                                <a class='dropdown-item' href='https://jenkins.io/press'>Press</a>
-                                <a class='dropdown-item' href='https://jenkins.io/project/conduct'>Conduct</a>
+                                <a class='dropdown-item' href='https://www.jenkins.io/security'>Security</a>
+                                <a class='dropdown-item' href='https://www.jenkins.io/press'>Press</a>
+                                <a class='dropdown-item' href='https://www.jenkins.io/project/conduct'>Conduct</a>
                             </div>
                         </li>
                         <li class='nav-item'>
-                            <a class='nav-link btn btn-outline-secondary' href='https://jenkins.io/download'>Download</a>
+                            <a class='nav-link btn btn-outline-secondary' href='https://www.jenkins.io/download'>Download</a>
                         </li>
                     </ul>
                 </div>
@@ -185,9 +185,9 @@
   </div>
 </div>
 
-<script src='https://jenkins.io/assets/bower/anchor-js/anchor.min.js'></script>
-<script src='https://jenkins.io/assets/bower/tether/js/tether.min.js'></script>
-<script src='https://jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js'></script>
+<script src='https://www.jenkins.io/assets/bower/anchor-js/anchor.min.js'></script>
+<script src='https://www.jenkins.io/assets/bower/tether/js/tether.min.js'></script>
+<script src='https://www.jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js'></script>
 <footer id='footer' style="position:absolute; width:100%">
 <div class='container'>
 <div class='row'>
@@ -214,17 +214,17 @@ Commons Attribution-ShareAlike 4.0 license.
 <h5>Resources</h5>
 <ul class='resources'>
 <li>
-<a href='https://jenkins.io/events'>
+<a href='https://www.jenkins.io/events'>
 Events
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/doc'>
+<a href='https://www.jenkins.io/doc'>
 Documentation
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/node'>
+<a href='https://www.jenkins.io/node'>
 Blog
 </a>
 </li>
@@ -236,47 +236,47 @@ Blog
 <h5>Solutions</h5>
 <ul>
 <li>
-<a href='https://jenkins.io/solutions/android'>
+<a href='https://www.jenkins.io/solutions/android'>
 Android
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/solutions/c'>
+<a href='https://www.jenkins.io/solutions/c'>
 C/C++
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/solutions/docker'>
+<a href='https://www.jenkins.io/solutions/docker'>
 Docker
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/solutions/embedded'>
+<a href='https://www.jenkins.io/solutions/embedded'>
 Embedded
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/solutions/github'>
+<a href='https://www.jenkins.io/solutions/github'>
 GitHub
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/solutions/java'>
+<a href='https://www.jenkins.io/solutions/java'>
 Java
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/solutions/pipeline'>
+<a href='https://www.jenkins.io/solutions/pipeline'>
 Continuous Delivery
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/solutions/python'>
+<a href='https://www.jenkins.io/solutions/python'>
 Python
 </a>
 </li>
 <li>
-<a href='https://jenkins.io/solutions/ruby'>
+<a href='https://www.jenkins.io/solutions/ruby'>
 Ruby
 </a>
 </li>
