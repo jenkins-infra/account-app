@@ -89,6 +89,7 @@ public class Application {
     // not exposing this to UI
     /*package*/ final CircuitBreaker circuitBreaker;
 
+    @CheckForNull
     private BoardElection boardElection;
 
     public Application(Parameters params) throws Exception {
@@ -586,7 +587,9 @@ public class Application {
         }
     }
 
-    public Boolean isElectionEnabled () { return boardElection.isElectionEnabled() ;}
+    public Boolean isElectionEnabled () { 
+        return boardElection != null && boardElection.isElectionEnabled();
+    }
 
     public @CheckForNull BoardElection getBoardElection() {
         return boardElection;
