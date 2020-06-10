@@ -3,11 +3,12 @@ package org.jenkinsci.account;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.net.InetAddresses;
-
 import com.captcha.botdetect.web.servlet.Captcha;
 
 import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
 import io.jenkins.backend.jiraldapsyncer.ServiceLocator;
+
+import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.Header;
 import org.kohsuke.stapler.HttpRedirect;
@@ -89,6 +90,7 @@ public class Application {
     // not exposing this to UI
     /*package*/ final CircuitBreaker circuitBreaker;
 
+    @CheckForNull
     private BoardElection boardElection;
 
     public Application(Parameters params) throws Exception {
@@ -360,7 +362,7 @@ public class Application {
     /**
      * Handles the password reset form submission.
      */
-    public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
+    public HttpResponse doDoPasswordReset(@QueryParameter String id, @QueryParameter String reason) throws Exception {
         final DirContext con = connect();
         if (id.isEmpty())
             throw new UserError("No email or user account provided");
@@ -371,7 +373,8 @@ public class Application {
 
                 String p = PasswordUtil.generateRandomPassword();
                 u.modifyPassword(con, p);
-                u.mailPassword(p);
+                u.mailPasswordReset(p, Stapler.getCurrentRequest().getRemoteUser(),
+                    StringUtils.isBlank(reason) ? "request in the account management app" : reason );
             }
         } finally {
             con.close();
@@ -432,6 +435,20 @@ public class Application {
                 "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
         }
 
+        /**
+         * Sends a new password and a password reset notification to this user.
+         */
+        public void mailPasswordReset(String password, @CheckForNull String requestedByUser, @CheckForNull String reason) throws MessagingException {
+            mail("Admin <admin@jenkins-ci.org>", mail, "Password reset on the Jenkins project infrastructure", 
+                "Your Jenkins account password was reset. " +
+                (requestedByUser != null ? String.format("It was requested by user %s. ", requestedByUser) : "") +
+                (StringUtils.isNotBlank(reason) ? String.format("Reason: %s. ", reason) : "") +
+                "Your userid is " + id + "\n" +
+                "Your temporary password is " + password + "\n" +
+                "\n" +
+                "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
+        }
+
         public void delete(DirContext con) throws NamingException {
             con.destroySubcontext(getDn());
             LOGGER.info("User " + id + " deleted");
@@ -442,7 +459,7 @@ public class Application {
         Session session;
         Properties props = new Properties(System.getProperties());
         props.put("mail.smtp.host",params.smtpServer());
-        if(params.smtpAuth()) {
+        if(params.smtpAuth() != null && params.smtpAuth()) {
             props.put("mail.smtp.auth", params.smtpAuth());
             props.put("mail.smtp.starttls.enable", true);
             props.put("mail.smtp.port", 587);
@@ -586,7 +603,9 @@ public class Application {
         }
     }
 
-    public Boolean isElectionEnabled () { return boardElection.isElectionEnabled() ;}
+    public Boolean isElectionEnabled () { 
+        return boardElection != null && boardElection.isElectionEnabled();
+    }
 
     public @CheckForNull BoardElection getBoardElection() {
         return boardElection;
@@ -608,7 +627,10 @@ public class Application {
     }
 
     public AdminUI getAdmin() {
-        return getMyself().isAdmin() ? new AdminUI(this) : null;
+        if (!getMyself().isAdmin()) {
+            throw HttpResponses.forbidden();
+        }
+        return new AdminUI(this);
     }
 
     private static final Logger LOGGER = Logger.getLogger(Application.class.getName());

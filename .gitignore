@@ -3,10 +3,15 @@
 *.iws
 target
 config.properties
-bin/jetty-runner*.jar
+bin
 .idea
 .gradle/
 *.sw*
 build/
 .env
 fake_data
+
+# IDE
+.classpath
+.project
+.settings
