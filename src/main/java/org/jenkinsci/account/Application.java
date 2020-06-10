@@ -608,7 +608,7 @@ public class Application {
             String[] res = new String(userPasswordBytes).split(":");
             String user = res[0];
             String password = res[1];
-            return login(user, password);
+            return login(user, password).withRESTAuthentication(true);
         }
 
         StringBuilder from = new StringBuilder(req.getRequestURI());
