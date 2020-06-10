@@ -520,19 +520,28 @@ public class Application {
             @QueryParameter String password,
             @QueryParameter String from
     ) {
+        login(userid, password);
+
+        // to limit the redirect to this application, require that the from URL starts from '/'
+        if (from==null || !from.startsWith("/")) from="/";
+        return HttpResponses.redirectTo(from);
+    }
+
+    private Myself login(String userid, String password) throws UserError {
         if (Strings.isNullOrEmpty(userid)) {
             throw new UserError("Missing username");
         }
         if (Strings.isNullOrEmpty(password)) {
             throw new UserError("Missing password");
         }
-
+        
         String dn = "cn=" + userid + "," + params.newUserBaseDN();
         try {
             LdapContext context = connect(dn, password);    // make sure the password is valid
             try {
-                Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(),
-                        new Myself(this, dn, context.getAttributes(dn), getGroups(dn,context)));
+                Myself myself = new Myself(this, dn, context.getAttributes(dn), getGroups(dn,context));
+                Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(), myself);
+                return myself;
             } finally {
                 context.close();
             }
@@ -543,10 +552,6 @@ public class Application {
             LOGGER.log(Level.SEVERE, "Login error " + errorId, e);
             throw new UserError("Something went wrong. Please try again later.", errorId);
         }
-
-        // to limit the redirect to this application, require that the from URL starts from '/'
-        if (from==null || !from.startsWith("/")) from="/";
-        return HttpResponses.redirectTo(from);
     }
 
     /**
@@ -584,15 +589,28 @@ public class Application {
      */
     public Myself getMyself() {
         Myself myself = Myself.current();
-        if (myself ==null) {
-            needToLogin();
+        if (myself == null) {
+            return needToLogin();
         }
         return myself;
     }
 
-    private void needToLogin() {
+    private Myself needToLogin() {
         // needs to login
         StaplerRequest req = Stapler.getCurrentRequest();
+
+        String authHeader = req.getHeader("Authorization");
+        if (authHeader != null) { // Basic auth
+            if (!authHeader.startsWith("Basic")) {
+                throw HttpResponses.error(403, "Only Basic authentication is supported");
+            }
+            byte[] userPasswordBytes = Base64.getDecoder().decode(authHeader.trim().substring(6));
+            String[] res = new String(userPasswordBytes).split(":");
+            String user = res[0];
+            String password = res[1];
+            return login(user, password);
+        }
+
         StringBuilder from = new StringBuilder(req.getRequestURI());
         if (req.getQueryString()!=null)
             from.append('?').append(req.getQueryString());
