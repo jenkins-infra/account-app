@@ -29,6 +29,11 @@ public class Myself {
     private final String dn;
     public String firstName, lastName, email, userId;
     public String githubId, sshKeys, registrationDate;
+    /**
+     * Indicates that a REST API client is used.
+     * It will impact some redirects on commands.
+     */
+    private boolean authenticatedWithREST;
     private final Set<String> groups;
 
     public Myself(Application parent, String dn, Attributes attributes, Set<String> groups) throws NamingException {
@@ -65,6 +70,15 @@ public class Myself {
      */
     public boolean isAdmin() {
         return groups.contains("admins");
+    }
+
+    public Myself withRESTAuthentication(boolean value) {
+        this.authenticatedWithREST = value;
+        return this;
+    }
+
+    public boolean isAuthenticatedWithREST() {
+        return this.authenticatedWithREST;
     }
 
     private static String getAttribute(Attributes attributes, String name) throws NamingException {

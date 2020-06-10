@@ -61,7 +61,11 @@ public class AdminUI {
             u.modifyPassword(con, p);
             u.mailPasswordReset(p, Stapler.getCurrentRequest().getRemoteUser(), reason);
 
-            return HttpResponses.forwardToView(this,"newPassword.jelly").with("user",u).with("password",p);
+            if (Myself.current().isAuthenticatedWithREST()) {
+                return HttpResponses.ok();
+            } else {
+                return HttpResponses.forwardToView(this,"newPassword.jelly").with("user", u).with("password", p);
+            }
         } finally {
             con.close();
         }
