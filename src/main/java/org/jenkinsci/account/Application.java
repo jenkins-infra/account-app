@@ -3,7 +3,6 @@ package org.jenkinsci.account;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.net.InetAddresses;
-
 import com.captcha.botdetect.web.servlet.Captcha;
 
 import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
@@ -628,7 +627,10 @@ public class Application {
     }
 
     public AdminUI getAdmin() {
-        return getMyself().isAdmin() ? new AdminUI(this) : null;
+        if (!getMyself().isAdmin()) {
+            throw HttpResponses.forbidden();
+        }
+        return new AdminUI(this);
     }
 
     private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
