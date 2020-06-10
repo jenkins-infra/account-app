@@ -8,6 +8,8 @@ import com.captcha.botdetect.web.servlet.Captcha;
 
 import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
 import io.jenkins.backend.jiraldapsyncer.ServiceLocator;
+
+import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.Header;
 import org.kohsuke.stapler.HttpRedirect;
@@ -361,7 +363,7 @@ public class Application {
     /**
      * Handles the password reset form submission.
      */
-    public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
+    public HttpResponse doDoPasswordReset(@QueryParameter String id, @QueryParameter String reason) throws Exception {
         final DirContext con = connect();
         if (id.isEmpty())
             throw new UserError("No email or user account provided");
@@ -372,7 +374,8 @@ public class Application {
 
                 String p = PasswordUtil.generateRandomPassword();
                 u.modifyPassword(con, p);
-                u.mailPassword(p);
+                u.mailPasswordReset(p, Stapler.getCurrentRequest().getRemoteUser(),
+                    StringUtils.isBlank(reason) ? "request in the account management app" : reason );
             }
         } finally {
             con.close();
@@ -428,6 +431,20 @@ public class Application {
          */
         public void mailPassword(String password) throws MessagingException {
             mail("Admin <admin@jenkins-ci.org>", mail, "Your access to Jenkins resources", "Your userid is " + id + "\n" +
+                "Your temporary password is " + password + "\n" +
+                "\n" +
+                "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
+        }
+
+        /**
+         * Sends a new password and a password reset notification to this user.
+         */
+        public void mailPasswordReset(String password, @CheckForNull String requestedByUser, @CheckForNull String reason) throws MessagingException {
+            mail("Admin <admin@jenkins-ci.org>", mail, "Password reset on the Jenkins project infrastructure", 
+                "Your Jenkins account password was reset. " +
+                (requestedByUser != null ? String.format("It was requested by user %s. ", requestedByUser) : "") +
+                (StringUtils.isNotBlank(reason) ? String.format("Reason: %s. ", reason) : "") +
+                "Your userid is " + id + "\n" +
                 "Your temporary password is " + password + "\n" +
                 "\n" +
                 "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");

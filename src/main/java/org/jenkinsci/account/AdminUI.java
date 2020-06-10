@@ -4,6 +4,7 @@ import org.jenkinsci.account.Application.User;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import javax.mail.MessagingException;
@@ -51,13 +52,14 @@ public class AdminUI {
     }
 
     @RequirePOST
-    public HttpResponse doPasswordReset(@QueryParameter String id) throws NamingException {
+    public HttpResponse doPasswordReset(@QueryParameter String id, @QueryParameter String reason) throws NamingException, MessagingException {
         LdapContext con = app.connect();
         try {
             User u = app.getUserById(id, con);
 
             String p = PasswordUtil.generateRandomPassword();
             u.modifyPassword(con, p);
+            u.mailPasswordReset(p, Stapler.getCurrentRequest().getRemoteUser(), reason);
 
             return HttpResponses.forwardToView(this,"newPassword.jelly").with("user",u).with("password",p);
         } finally {
