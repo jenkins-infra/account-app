@@ -460,7 +460,7 @@ public class Application {
         Session session;
         Properties props = new Properties(System.getProperties());
         props.put("mail.smtp.host",params.smtpServer());
-        if(params.smtpAuth()) {
+        if(params.smtpAuth() != null && params.smtpAuth()) {
             props.put("mail.smtp.auth", params.smtpAuth());
             props.put("mail.smtp.starttls.enable", true);
             props.put("mail.smtp.port", 587);
