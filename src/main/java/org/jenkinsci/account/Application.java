@@ -436,6 +436,20 @@ public class Application {
         }
 
         /**
+         * Sends a new password to this user.
+         */
+        public void mailAccountCreated(boolean sendPassword, String password, @CheckForNull String message) throws MessagingException {
+            mail("Admin <admin@jenkins-ci.org>", mail, "New account on the Jenkins project infrastructure", 
+                "Dear recipient, \n\n" +
+                "We have created a new Jenkins project account for you. Your new user ID is " + id + "\n" +
+                ( sendPassword ? "Your temporary password is " + password + "\n" : "" ) +
+                ( StringUtils.isNotBlank(message) ? message + "\n" : "" ) +
+                "\n" +
+                ( sendPassword ? "Please visit " + getUrl() + " and update your password and profile\n" : "" ), 
+                "text/plain");
+        }
+
+        /**
          * Sends a new password and a password reset notification to this user.
          */
         public void mailPasswordReset(String password, @CheckForNull String requestedByUser, @CheckForNull String reason) throws MessagingException {

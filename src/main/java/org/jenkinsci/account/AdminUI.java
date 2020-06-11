@@ -105,11 +105,13 @@ public class AdminUI {
             @QueryParameter String userid,
             @QueryParameter String firstName,
             @QueryParameter String lastName,
-            @QueryParameter String email
+            @QueryParameter String email,
+            @QueryParameter boolean skipPassword,
+            @QueryParameter String message
     ) throws NamingException, MessagingException {
         String password = app.createRecord(userid, firstName, lastName, email);
 
-        app.new User(userid,email).mailPassword(password);
+        app.new User(userid,email).mailAccountCreated(!skipPassword, password, message);
 
         return HttpResponses.plainText("Created");
     }
