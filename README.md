@@ -21,7 +21,7 @@ following:
 
 Finally, run the application with Jetty, then access `http://localhost:8080/`:
 
-    ./gradlew -Djira.url=https://issues.jenkins-ci.org/ -Djira.username=kohsuke -Djira.password=... -Durl=ldap://localhost:9389 -Dpassword=... jettyRun
+    ./gradlew -Djira.url=https://issues.jenkins.io/ -Djira.username=kohsuke -Djira.password=... -Durl=ldap://localhost:9389 -Dpassword=... jettyRun
 
 (As you can see above, this connects your test instance to the actual LDAP
 server, so the data you'll be seeing is real.
@@ -43,7 +43,7 @@ _Require ssh tunnel to an ldap server and an WAR archive_
     ELECTION_OPEN=1970/01/01
     JIRA_USERNAME=<insert your jira username>
     JIRA_PASSWORD=<insert your jira password>
-    JIRA_URL=https://issues.jenkins-ci.org
+    JIRA_URL=https://issues.jenkins.io
     LDAP_URL=server=ldap://localhost:9389/
     LDAP_PASSWORD=<insert your ldap password>
     LDAP_MANAGER_DN=cn=admin,dc=jenkins-ci,dc=org
