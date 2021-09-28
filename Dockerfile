@@ -10,7 +10,7 @@ ENV STV_GIT_URL="https://github.com/louridas/stv.git"
 ENV ELECTION_LOGDIR=/var/log/accountapp/elections
 ENV CIRCUIT_BREAKER_FILE=/etc/accountapp/circuitBreaker.txt
 ENV SMTP_SERVER=localhost
-ENV JIRA_URL=https://issues.jenkins-ci.org
+ENV JIRA_URL=https://issues.jenkins.io
 ENV APP_URL=http://accounts.jenkins.io/
 ENV ELECTION_ENABLED=false
 

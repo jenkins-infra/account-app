@@ -4,7 +4,7 @@
     <h1>Done!</h1>
     <p>
       Check your mail for the password.
-      You can login to <a href="http://wiki.jenkins-ci.org/" target="_top">Wiki</a> and <a href="http://issues.jenkins-ci.org/" target="_top">JIRA</a>,
+      You can login to <a href="http://wiki.jenkins-ci.org/" target="_top">Wiki</a> and <a href="http://issues.jenkins.io/" target="_top">JIRA</a>,
       with this username and password.
     </p>
   </t:layout>

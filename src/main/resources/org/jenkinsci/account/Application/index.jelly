@@ -3,7 +3,7 @@
   <t:layout title="Account self-service app">
     <p>
     You can create/manage your user account that you use for accessing
-    <a href="http://issues.jenkins-ci.org/" target="_top">Jenkins JIRA</a>,
+    <a href="http://issues.jenkins.io/" target="_top">Jenkins JIRA</a>,
     <a href="https://ci.jenkins.io/" target="_top">ci.jenkins.io</a>,
     VPN and other services within the <a href="https://www.jenkins.io/projects/infrastructure" target="_top">Jenkins Infrastructure</a>.
     </p>
