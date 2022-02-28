@@ -5,7 +5,7 @@
     <h1>Oops!</h1>
     <p style="font-size:1.5em">${it.message}</p>
     <j:if test="${it.id != null}">
-      Please consider reporting this as an <a href="https://issues.jenkins.io/projects/INFRA/issues/">issue in the Jenkins INFRA project</a>.
+      Please consider reporting this as an <a href="https://github.com/jenkins-infra/helpdesk/issues/">issue in the Jenkins Infrastructure help desk</a>.
       Please mention the following error ID in the ticket: ${it.id}
     </j:if>
   </t:layout>
