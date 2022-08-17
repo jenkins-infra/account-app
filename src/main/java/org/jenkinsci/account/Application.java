@@ -732,7 +732,6 @@ public class Application {
         "asadk7856",
         "asadkiller2@gmail.com",
         "asadwoz",
-        "ashishkumar",
         "ashwanikumar",
         "avanrajput5@gmail.com",
         "avanrajput5@gmail.com",
