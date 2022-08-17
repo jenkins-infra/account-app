@@ -5,23 +5,29 @@
 First, set up a tunnel to Jenkins LDAP server. Run the following command and
 keep the terminal open:
 
-    ssh -4 -L 9389:localhost:389 ldap.jenkins.io
+```shell
+ssh -4 -L 9389:localhost:389 ldap.jenkins.io
+```
 
 Create `config.properties` in the same directory as `pom.xml`. See the
 `Parameters` class for the details, but it should look something like the
 following:
 
-    server=ldap://localhost:9389/
-    managerDN=cn=admin,dc=jenkins-ci,dc=org
-    newUserBaseDN=ou=people,dc=jenkins-ci,dc=org
-    smtpServer=localhost
-    managerPassword=*****
-    circuitBreakerFile=./circuitBreaker.txt
-    url=http://localhost:8080/account/
+```init
+server=ldap://localhost:9389/
+managerDN=cn=admin,dc=jenkins-ci,dc=org
+newUserBaseDN=ou=people,dc=jenkins-ci,dc=org
+smtpServer=localhost
+managerPassword=*****
+circuitBreakerFile=./circuitBreaker.txt
+url=http://localhost:8080/account/
+```
 
 Finally, run the application with Jetty, then access `http://localhost:8080/`:
 
-    ./gradlew -Djira.url=https://issues.jenkins.io/ -Djira.username=kohsuke -Djira.password=... -Durl=ldap://localhost:9389 -Dpassword=... jettyRun
+```shell
+./gradlew -Djira.url=https://issues.jenkins.io/ -Djira.username=kohsuke -Djira.password=... -Durl=ldap://localhost:9389 -Dpassword=... jettyRun
+```
 
 (As you can see above, this connects your test instance to the actual LDAP
 server, so the data you'll be seeing is real.
@@ -30,13 +36,14 @@ The command line system properties are for JIRA LDAP sync tool. JIRA user accoun
 TODO: feed this data from config.properties
 
 ### Docker Compose
+
 A docker compose file can be used for testing purpose.
 
-_Require ssh tunnel to an ldap server and an WAR archive_
+⚠️ Requires ssh tunnel to an ldap server and an WAR archive
 
-* Create the file ```.env``` used by docker-compose to load configuration
-.env example
-```
+* Create the file `.env` used by docker-compose to load configuration:
+
+    ```ini
     APP_URL=http://localhost:8080/
     ELECTION_CANDIDATES=alice,bob
     ELECTION_CLOSE=2038/01/19
@@ -54,9 +61,13 @@ _Require ssh tunnel to an ldap server and an WAR archive_
     SMTP_USER=user@jenkins.io
     SMTP_AUTH=true
     SMTP_PASSWORD=password
+    ```
+
+* Run docker-compose:
+
+```shell
+docker-compose up --build accountapp
 ```
-* Run docker-compose 
-```docker-compose up --build accountapp```
 
 ## Packaging
 
@@ -64,18 +75,19 @@ For deploying to production, this app gets containerized. The container expects
 to see `/etc/accountapp` mounted from outside that contains the above mentioned
 `config.properties`
 
-
 To run the container locally, build it then:
 
-    docker run -ti --net=host  -v `pwd`:/etc/accountapp jenkinsciinfra/account-app:latest
+```shell
+docker run -ti --net=host  -v `pwd`:/etc/accountapp jenkinsciinfra/account-app:latest
+```
 
 ## Configuration
+
 Instead of mounting the configuration file from an external volume,
 we may want to use environment variable.
 
 **Those two options are mutually exclusive.**
 
-```
 * APP_URL
 * CIRCUIT_BREAKER_FILE
 * ELECTION_CANDIDATES   coma separated list of candidates
@@ -95,16 +107,17 @@ we may want to use environment variable.
 * SMTP_USER
 * SMTP_PASSWORD
 * SMTP_AUTH
-```
 
 ## Makefile
 
-``` make build```: Build build/libs/accountapp-2.5.war and docker image
-``` make run ```: Run docker container
-``` make clean ```: Clean build environment
+```make build```: Build build/libs/accountapp-2.5.war and docker image
+```make run```: Run docker container
+```make clean```: Clean build environment
 
 ## SMTP
-The accountapp support different types of SMTP configuration to send emails.
+
+The accountapp support different types of SMTP configuration to send emails:
+
 * Nothing is configured, the application try to connect on localhost:25
 * SMTP_AUTH is set to false, the accountapp will connect on  $SMTP_SERVER:25
 * SMTP_AUTH is set to true, the accountapp will connect on $SMTP_SERVER:587 with tls authentication
