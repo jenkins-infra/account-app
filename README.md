@@ -39,7 +39,7 @@ TODO: feed this data from config.properties
 
 A docker compose file can be used for testing purpose.
 
-⚠️ Requires ssh tunnel to an ldap server and an WAR archive
+⚠️ Requires ssh tunnel to an ldap server and a WAR archive
 
 * Create the file `.env` used by docker-compose to load configuration:
 
@@ -78,7 +78,7 @@ to see `/etc/accountapp` mounted from outside that contains the above mentioned
 To run the container locally, build it then:
 
 ```shell
-docker run -ti --net=host  -v `pwd`:/etc/accountapp jenkinsciinfra/account-app:latest
+docker run -ti --net=host  -v "$(pwd)":/etc/accountapp jenkinsciinfra/account-app:latest
 ```
 
 ## Configuration
