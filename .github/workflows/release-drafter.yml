@@ -1,0 +1,27 @@
+---
+name: cd
+on:
+  push:
+  workflow_dispatch:
+  release:
+
+# Only allow 1 release-drafter build at a time to avoid creating multiple "next" releases
+concurrency: "release-drafter"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Release Drafter
+        uses: release-drafter/release-drafter@v5.20.0
+        with:
+          name: next
+          tag: next
+          version: next
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
