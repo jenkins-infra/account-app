@@ -22,14 +22,14 @@ EXPOSE 8080
 
 USER root
 
-## Alwyas use latest available version of these packages
+## Always use latest available version of these packages
 # hadolint ignore=DL3008
 RUN \
   apt-get update && \
   apt-get install --yes --no-install-recommends python && \
   rm -rf /var/lib/apt/lists/*
 
-## Install the STV Election projects (which requries python)
+## Install the STV Election projects (which requires python)
 ARG STV_GIT_COMMIT="fdb6dfdbc171d3e91bd98dd85bc2fbcea8aa2a7a"
 ADD "https://github.com/louridas/stv/archive/${STV_GIT_COMMIT}.tar.gz" /opt/stv
 
