@@ -1433,8 +1433,10 @@ public class Application {
         "vagina"
     );
 
-    public static final String SPAM_MESSAGE = "Due to the spam problem, we will need additional verification for your sign-up request. " +
-            "More details are found on <a href='https://wiki.jenkins-ci.org/display/JENKINS/User+Account+on+Jenkins'>our wiki</a> on how to get your account created.";
+    public static final String SPAM_MESSAGE = "The anti-spam system was triggered: we need your help to prove that you are human and not a robot (or a human spammer). " +
+        "Open an issue on <a href='https://github.com/jenkins-infra/helpdesk/issues/new?template=1-report-issue.yml'>the Jenkins Infrastructure Help Desk</a> and provide the email and the userid you tried to register with, as well as the version of Jenkins you currently are running. " +
+        "Try to make your issue look legitimate and not like it's written by someone who doesn't know anything or just read the jenkins.io home page. " +
+        "If we don't think your signup request is legitimate, it won't be approved. We're a popular target of human spammers, i.e. actual people with actual web browsers trying to post their spam in our applications. ";
 
     // Somewhat cryptic name for cookie, so prying eyes don't know its use.
     public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
