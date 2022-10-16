@@ -7,7 +7,6 @@ import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import javax.naming.NamingException;
-import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -63,7 +62,7 @@ public class BoardElection {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(s.getBytes());
         byte[] digest = md.digest();
-        return DatatypeConverter.printHexBinary(digest);
+        return s;
     }
 
     public HttpResponse doResults() throws NamingException, IOException {
