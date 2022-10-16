@@ -32,30 +32,30 @@ java {
 }
 
 dependencies {
-    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
 
-    compileOnly("org.glassfish:javax.json:1.1.4")
-    compileOnly("commons-codec:commons-codec:1.15")
+    implementation("org.glassfish:javax.json:1.1.4")
+    implementation("commons-codec:commons-codec:1.15")
 
-    compileOnly("org.kohsuke.stapler:stapler:1.263")
-    compileOnly("org.kohsuke.stapler:stapler-jelly:1.263")
-    compileOnly("org.kohsuke.stapler:stapler-openid-server:[1.0,2.0)")
+    implementation("org.kohsuke.stapler:stapler:1.263")
+    implementation("org.kohsuke.stapler:stapler-jelly:1.263")
+    implementation("org.kohsuke.stapler:stapler-openid-server:[1.0,2.0)")
 
-    compileOnly("commons-jelly:commons-jelly-tags-define:1.0")
+    implementation("commons-jelly:commons-jelly-tags-define:1.0")
 
-    compileOnly("javax.mail:javax.mail-api:1.6.2")
-    compileOnly("javax.activation:activation:1.1.1")
+    implementation("javax.mail:javax.mail-api:1.6.2")
+    implementation("javax.activation:activation:1.1.1")
 
-    compileOnly("io.jenkins.backend:jira-rest-ldap-syncer:1.2") {
+    implementation("io.jenkins.backend:jira-rest-ldap-syncer:1.2") {
         exclude(module ="javamail")
     }
 
-    compileOnly("org.webjars:webjars-servlet-2.x:1.6")
-    compileOnly("org.webjars:jquery:3.6.1")
-    compileOnly("org.webjars:jquery-ui:1.13.2")
-    compileOnly("org.webjars.bower:fontawesome:4.7.0")
+    implementation("org.webjars:webjars-servlet-2.x:1.6")
+    implementation("org.webjars:jquery:3.6.1")
+    implementation("org.webjars:jquery-ui:1.13.2")
+    implementation("org.webjars.bower:fontawesome:4.7.0")
 
-    compileOnly("com.captcha:botdetect-jsp20:4.0.beta3")
+    implementation("com.captcha:botdetect-jsp20:4.0.beta3")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 }
