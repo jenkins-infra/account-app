@@ -1,12 +1,17 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Administration">
-    <table>
-      <tr>
-        <td>User ID</td>
-        <td>E-mail address</td>
-        <td/>
-      </tr>
+  <t:layout title="Search results">
+    <h1>Search results</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <td>User ID</td>
+          <td>Email address</td>
+          <td>Reset password</td>
+          <td>Update email</td>
+          <td>Delete user</td>
+        </tr>
+      </thead>
       <j:forEach var="u" items="${all}">
         <tr>
           <td>${u.id}</td>
@@ -14,22 +19,22 @@
           <td>
             <form method="post" action="passwordReset" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="submit" value="Reset password" />
+              <input type="submit" value="Reset password" class="btn btn-secondary" />
             </form>
           </td>
           <td style="padding-left:1em">
             <form method="post" action="emailReset" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="text" name="email" value="${u.mail}" />
-              <input type="submit" value="Reset email" />
+              <input type="text" name="email" value="${u.mail}" class="form-control mb-1" />
+              <input type="submit" value="Update" class="btn btn-secondary" />
             </form>
           </td>
 
           <td style="padding-left:1em">
             <form method="post" action="delete" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="text" name="confirm" style="width:3em" />
-              <input type="submit" value="Delete" />
+              <input type="text" name="confirm" style="width:3em" class="form-control mb-1" />
+              <input type="submit" value="Delete" class="btn btn-danger" />
             </form>
           </td>
         </tr>

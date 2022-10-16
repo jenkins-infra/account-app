@@ -69,6 +69,6 @@ tasks {
 }
 
 gretty {
-    contextPath = "/account"
+    contextPath = "/"
     httpPort = 8080
 }
