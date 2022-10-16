@@ -90,16 +90,10 @@ public class Application {
     // not exposing this to UI
     /*package*/ final CircuitBreaker circuitBreaker;
 
-    @CheckForNull
-    private BoardElection boardElection;
-
     public Application(Parameters params) throws Exception {
         this.params = params;
         this.openid = new JenkinsOpenIDServer(this);
         this.circuitBreaker = new CircuitBreaker(params);
-        if (params.electionCandidates() != null) {
-            this.boardElection = new BoardElection(this, params);
-        }
     }
 
     public Application(Properties config) throws Exception {
@@ -633,22 +627,6 @@ public class Application {
         } catch (UnsupportedEncodingException e) {
             throw new AssertionError(e);
         }
-    }
-
-    public Boolean isElectionEnabled () { 
-        return boardElection != null && boardElection.isElectionEnabled();
-    }
-
-    public @CheckForNull BoardElection getBoardElection() {
-        return boardElection;
-    }
-
-    public @CheckForNull BoardElection getElection() {
-        Myself myself = Myself.current();
-        if (myself ==null) {
-            needToLogin();
-        }
-        return boardElection;
     }
 
     /**

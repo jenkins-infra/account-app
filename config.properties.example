@@ -25,16 +25,4 @@ url=APP_URL
 # Optional: Default value set to /etc/accountapp/circuitBreaker.txt
 circuitBreakerFile=CIRCUIT_BREAKER_FILE
 
-electionCandidates=ELECTION_CANDIDATES
-electionClose=ELECTION_CLOSE
-electionEnabled=ELECTION_ENABLED
-electionOpen= ELECTION_OPEN
-# Optional: Default value set to /var/log/accountapp/elections
-electionLogDir=ELECTION_LOGDIR
-
-# Criteria in month to be consider as a Senior Jenkins community member.
-seniority=SENIORITY
-# Number of seats for election
-seats=SEATS
-
 # vim: ft=conf
