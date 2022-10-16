@@ -21,13 +21,6 @@ EXPOSE 8080
 
 USER root
 
-## Always use latest available version of these packages
-# hadolint ignore=DL3008
-RUN \
-  apt-get update && \
-  apt-get install --yes --no-install-recommends python && \
-  rm -rf /var/lib/apt/lists/*
-
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
 RUN \
   mkdir -p /home/jetty/.app &&\

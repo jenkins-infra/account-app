@@ -9,7 +9,6 @@ group = "org.jenkins-ci"
 description = "User self-service account management app"
 version = "2.5"
 
-
 repositories {
     mavenCentral()
     maven("https://repo.jenkins-ci.org/public/")
