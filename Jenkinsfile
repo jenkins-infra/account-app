@@ -15,7 +15,7 @@ pipeline {
             }
             post {
               always {
-                junit 'build/reports/tests/*.xml'
+                // enable when tests are added junit 'build/reports/tests/*.xml'
               }
             }
         }
