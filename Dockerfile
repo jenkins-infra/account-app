@@ -11,6 +11,7 @@ LABEL \
   project="https://github.com/jenkins-infra/account-app" \
   maintainer="infra@lists.jenkins-ci.org"
 
+ENV DD_AGENT_SERVICE_PORT="8126"
 ENV ELECTION_LOGDIR=/var/log/accountapp/elections
 ENV CIRCUIT_BREAKER_FILE=/etc/accountapp/circuitBreaker.txt
 ENV SMTP_SERVER=localhost
