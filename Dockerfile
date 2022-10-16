@@ -2,7 +2,7 @@ FROM eclipse-temurin:8 AS build
 
 WORKDIR /app
 COPY . .
-RUN ./gradlew --no-daemon --info war -x test
+RUN ./gradlew --no-daemon --info war
 
 FROM jetty:jre8 AS production
 
@@ -20,13 +20,6 @@ ENV APP_URL=http://accounts.jenkins.io/
 EXPOSE 8080
 
 USER root
-
-## Always use latest available version of these packages
-# hadolint ignore=DL3008
-RUN \
-  apt-get update && \
-  apt-get install --yes --no-install-recommends python && \
-  rm -rf /var/lib/apt/lists/*
 
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
 RUN \
