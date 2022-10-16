@@ -24,16 +24,6 @@
           </j:if>
           <li><a href="./myself">Profile</a> - View and edit profile, change password, etc.</li>
 
-          <j:if test="${it.isElectionEnabled()}" >
-            <li>
-              <li>
-                Elections:
-                <a href="./election">Vote</a>
-                <a href="./election/results">Results</a>
-              </li>
-            </li>
-          </j:if>
-
           <li><a href="./logout">Logout</a></li>
         </ul>
       </j:if>
