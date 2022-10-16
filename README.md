@@ -45,9 +45,6 @@ A docker compose file can be used for testing purpose.
 
     ```ini
     APP_URL=http://localhost:8080/
-    ELECTION_CANDIDATES=alice,bob
-    ELECTION_CLOSE=2038/01/19
-    ELECTION_OPEN=1970/01/01
     JIRA_USERNAME=<insert your jira username>
     JIRA_PASSWORD=<insert your jira password>
     JIRA_URL=https://issues.jenkins.io
@@ -90,10 +87,6 @@ we may want to use environment variable.
 
 * APP_URL
 * CIRCUIT_BREAKER_FILE
-* ELECTION_CANDIDATES   coma separated list of candidates
-* ELECTION_CLOSE   date election will close. yyyy/MM/dd
-* ELECTION_OPEN    date election will open. yyyy/MM/dd
-* ELECTION_LOGDIR
 * JIRA_PASSWORD
 * JIRA_URL
 * JIRA_USERNAME

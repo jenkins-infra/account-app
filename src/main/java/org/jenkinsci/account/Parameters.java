@@ -41,20 +41,4 @@ public interface Parameters {
      */
 
     String circuitBreakerFile();
-
-    String electionCandidates();
-
-    String electionEnabled();
-
-    String electionLogDir();
-
-    String electionOpen();
-
-    String electionClose();
-
-    /**
-     * seniority: Define the age in month to be consider as Senior Jenkins community member.
-     */
-    Integer seniority();
-    String seats();
 }
