@@ -36,7 +36,7 @@ dependencies {
     implementation("org.glassfish:javax.json:1.1.4")
     implementation("commons-codec:commons-codec:1.15")
 
-    implementation("org.kohsuke.stapler:stapler:1.263")
+    implementation("org.kohsuke.stapler:stapler:1733.v981fdd98007e")
     implementation("org.kohsuke.stapler:stapler-jelly:1.263")
     implementation("org.kohsuke.stapler:stapler-openid-server:[1.0,2.0)")
 
