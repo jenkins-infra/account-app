@@ -2,7 +2,7 @@ plugins {
     java
     `maven-publish`
     war
-    id("org.gretty") version "3.0.9"
+    id("org.gretty") version "4.0.3"
 }
 
 group = "org.jenkins-ci"
