@@ -50,9 +50,6 @@ dependencies {
     }
 
     implementation("org.webjars:webjars-servlet-2.x:1.6")
-    implementation("org.webjars:jquery:3.6.1")
-    implementation("org.webjars:jquery-ui:1.13.2")
-    implementation("org.webjars.bower:fontawesome:4.7.0")
 
     implementation("com.captcha:botdetect-jsp20:4.0.beta3")
 

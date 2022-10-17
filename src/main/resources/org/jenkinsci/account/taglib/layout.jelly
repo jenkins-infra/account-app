@@ -34,7 +34,6 @@
 <meta content='${attrs.title}' property='og:title'/>
 <meta content='article' property='og:type'/>
 <meta content='Jenkins – Continuous Delivery for every team' property='og:description'/>
-<link href='/webjars/fontawesome/4.7.0/css/font-awesome.min.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/assets/bower/bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/assets/bower/tether/css/tether.min.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/css/font-icons.css' media='screen' rel='stylesheet'/>
@@ -42,244 +41,47 @@
 <!-- Non-obtrusive CSS styles -->
 <link href='https://www.jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/css/footer.css' media='screen' rel='stylesheet'/>
-<script src="/webjars/jquery/3.2.0/jquery.js"></script>
-<script src="/webjars/jquery-ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body style="min-height:100%; height:100%; padding-top:100px">
-    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.6.0/webcomponents-loader.js"></script>
-    <script src="https://unpkg.com/lit@2.4.0/polyfill-support.js"></script>
-    <script data="jio" src="https://unpkg.com/@halkeye/jenkins-io-components?module" type="module"></script>
-    <script data="jio" nomodule="" src="https://unpkg.com/@halkeye/jenkins-io-components"></script>
-
-    <jio-navbar class="fixed-top" property="https://accounts.jenkins.io"></jio-navbar>
-    <div>
+  <jio-navbar class="fixed-top" property="https://accounts.jenkins.io">
     <j:if test="${app.isLoggedIn() or it.isLoggedIn()}">
-        <nav class='navbar navbar-toggleable-md navbar-inverse top bg-inverse' id="ji-toolbar">
-            <div class='container'>
-                <button class='navbar-toggler navbar-toggler-rght hidden-lg-up float-left' data-target='#CollapsingNavbar2' data-toggle='collapse' type='button'>
-                    <i class="fa fa-bars" aria-hidden="true"></i>
-                </button>
-                <div class='collapse navbar-collapse' id='CollapsingNavbar2'>
-                    <a class='navbar-brand' href='/'>
-                        My Account
-                    </a>
-
-                    <ul class='nav navbar-nav ml-auto'>
-                        <j:if test="${it.isAdmin() or app.isAdmin()}">
-                            <li class="nav-item">
-                                <a href="/admin" class="active nav-link">Admin</a>
-                            </li>
-                        </j:if>
-                        <li class="nav-item">
-                            <a href="/myself" class="active nav-link">Profile</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="/logout" class="active nav-link">
-                                Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+      <div slot="rightMenuItems">
+        <j:if test="${it.isAdmin() or app.isAdmin()}">
+          <jio-navbar-link href="/admin">Admin</jio-navbar-link>
+        </j:if>
+        <jio-navbar-link href="/myself">Profile</jio-navbar-link>
+        <jio-navbar-link href="/logout">Logout <ion-icon name="log-out-outline"></ion-icon></jio-navbar-link>
+      </div>
     </j:if>
-    </div>
+  </jio-navbar>
 
-
-    <div class='container' style="min-height:55%; padding-top: 50px; padding-bottom: 50px">
-  <div class='row'>
-    <div class="col-sm-3 col-md-3">
-    </div>
-    <div class="col-md-9 col-md-offset-3">
-      <div class="main">
-      <d:invokeBody />
+  <div class='container' style="min-height:55%; padding-top: 50px; padding-bottom: 50px">
+    <div class='row'>
+      <div class="col-sm-3 col-md-3">
+      </div>
+      <div class="col-md-9 col-md-offset-3">
+        <div class="main">
+          <d:invokeBody />
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script src='https://www.jenkins.io/assets/bower/anchor-js/anchor.min.js'></script>
-<script src='https://www.jenkins.io/assets/bower/tether/js/tether.min.js'></script>
-<script src='https://www.jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js'></script>
-<footer id='footer' style="position:absolute; width:100%">
-<div class='container'>
-<div class='row'>
-<div class='col-md-4'>
-<div class='license-box'>
-<div id='creativecommons'>
-<a href='https://creativecommons.org/licenses/by-sa/4.0/'>
-<p>
-<img src='https://licensebuttons.net/l/by-sa/4.0/88x31.png'/>
-</p>
-</a>
-<p>
-The content driving this site is licensed under the Creative
-Commons Attribution-ShareAlike 4.0 license.
-</p>
-</div>
-</div>
-</div>
-<div class='links col-md-8'>
-<div class='container'>
-<div class='row'>
-<div class='area col-md-3'>
-<div class='div-mar'>
-<h5>Resources</h5>
-<ul class='resources'>
-<li>
-<a href='https://www.jenkins.io/events'>
-Events
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/doc'>
-Documentation
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/node'>
-Blog
-</a>
-</li>
-</ul>
-</div>
-</div>
-<div class='area col-md-3'>
-<div class='div-mar'>
-<h5>Solutions</h5>
-<ul>
-<li>
-<a href='https://www.jenkins.io/solutions/android'>
-Android
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/solutions/c'>
-C/C++
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/solutions/docker'>
-Docker
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/solutions/embedded'>
-Embedded
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/solutions/github'>
-GitHub
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/solutions/java'>
-Java
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/solutions/pipeline'>
-Continuous Delivery
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/solutions/python'>
-Python
-</a>
-</li>
-<li>
-<a href='https://www.jenkins.io/solutions/ruby'>
-Ruby
-</a>
-</li>
-</ul>
-</div>
-</div>
-<div class='area col-md-3'>
-<div class='div-mar'>
-<h5>Project</h5>
-<ul class='project'>
-<li>
-<a href='https://issues.jenkins.io'>
-Issue tracker
-</a>
-</li>
-<li>
-<a href='https://wiki.jenkins-ci.org'>
-Wiki
-</a>
-</li>
-<li>
-<a href='https://github.com/jenkinsci'>
-GitHub
-</a>
-</li>
-<li>
-<a href='https://ci.jenkins.io'>
-Jenkins on Jenkins
-</a>
-</li>
-</ul>
-</div>
-</div>
-<div class='area col-md-3'>
-<div class='div-mar'>
-<h5>Community</h5>
-<ul class='community'>
-<li>
-<a href='https://groups.google.com/forum/#!forum/jenkinsci-users'>
-Users mailing list
-</a>
-</li>
-<li>
-<a href='https://groups.google.com/forum/#!forum/jenkinsci-dev'>
-Developers mailing list
-</a>
-</li>
-<li>
-<a href='https://twitter.com/jenkinsci'>
-Twitter
-</a>
-</li>
-<li>
-<a href='https://reddit.com/r/jenkinsci'>
-Reddit
-</a>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</footer>
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <jio-footer property="https://accounts.jenkins.io"></jio-footer>
 
-ga('create', 'UA-4216293-5', 'auto');
-ga('send', 'pageview');
-ga('set', 'anonymizeIp', true);
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-4216293-5', 'auto');
+  ga('send', 'pageview');
+  ga('set', 'anonymizeIp', true);
+  </script>
 
-</script>
+  <script async="" src="https://www.jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js"></script>
+  <script async="" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.6.0/webcomponents-loader.js"></script>
+  <script async="" src="https://unpkg.com/lit@2.4.0/polyfill-support.js"></script>
+  <script async="" data="jio" src="https://unpkg.com/@halkeye/jenkins-io-components?module" type="module"></script>
+  <script async="" data="jio" nomodule="" src="https://unpkg.com/@halkeye/jenkins-io-components"></script>
 
-<script>
-!function(d,s,id) {
-    var js, fjs=d.getElementsByTagName(s)[0];
-    if (!d.getElementById(id)) {
-    js = d.createElement(s);
-    js.id=id;
-    js.src="//platform.twitter.com/widgets.js";
-    fjs.parentNode.insertBefore(js,fjs);
-    }
-}(document,"script","twitter-wjs");
-</script>
 </body>
 </html>
 
