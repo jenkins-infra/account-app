@@ -1,12 +1,17 @@
 h5 {
-  margin-bottom: 0em;
+  margin-bottom: 0;
 }
-INPUT.text {
-  width: 20em;
+input.text {
+  width: 100%;
 }
 
 p.description {
-  margin-top: 0em;
+  margin-top: 0;
   color: gray;
   font-size: 0.8em;
+}
+
+nav.navbar {
+  padding-left: 0;
+  padding-top: 0;
 }
