@@ -4,8 +4,7 @@
     <st:attribute name="title" use="required"/>
   </st:documentation>
   <st:contentType value="text/html;charset=UTF-8" />
-
-<html style="height:100%;min-height:100%;position:relative">
+<html style="height:100%;min-height:100%;">
 <head>
 <title>
     ${attrs.title} | Jenkins
@@ -16,12 +15,6 @@
 <meta charset='utf-8'/>
 <meta content='width=device-width, initial-scale=1' name='viewport'/>
 <meta content='ie=edge' http-equiv='x-ua-compatible'/>
-<link href='img/favicon.ico' rel='icon' sizes='32x32' type='img/png'/>
-<link href='img/favicon-32x32.png' rel='icon' sizes='32x32' type='image/png'/>
-<link href='img/favicon-16x16.png' rel='icon' sizes='16x16' type='image/png'/>
-<link href='img/apple-touch-icon-76x76.png' rel='apple-touch-icon' sizes='76x76'/>
-<link href='img/apple-touch-icon-120x120.png' rel='apple-touch-icon' sizes='120x120'/>
-<link href='img/apple-touch-icon-152x152.png' rel='apple-touch-icon' sizes='152x152'/>
 <meta content='Jenkins Plugins' name='apple-mobile-web-app-title'/>
 <!-- Twitter Card data -->
 <meta content='summary_large_image' name='twitter:card'/>
@@ -50,24 +43,16 @@
           <jio-navbar-link href="/admin">Admin</jio-navbar-link>
         </j:if>
         <jio-navbar-link href="/myself">Profile</jio-navbar-link>
-        <jio-navbar-link href="/logout">Logout <ion-icon name="log-out-outline"></ion-icon></jio-navbar-link>
+        <jio-navbar-link href="/logout">Logout <ion-icon name="log-out-outline" /></jio-navbar-link>
       </div>
     </j:if>
   </jio-navbar>
 
-  <div class='container' style="min-height:55%; padding-top: 50px; padding-bottom: 50px">
-    <div class='row'>
-      <div class="col-sm-3 col-md-3">
-      </div>
-      <div class="col-md-9 col-md-offset-3">
-        <div class="main">
-          <d:invokeBody />
-        </div>
-      </div>
-    </div>
+  <div class='container pb-5' style="min-height:64%;">
+    <d:invokeBody />
   </div>
 
-  <jio-footer property="https://accounts.jenkins.io"></jio-footer>
+  <jio-footer property="https://accounts.jenkins.io" />
 
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
@@ -76,11 +61,11 @@
   ga('set', 'anonymizeIp', true);
   </script>
 
-  <script async="" src="https://www.jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js"></script>
-  <script async="" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.6.0/webcomponents-loader.js"></script>
-  <script async="" src="https://unpkg.com/lit@2.4.0/polyfill-support.js"></script>
-  <script async="" data="jio" src="https://unpkg.com/@halkeye/jenkins-io-components?module" type="module"></script>
-  <script async="" data="jio" nomodule="" src="https://unpkg.com/@halkeye/jenkins-io-components"></script>
+  <script async="" src="https://www.jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js" />
+  <script async="" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.6.0/webcomponents-loader.js" />
+  <script async="" src="https://unpkg.com/lit@2.4.0/polyfill-support.js" />
+  <script async="" data="jio" src="https://unpkg.com/@halkeye/jenkins-io-components?module" type="module" />
+  <script async="" data="jio" nomodule="" src="https://unpkg.com/@halkeye/jenkins-io-components" />
 
 </body>
 </html>

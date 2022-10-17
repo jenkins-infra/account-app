@@ -2,34 +2,30 @@
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Login">
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-md-6 mx-auto">
+    <div class="logo">
+      <img height="40px" src="/logo.svg" alt="Jenkins logo" />
+    </div>
+
     <h1 class="text-center">Login</h1>
 
     <form method="post" action="doLogin">
       <div class="form-group">
-        <label class="sr-only" for="userid">Login</label>
-        <input type="text" name="userid" class="form-control text" id="userid" placeholder="Userid"/>
+        <label for="userid">Username</label>
+        <input autofocus="autofocus" type="text" name="userid" class="form-control text" id="userid" placeholder="Enter your username"/>
       </div>
 
       <div class="form-group">
-        <label class="sr-only" for="login_password">Password</label>
-        <input type="password" id="login_password" name="password" placeholder="Password" class="form-control text"/>
+        <label for="login_password">Password</label>
+        <input type="password" id="login_password" name="password" placeholder="Enter your password" class="form-control text"/>
       </div>
 
       <input type="hidden" name="from" value="${request.getParameter('from')}"/>
 
-      <button type="submit" class="btn btn-default btn-lg btn-block">Login</button>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
     </form>
 
     <small><a href="signup">Sign up?</a> - <a href="passwordReset">Forgot password</a></small>
-
-    <script>
-      window.onload = function() {
-        document.getElementById('userid').focus();
-      }
-    </script>
-  </div>
-  <div class="col-sm-6">
   </div>
 </div>
   </t:layout>
