@@ -1,7 +1,7 @@
 # This file configures the Jenkins project's accounts management application.
 #
 # See: <https://github.com/jenkins-infra/account-app>
-server=LDAP_URL 
+server=LDAP_URL
 managerDN=LDAP_MANAGER_DN
 managerPassword=LDAP_PASSWORD
 
@@ -18,7 +18,7 @@ recaptchaPublicKey=RECAPTCHA_PUBLIC_KEY
 recaptchaPrivateKey=RECAPTCHA_PRIVATE_KEY
 
 # Optional: Default value set to http://accounts.jenkins.io/
-url=APP_URL
+url=http://localhost:8080
 
 # Create this file on the host machine in order to temporarily disable account
 # creation
