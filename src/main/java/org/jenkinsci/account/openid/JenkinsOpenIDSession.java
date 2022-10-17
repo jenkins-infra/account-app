@@ -33,7 +33,7 @@ public class JenkinsOpenIDSession extends Session {
             .withLastName(myself.lastName)
             .withFullName(myself.firstName + ' ' + myself.lastName)
             .withNick(myself.userId);
-        // not passing e-mail
+        // not passing email
 
         if (!isApproved()) {
             // let's confirm the user, which will take them to doVerify

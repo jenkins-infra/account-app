@@ -1,10 +1,10 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Done!">
-    <h1>Done!</h1>
+  <t:layout title="Account created">
+    <h1>Account created</h1>
     <p>
-      Check your mail for the password.
-      You can login to <a href="http://wiki.jenkins-ci.org/" target="_top">Wiki</a> and <a href="http://issues.jenkins.io/" target="_top">JIRA</a>,
+      Check your email for the password.
+      You can log in to <a href="https://issues.jenkins.io/" target="_blank">Jira</a> and <a href="https://repo.jenkins-ci.org/" target="_blank">Artifactory</a>,
       with this username and password.
     </p>
   </t:layout>

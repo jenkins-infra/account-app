@@ -163,11 +163,11 @@ public class Application {
         if (isEmpty(lastName))
             throw new UserError("Last name is required");
         if (isEmpty(email))
-            throw new UserError("e-mail is required");
+            throw new UserError("email is required");
         if (!email.equals(emailconfirm))
             throw new UserError(String.format("Following emails are not matching: %s - %s", email, emailconfirm));
         if(!email.contains("@"))
-            throw new UserError("Need a valid e-mail address.");
+            throw new UserError("Need a valid email address.");
         if(isEmpty(usedFor))
             throw new UserError("Please fill what you use Jenkins for.");
         if (!isHuman)
@@ -391,7 +391,7 @@ public class Application {
          */
         public final String id;
         /**
-         * E-mail address.
+         * Email address.
          */
         public final String mail;
 
@@ -416,7 +416,7 @@ public class Application {
 
         public void modifyEmail(DirContext con, String email) throws NamingException {
             con.modifyAttributes(getDn(),REPLACE_ATTRIBUTE,new BasicAttributes("mail",email));
-            LOGGER.info("User "+id+" reset the e-mail address to: "+email);
+            LOGGER.info("User "+id+" reset the email address to: "+email);
         }
 
         /**
