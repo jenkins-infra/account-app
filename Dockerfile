@@ -1,4 +1,4 @@
-FROM eclipse-temurin:8 AS build
+FROM eclipse-temurin:17 AS build
 
 WORKDIR /app
 COPY . .
