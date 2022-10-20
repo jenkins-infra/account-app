@@ -18,7 +18,7 @@ recaptchaPublicKey=RECAPTCHA_PUBLIC_KEY
 recaptchaPrivateKey=RECAPTCHA_PRIVATE_KEY
 
 # Optional: Default value set to http://accounts.jenkins.io/
-url=http://localhost:8080
+url=APP_URL
 
 # Create this file on the host machine in order to temporarily disable account
 # creation
