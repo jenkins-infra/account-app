@@ -13,13 +13,12 @@ pipeline {
             steps {
                 sh './gradlew check'
             }
-            /* enable when tests are added 
+
             post {
               always {
                 junit 'build/reports/tests/*.xml'
               }
             }
-            */
         }
     }
 }
