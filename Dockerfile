@@ -30,7 +30,7 @@ COPY config.properties.example /etc/accountapp/config.properties.example
 COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
 COPY entrypoint.sh /entrypoint.sh
 
-ENV DD_AGENT_VERSION = 0.9.0
+ENV DD_AGENT_VERSION=0.9.0
 ADD https://repo1.maven.org/maven2/com/datadoghq/dd-java-agent/$DD_AGENT_VERSION/dd-java-agent-"$DD_AGENT_VERSION".jar /home/jetty/dd-java-agent.jar
 
 COPY --chown=jetty:root --from=build /app/build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
