@@ -6,15 +6,10 @@
   ],
   "labels": ["dependencies"],
   "rebaseWhen": "conflicted",
-  "packageRules": [
-    {
-      "ignoreDeps": [
-        "org.gretty",
-        "org.kohsuke.stapler:stapler-jelly",
-        "org.kohsuke.stapler:stapler",
-        "eclipse-temurin"
-      ],
-      "description": "The app uses Java 8, therefore we can't update to newer versions of these dependencies",
-    }
+  "ignoreDeps": [
+    "org.gretty",
+    "org.kohsuke.stapler:stapler-jelly",
+    "org.kohsuke.stapler:stapler",
+    "eclipse-temurin"
   ]
 }
