@@ -42,8 +42,9 @@ dependencies {
 
     implementation("commons-jelly:commons-jelly-tags-define:1.0")
 
-    implementation("javax.mail:javax.mail-api:1.6.2")
-    implementation("javax.activation:activation:1.1.1")
+    implementation("com.sun.mail:jakarta.mail:1.6.7")
+
+    implementation("jakarta.activation:jakarta.activation-api:1.2.2")
 
     implementation("io.jenkins.backend:jira-rest-ldap-syncer:1.2") {
         exclude(module ="javamail")
