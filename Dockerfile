@@ -2,7 +2,7 @@ FROM eclipse-temurin:8 AS build
 
 WORKDIR /app
 COPY . .
-RUN ./gradlew --no-daemon --info war -x test
+RUN ./gradlew --no-daemon --info war -x test -x integrationTest
 
 FROM jetty:jre8 AS production
 
