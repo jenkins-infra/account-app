@@ -1,24 +1,46 @@
 package org.jenkinsci.account;
 
-import java.util.Date;
+import org.jenkinsci.account.config.LdapConfig;
+import org.jenkinsci.account.config.MailConfig;
 
 /**
  * Configuration of the application that needs to be set outside the application.
  *
  * @author Kohsuke Kawaguchi
  */
-public interface Parameters {
+public class Parameters {
+
+    private final String url;
+    private final LdapConfig ldapConfig;
+    private final MailConfig mailConfig;
+    private final String circuitBreakerFile;
+
+    public Parameters(String url, LdapConfig ldapConfig, MailConfig mailConfig, String circuitBreakerFile) {
+        this.url = url;
+        this.ldapConfig = ldapConfig;
+        this.mailConfig = mailConfig;
+        this.circuitBreakerFile = circuitBreakerFile;
+    }
+
     /**
      * string like "ou=people,dc=acme,dc=com" that decides where new users are created.
      */
-    String newUserBaseDN();
+    public String newUserBaseDN() {
+        return ldapConfig.getNewUserBaseDn();
+    }
 
     /**
      * Coordinates to access LDAP.
      */
-    String managerDN();
-    String managerPassword();
-    String server();
+    public String managerDN() {
+        return ldapConfig.getManagerDn();
+    }
+    public String managerPassword() {
+        return ldapConfig.getManagerPassword();
+    }
+    public String server() {
+        return ldapConfig.getServer();
+    }
 
     /**
      * smtpServer: The SMTP server to connect to.
@@ -26,19 +48,31 @@ public interface Parameters {
      * smtpAuth: If true, attempt to authenticate the user using the AUTH command.
      * smtpPassword: SMTP password for SMTP server.
      */
-    Boolean smtpAuth();
-    String smtpServer();
-    String smtpUser();
-    String smtpPassword();
+    public boolean smtpAuth() {
+        return mailConfig.isSmtpAuth();
+    }
+    public String smtpServer() {
+        return mailConfig.getSmtpServer();
+    }
+    public String smtpUser() {
+        return mailConfig.getSmtpUser();
+    }
+    public String smtpPassword() {
+        return mailConfig.getSmtpPassword();
+    }
 
     /**
-     * HTTP URL that this application is running. Something like 'http://jenkins-ci.org/account/'. Must end with '/'.
+     * HTTP URL that this application is running. Something like '<a href="https://accounts.jenkins.io/">https://accounts.jenkins.io/</a>'. Must end with '/'.
      */
-    String url();
+    public String url() {
+        return url;
+    }
 
     /**
      * File that activates a circuit breaker, a temporary shutdown of a sign-up service.
      */
 
-    String circuitBreakerFile();
+    public String circuitBreakerFile() {
+        return circuitBreakerFile;
+    }
 }
