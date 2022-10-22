@@ -6,20 +6,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh './gradlew build -x test'
+                sh './gradlew build -x test -x integrationTest'
             }
         }
        stage('Test') {
             steps {
                 sh './gradlew check'
             }
-            /* enable when tests are added 
+
             post {
               always {
-                junit 'build/reports/tests/*.xml'
+                junit 'build/reports/tests/**/*.xml'
               }
             }
-            */
         }
     }
 }
