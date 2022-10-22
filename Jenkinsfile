@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh './gradlew build -x test integrationTest'
+                sh './gradlew build -x test -x integrationTest'
             }
         }
        stage('Test') {
