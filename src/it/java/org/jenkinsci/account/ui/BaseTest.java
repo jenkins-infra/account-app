@@ -48,8 +48,12 @@ public class BaseTest {
 
     @AfterEach
     public void after() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
 
-        ds.close();
+        if (ds != null) {
+            ds.close();
+        }
     }
 }
