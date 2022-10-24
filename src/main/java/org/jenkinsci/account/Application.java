@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.google.common.net.InetAddresses;
 import com.captcha.botdetect.web.servlet.Captcha;
 
+import com.typesafe.config.Config;
 import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
 import io.jenkins.backend.jiraldapsyncer.ServiceLocator;
 
@@ -94,14 +95,6 @@ public class Application {
         this.params = params;
         this.openid = new JenkinsOpenIDServer(this);
         this.circuitBreaker = new CircuitBreaker(params);
-    }
-
-    public Application(Properties config) throws Exception {
-        this(ConfigurationLoader.from(config).as(Parameters.class));
-    }
-
-    public Application(File config) throws Exception {
-        this(ConfigurationLoader.from(config).as(Parameters.class));
     }
 
     public String getUrl() {
@@ -467,7 +460,7 @@ public class Application {
         Session session;
         Properties props = new Properties(System.getProperties());
         props.put("mail.smtp.host",params.smtpServer());
-        if(params.smtpAuth() != null && params.smtpAuth()) {
+        if(params.smtpAuth()) {
             props.put("mail.smtp.auth", params.smtpAuth());
             props.put("mail.smtp.starttls.enable", true);
             props.put("mail.smtp.port", 587);

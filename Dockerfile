@@ -26,7 +26,6 @@ RUN \
   mkdir -p /home/jetty/.app &&\
   mkdir -p /etc/accountapp
 
-COPY config.properties.example /etc/accountapp/config.properties.example
 COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
 COPY entrypoint.sh /entrypoint.sh
 

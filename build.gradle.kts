@@ -31,6 +31,8 @@ java {
 }
 
 dependencies {
+    implementation("com.typesafe:config:1.4.2")
+
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     implementation("org.glassfish:javax.json:1.1.4")

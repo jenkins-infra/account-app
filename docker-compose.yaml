@@ -3,22 +3,18 @@ services:
   ldap:
     image: jenkinsciinfra/mock-ldap:latest
     ports:
-        - 636:636
-        - 389:389
+        - "1636:636"
+        - "1389:389"
 
-  fake:
+  app:
     build: .
     image: accountapp:latest
+    environment:
+      - JIRA_USERNAME
+      - JIRA_PASSWORD
+      - JIRA_URL=https://issues.jenkins.io
+      - LDAP_URL=ldap://ldap:389
     depends_on:
       - ldap
-    env_file: env.sandbox
-    ports:
-      - '8080:8080'
-
-  local:
-    build: .
-    image: accountapp:latest
-    env_file: .env
-    network_mode: host
     ports:
       - '8080:8080'
