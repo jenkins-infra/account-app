@@ -21,7 +21,7 @@ public class BaseTest {
 
     @BeforeAll
     static void setupAll() {
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromiumdriver().setup();
     }
 
     @BeforeEach
