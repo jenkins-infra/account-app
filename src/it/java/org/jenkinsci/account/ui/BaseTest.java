@@ -7,20 +7,32 @@ import com.unboundid.ldap.listener.InMemoryListenerConfig;
 import com.unboundid.ldap.listener.SaltedMessageDigestInMemoryPasswordEncoder;
 import com.unboundid.ldap.sdk.LDAPException;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+@ExtendWith(BaseTest.ScreenShotOnFailedTestExtension.class)
 public class BaseTest {
 
-    protected ChromeDriver driver;
+    public ChromeDriver driver;
     protected InMemoryDirectoryServer ds;
 
     @BeforeAll
@@ -68,6 +80,19 @@ public class BaseTest {
         }
     }
 
+    public void takeScreenshot(String testName) {
+        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(
+                    scrFile,
+                    new File(String.format("errorScreenshots/%s-%s.jpg", testName, UUID.randomUUID())
+                    )
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @AfterEach
     public void after() {
         if (driver != null) {
@@ -76,6 +101,28 @@ public class BaseTest {
 
         if (ds != null) {
             ds.close();
+        }
+    }
+
+    public static class ScreenShotOnFailedTestExtension implements AfterTestExecutionCallback {
+
+        @Override
+        public void afterTestExecution(ExtensionContext context) throws Exception {
+            boolean testFailed = context.getExecutionException().isPresent();
+
+            if (testFailed) {
+                BaseTest baseTest = (BaseTest) context.getRequiredTestInstance();
+                Optional<Method> testMethod = context.getTestMethod();
+
+                String displayName = testMethod
+                        .map(Method::getName).orElse(context
+                                .getDisplayName()
+                                .replace("(", "")
+                                .replace(")", ""));
+
+                baseTest.takeScreenshot(displayName);
+            }
+
         }
     }
 }

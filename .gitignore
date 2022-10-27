@@ -11,6 +11,8 @@ build/
 .env
 fake_data
 
+errorScreenshots/
+
 # IDE
 .classpath
 .project
