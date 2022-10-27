@@ -49,7 +49,7 @@ testing {
 
                 implementation("io.github.bonigarcia:webdrivermanager:5.3.0")
 
-                implementation("org.seleniumhq.selenium:selenium-java:4.5.0")
+                implementation("org.seleniumhq.selenium:selenium-java:4.5.3")
                 implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.5.0")
                 implementation("org.assertj:assertj-core:3.23.1")
 
