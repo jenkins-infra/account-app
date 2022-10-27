@@ -61,6 +61,10 @@ public class Parameters {
         return mailConfig.getSmtpPassword();
     }
 
+    public int smtpPort() {
+        return mailConfig.getSmtpPort();
+    }
+
     /**
      * HTTP URL that this application is running. Something like '<a href="https://accounts.jenkins.io/">https://accounts.jenkins.io/</a>'. Must end with '/'.
      */

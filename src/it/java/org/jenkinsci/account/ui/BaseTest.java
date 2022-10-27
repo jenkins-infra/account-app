@@ -1,12 +1,16 @@
 package org.jenkinsci.account.ui;
 
+import com.unboundid.ldap.listener.Base64PasswordEncoderOutputFormatter;
 import com.unboundid.ldap.listener.InMemoryDirectoryServer;
 import com.unboundid.ldap.listener.InMemoryDirectoryServerConfig;
 import com.unboundid.ldap.listener.InMemoryListenerConfig;
+import com.unboundid.ldap.listener.SaltedMessageDigestInMemoryPasswordEncoder;
 import com.unboundid.ldap.sdk.LDAPException;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,8 +29,16 @@ public class BaseTest {
     }
 
     @BeforeEach
-    void before() throws LDAPException {
+    void before() throws LDAPException, NoSuchAlgorithmException {
         InMemoryDirectoryServerConfig config = new InMemoryDirectoryServerConfig("dc=jenkins-ci,dc=org");
+        config.setPasswordEncoders(
+                new SaltedMessageDigestInMemoryPasswordEncoder("{SSHA}",
+                        Base64PasswordEncoderOutputFormatter.getInstance(),
+                        MessageDigest.getInstance("SHA-1"),
+                        4,
+                        true,
+                        true
+                ));
         config.addAdditionalBindCredentials("cn=Directory Manager", "password");
 
         InMemoryListenerConfig listener = InMemoryListenerConfig.createLDAPConfig("default", 1389);
@@ -44,6 +56,16 @@ public class BaseTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
+    }
+
+    /**
+     * Useful to use when you want to debug a test interactively
+     */
+    @SuppressWarnings({"unused", "InfiniteLoopStatement", "BusyWait"})
+    public void pause() throws InterruptedException {
+        while (true) {
+            Thread.sleep(2000L);
+        }
     }
 
     @AfterEach
