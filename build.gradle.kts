@@ -1,5 +1,6 @@
 plugins {
     java
+    `jvm-test-suite`
     `maven-publish`
     war
     id("org.gretty") version "3.0.9"
@@ -28,6 +29,48 @@ plugins.withId("java") {
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            useJUnitJupiter()
+        }
+
+        val integrationTest by registering(JvmTestSuite::class) {
+            sources {
+                java {
+                    setSrcDirs(listOf("src/it/java"))
+                }
+            }
+
+            dependencies {
+                implementation(project)
+
+                implementation("io.github.bonigarcia:webdrivermanager:5.3.0")
+
+                implementation("org.seleniumhq.selenium:selenium-java:4.5.0")
+                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.5.0")
+                implementation("org.assertj:assertj-core:3.11.1")
+
+                implementation("com.unboundid:unboundid-ldapsdk:6.0.6")
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+
+            testType.set(TestSuiteType.INTEGRATION_TEST)
+        }
+    }
+}
+
+tasks.named("check") {
+    dependsOn(testing.suites.named("integrationTest"))
 }
 
 dependencies {
@@ -74,4 +117,6 @@ tasks {
 gretty {
     contextPath = "/"
     httpPort = 8080
+
+    integrationTestTask = "integrationTest"
 }
