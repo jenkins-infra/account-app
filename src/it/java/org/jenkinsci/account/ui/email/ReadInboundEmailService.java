@@ -1,4 +1,4 @@
-package org.jenkinsci.account.ui;
+package org.jenkinsci.account.ui.email;
 
 import java.io.IOException;
 import java.util.Arrays;

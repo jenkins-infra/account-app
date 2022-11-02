@@ -1,4 +1,4 @@
-package org.jenkinsci.account.ui;
+package org.jenkinsci.account.ui.resetpassword;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

@@ -1,10 +1,13 @@
-package org.jenkinsci.account.ui;
+package org.jenkinsci.account.ui.resetpassword;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.mail.MessagingException;
+import org.jenkinsci.account.ui.BaseTest;
+import org.jenkinsci.account.ui.email.ReadInboundEmailService;
+import org.jenkinsci.account.ui.login.LoginPage;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,12 +51,5 @@ class ResetPasswordTest extends BaseTest {
 
         String pageTitle = driver.getTitle();
         assertThat(pageTitle).contains("Account");
-    }
-
-    @Test
-    void resetPasswordAsAdmin() {
-        driver.get("http://localhost:8080");
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("kohsuke", "password");
     }
 }

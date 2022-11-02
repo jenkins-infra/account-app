@@ -1,5 +1,7 @@
-package org.jenkinsci.account.ui;
+package org.jenkinsci.account.ui.login;
 
+import org.jenkinsci.account.ui.BaseTest;
+import org.jenkinsci.account.ui.login.LoginPage;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

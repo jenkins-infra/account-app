@@ -1,4 +1,4 @@
-package org.jenkinsci.account.ui;
+package org.jenkinsci.account.ui.myaccount;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
