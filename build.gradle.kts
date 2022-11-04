@@ -47,7 +47,7 @@ testing {
             dependencies {
                 implementation(project)
 
-                implementation("io.github.bonigarcia:webdrivermanager:5.3.0")
+                implementation("io.github.bonigarcia:webdrivermanager:5.3.1")
 
                 implementation("org.seleniumhq.selenium:selenium-java:4.5.3")
                 implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.6.0")
