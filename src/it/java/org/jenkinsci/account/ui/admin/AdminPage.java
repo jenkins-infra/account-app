@@ -14,7 +14,6 @@ public class AdminPage {
     @FindBy(xpath = "//input[@value=\"Search\"]")
     private WebElement searchButton;
 
-
     public AdminPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }

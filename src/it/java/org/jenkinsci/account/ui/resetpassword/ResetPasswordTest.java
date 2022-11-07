@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ResetPasswordTest extends BaseTest {
 
-
     @Test
     void resetPasswordAsUser() throws MessagingException, IOException, InterruptedException {
         driver.get("http://localhost:8080");
