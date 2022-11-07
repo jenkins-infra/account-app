@@ -25,4 +25,18 @@ public class AdminSearchPage {
     public AdminSearchPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
+
+    public void resetPassword() {
+        resetPasswordButton.click();
+    }
+
+    public void deleteUser() {
+        confirmDeleteUserInput.sendKeys("Yes");
+        deleteUserButton.click();
+    }
+
+    public void updateEmail(String newEmail) {
+        updateEmailInput.sendKeys(newEmail);
+        updateEmailButton.click();
+    }
 }

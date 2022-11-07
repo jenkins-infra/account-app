@@ -15,7 +15,6 @@ public class ResetPasswordPage {
     @FindBy(xpath = "//button")
     private WebElement resetPrimaryBlockButton;
 
-
     private final WebDriver driver;
 
     public ResetPasswordPage(WebDriver driver) {

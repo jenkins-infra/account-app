@@ -18,4 +18,9 @@ public class AdminPage {
     public AdminPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
+
+    public void search(String query) {
+        searchInput.sendKeys(query);
+        searchButton.click();
+    }
 }

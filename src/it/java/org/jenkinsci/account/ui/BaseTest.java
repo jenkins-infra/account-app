@@ -65,8 +65,12 @@ public class BaseTest {
         ds.importFromLDIF(true, resource.toFile());
         ds.startListening();
 
+        startBrowser();
+    }
+
+    public void startBrowser() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+//        options.addArguments("--headless");
         driver = new ChromeDriver(options);
     }
 
