@@ -8,8 +8,8 @@ import java.util.List;
 
 // page_url = http://localhost:8080/admin/passwordReset
 public class AdminResetPasswordResultPage {
-    @FindBy(xpath = "//p[.//code]")
-    private WebElement newPasswordText;
+    @FindBy(xpath = "//p/code")
+    public WebElement newPasswordText;
 
     public AdminResetPasswordResultPage(WebDriver driver) {
         PageFactory.initElements(driver, this);

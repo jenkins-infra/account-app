@@ -1,6 +1,12 @@
 package org.jenkinsci.account.ui.admin;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.regex.Matcher;
+import javax.mail.MessagingException;
 import org.jenkinsci.account.ui.BaseTest;
+import org.jenkinsci.account.ui.email.Emails;
+import org.jenkinsci.account.ui.email.ReadInboundEmailService;
 import org.jenkinsci.account.ui.login.LoginPage;
 import org.jenkinsci.account.ui.myaccount.MyAccountPage;
 import org.junit.jupiter.api.Test;
@@ -10,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ResetPasswordAdminTest extends BaseTest {
 
     @Test
-    void resetPasswordAsAdmin() {
+    void resetPasswordAsAdmin() throws MessagingException, IOException {
         driver.get("http://localhost:8080");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("kohsuke", "password");
@@ -21,13 +27,28 @@ public class ResetPasswordAdminTest extends BaseTest {
         AdminPage adminPage = new AdminPage(driver);
         adminPage.search("alice");
 
+        Date timestampBeforeReset = new Date();
+
         AdminSearchPage adminSearchPage = new AdminSearchPage(driver);
         adminSearchPage.resetPassword();
 
         AdminResetPasswordResultPage resetPasswordResultPage = new AdminResetPasswordResultPage(driver);
         String newPassword = resetPasswordResultPage.getNewPassword();
 
-        // TODO get password from email and assert same password
+        String emailContent = new ReadInboundEmailService("localhost", 1143)
+                .retrieveEmail(
+                        "bob@jenkins-ci.org",
+                        Emails.RESET_PASSWORD_SUBJECT,
+                        timestampBeforeReset
+                );
+
+        Matcher matcher = Emails.PASSWORD_EXTRACTOR.matcher(emailContent);
+        boolean matches = matcher.find();
+        assertThat(matches).isTrue();
+
+        String passwordFromEmail = matcher.group(1);
+
+        assertThat(newPassword).isEqualTo(passwordFromEmail);
 
         newSession();
 
