@@ -8,36 +8,11 @@ Run `docker compose up -d ldap`
 ./gradlew appRun
 ```
 
-This will get you a development server running at `http://localhost:8080`
+This will get you a development server running at http://localhost:8080
 
-## Testing locally against production
+### Emails
 
-If you want to use real data you will need to set a few environment variables:
-
-```shell
-JIRA_USERNAME=<insert your jira username>
-JIRA_PASSWORD=<insert your jira password>
-JIRA_URL=https://issues.jenkins.io
-LDAP_URL=ldap://localhost:1389/ # needs to be port forwarded see below
-LDAP_PASSWORD=<insert the ldap admin password>
-LDAP_MANAGER_DN=cn=admin,dc=jenkins-ci,dc=org
-SMTP_SERVER=smtp.sendgrid.net
-SMTP_AUTH=true
-SMTP_USER=apikey
-SMTP_PASSWORD=<insert sendgrid api key>
-```
-
-and port forward to the production ldap instance:
-
-```shell
-kubectl port-forward ldap-0 1389:389 1636:636 -n ldap
-```
-
-then run:
-
-```shell
-./gradlew appRun
-```
+Emails are send to a local mail server and not forwarded on, you can see them at http://localhost:3000.
 
 ## Packaging
 
