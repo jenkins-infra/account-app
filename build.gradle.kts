@@ -47,12 +47,12 @@ testing {
             dependencies {
                 implementation(project)
 
-                implementation("io.github.bonigarcia:webdrivermanager:5.3.0")
+                implementation("io.github.bonigarcia:webdrivermanager:5.3.1")
 
                 implementation("com.sun.mail:jakarta.mail:1.6.7")
 
-                implementation("org.seleniumhq.selenium:selenium-java:4.5.3")
-                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.5.3")
+                implementation("org.seleniumhq.selenium:selenium-java:4.6.0")
+                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.6.0")
                 implementation("org.assertj:assertj-core:3.23.1")
 
                 implementation("com.unboundid:unboundid-ldapsdk:6.0.6")
