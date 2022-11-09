@@ -10,7 +10,7 @@ class LoginTest extends BaseTest {
 
     @Test
     void acceptsValidPassword() {
-        driver.get("http://localhost:8080");
+        openHomePage();
 
         LoginPage loginPage = new LoginPage(driver);
 

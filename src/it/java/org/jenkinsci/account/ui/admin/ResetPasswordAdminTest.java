@@ -17,7 +17,7 @@ public class ResetPasswordAdminTest extends BaseTest {
 
     @Test
     void resetPasswordAsAdmin() throws MessagingException, IOException {
-        driver.get("http://localhost:8080");
+        openHomePage();
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("kohsuke", "password");
 
@@ -35,7 +35,7 @@ public class ResetPasswordAdminTest extends BaseTest {
         AdminResetPasswordResultPage resetPasswordResultPage = new AdminResetPasswordResultPage(driver);
         String newPassword = resetPasswordResultPage.getNewPassword();
 
-        String emailContent = new ReadInboundEmailService("localhost", 1143)
+        String emailContent = READ_INBOUND_EMAIL_SERVICE
                 .retrieveEmail(
                         "bob@jenkins-ci.org",
                         Emails.RESET_PASSWORD_SUBJECT,
@@ -60,6 +60,6 @@ public class ResetPasswordAdminTest extends BaseTest {
     private void newSession() {
         driver.quit();
         startBrowser();
-        driver.get("http://localhost:8080");
+        openHomePage();
     }
 }

@@ -1,5 +1,7 @@
 package org.jenkinsci.account.ui;
 
+import com.icegreen.greenmail.junit5.GreenMailExtension;
+import com.icegreen.greenmail.util.ServerSetupTest;
 import com.unboundid.ldap.listener.Base64PasswordEncoderOutputFormatter;
 import com.unboundid.ldap.listener.InMemoryDirectoryServer;
 import com.unboundid.ldap.listener.InMemoryDirectoryServerConfig;
@@ -18,12 +20,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import org.apache.commons.io.FileUtils;
+import org.jenkinsci.account.ui.email.ReadInboundEmailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -34,6 +38,11 @@ public class BaseTest {
 
     public ChromeDriver driver;
     protected InMemoryDirectoryServer ds;
+
+    @RegisterExtension
+    public static GreenMailExtension greenMail = new GreenMailExtension(ServerSetupTest.SMTP_IMAP);
+
+    public static final ReadInboundEmailService READ_INBOUND_EMAIL_SERVICE = new ReadInboundEmailService("localhost", 3143);
 
     @BeforeAll
     static void setupAll() {
@@ -53,7 +62,7 @@ public class BaseTest {
                 ));
         config.addAdditionalBindCredentials("cn=Directory Manager", "password");
 
-        InMemoryListenerConfig listener = InMemoryListenerConfig.createLDAPConfig("default", 1389);
+        InMemoryListenerConfig listener = InMemoryListenerConfig.createLDAPConfig("default", 3389);
         config.setListenerConfigs(listener);
 
         ds = new InMemoryDirectoryServer(config);
@@ -72,6 +81,10 @@ public class BaseTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
+    }
+
+    public void openHomePage() {
+        driver.get(System.getProperty("gretty.httpBaseURI"));
     }
 
     /**

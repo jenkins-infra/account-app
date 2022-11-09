@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 import com.sun.mail.imap.IMAPFolder;
 
 public class ReadInboundEmailService {
-    private static final Logger logger = LoggerFactory.getLogger(ReadInboundEmailService.class);
-
     private final String host;
     private final int port;
 
@@ -28,7 +26,7 @@ public class ReadInboundEmailService {
     public String retrieveEmail(String toAddressToSearchFor, String subjectToSearchFor, Date beginningOfTimeWindow) throws MessagingException, IOException {
         Session session = this.getImapSession();
         Store store = session.getStore("imap");
-        store.connect(host, port, "", "");
+        store.connect(host, port, toAddressToSearchFor, toAddressToSearchFor);
         IMAPFolder inbox = (IMAPFolder) store.getFolder("INBOX");
         inbox.open(Folder.READ_WRITE);
         Message[] messages = inbox.getMessages();

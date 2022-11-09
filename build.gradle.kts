@@ -33,11 +33,11 @@ java {
 
 testing {
     suites {
-        val test by getting(JvmTestSuite::class) {
+        @Suppress("UnstableApiUsage") val test by getting(JvmTestSuite::class) {
             useJUnitJupiter()
         }
 
-        val integrationTest by registering(JvmTestSuite::class) {
+        @Suppress("UnstableApiUsage", "UNUSED_VARIABLE") val integrationTest by registering(JvmTestSuite::class) {
             sources {
                 java {
                     setSrcDirs(listOf("src/it/java"))
@@ -56,6 +56,8 @@ testing {
                 implementation("org.assertj:assertj-core:3.23.1")
 
                 implementation("com.unboundid:unboundid-ldapsdk:6.0.6")
+
+                implementation("com.icegreen:greenmail-junit5:1.6.11")
             }
 
             targets {
@@ -121,4 +123,6 @@ gretty {
     httpPort = 8080
 
     integrationTestTask = "integrationTest"
+
+    jvmArgs = listOf("-DSMTP_PORT=3025", "-DLDAP_URL=ldap://localhost:3389")
 }

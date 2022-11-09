@@ -17,7 +17,7 @@ class ResetPasswordTest extends BaseTest {
 
     @Test
     void resetPasswordAsUser() throws MessagingException, IOException, InterruptedException {
-        driver.get("http://localhost:8080");
+        openHomePage();
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.clickForgotPassword();
@@ -30,7 +30,7 @@ class ResetPasswordTest extends BaseTest {
         String text = resetPasswordPage.resultText();
         assertThat(text).contains("If your user account or email address exists");
 
-        String emailContent = new ReadInboundEmailService("localhost", 1143)
+        String emailContent = READ_INBOUND_EMAIL_SERVICE
                 .retrieveEmail(
                         "bob@jenkins-ci.org",
                         Emails.RESET_PASSWORD_SUBJECT,
@@ -45,7 +45,7 @@ class ResetPasswordTest extends BaseTest {
 
         String password = matcher.group(1);
 
-        driver.get("http://localhost:8080");
+        openHomePage();
         loginPage.login("alice", password);
 
         String pageTitle = driver.getTitle();
