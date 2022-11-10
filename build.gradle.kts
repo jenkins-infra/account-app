@@ -49,7 +49,7 @@ testing {
 
                 implementation("io.github.bonigarcia:webdrivermanager:5.3.1")
 
-                implementation("com.sun.mail:jakarta.mail:1.6.7")
+                implementation("com.sun.mail:jakarta.mail:2.0.1")
 
                 implementation("org.seleniumhq.selenium:selenium-java:4.6.0")
                 implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.6.0")
@@ -91,7 +91,7 @@ dependencies {
 
     implementation("commons-jelly:commons-jelly-tags-define:1.0")
 
-    implementation("com.sun.mail:jakarta.mail:1.6.7")
+    implementation("com.sun.mail:jakarta.mail:2.0.1")
 
     implementation("jakarta.activation:jakarta.activation-api:1.2.2")
 
