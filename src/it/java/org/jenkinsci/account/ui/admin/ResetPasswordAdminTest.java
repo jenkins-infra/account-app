@@ -9,6 +9,7 @@ import org.jenkinsci.account.ui.email.Emails;
 import org.jenkinsci.account.ui.email.ReadInboundEmailService;
 import org.jenkinsci.account.ui.login.LoginPage;
 import org.jenkinsci.account.ui.myaccount.MyAccountPage;
+import org.jenkinsci.account.ui.resetpassword.ResetPasswordType;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ResetPasswordAdminTest extends BaseTest {
 
     @Test
-    void resetPasswordAsAdmin() throws MessagingException, IOException {
+    void resetPasswordWithUsername() throws MessagingException, IOException {
+        resetPassword("alice", "bob@jenkins-ci.org", ResetPasswordType.USERNAME);
+    }
+
+    @Test
+    void resetPasswordWithEmail() throws MessagingException, IOException {
+        resetPassword("alice", "bob@jenkins-ci.org", ResetPasswordType.EMAIL);
+    }
+
+    private void resetPassword(String username, String email, ResetPasswordType resetPasswordType) throws MessagingException, IOException {
         openHomePage();
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("kohsuke", "password");
@@ -25,7 +35,11 @@ public class ResetPasswordAdminTest extends BaseTest {
         myAccountPage.clickAdminLink();
 
         AdminPage adminPage = new AdminPage(driver);
-        adminPage.search("alice");
+        if (resetPasswordType == ResetPasswordType.USERNAME) {
+            adminPage.search(username);
+        } else {
+            adminPage.search(email);
+        }
 
         Date timestampBeforeReset = new Date();
 
@@ -37,7 +51,7 @@ public class ResetPasswordAdminTest extends BaseTest {
 
         String emailContent = READ_INBOUND_EMAIL_SERVICE
                 .retrieveEmail(
-                        "bob@jenkins-ci.org",
+                        email,
                         Emails.RESET_PASSWORD_SUBJECT,
                         timestampBeforeReset
                 );
@@ -52,7 +66,7 @@ public class ResetPasswordAdminTest extends BaseTest {
 
         newSession();
 
-        new LoginPage(driver).login("alice", newPassword);
+        new LoginPage(driver).login(username, newPassword);
         String pageTitle = driver.getTitle();
         assertThat(pageTitle).contains("Account");
     }

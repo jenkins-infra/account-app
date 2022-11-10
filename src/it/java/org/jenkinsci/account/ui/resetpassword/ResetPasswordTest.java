@@ -16,7 +16,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ResetPasswordTest extends BaseTest {
 
     @Test
-    void resetPasswordAsUser() throws MessagingException, IOException, InterruptedException {
+    void resetPasswordWithUsername() throws MessagingException, IOException {
+        resetPassword("alice", "bob@jenkins-ci.org", ResetPasswordType.USERNAME);
+    }
+
+    @Test
+    void resetPasswordWithEmail() throws MessagingException, IOException {
+        resetPassword("alice", "bob@jenkins-ci.org", ResetPasswordType.EMAIL);
+    }
+
+    private void resetPassword(String username, String email, ResetPasswordType resetPasswordType) throws MessagingException, IOException {
         openHomePage();
 
         LoginPage loginPage = new LoginPage(driver);
@@ -25,14 +34,18 @@ class ResetPasswordTest extends BaseTest {
         Date timestampBeforeReset = new Date();
 
         ResetPasswordPage resetPasswordPage = new ResetPasswordPage(driver);
-        resetPasswordPage.resetPassword("alice");
+        if (resetPasswordType == ResetPasswordType.USERNAME) {
+            resetPasswordPage.resetPassword(username);
+        } else {
+            resetPasswordPage.resetPassword(email);
+        }
 
         String text = resetPasswordPage.resultText();
         assertThat(text).contains("If your user account or email address exists");
 
         String emailContent = READ_INBOUND_EMAIL_SERVICE
                 .retrieveEmail(
-                        "bob@jenkins-ci.org",
+                        email,
                         Emails.RESET_PASSWORD_SUBJECT,
                         timestampBeforeReset
                 );
@@ -46,7 +59,7 @@ class ResetPasswordTest extends BaseTest {
         String password = matcher.group(1);
 
         openHomePage();
-        loginPage.login("alice", password);
+        loginPage.login(username, password);
 
         String pageTitle = driver.getTitle();
         assertThat(pageTitle).contains("Account");
