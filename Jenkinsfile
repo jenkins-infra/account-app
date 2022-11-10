@@ -18,6 +18,9 @@ pipeline {
               always {
                 junit 'build/test-results/**/TEST-*.xml'
               }
+              unsuccessful {
+                archiveArtifacts allowEmptyArchive: true, artifacts: 'errorScreenshots/*.jpg'
+              }
             }
         }
     }

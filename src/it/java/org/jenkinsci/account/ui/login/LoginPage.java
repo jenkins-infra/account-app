@@ -1,21 +1,26 @@
-package org.jenkinsci.account.ui;
+package org.jenkinsci.account.ui.login;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import java.util.List;
 
 // page_url = http://localhost:8080/login
 public class LoginPage {
     @FindBy(name = "userid")
-    public WebElement usernameField;
+    private WebElement usernameField;
 
     @FindBy(name = "password")
-    public WebElement passwordField;
+    private WebElement passwordField;
 
     @FindBy(xpath = "//button")
-    public WebElement loginBtn;
+    private WebElement loginBtn;
+
+    @FindBy(xpath = "//a[@href=\"passwordReset\"]")
+    private WebElement forgotPasswordLink;
+
+    @FindBy(xpath = "//a[@href=\"signup\"]")
+    private WebElement signupLink;
 
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -26,6 +31,14 @@ public class LoginPage {
         enterPassword(password);
 
         clickLogin();
+    }
+
+    public void clickForgotPassword() {
+        forgotPasswordLink.click();
+    }
+
+    public void clickSignup() {
+        signupLink.click();
     }
 
     private void enterUsername(String username) {

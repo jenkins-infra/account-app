@@ -5,10 +5,8 @@ import com.google.common.base.Strings;
 import com.google.common.net.InetAddresses;
 import com.captcha.botdetect.web.servlet.Captcha;
 
-import com.typesafe.config.Config;
 import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
 import io.jenkins.backend.jiraldapsyncer.ServiceLocator;
-
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.Header;
@@ -460,6 +458,7 @@ public class Application {
         Session session;
         Properties props = new Properties(System.getProperties());
         props.put("mail.smtp.host",params.smtpServer());
+        props.put("mail.smtp.port", params.smtpPort());
         if(params.smtpAuth()) {
             props.put("mail.smtp.auth", params.smtpAuth());
             props.put("mail.smtp.starttls.enable", true);

@@ -5,6 +5,12 @@ services:
     ports:
         - "1636:636"
         - "1389:389"
+  mail:
+    image: rnwood/smtp4dev
+    ports:
+      - "3000:80"
+      - "2525:25"
+      - "1143:143"
 
   app:
     build: .
