@@ -93,7 +93,7 @@ dependencies {
 
     implementation("com.sun.mail:jakarta.mail:1.6.7")
 
-    implementation("jakarta.activation:jakarta.activation-api:1.2.2")
+    implementation("jakarta.activation:jakarta.activation-api:2.1.0")
 
     implementation("io.jenkins.backend:jira-rest-ldap-syncer:1.2") {
         exclude(module ="javamail")
