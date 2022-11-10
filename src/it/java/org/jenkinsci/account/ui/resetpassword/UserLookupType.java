@@ -1,5 +1,5 @@
 package org.jenkinsci.account.ui.resetpassword;
 
-public enum ResetPasswordType {
+public enum UserLookupType {
     EMAIL, USERNAME
 }

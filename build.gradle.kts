@@ -113,6 +113,11 @@ tasks {
     withType<Test> {
         useJUnitPlatform()
     }
+    withType<org.akhikhl.gretty.AppBeforeIntegrationTestTask> {
+        doFirst {
+            jvmArgs = listOf("-DSMTP_PORT=3025", "-DLDAP_URL=ldap://localhost:3389")
+        }
+    }
     named("war") {
         dependsOn("check")
     }
@@ -123,6 +128,4 @@ gretty {
     httpPort = 8080
 
     integrationTestTask = "integrationTest"
-
-    jvmArgs = listOf("-DSMTP_PORT=3025", "-DLDAP_URL=ldap://localhost:3389")
 }

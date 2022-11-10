@@ -3,11 +3,9 @@ package org.jenkinsci.account.ui.resetpassword;
 import java.io.IOException;
 import java.util.Date;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.mail.MessagingException;
 import org.jenkinsci.account.ui.BaseTest;
 import org.jenkinsci.account.ui.email.Emails;
-import org.jenkinsci.account.ui.email.ReadInboundEmailService;
 import org.jenkinsci.account.ui.login.LoginPage;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +15,15 @@ class ResetPasswordTest extends BaseTest {
 
     @Test
     void resetPasswordWithUsername() throws MessagingException, IOException {
-        resetPassword("alice", "bob@jenkins-ci.org", ResetPasswordType.USERNAME);
+        resetPassword("alice", "bob@jenkins-ci.org", UserLookupType.USERNAME);
     }
 
     @Test
     void resetPasswordWithEmail() throws MessagingException, IOException {
-        resetPassword("alice", "bob@jenkins-ci.org", ResetPasswordType.EMAIL);
+        resetPassword("alice", "bob@jenkins-ci.org", UserLookupType.EMAIL);
     }
 
-    private void resetPassword(String username, String email, ResetPasswordType resetPasswordType) throws MessagingException, IOException {
+    private void resetPassword(String username, String email, UserLookupType userLookupType) throws MessagingException, IOException {
         openHomePage();
 
         LoginPage loginPage = new LoginPage(driver);
@@ -34,7 +32,7 @@ class ResetPasswordTest extends BaseTest {
         Date timestampBeforeReset = new Date();
 
         ResetPasswordPage resetPasswordPage = new ResetPasswordPage(driver);
-        if (resetPasswordType == ResetPasswordType.USERNAME) {
+        if (userLookupType == UserLookupType.USERNAME) {
             resetPasswordPage.resetPassword(username);
         } else {
             resetPasswordPage.resetPassword(email);
