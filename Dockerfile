@@ -1,10 +1,10 @@
-FROM eclipse-temurin:8 AS build
+FROM eclipse-temurin:17 AS build
 
 WORKDIR /app
 COPY . .
 RUN ./gradlew --no-daemon --info war -x test -x integrationTest
 
-FROM jetty:jre8 AS production
+FROM jetty:10.0.12-jre17 AS production
 
 LABEL \
   description="Deploy Jenkins infra account app" \

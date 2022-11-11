@@ -3,7 +3,8 @@ plugins {
     `jvm-test-suite`
     `maven-publish`
     war
-    id("org.gretty") version "3.0.9"
+    id("org.gretty") version "3.1.0"
+    id("com.github.ben-manes.versions") version "0.43.0"
 }
 
 group = "org.jenkins-ci"
@@ -17,12 +18,12 @@ repositories {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 plugins.withId("java") {
     the<JavaPluginExtension>().toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
@@ -49,7 +50,7 @@ testing {
 
                 implementation("io.github.bonigarcia:webdrivermanager:5.3.1")
 
-                implementation("com.sun.mail:jakarta.mail:1.6.7")
+                implementation("com.sun.mail:jakarta.mail:2.0.1")
 
                 implementation("org.seleniumhq.selenium:selenium-java:4.6.0")
                 implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.6.0")
@@ -57,7 +58,7 @@ testing {
 
                 implementation("com.unboundid:unboundid-ldapsdk:6.0.6")
 
-                implementation("com.icegreen:greenmail-junit5:1.6.11")
+                implementation("com.icegreen:greenmail-junit5:2.0.0-alpha-2")
             }
 
             targets {
@@ -85,18 +86,17 @@ dependencies {
     implementation("org.glassfish:javax.json:1.1.4")
     implementation("commons-codec:commons-codec:1.15")
 
-    implementation("org.kohsuke.stapler:stapler:1.263")
-    implementation("org.kohsuke.stapler:stapler-jelly:1.263")
-    implementation("org.kohsuke.stapler:stapler-openid-server:[1.0,2.0)")
+    implementation("org.kohsuke.stapler:stapler-jelly:1747.v9580b_2f1d80b")
+    implementation("org.kohsuke.stapler:stapler-openid-server:1.0")
 
     implementation("commons-jelly:commons-jelly-tags-define:1.0")
 
-    implementation("com.sun.mail:jakarta.mail:1.6.7")
+    implementation("com.sun.mail:jakarta.mail:2.0.1")
 
-    implementation("jakarta.activation:jakarta.activation-api:1.2.2")
+    implementation("com.sun.activation:jakarta.activation:2.0.1")
 
     implementation("io.jenkins.backend:jira-rest-ldap-syncer:1.2") {
-        exclude(module ="javamail")
+        exclude(module ="javax.mail-api")
     }
 
     implementation("org.webjars:webjars-servlet-2.x:1.6")
@@ -105,6 +105,10 @@ dependencies {
     implementation("org.webjars.bower:fontawesome:4.7.0")
 
     implementation("com.captcha:botdetect-jsp20:4.0.beta3")
+
+    implementation("com.github.spotbugs:spotbugs-annotations:4.7.3")
+
+    implementation("com.google.guava:guava:31.1-jre")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 }
@@ -128,4 +132,5 @@ gretty {
     httpPort = 8080
 
     integrationTestTask = "integrationTest"
+    servletContainer = "jetty10"
 }

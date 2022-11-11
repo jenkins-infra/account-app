@@ -1,17 +1,15 @@
 package org.jenkinsci.account.ui.email;
 
+import jakarta.mail.Folder;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.Store;
+import jakarta.mail.internet.InternetAddress;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Store;
-import javax.mail.internet.InternetAddress;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.sun.mail.imap.IMAPFolder;
 
 public class ReadInboundEmailService {

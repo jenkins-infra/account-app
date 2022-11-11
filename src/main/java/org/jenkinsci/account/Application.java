@@ -1,35 +1,37 @@
 package org.jenkinsci.account;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
-import com.google.common.net.InetAddresses;
 import com.captcha.botdetect.web.servlet.Captcha;
-
+import com.google.common.net.InetAddresses;
 import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
 import io.jenkins.backend.jiraldapsyncer.ServiceLocator;
-import org.apache.commons.lang.StringUtils;
-import org.jenkinsci.account.openid.JenkinsOpenIDServer;
-import org.kohsuke.stapler.Header;
-import org.kohsuke.stapler.HttpRedirect;
-import org.kohsuke.stapler.HttpResponse;
-import org.kohsuke.stapler.HttpResponses;
-import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
-import org.kohsuke.stapler.config.ConfigurationLoader;
-
+import jakarta.mail.Authenticator;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.annotation.CheckForNull;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.mail.Message.RecipientType;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.PasswordAuthentication;
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NameAlreadyBoundException;
@@ -43,32 +45,25 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.Cookie;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.rmi.RemoteException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
+import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.account.openid.JenkinsOpenIDServer;
+import org.kohsuke.stapler.Header;
+import org.kohsuke.stapler.HttpRedirect;
+import org.kohsuke.stapler.HttpResponse;
+import org.kohsuke.stapler.HttpResponses;
+import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.Stapler;
+import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerResponse;
 
 import static javax.naming.directory.DirContext.ADD_ATTRIBUTE;
 import static javax.naming.directory.DirContext.REMOVE_ATTRIBUTE;
 import static javax.naming.directory.DirContext.REPLACE_ATTRIBUTE;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
 import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.jenkinsci.account.LdapAbuse.*;
+import static org.jenkinsci.account.LdapAbuse.REGISTRATION_DATE;
+import static org.jenkinsci.account.LdapAbuse.SENIOR_STATUS;
 
 /**
  * Root of the account application.
@@ -221,7 +216,7 @@ public class Application {
             String body = "Rejecting, likely spam:\n\n" + userDetails + "\n\nHTTP Headers\n" +
                 dumpHeaders(request) + "\n\n" +
                 "===Block Reasons===\n"
-                + Joiner.on("\n").join(blockReasons) + "\n===================" + "\n\n" +
+                + String.join("\n", blockReasons) + "\n===================" + "\n\n" +
                 "IP Void link: http://ipvoid.com/scan/" + ip + "\n\n" +
                 "To allow this account to be created, click the following link:\n" +
                 getUrl() + "/admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
@@ -269,7 +264,7 @@ public class Application {
         MimeMessage msg = new MimeMessage(s);
         msg.setSubject(subject);
         msg.setFrom(new InternetAddress(from));
-        msg.setRecipient(RecipientType.TO, new InternetAddress(to));
+        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
         msg.setContent(body, encoding);
         Transport.send(msg);
     }
@@ -288,7 +283,7 @@ public class Application {
         int idx = ip.indexOf(",");
         if(idx>0) {
             for (String xForwardedFor : ip.split(",")) {
-                if (!Strings.isNullOrEmpty(xForwardedFor) && !InetAddresses.forString(xForwardedFor).isSiteLocalAddress()) {
+                if (StringUtils.isNotBlank(xForwardedFor) && !InetAddresses.forString(xForwardedFor).isSiteLocalAddress()) {
                     return ip;
                 }
             }
@@ -464,7 +459,7 @@ public class Application {
             props.put("mail.smtp.starttls.enable", true);
             props.put("mail.smtp.port", 587);
             session = Session.getInstance(props,
-                    new javax.mail.Authenticator() {
+                    new Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
                             return new PasswordAuthentication(params.smtpUser(), params.smtpPassword());
                         }
@@ -528,10 +523,10 @@ public class Application {
     }
 
     private Myself login(String userid, String password) throws UserError {
-        if (Strings.isNullOrEmpty(userid)) {
+        if (StringUtils.isBlank(userid)) {
             throw new UserError("Missing username");
         }
-        if (Strings.isNullOrEmpty(password)) {
+        if (StringUtils.isBlank(password)) {
             throw new UserError("Missing password");
         }
         
