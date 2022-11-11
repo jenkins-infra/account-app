@@ -45,10 +45,4 @@ public class DeleteUserTest extends BaseTest {
         loginPage.login("alice", "password");
         assertThat(driver.getTitle()).isEqualTo("Error | Jenkins");
     }
-
-    private void newSession() {
-        driver.quit();
-        startBrowser();
-        openHomePage();
-    }
 }

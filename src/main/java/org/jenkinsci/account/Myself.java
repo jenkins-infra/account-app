@@ -120,7 +120,9 @@ public class Myself {
 
         LOGGER.info("User "+userId+" updated the profile. email="+email);
 
-        doChangePassword(password,newPassword1,newPassword2);
+        if (fixEmpty(password) != null || fixEmpty(newPassword1) != null || fixEmpty(newPassword2) != null) {
+            return doChangePassword(password, newPassword1, newPassword2);
+        }
 
         return new HttpRedirect("done");
     }

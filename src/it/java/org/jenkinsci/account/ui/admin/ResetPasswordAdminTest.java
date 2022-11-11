@@ -69,10 +69,4 @@ public class ResetPasswordAdminTest extends BaseTest {
         String pageTitle = driver.getTitle();
         assertThat(pageTitle).contains("Account");
     }
-
-    private void newSession() {
-        driver.quit();
-        startBrowser();
-        openHomePage();
-    }
 }

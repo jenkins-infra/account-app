@@ -87,6 +87,12 @@ public class BaseTest {
         driver.get(System.getProperty("gretty.httpBaseURI"));
     }
 
+    public void newSession() {
+        driver.quit();
+        startBrowser();
+        openHomePage();
+    }
+
     /**
      * Useful to use when you want to debug a test interactively
      */
