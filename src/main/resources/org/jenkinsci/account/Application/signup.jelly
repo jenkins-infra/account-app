@@ -34,6 +34,9 @@
       <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" name="email" id="email" class="form-control text"/>
+      </div>
+
+      <div class="form-group">
         <label for="emailconfirm">Confirm your Email address</label>
         <input type="email" name="emailconfirm" id="emailconfirm" class="form-control text"/>
       </div>
