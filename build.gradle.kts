@@ -104,7 +104,7 @@ dependencies {
     implementation("org.webjars:jquery-ui:1.13.2")
     implementation("org.webjars.bower:fontawesome:4.7.0")
 
-    implementation("com.captcha:botdetect-jsp20:4.0.beta3")
+    implementation("com.captcha:botdetect-jsp20:4.0.beta3.7")
 
     implementation("com.github.spotbugs:spotbugs-annotations:4.7.3")
 
