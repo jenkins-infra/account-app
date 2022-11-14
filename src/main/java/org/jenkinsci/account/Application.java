@@ -116,7 +116,6 @@ public class Application {
             @QueryParameter String lastName,
             @QueryParameter String email,
             @QueryParameter String emailconfirm,
-            @QueryParameter String usedFor,
             @QueryParameter String hp,
             @QueryParameter String captchaCode,
             @Header("X-Forwarded-For") String ip    // client IP
@@ -159,8 +158,6 @@ public class Application {
             throw new UserError(String.format("Following emails are not matching: %s - %s", email, emailconfirm));
         if(!email.contains("@"))
             throw new UserError("Need a valid email address.");
-        if(isEmpty(usedFor))
-            throw new UserError("Please fill what you use Jenkins for.");
         if (!isHuman)
             throw new UserError("Captcha mismatch. Please try again and retry a captcha to prove that you are a human");
 
@@ -202,7 +199,6 @@ public class Application {
             if(userid.toLowerCase().contains(fragment.toLowerCase())
                 || firstName.toLowerCase().contains(fragment.toLowerCase())
                 || lastName.toLowerCase().contains(fragment.toLowerCase())
-                || usedFor.toLowerCase().contains(fragment.toLowerCase())
                 ) {
                 blockReasons.add("BL: naughty");
             }
@@ -216,7 +212,7 @@ public class Application {
             blockReasons.add("circuit breaker");
         }
 
-        String userDetails = userDetails(userid, firstName, lastName, email, ip, usedFor);
+        String userDetails = userDetails(userid, firstName, lastName, email, ip);
         if(blockReasons.size() > 0) {
             String body = "Rejecting, likely spam:\n\n" + userDetails + "\n\nHTTP Headers\n" +
                 dumpHeaders(request) + "\n\n" +
@@ -274,10 +270,10 @@ public class Application {
         Transport.send(msg);
     }
 
-    private String userDetails(String userid, String firstName, String lastName, String email, String ip, String usedFor) {
+    private String userDetails(String userid, String firstName, String lastName, String email, String ip) {
         return String.format(
-            "ip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s\nuse=%s",
-            ip, email, userid, lastName, firstName, usedFor);
+            "ip=%s\nemail=%s\nuserId=%s\nlastName=%s\nfirstName=%s",
+            ip, email, userid, lastName, firstName);
     }
 
     /**
