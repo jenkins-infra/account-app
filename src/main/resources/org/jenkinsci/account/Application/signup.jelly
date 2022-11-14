@@ -38,11 +38,6 @@
         <input type="email" name="emailconfirm" id="emailconfirm" class="form-control text"/>
       </div>
 
-      <div class="form-group">
-        <label for="usedFor">What do you use Jenkins for?</label>
-        <input type="text" name="usedFor" id="usedfor" class="form-control text" />
-      </div>
-
       <input id="hp" type="text"  name="hp"/>
 
       <script>
