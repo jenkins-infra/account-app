@@ -1,5 +1,6 @@
 package org.jenkinsci.account;
 
+import jakarta.mail.MessagingException;
 import org.jenkinsci.account.Application.User;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
@@ -7,7 +8,6 @@ import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
-import javax.mail.MessagingException;
 import javax.naming.NamingException;
 import javax.naming.ldap.LdapContext;
 import javax.servlet.http.HttpServletResponse;

@@ -1,9 +1,9 @@
 package org.jenkinsci.account.ui.resetpassword;
 
+import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.regex.Matcher;
-import javax.mail.MessagingException;
 import org.jenkinsci.account.ui.BaseTest;
 import org.jenkinsci.account.ui.email.Emails;
 import org.jenkinsci.account.ui.login.LoginPage;
