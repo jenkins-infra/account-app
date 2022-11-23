@@ -9,7 +9,7 @@
 
     <h1 class="text-center">Login</h1>
 
-    <form method="post" action="doLogin">
+    <form method="post" action="doLogin" class="d-grid gap-2">
       <div class="form-group">
         <label for="userid">Username</label>
         <input autofocus="autofocus" type="text" name="userid" class="form-control text" id="userid" placeholder="Enter your username"/>
@@ -22,7 +22,7 @@
 
       <input type="hidden" name="from" value="${request.getParameter('from')}"/>
 
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+      <button type="submit" class="btn btn-primary btn-lg">Login</button>
     </form>
 
     <small><a href="signup">Sign up?</a> - <a href="passwordReset">Forgot password</a></small>

@@ -79,7 +79,7 @@ public class BaseTest {
 
     public void startBrowser() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+        options.addArguments("--headless", "--window-size=1920,1080");
         driver = new ChromeDriver(options);
     }
 
