@@ -12,7 +12,7 @@
 
     <p class="description">All fields are required</p>
 
-    <form method="post" action="doSignup">
+    <form method="post" action="doSignup" class="d-grid gap-2">
       <div class="form-group">
         <label for="userid">Username</label>
         <p id="helpBlock" class="help-block description">
@@ -53,7 +53,7 @@
           <input type="text" name="captchaCode" id="captchaCode" class="form-control text mt-2"/>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Sign Up</button>
+      <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
     </form>
   </div>
 </div>
