@@ -2,6 +2,6 @@
     <st:statusCode value="500" />
     <t:layout title="Error">
         <h1>Oops!</h1>
-        <p style="font-size:1.5em">${it.message}</p>
+        <p style="font-size:1.5em"><j:out value="${it.message}" /></p>
     </t:layout>
 </j:jelly>
