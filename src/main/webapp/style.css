@@ -15,3 +15,7 @@ nav.navbar {
   padding-left: 0;
   padding-top: 0;
 }
+
+.form-group {
+  margin-bottom: 0.5rem;
+}
