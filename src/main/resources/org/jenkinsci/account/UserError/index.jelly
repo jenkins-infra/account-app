@@ -5,8 +5,7 @@
     <h1>Oops!</h1>
     <p style="font-size:1.5em">${it.message}</p>
     <j:if test="${it.id != null}">
-      Please consider reporting this as an <a href="https://github.com/jenkins-infra/helpdesk/issues/">issue in the Jenkins Infrastructure help desk</a>.
-      Please mention the following error ID in the ticket: ${it.id}
+      Please consider reporting this as an <a href="https://github.com/jenkins-infra/helpdesk/issues/new?template=2-account-issue.yml&amp;labels=triage,accounts&amp;url=account.jenkins.io%2FpasswordReset%3Ferror_id=${it.id}">issue in the Jenkins Infrastructure help desk</a>.
     </j:if>
   </t:layout>
 </j:jelly>

@@ -208,7 +208,7 @@ public class Application {
         }
 
         String userDetails = userDetails(userid, firstName, lastName, email, ip);
-        if(blockReasons.size() > 0) {
+        if(!blockReasons.isEmpty()) {
             String body = "Rejecting, likely spam:\n\n" + userDetails + "\n\nHTTP Headers\n" +
                 dumpHeaders(request) + "\n\n" +
                 "===Block Reasons===\n"
@@ -1395,7 +1395,7 @@ public class Application {
     );
 
     public static final String SPAM_MESSAGE = "The anti-spam system was triggered: we need your help to prove that you are human and not a robot (or a human spammer). " +
-        "Open an issue on <a href='https://github.com/jenkins-infra/helpdesk/issues/new?template=1-report-issue.yml'>the Jenkins Infrastructure Help Desk</a> and provide the email and the userid you tried to register with, as well as the version of Jenkins you currently are running. " +
+        "Open an issue on the <a href=\"https://github.com/jenkins-infra/helpdesk/issues/new?template=2-account-issue.yml&labels=triage,accounts&url=account.jenkins.io/antispam\">Jenkins Infrastructure Help Desk</a> and provide the email and the userid you tried to register with, as well as the version of Jenkins you currently are running. " +
         "Try to make your issue look legitimate and not like it's written by someone who doesn't know anything or just read the jenkins.io home page. " +
         "If we don't think your signup request is legitimate, it won't be approved. We're a popular target of human spammers, i.e. actual people with actual web browsers trying to post their spam in our applications. ";
 
