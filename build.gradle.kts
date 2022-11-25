@@ -46,7 +46,7 @@ testing {
             }
 
             dependencies {
-                implementation(project)
+                implementation(project())
 
                 implementation("io.github.bonigarcia:webdrivermanager:5.3.1")
 
