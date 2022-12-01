@@ -27,6 +27,8 @@
 <meta content='${attrs.title}' property='og:title'/>
 <meta content='article' property='og:type'/>
 <meta content='Jenkins – Continuous Delivery for every team' property='og:description'/>
+<!-- Don't index internal tooling in search engines -->
+<meta name="robots" content="noindex"/>
 <link href='/webjars/fontawesome/4.7.0/css/font-awesome.min.css' media='screen' rel='stylesheet'/>
 <link href='/style.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/assets/bower/bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet'/>
