@@ -56,7 +56,7 @@ testing {
                 implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.7.0")
                 implementation("org.assertj:assertj-core:3.23.1")
 
-                implementation("com.unboundid:unboundid-ldapsdk:6.0.6")
+                implementation("com.unboundid:unboundid-ldapsdk:6.0.7")
 
                 implementation("com.icegreen:greenmail-junit5:2.0.0-alpha-2")
             }
