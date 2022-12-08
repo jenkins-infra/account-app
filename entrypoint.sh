@@ -2,14 +2,7 @@
 
 set -e
 
-: "${JIRA_USERNAME:?Jira user required}"
-: "${JIRA_PASSWORD:?Jira password required}"
-: "${JIRA_URL:? Jira url required}"
-
 exec java \
-    -Djira.username="$JIRA_USERNAME" \
-    -Djira.password="$JIRA_PASSWORD" \
-    -Djira.url="$JIRA_URL" \
     -Dcom.sun.jndi.ldap.connect.pool=true \
     -Dcom.sun.jndi.ldap.connect.pool.protocol="plain ssl" \
     -Dcom.sun.jndi.ldap.connect.pool.maxsize=0 \

@@ -16,9 +16,6 @@ services:
     build: .
     image: accountapp:latest
     environment:
-      - JIRA_USERNAME
-      - JIRA_PASSWORD
-      - JIRA_URL=https://issues.jenkins.io
       - LDAP_URL=ldap://ldap:389
     depends_on:
       - ldap

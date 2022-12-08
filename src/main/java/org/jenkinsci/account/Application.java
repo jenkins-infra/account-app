@@ -2,8 +2,6 @@ package org.jenkinsci.account;
 
 import com.captcha.botdetect.web.servlet.Captcha;
 import com.google.common.net.InetAddresses;
-import io.jenkins.backend.jiraldapsyncer.JiraLdapSyncer;
-import io.jenkins.backend.jiraldapsyncer.ServiceLocator;
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -14,7 +12,6 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -322,13 +319,6 @@ public class Application {
             throw new UserError("ID "+userid+" is already taken. Perhaps you already have an account imported from legacy java.net? You may try resetting the password.");
         } finally {
             con.close();
-        }
-
-        try {
-            JiraLdapSyncer jiraLdapSyncer = (JiraLdapSyncer) new ServiceLocator().lookupService(JiraLdapSyncer.ROLE);
-            jiraLdapSyncer.syncOneUserFromLDAPToJIRA(userid);
-        } catch (RemoteException e) {
-            LOGGER.log(Level.SEVERE, "Failed to register " + userid + " to JIRA", e);
         }
 
         LOGGER.info("User "+userid+" signed up: "+email);

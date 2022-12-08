@@ -21,8 +21,6 @@ For deploying to production, this app is packaged as a container.
 To run the container locally:
 
 ```shell
-export JIRA_USERNAME=<your-jira-username>
-export JIRA_PASSWORD=<your-jira-password>
 docker compose up --build app
 ```
 

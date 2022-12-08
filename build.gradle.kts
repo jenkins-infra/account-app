@@ -95,10 +95,6 @@ dependencies {
 
     implementation("com.sun.activation:jakarta.activation:2.0.1")
 
-    implementation("io.jenkins.backend:jira-rest-ldap-syncer:1.2") {
-        exclude(module ="javax.mail-api")
-    }
-
     implementation("org.webjars:webjars-servlet-2.x:1.6")
     implementation("org.webjars:jquery:3.6.1")
     implementation("org.webjars:jquery-ui:1.13.2")
