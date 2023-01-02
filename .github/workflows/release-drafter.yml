@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
 
       - name: Release Drafter
-        uses: release-drafter/release-drafter@v5.22.0
+        uses: release-drafter/release-drafter@v5
         with:
           name: next
           tag: next
