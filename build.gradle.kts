@@ -52,7 +52,7 @@ testing {
 
                 implementation("com.sun.mail:jakarta.mail:2.0.1")
 
-                implementation("org.seleniumhq.selenium:selenium-java:4.7.2")
+                implementation("org.seleniumhq.selenium:selenium-java:4.8.0")
                 implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.7.2")
                 implementation("org.assertj:assertj-core:3.24.2")
 
