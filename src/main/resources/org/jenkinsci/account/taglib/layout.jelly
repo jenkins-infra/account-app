@@ -37,12 +37,12 @@
 <!-- Non-obtrusive CSS styles -->
 <link href='https://www.jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/css/footer.css' media='screen' rel='stylesheet'/>
-    <script src="/webjars/jquery/3.6.1/jquery.js"/>
+    <script src="/webjars/jquery/3.6.3/jquery.js"/>
     <script src="/webjars/jquery-ui/1.13.2/jquery-ui.js"/>
 </head>
 <body style="min-height:100%; height:100%; padding-top:100px">
-    <script src="https://cdn.jsdelivr.net/npm/lit@3.4.0/polyfill-support.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.6.0/webcomponents-loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lit@2.6.1/polyfill-support.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.7.0/webcomponents-loader.js"></script>
     <script defer="" src="https://cdn.jsdelivr.net/npm/@jenkinsci/jenkins-io-components/+esm" type="module"></script>
     <script defer="" nomodule="" src="https://cdn.jsdelivr.net/npm/@jenkinsci/jenkins-io-components/"></script>
 
