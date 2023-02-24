@@ -1,13 +1,10 @@
----
 name: release-drafter
 on:
   push:
   workflow_dispatch:
   release:
-
 # Only allow 1 release-drafter build at a time to avoid creating multiple "next" releases
 concurrency: "release-drafter"
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -16,9 +13,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
       - name: Release Drafter
-        uses: release-drafter/release-drafter@v5
+        uses: release-drafter/release-drafter@569eb7ee3a85817ab916c8f8ff03a5bd96c9c83e # v5
         with:
           name: next
           tag: next
