@@ -3,7 +3,7 @@ plugins {
     `jvm-test-suite`
     `maven-publish`
     war
-    id("org.gretty") version "3.1.0"
+    id("org.gretty") version "3.1.1"
     id("com.github.ben-manes.versions") version "0.46.0"
 }
 
