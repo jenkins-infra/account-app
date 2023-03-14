@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":semanticCommitsDisabled"
+  ],
+  "labels": ["dependencies"],
+  "rebaseWhen": "conflicted",
+  "ignoreDeps": [
+    "org.gretty",
+    "org.kohsuke.stapler:stapler-jelly",
+    "org.kohsuke.stapler:stapler",
+    "eclipse-temurin"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["src/main/resources/org/jenkinsci/account/taglib/layout.jelly"],
+      "matchStrings": ["jquery/(?<currentValue>.*?)/jquery.js"],
+      "depNameTemplate": "org.webjars:jquery",
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["src/main/resources/org/jenkinsci/account/taglib/layout.jelly"],
+      "matchStrings": ["jquery-ui/(?<currentValue>.*?)/jquery-ui.js"],
+      "depNameTemplate": "org.webjars:jquery-ui",
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["src/main/resources/org/jenkinsci/account/taglib/layout.jelly"],
+      "matchStrings": ["fontawesome/(?<currentValue>.*?)/css"],
+      "depNameTemplate": "org.webjars.bower:fontawesome",
+      "datasourceTemplate": "maven"
+    }
+  ],
+}
