@@ -8,8 +8,6 @@
   "rebaseWhen": "conflicted",
   "ignoreDeps": [
     "org.gretty",
-    "org.kohsuke.stapler:stapler-jelly",
-    "org.kohsuke.stapler:stapler",
     "eclipse-temurin"
   ],
   "regexManagers": [
