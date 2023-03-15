@@ -29,5 +29,5 @@
       "depNameTemplate": "org.webjars.bower:fontawesome",
       "datasourceTemplate": "maven"
     }
-  ],
+  ]
 }
