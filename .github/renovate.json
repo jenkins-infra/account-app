@@ -29,5 +29,13 @@
       "depNameTemplate": "org.webjars.bower:fontawesome",
       "datasourceTemplate": "maven"
     }
+  ],
+  "packageRules": [
+    {
+      "groupName": "selenium",
+      "matchPackagePatterns": [
+        "selenium"
+      ]
+    }
   ]
 }
