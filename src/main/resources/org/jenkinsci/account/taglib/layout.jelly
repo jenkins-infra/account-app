@@ -41,10 +41,12 @@
     <script src="/webjars/jquery-ui/1.13.2/jquery-ui.js"/>
 </head>
 <body style="min-height:100%; height:100%; padding-top:100px">
-    <script src="https://cdn.jsdelivr.net/npm/lit@2.6.1/polyfill-support.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.7.0/webcomponents-loader.js"></script>
-    <script defer="" src="https://cdn.jsdelivr.net/npm/@jenkinsci/jenkins-io-components/+esm" type="module"></script>
-    <script defer="" nomodule="" src="https://cdn.jsdelivr.net/npm/@jenkinsci/jenkins-io-components/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lit@2.6.1/polyfill-support.js"/>
+    <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.7.0/webcomponents-loader.js"/>
+    <script defer="" src="https://cdn.jsdelivr.net/npm/@jenkinsci/jenkins-io-components/+esm" type="module"/>
+    <script defer="" nomodule="" src="https://cdn.jsdelivr.net/npm/@jenkinsci/jenkins-io-components/"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/7.1.0/ionicons/ionicons.esm.js" type="module"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/7.1.0/ionicons/ionicons.js" nomodule="" defer=""/>
 
     <jio-navbar class="fixed-top" property="https://accounts.jenkins.io"/>
 
