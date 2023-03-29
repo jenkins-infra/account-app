@@ -28,6 +28,24 @@
       "matchStrings": ["fontawesome/(?<currentValue>.*?)/css"],
       "depNameTemplate": "org.webjars.bower:fontawesome",
       "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["src/main/resources/org/jenkinsci/account/taglib/layout.jelly"],
+      "matchStrings": ["webcomponentsjs@(?<currentValue>.*?)/"],
+      "depNameTemplate": "@webcomponents/webcomponentsjs",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "fileMatch": ["src/main/resources/org/jenkinsci/account/taglib/layout.jelly"],
+      "matchStrings": ["lit@(?<currentValue>.*?)/"],
+      "depNameTemplate": "lit",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "fileMatch": ["src/main/resources/org/jenkinsci/account/taglib/layout.jelly"],
+      "matchStrings": ["ionicons/(?<currentValue>.*?)/css"],
+      "depNameTemplate": "ionicons",
+      "datasourceTemplate": "npm"
     }
   ],
   "packageRules": [
