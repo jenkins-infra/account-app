@@ -36,3 +36,4 @@ The account app support different types of SMTP configuration to send emails:
 * `SMTP_AUTH` is set to false, the accountapp will connect on `$SMTP_SERVER:25`
 * `SMTP_AUTH` is set to true, the accountapp will connect on `$SMTP_SERVER:587` with tls authentication
   and will use: `$SMTP_USER` with `$SMTP_PASSWORD`.
+
