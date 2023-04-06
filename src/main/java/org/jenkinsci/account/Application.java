@@ -11,7 +11,6 @@ import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.lang.String.isBlank;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -122,7 +121,7 @@ public class Application {
         // Check if userid and email are available before going further
         final DirContext con = connect();
         try {
-            if (isBlank(userid))
+            if (userid == null || isEmpty(userid))
                 throw new UserError("UserId is required");
 
             userid = userid.toLowerCase();
