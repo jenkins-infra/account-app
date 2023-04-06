@@ -13,6 +13,7 @@ import jakarta.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.lang.String.isBlank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
