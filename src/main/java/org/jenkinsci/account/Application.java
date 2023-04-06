@@ -115,16 +115,16 @@ public class Application {
 
         ip = extractFirst(ip);
 
-        userid = userid.toLowerCase();
-
         Captcha captcha = Captcha.load(request, "signUpCaptcha");
         boolean isHuman = captcha.validate(request.getParameter("captchaCode"));
 
         // Check if userid and email are available before going further
         final DirContext con = connect();
         try {
-            if (isEmpty(userid))
+            if (isBlank(userid))
                 throw new UserError("UserId is required");
+
+            userid = userid.toLowerCase();
 
             Iterator<User> a = searchByWord(userid, con);
             if (a.hasNext())
