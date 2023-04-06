@@ -213,6 +213,7 @@ public class Application {
                 "IP Void link: http://ipvoid.com/scan/" + ip + "\n\n" +
                 "To allow this account to be created, click the following link:\n" +
                 getUrl() + "/admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
+            LOGGER.warning(body);
             mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "Rejection of a new account creation for " + firstName + " " + lastName, body, "text/plain");
             throw new SystemError(SPAM_MESSAGE);
         }
