@@ -2,6 +2,9 @@ pipeline {
     agent {
         label 'jdk17'
     }
+    options {
+        disableConcurrentBuilds(abortPrevious: true)
+    }
 
     stages {
         stage('Build') {
