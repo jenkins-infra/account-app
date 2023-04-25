@@ -14,6 +14,7 @@ LABEL \
 ENV DD_AGENT_SERVICE_PORT="8126"
 ENV CIRCUIT_BREAKER_FILE=/etc/accountapp/circuitBreaker.txt
 ENV SMTP_SERVER=localhost
+ENV SMTP_SENDER=admin@jenkins-ci.org
 ENV APP_URL=http://accounts.jenkins.io/
 
 EXPOSE 8080

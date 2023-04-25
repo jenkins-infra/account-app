@@ -36,6 +36,7 @@ public class WebAppMain extends AbstractWebAppMain<Application> {
 
         MailConfig mailConfig = new MailConfig(
                 conf.getString("mail.server"),
+                conf.getString("mail.sender"),
                 conf.getInt("mail.port"),
                 conf.hasPath("mail.user") ? conf.getString("mail.user") : null,
                 conf.hasPath("mail.password") ? conf.getString("mail.password") : null,

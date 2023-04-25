@@ -214,13 +214,13 @@ public class Application {
                 "To allow this account to be created, click the following link:\n" +
                 getUrl() + "/admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
             LOGGER.warning(userDetails.replaceAll("\\R", " ") + " signup rejected, likely spam: " + String.join(" / ", blockReasons));
-            mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "Rejection of a new account creation for " + firstName + " " + lastName, body, "text/plain");
+            mail("jenkinsci-account-admins@googlegroups.com", "Rejection of a new account creation for " + firstName + " " + lastName, body, "text/plain");
             throw new SystemError(SPAM_MESSAGE);
         }
 
         String password = createRecord(userid, firstName, lastName, email);
         LOGGER.info("User "+userid+" is from "+ip);
-        mail("Admin <admin@jenkins-ci.org>", "jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
+        mail("jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
             userDetails + "\n\nHTTP Headers\n" +
                 dumpHeaders(request) + "\n\n" + "Account page: " + getUrl() + "/admin/search?word=" + userid + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
         new User(userid,email).mailPassword(password);
@@ -253,11 +253,11 @@ public class Application {
         return false;
     }
 
-    private void mail(String from, String to, String subject, String body, String encoding) throws MessagingException {
+    private void mail(String to, String subject, String body, String encoding) throws MessagingException {
         Session s = createJavaMailSession();
         MimeMessage msg = new MimeMessage(s);
         msg.setSubject(subject);
-        msg.setFrom(new InternetAddress(from));
+        msg.setFrom(new InternetAddress(String.format("Jenkins Accounts <%s>", params.smtpSender())));
         msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
         msg.setContent(body, encoding);
         Transport.send(msg);
@@ -396,7 +396,7 @@ public class Application {
          * Sends a new password to this user.
          */
         public void mailPassword(String password) throws MessagingException {
-            mail("Admin <admin@jenkins-ci.org>", mail, "Your access to Jenkins resources", "Your userid is " + id + "\n" +
+            mail(mail, "Your access to Jenkins resources", "Your userid is " + id + "\n" +
                 "Your temporary password is " + password + "\n" +
                 "\n" +
                 "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
@@ -406,7 +406,7 @@ public class Application {
          * Sends a new password to this user.
          */
         public void mailAccountCreated(boolean sendPassword, String password, @CheckForNull String message) throws MessagingException {
-            mail("Admin <admin@jenkins-ci.org>", mail, "New account on the Jenkins project infrastructure", 
+            mail(mail, "New account on the Jenkins project infrastructure",
                 "Dear recipient, \n\n" +
                 "We have created a new Jenkins project account for you. Your new user ID is " + id + "\n" +
                 ( sendPassword ? "Your temporary password is " + password + "\n" : "" ) +
@@ -420,7 +420,7 @@ public class Application {
          * Sends a new password and a password reset notification to this user.
          */
         public void mailPasswordReset(String password, @CheckForNull String requestedByUser, @CheckForNull String reason) throws MessagingException {
-            mail("Admin <admin@jenkins-ci.org>", mail, "Password reset on the Jenkins project infrastructure", 
+            mail(mail, "Password reset on the Jenkins project infrastructure",
                 "Your Jenkins account password was reset. " +
                 (requestedByUser != null ? String.format("It was requested by user %s. ", requestedByUser) : "") +
                 (StringUtils.isNotBlank(reason) ? String.format("Reason: %s. ", reason) : "") +

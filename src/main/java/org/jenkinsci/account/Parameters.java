@@ -44,6 +44,7 @@ public class Parameters {
 
     /**
      * smtpServer: The SMTP server to connect to.
+     * smtpSender: The sender email address used to send emails
      * smtpUser: Default user name for SMTP.
      * smtpAuth: If true, attempt to authenticate the user using the AUTH command.
      * smtpPassword: SMTP password for SMTP server.
@@ -53,6 +54,9 @@ public class Parameters {
     }
     public String smtpServer() {
         return mailConfig.getSmtpServer();
+    }
+    public String smtpSender() {
+        return mailConfig.getSmtpSender();
     }
     public String smtpUser() {
         return mailConfig.getSmtpUser();
