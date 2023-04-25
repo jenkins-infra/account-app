@@ -444,7 +444,6 @@ public class Application {
         if(params.smtpAuth()) {
             props.put("mail.smtp.auth", params.smtpAuth());
             props.put("mail.smtp.starttls.enable", true);
-            props.put("mail.smtp.port", 587);
             session = Session.getInstance(props,
                     new Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
