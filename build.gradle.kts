@@ -110,7 +110,7 @@ dependencies {
 }
 
 tasks {
-    withType<Test> {
+    test {
         useJUnitPlatform()
     }
     withType<org.akhikhl.gretty.AppBeforeIntegrationTestTask> {
