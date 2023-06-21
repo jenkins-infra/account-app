@@ -84,7 +84,7 @@ dependencies {
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     implementation("org.glassfish:javax.json:1.1.4")
-    implementation("commons-codec:commons-codec:1.15")
+    implementation("commons-codec:commons-codec:1.16.0")
 
     implementation("org.kohsuke.stapler:stapler-jelly:1781.v62372c33644e")
     implementation("org.kohsuke.stapler:stapler-openid-server:1.0")
