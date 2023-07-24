@@ -26,5 +26,10 @@ pipeline {
               }
             }
         }
+        stage('Docker image') {
+            steps {
+                buildDockerAndPublishImage('account-app', [rebuildImageOnPeriodicJob: false])
+            }
+        }
     }
 }
