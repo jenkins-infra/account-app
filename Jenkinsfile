@@ -26,5 +26,8 @@ pipeline {
               }
             }
         }
+        stage('Docker image') {
+            buildDockerAndPublishImage('account-app', [rebuildImageOnPeriodicJob: false])
+        }
     }
 }
