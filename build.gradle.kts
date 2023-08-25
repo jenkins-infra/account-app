@@ -48,7 +48,7 @@ testing {
             dependencies {
                 implementation(project())
 
-                implementation("io.github.bonigarcia:webdrivermanager:5.5.0")
+                implementation("io.github.bonigarcia:webdrivermanager:5.5.2")
 
                 implementation("com.sun.mail:jakarta.mail:2.0.1")
 
