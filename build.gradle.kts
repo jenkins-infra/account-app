@@ -104,7 +104,7 @@ dependencies {
 
     implementation("com.github.spotbugs:spotbugs-annotations:4.7.3")
 
-    implementation("com.google.guava:guava:32.1.2-jre")
+    implementation("com.google.guava:guava:32.1.3-jre")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 }
