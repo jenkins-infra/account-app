@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Docker image') {
             steps {
-                buildDockerAndPublishImage('account-app', [rebuildImageOnPeriodicJob: false])
+                buildDockerAndPublishImage('account-app', [rebuildImageOnPeriodicJob: false, buildDockerConfig: [targetplatforms: 'linux/amd64,linux/arm64']])
             }
         }
     }
