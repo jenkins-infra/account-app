@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 RUN ./gradlew --no-daemon --info war -x test -x integrationTest
 
-FROM jetty:10.0.18-jre17 AS production
+FROM jetty:10.0.19-jre17 AS production
 
 LABEL \
   description="Deploy Jenkins infra account app" \
