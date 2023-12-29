@@ -27,9 +27,10 @@ pipeline {
             }
         }
         stage('Docker image') {
-            steps {
-                parallelDockerUpdatecli([imageName: 'account-app', rebuildImageOnPeriodicJob: false, buildDockerConfig: [targetplatforms: 'linux/amd64,linux/arm64']])
-            }
+            expression { infra.isInfra() }
+                steps {
+                    parallelDockerUpdatecli([imageName: 'account-app', rebuildImageOnPeriodicJob: false, buildDockerConfig: [targetplatforms: 'linux/amd64,linux/arm64']])
+                }
         }
     }
 }
