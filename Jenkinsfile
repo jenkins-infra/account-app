@@ -1,5 +1,3 @@
-@Library('pipeline-library@pull/784/head') _
-
 pipeline {
     agent {
         label 'jdk17'
