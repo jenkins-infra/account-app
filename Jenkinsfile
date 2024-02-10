@@ -30,13 +30,11 @@ pipeline {
         }
         stage('Docker image') {
             steps {
-                parallelDockerUpdatecli([
-                    imageName: 'account-app',
+                buildDockerAndPublishImage('account-app', [
                     rebuildImageOnPeriodicJob: false,
-                    buildDockerConfig: [
-                        targetplatforms: 'linux/amd64,linux/arm64',
-                        disablePublication: true
-                    ]
+                    automaticSemanticVersioning: true,
+                    targetplatforms: 'linux/amd64,linux/arm64',
+                    disablePublication: true
                 ])
             }
         }
