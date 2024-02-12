@@ -32,7 +32,7 @@ pipeline {
                     rebuildImageOnPeriodicJob: false,
                     automaticSemanticVersioning: true,
                     targetplatforms: 'linux/amd64,linux/arm64',
-                    disablePublication: infra.isInfra()
+                    disablePublication: !infra.isInfra()
                 ])
             }
         }
