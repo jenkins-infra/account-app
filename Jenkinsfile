@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'jdk17'
+        label 'jdk17 || linux-arm64'
     }
     options {
         disableConcurrentBuilds(abortPrevious: true)
@@ -32,7 +32,7 @@ pipeline {
                     rebuildImageOnPeriodicJob: false,
                     automaticSemanticVersioning: true,
                     targetplatforms: 'linux/amd64,linux/arm64',
-                    disablePublication: true
+                    disablePublication: infra.isInfra()
                 ])
             }
         }
