@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
     war
     id("org.gretty") version "3.1.1"
-    id("com.github.ben-manes.versions") version "0.50.0"
+    id("com.github.ben-manes.versions") version "0.51.0"
 }
 
 group = "org.jenkins-ci"
@@ -48,13 +48,13 @@ testing {
             dependencies {
                 implementation(project())
 
-                implementation("io.github.bonigarcia:webdrivermanager:5.6.2")
+                implementation("io.github.bonigarcia:webdrivermanager:5.6.3")
 
                 implementation("com.sun.mail:jakarta.mail:2.0.1")
 
-                implementation("org.seleniumhq.selenium:selenium-java:4.16.1")
-                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.16.1")
-                implementation("org.assertj:assertj-core:3.25.1")
+                implementation("org.seleniumhq.selenium:selenium-java:4.17.0")
+                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.17.0")
+                implementation("org.assertj:assertj-core:3.25.3")
 
                 implementation("com.unboundid:unboundid-ldapsdk:6.0.11")
 
@@ -106,7 +106,7 @@ dependencies {
 
     implementation("com.google.guava:guava:33.0.0-jre")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
 
 tasks {
