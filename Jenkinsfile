@@ -1,7 +1,7 @@
 pipeline {
     agent {
         // infra.ci build on arm64 in the Dockerfile, as it's used in production
-        label 'jdk17 || linux-arm64'
+        label 'jdk17 || linux-large-arm64'
     }
     options {
         disableConcurrentBuilds(abortPrevious: true)
