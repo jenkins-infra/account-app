@@ -1,8 +1,7 @@
-@Library('pipeline-library@pull/784/head') _
-
 pipeline {
     agent {
-        label 'jdk17'
+        // infra.ci build on arm64 in the Dockerfile, as it's used in production
+        label 'jdk17 || linux-arm64-docker'
     }
     options {
         disableConcurrentBuilds(abortPrevious: true)
@@ -34,7 +33,7 @@ pipeline {
                     rebuildImageOnPeriodicJob: false,
                     automaticSemanticVersioning: true,
                     targetplatforms: 'linux/amd64,linux/arm64',
-                    disablePublication: true
+                    disablePublication: !infra.isInfra()
                 ])
             }
         }
