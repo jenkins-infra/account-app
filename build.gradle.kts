@@ -48,15 +48,15 @@ testing {
             dependencies {
                 implementation(project())
 
-                implementation("io.github.bonigarcia:webdrivermanager:5.6.3")
+                implementation("io.github.bonigarcia:webdrivermanager:5.8.0")
 
                 implementation("com.sun.mail:jakarta.mail:2.0.1")
 
                 implementation("org.seleniumhq.selenium:selenium-java:4.18.1")
-                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.18.1")
+                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.19.0")
                 implementation("org.assertj:assertj-core:3.25.3")
 
-                implementation("com.unboundid:unboundid-ldapsdk:6.0.11")
+                implementation("com.unboundid:unboundid-ldapsdk:7.0.0")
 
                 implementation("com.icegreen:greenmail-junit5:2.0.1")
             }
@@ -84,7 +84,7 @@ dependencies {
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     implementation("org.glassfish:javax.json:1.1.4")
-    implementation("commons-codec:commons-codec:1.16.1")
+    implementation("commons-codec:commons-codec:1.17.0")
 
     implementation("org.kohsuke.stapler:stapler-jelly:1822.v120278426e1c")
     implementation("org.kohsuke.stapler:stapler-openid-server:1.0")
@@ -104,7 +104,7 @@ dependencies {
 
     implementation("com.github.spotbugs:spotbugs-annotations:4.8.3")
 
-    implementation("com.google.guava:guava:33.0.0-jre")
+    implementation("com.google.guava:guava:33.1.0-jre")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
