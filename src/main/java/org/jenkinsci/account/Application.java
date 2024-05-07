@@ -1172,7 +1172,11 @@ public class Application {
         "176.67.86.", // laptoprepair gmail guy and Persistent spammers
         "176.67.86.36", // Persistent spammer
         "177.154.139.203", // http://www.ipvoid.com/scan/177.154.139.203
-        "180.151.",
+        "180.151.228.235", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
+        "180.151.246.3", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
+        "180.151.30.243", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
+        "180.151.7.42", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
+        "180.151.84.234", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
         "180.254.96.177", // http://www.ipvoid.com/scan/180.254.96.177
         "181.41.197.63", // Persistent spammer
         "182.156.72.162",
