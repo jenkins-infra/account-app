@@ -1,8 +1,10 @@
-@Library('pipeline-library@pull/784/head') _
-
 pipeline {
+    environment {
+        JAVA_HOME = '/opt/jdk-17'
+    }
     agent {
-        label 'jdk17'
+        // infra.ci build on amd64 to be compliant with selenium
+        label 'jdk17 || linux-amd64-docker '
     }
     options {
         disableConcurrentBuilds(abortPrevious: true)
@@ -14,7 +16,7 @@ pipeline {
                 sh './gradlew build -x test -x integrationTest'
             }
         }
-       stage('Test') {
+        stage('Test') {
             steps {
                 sh './gradlew check'
             }
@@ -34,7 +36,7 @@ pipeline {
                     rebuildImageOnPeriodicJob: false,
                     automaticSemanticVersioning: true,
                     targetplatforms: 'linux/amd64,linux/arm64',
-                    disablePublication: true
+                    disablePublication: !infra.isInfra()
                 ])
             }
         }
