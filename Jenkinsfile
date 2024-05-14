@@ -1,4 +1,7 @@
 pipeline {
+    environment {
+        JAVA_HOME = '/opt/jdk-17'
+    }
     agent {
         // infra.ci build on arm64 in the Dockerfile, as it's used in production
         label 'jdk17 || linux-arm64-docker'
@@ -13,7 +16,7 @@ pipeline {
                 sh './gradlew build -x test -x integrationTest'
             }
         }
-       stage('Test') {
+        stage('Test') {
             steps {
                 sh './gradlew check'
             }
