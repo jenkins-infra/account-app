@@ -3,8 +3,8 @@ pipeline {
         JAVA_HOME = '/opt/jdk-17'
     }
     agent {
-        // infra.ci build on arm64 in the Dockerfile, as it's used in production
-        label 'jdk17 || linux-arm64-docker'
+        // infra.ci build on amd64 to be compliant with selenium
+        label 'jdk17 || linux-amd64-docker '
     }
     options {
         disableConcurrentBuilds(abortPrevious: true)
