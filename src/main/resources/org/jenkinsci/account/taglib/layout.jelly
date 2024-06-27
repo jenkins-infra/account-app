@@ -38,7 +38,7 @@
 <link href='https://www.jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/css/footer.css' media='screen' rel='stylesheet'/>
     <script src="/webjars/jquery/3.7.1/jquery.js"/>
-    <script src="/webjars/jquery-ui/1.13.2/jquery-ui.js"/>
+    <script src="/webjars/jquery-ui/1.13.3/jquery-ui.js"/>
 </head>
 <body style="padding-top:72px">
     <script src="https://cdn.jsdelivr.net/npm/lit@2.6.1/polyfill-support.js"></script>
