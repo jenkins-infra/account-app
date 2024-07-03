@@ -1,15 +1,11 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Login">
-<div class="row">
+<div class="row pt-5">
   <div class="col-md-6 mx-auto">
-    <div class="logo">
-      <img height="40px" src="/logo.svg" alt="Jenkins logo" />
-    </div>
+    <h1>Login</h1>
 
-    <h1 class="text-center">Login</h1>
-
-    <form method="post" action="doLogin" class="d-grid gap-2">
+    <form method="post" action="doLogin" class="d-grid gap-3">
       <div class="form-group">
         <label for="userid">Username</label>
         <input autofocus="autofocus" type="text" name="userid" class="form-control text" id="userid" placeholder="Enter your username"/>

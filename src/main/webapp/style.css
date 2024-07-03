@@ -7,7 +7,7 @@ input.text {
 
 p.description {
   margin-top: 0;
-  color: gray;
+  color: var(--color--secondary);
   font-size: 0.8em;
 }
 
