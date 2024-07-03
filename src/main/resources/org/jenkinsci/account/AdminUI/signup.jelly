@@ -1,9 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Administration">
-  <div class="row">
-  <div class="col-sm-4">
-
     <p>
       Confirm creating the following user
     </p>
@@ -28,13 +25,8 @@
         <input type="email" name="email" value="${request.getParameter('email')}" class="form-control text" placeholder="Last Name"/>
       </div>
 
-      <button type="submit" class="btn btn-default">Sign Up</button>
+      <button type="submit" class="app-button">Sign Up</button>
 
     </form>
-  </div>
-  <div class="col-sm-8">
-  </div>
-  </div>
-
   </t:layout>
 </j:jelly>

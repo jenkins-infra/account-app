@@ -1,28 +1,24 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Login">
-<div class="row pt-5">
-  <div class="col-md-6 mx-auto">
+  <t:layout title="Login" class="smol menoo">
     <h1>Login</h1>
 
-    <form method="post" action="doLogin" class="d-grid gap-3">
+    <form method="post" action="doLogin" class="fooorm">
       <div class="form-group">
         <label for="userid">Username</label>
-        <input autofocus="autofocus" type="text" name="userid" class="form-control text" id="userid" placeholder="Enter your username"/>
+        <input autofocus="autofocus" type="text" name="userid" class="form-control text" id="userid" />
       </div>
 
       <div class="form-group">
         <label for="login_password">Password</label>
-        <input type="password" id="login_password" name="password" placeholder="Enter your password" class="form-control text"/>
+        <input type="password" id="login_password" name="password" class="form-control text"/>
       </div>
 
       <input type="hidden" name="from" value="${request.getParameter('from')}"/>
 
-      <button type="submit" class="btn btn-primary btn-lg">Login</button>
+      <button type="submit" class="app-button app-button--primary app-button--large">Login</button>
     </form>
 
     <small><a href="signup">Sign up?</a> - <a href="passwordReset">Forgot password</a></small>
-  </div>
-</div>
   </t:layout>
 </j:jelly>

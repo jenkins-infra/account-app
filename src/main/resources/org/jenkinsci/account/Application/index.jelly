@@ -2,30 +2,17 @@
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Account">
     <h1>Account</h1>
-    <p>
+    <p class="app-description">
     You can create/manage your user account that you use for accessing
     <a href="https://issues.jenkins.io/" target="_blank">Jira</a>,
     <a href="https://repo.jenkins-ci.org/" target="_blank">Artifactory</a>,
     VPN and other services within the <a href="https://www.jenkins.io/projects/infrastructure" target="_top">Jenkins Infrastructure</a>.
     </p>
 
-    <div id="account-menu">
-      <j:if test="${not it.isLoggedIn()}">
-        <script type="text/javascript">
-            window.location.href = "login"
-        </script>
-      </j:if>
-      <j:if test="${it.isLoggedIn()}">
-        <ul>
-          <j:if test="${it.isAdmin() or app.isAdmin()}">
-            <li><a href="./admin">Administer</a> - Manage other accounts</li>
-          </j:if>
-          <li><a href="./myself">Profile</a> - View and edit profile, change password, etc.</li>
-
-          <li><a href="./logout">Logout</a></li>
-        </ul>
-      </j:if>
-    </div>
-
+    <j:if test="${not it.isLoggedIn()}">
+      <script type="text/javascript">
+          window.location.href = "login"
+      </script>
+    </j:if>
   </t:layout>
 </j:jelly>

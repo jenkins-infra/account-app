@@ -1,8 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Your Profile">
-  <div class="row">
-  <div class="col-md-6">
     <h1>Your Profile</h1>
 
     <form method="post" action="update" class="d-grid gap-2">
@@ -56,9 +54,7 @@
         <input autocomplete="new-password" type="password" name="newPassword2" class="form-control text"/>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Update</button>
+      <button type="submit" class="app-button app-button--primary app-button--large btn-block">Update</button>
     </form>
-      </div>
-</div>
   </t:layout>
 </j:jelly>

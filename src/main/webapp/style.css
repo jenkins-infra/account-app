@@ -1,17 +1,149 @@
-h5 {
-  margin-bottom: 0;
-}
-input.text {
-  width: 100%;
+:root {
+  --bs-navbar-brand-color: var(--color) !important;
 }
 
-p.description {
-  margin-top: 0;
+.description {
   color: var(--color--secondary);
-  font-size: 0.8em;
 }
 
-nav.navbar {
-  padding-left: 0;
-  padding-top: 0;
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.bananarama {
+  display: grid;
+  grid-template-columns: 280px 800px;
+  gap: 3.75rem;
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+}
+
+input[type='text'], input[type='password'], input[type='email'], textarea {
+  --background: color-mix(in srgb, var(--color) 1%, transparent);
+  --border: color-mix(in srgb, var(--color) 5%, transparent);
+
+  appearance: none;
+  font-size: 1rem;
+  background: var(--background);
+  border: 2px solid var(--border);
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.66rem;
+  color: var(--color);
+  transition: 0.2s ease;
+  box-shadow: 0 0 0 10px transparent;
+  outline: none;
+
+  &:not(:disabled) {
+    &:hover {
+      --background: color-mix(in srgb, var(--color) 5%, transparent);
+      --border: color-mix(in srgb, var(--color) 10%, transparent);
+    }
+
+    &:active, &:focus {
+      --background: color-mix(in srgb, var(--color) 10%, transparent);
+      --border: var(--accent-color);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent-color) 20%, transparent);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.smol {
+  max-width: 600px !important;
+}
+
+h1 {
+  margin: 0;
+}
+
+.app-button--large {
+  display: flex !important;
+  padding: 1rem !important;
+  font-size: 1rem !important;
+  width: 100%;
+  cursor: pointer;
+}
+
+.mainwrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  form {
+    display: contents;
+  }
+
+  h1, h2, p {
+    margin: 0;
+  }
+}
+
+.menoo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  form, .mainwrapper {
+    display: contents;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+
+  h1 {
+    margin-bottom: 1.5rem;
+    margin-left: 0.85rem;
+  }
+
+  ul {
+    display: contents;
+
+    li {
+      display: contents;
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 0.65rem;
+        color: var(--color);
+        border-radius: 0.66rem;
+        padding: 0.65rem 0.85rem;
+        text-decoration: none;
+        line-height: 1;
+        font-size: 0.865rem;
+        font-weight: 450;
+        transition: 0.2s ease;
+
+        ion-icon {
+          font-size: 1.125rem;
+        }
+
+        &:hover {
+          background: color-mix(in srgb, var(--color--secondary) 5%, transparent);
+        }
+
+        &:active, &:focus, &.active {
+          background: color-mix(in srgb, var(--color--secondary) 10%, transparent);
+        }
+      }
+    }
+  }
 }

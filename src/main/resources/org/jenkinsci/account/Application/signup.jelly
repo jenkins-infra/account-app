@@ -1,19 +1,16 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-
-  <t:layout title="Sign up">
-  <div class="row pt-5">
-  <div class="col-md-6 mx-auto">
+  <t:layout title="Sign up" class="smol menoo">
     <h1>Sign up</h1>
 
-    <p class="description">All fields are required</p>
+    <div class="description">All fields are required</div>
 
     <form method="post" action="doSignup" class="d-grid gap-2">
       <div class="form-group">
         <label for="userid">Username</label>
-        <p id="helpBlock" class="help-block description">
+        <div class="description">
           Only letters, numbers, and '_' is allowed.
-        </p>
+        </div>
         <input autofocus="autofocus" autocomplete="username" type="text" name="userid" id="userid" class="form-control text"/>
       </div>
 
@@ -49,10 +46,7 @@
           <input type="text" name="captchaCode" id="captchaCode" class="form-control text mt-2"/>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+      <button type="submit" class="app-button app-button--primary app-button--large">Sign Up</button>
     </form>
-  </div>
-</div>
-
   </t:layout>
 </j:jelly>
