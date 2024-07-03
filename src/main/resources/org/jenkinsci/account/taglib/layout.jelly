@@ -34,6 +34,7 @@
 <link href='https://www.jenkins.io/assets/bower/bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/css/font-icons.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/css/jenkins.css' media='screen' rel='stylesheet'/>
+<link href='https://www.jenkins.io/stylesheets/styles.css' media='screen' rel='stylesheet'/>
 <!-- Non-obtrusive CSS styles -->
 <link href='https://www.jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/css/footer.css' media='screen' rel='stylesheet'/>
