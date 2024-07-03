@@ -2,6 +2,7 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define">
   <st:documentation>
     <st:attribute name="title" use="required"/>
+    <st:attribute name="class" />
   </st:documentation>
   <st:contentType value="text/html;charset=UTF-8" />
 <html style="height:100%;min-height:100%;">
@@ -30,18 +31,20 @@
 <!-- Don't index internal tooling in search engines -->
 <meta name="robots" content="noindex"/>
 <link href='/webjars/fontawesome/4.7.0/css/font-awesome.min.css' media='screen' rel='stylesheet'/>
-<link href='/style.css' media='screen' rel='stylesheet'/>
-<link href='https://www.jenkins.io/assets/bower/bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet'/>
+<!--<link href='https://www.jenkins.io/assets/bower/bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet'/>-->
 <link href='https://www.jenkins.io/css/font-icons.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/css/jenkins.css' media='screen' rel='stylesheet'/>
-<link href='https://www.jenkins.io/stylesheets/styles.css' media='screen' rel='stylesheet'/>
+<link href='https://deploy-preview-7266--jenkins-io-site-pr.netlify.app/stylesheets/styles.css' media='screen' rel='stylesheet'/>
+    <link href='/style.css' media='screen' rel='stylesheet'/>
 <!-- Non-obtrusive CSS styles -->
 <link href='https://www.jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
 <link href='https://www.jenkins.io/css/footer.css' media='screen' rel='stylesheet'/>
     <script src="/webjars/jquery/3.7.1/jquery.js"/>
     <script src="/webjars/jquery-ui/1.13.2/jquery-ui.js"/>
 </head>
-<body style="padding-top:72px">
+<body>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lit@2.6.1/polyfill-support.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.7.0/webcomponents-loader.js"></script>
     <script defer="" src="https://cdn.jsdelivr.net/npm/@jenkinsci/jenkins-io-components/+esm" type="module"></script>
@@ -49,45 +52,48 @@
 
     <jio-navbar class="fixed-top" property="https://accounts.jenkins.io" theme="auto" />
 
-    <div class='container pb-5'>
+    <div class='app-container ${attrs.class} ${app.isLoggedIn() or it.isLoggedIn() ? "bananarama" : ""}'>
         <j:if test="${app.isLoggedIn() or it.isLoggedIn()}">
-            <nav class='navbar navbar-expand-md navbar-light' id="ji-toolbar">
-                <a class='navbar-brand' href='/'>
-                    My Account
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"/>
-                </button>
-                <div class='collapse navbar-collapse' id='CollapsingNavbar2'>
-
-                    <ul class='navbar-nav mr-auto'>
+            <nav class='navbar'>
+                <h1>Account</h1>
+                    <ul>
+                        <li>
+                            <a href='/' class="${app.isActive('') ? 'active' : ''}">
+                                <ion-icon name="home-outline"></ion-icon>
+                                Account
+                            </a>
+                        </li>
                         <j:if test="${it.isAdmin() or app.isAdmin()}">
-                            <li class="nav-item">
-                                <a href="/admin" class="active nav-link">Admin</a>
+                            <li>
+                                <a href="/admin" class="${app.isActive('admin') ? 'active' : ''}">
+                                    <ion-icon name="shield-outline"></ion-icon>
+                                    Admin
+                                </a>
                             </li>
                         </j:if>
-                        <li class="nav-item">
-                            <a href="/myself" class="active nav-link">Profile</a>
+                        <li>
+                            <a href="/myself" class="${app.isActive('myself') ? 'active' : ''}">
+                                <ion-icon name="person-outline"></ion-icon>
+                                Profile
+                            </a>
                         </li>
-
-                        <li class="nav-item">
-                            <a href="/logout" class="active nav-link">
+                        <li>
+                            <a href="/logout">
+                                <ion-icon name="log-out-outline"></ion-icon>
                                 Logout
-                                <i class="fa fa-sign-out" aria-hidden="true"/>
                             </a>
                         </li>
                     </ul>
-                </div>
             </nav>
         </j:if>
 
-        <d:invokeBody/>
+        <div class="mainwrapper">
+            <d:invokeBody/>
+        </div>
     </div>
 
     <script src='https://www.jenkins.io/assets/bower/anchor-js/anchor.min.js'></script>
-<script src='https://www.jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js'></script>
+<!--<script src='https://www.jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js'></script>-->
 <jio-footer property="https://accounts.jenkins.io"
             reportAProblemTemplate="1-bug.yml" githubRepo="jenkins-infra/account-app" githubBranch="main"></jio-footer>
 <script>
