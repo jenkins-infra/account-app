@@ -40,7 +40,7 @@
         </tr>
       </j:forEach>
     </table>
-    <p>
+    <p class="description">
       To delete, type "YES" to the text field left of "Delete" then click the Delete button.
     </p>
   </t:layout>

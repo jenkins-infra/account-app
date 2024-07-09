@@ -1,7 +1,7 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Login" class="smol menoo">
-    <h1>Login</h1>
+  <t:layout title="Sign in" class="smol menoo">
+    <h1>Sign in</h1>
 
     <form method="post" action="doLogin" class="fooorm">
       <div class="form-group">
@@ -16,9 +16,12 @@
 
       <input type="hidden" name="from" value="${request.getParameter('from')}"/>
 
-      <button type="submit" class="app-button app-button--primary app-button--large">Login</button>
+      <button type="submit" class="app-button app-button--primary app-button--large">Sign in</button>
     </form>
 
-    <small><a href="signup">Sign up?</a> - <a href="passwordReset">Forgot password</a></small>
+    <div class="betterrr">
+      <a href="signup">Register</a>
+      <a href="passwordReset">Forgot password</a>
+    </div>
   </t:layout>
 </j:jelly>

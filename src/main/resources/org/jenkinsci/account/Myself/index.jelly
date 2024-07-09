@@ -54,7 +54,7 @@
         <input autocomplete="new-password" type="password" name="newPassword2" class="form-control text"/>
       </div>
 
-      <button type="submit" class="app-button app-button--primary app-button--large btn-block">Update</button>
+      <button type="submit" class="app-button app-button--primary">Update</button>
     </form>
   </t:layout>
 </j:jelly>

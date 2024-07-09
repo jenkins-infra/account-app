@@ -12,16 +12,20 @@
 }
 
 .bananarama {
-  display: grid;
+  margin-inline: auto;
+  display: inline-grid;
   grid-template-columns: 280px 800px;
   gap: 3.75rem;
+  width: unset;
 
   h1 {
     font-size: 1.8rem;
+    font-weight: 600;
   }
 
   h2 {
     font-size: 1.4rem;
+    font-weight: 600;
   }
 }
 
@@ -59,7 +63,7 @@ input[type='text'], input[type='password'], input[type='email'], textarea {
 }
 
 .smol {
-  max-width: 600px !important;
+  max-width: 550px;
 }
 
 h1 {
@@ -68,7 +72,7 @@ h1 {
 
 .app-button--large {
   display: flex !important;
-  padding: 1rem !important;
+  padding: 0.75rem !important;
   font-size: 1rem !important;
   width: 100%;
   cursor: pointer;
@@ -78,6 +82,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  font-size: 1rem;
 
   form {
     display: contents;
@@ -142,8 +147,16 @@ h1 {
 
         &:active, &:focus, &.active {
           background: color-mix(in srgb, var(--color--secondary) 10%, transparent);
+          font-weight: 500;
         }
       }
     }
   }
+}
+
+.betterrr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
