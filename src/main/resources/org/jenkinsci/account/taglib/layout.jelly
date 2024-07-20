@@ -30,17 +30,10 @@
 <meta content='Jenkins – Continuous Delivery for every team' property='og:description'/>
 <!-- Don't index internal tooling in search engines -->
 <meta name="robots" content="noindex"/>
-<link href='/webjars/fontawesome/4.7.0/css/font-awesome.min.css' media='screen' rel='stylesheet'/>
-<!--<link href='https://www.jenkins.io/assets/bower/bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet'/>-->
-<link href='https://www.jenkins.io/css/font-icons.css' media='screen' rel='stylesheet'/>
-<link href='https://www.jenkins.io/css/jenkins.css' media='screen' rel='stylesheet'/>
-<link href='https://deploy-preview-7266--jenkins-io-site-pr.netlify.app/stylesheets/styles.css' media='screen' rel='stylesheet'/>
+    <link href='https://www.jenkins.io/css/jenkins.css' media='screen' rel='stylesheet'/>
+    <link href='https://deploy-preview-7266--jenkins-io-site-pr.netlify.app/stylesheets/styles.css' media='screen' rel='stylesheet'/>
     <link href='/style.css' media='screen' rel='stylesheet'/>
-<!-- Non-obtrusive CSS styles -->
-<link href='https://www.jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
-<link href='https://www.jenkins.io/css/footer.css' media='screen' rel='stylesheet'/>
-    <script src="/webjars/jquery/3.7.1/jquery.js"/>
-    <script src="/webjars/jquery-ui/1.13.2/jquery-ui.js"/>
+    <link href='https://www.jenkins.io/assets/bower/ionicons/css/ionicons.min.css' media='screen' rel='stylesheet'/>
 </head>
 <body>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
