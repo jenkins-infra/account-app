@@ -34,7 +34,7 @@
       <textarea class="form-control" rows="3">${it.sshKeys}</textarea>
     </div>
 
-     <legend>Change Password</legend>
+     <h3>Change Password</h3>
      <p class="description">
        To update your password, please type your current password as well as new one for security.
        Leave this empty to keep the current password.

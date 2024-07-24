@@ -1,7 +1,7 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Account">
-    <h1>Account</h1>
+    <h1>Hey ${it.myself.firstName}</h1>
     <p class="app-description">
     You can create/manage your user account that you use for accessing
     <a href="https://issues.jenkins.io/" target="_blank">Jira</a>,
