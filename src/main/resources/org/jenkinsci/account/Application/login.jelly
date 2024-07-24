@@ -21,6 +21,7 @@
 
     <div class="betterrr">
       <a href="signup">Register</a>
+      <span class="description">-</span>
       <a href="passwordReset">Forgot password</a>
     </div>
   </t:layout>
