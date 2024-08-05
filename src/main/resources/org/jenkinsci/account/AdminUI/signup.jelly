@@ -4,7 +4,7 @@
     <p>
       Confirm creating the following user
     </p>
-    <form method="post" action="doSignup" class="d-grid gap-2">
+    <form method="post" action="doSignup">
       <div class="form-group">
         <label>User ID</label>
         <input type="text" name="userid" value="${request.getParameter('userId')}" class="form-control text" placeholder="Userid" />

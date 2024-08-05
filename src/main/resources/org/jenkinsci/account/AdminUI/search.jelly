@@ -25,7 +25,7 @@
           <td style="padding-left:1em">
             <form method="post" action="emailReset" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="text" name="email" value="${u.mail}" class="form-control mb-1" />
+              <input type="text" name="email" value="${u.mail}" class="form-control" />
               <input type="submit" value="Update" class="app-button" />
             </form>
           </td>
@@ -33,7 +33,7 @@
           <td style="padding-left:1em">
             <form method="post" action="delete" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="text" name="confirm" style="width:3em" class="form-control mb-1" />
+              <input type="text" name="confirm" style="width:3em" class="form-control" />
               <input type="submit" value="Delete" class="app-button app-button--TODO" />
             </form>
           </td>
