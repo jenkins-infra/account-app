@@ -19,7 +19,7 @@
       <button type="submit" class="app-button app-button--primary app-button--large">Sign in</button>
     </form>
 
-    <div class="betterrr">
+    <div class="app-login__controls">
       <a href="signup">Register</a>
       <span class="description">-</span>
       <a href="passwordReset">Forgot password</a>

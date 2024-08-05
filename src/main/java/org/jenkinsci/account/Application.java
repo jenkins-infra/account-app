@@ -1396,6 +1396,9 @@ public class Application {
     // Somewhat cryptic name for cookie, so prying eyes don't know its use.
     public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
 
+    /**
+     * Returns true if the provided url is the active url
+     */
     public boolean isActive(String url) {
         StaplerRequest req = Stapler.getCurrentRequest();
         String currentUrl = StringUtils.strip(req.getRequestURI(), "/");
