@@ -86,7 +86,6 @@
     </div>
 
     <script src='https://www.jenkins.io/assets/bower/anchor-js/anchor.min.js'></script>
-<!--<script src='https://www.jenkins.io/assets/bower/bootstrap/js/bootstrap.min.js'></script>-->
 <jio-footer property="https://accounts.jenkins.io"
             reportAProblemTemplate="1-bug.yml" githubRepo="jenkins-infra/account-app" githubBranch="main"></jio-footer>
 <script>
