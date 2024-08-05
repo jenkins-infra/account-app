@@ -4,53 +4,53 @@
     <h1>Your profile</h1>
 
     <form method="post" action="update">
-    <div class="form-group">
+    <div class="ac-form-group">
       <label>Username</label>
       <input type="text" readonly="true" value="${it.userId}" class="form-control text" disabled="true"/>
     </div>
 
-    <div class="form-group">
+    <div class="ac-form-group">
       <label>First name</label>
       <input type="text" name="firstName" value="${it.firstName}" class="form-control text"/>
     </div>
 
-    <div class="form-group">
+    <div class="ac-form-group">
       <label>Last name</label>
       <input type="text" name="lastName" value="${it.lastName}" class="form-control text"/>
     </div>
 
-    <div class="form-group">
+    <div class="ac-form-group">
       <label>Email</label>
       <input type="email" name="email" value="${it.email}" class="form-control text"/>
     </div>
 
-    <div class="form-group">
+    <div class="ac-form-group">
       <label>GitHub username</label>
       <input type="text" name="githubId" value="${it.githubId}" class="form-control text"/>
     </div>
 
-    <div class="form-group">
+    <div class="ac-form-group">
       <label>SSH Public Keys</label>
       <textarea class="form-control" rows="3">${it.sshKeys}</textarea>
     </div>
 
      <h3>Change Password</h3>
-     <p class="description">
+     <p class="ac-description">
        To update your password, please type your current password as well as new one for security.
        Leave this empty to keep the current password.
      </p>
 
-      <div class="form-group">
+      <div class="ac-form-group">
         <label>Current password</label>
         <input autocomplete="current-password" type="password" name="password" value="" class="form-control text"/>
       </div>
 
-      <div class="form-group">
+      <div class="ac-form-group">
         <label>New password</label>
         <input autocomplete="new-password" type="password" name="newPassword1" class="form-control text"/>
       </div>
 
-      <div class="form-group">
+      <div class="ac-form-group">
         <label>Confirm new password</label>
         <input autocomplete="new-password" type="password" name="newPassword2" class="form-control text"/>
       </div>

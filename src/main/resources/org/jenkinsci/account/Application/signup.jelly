@@ -1,35 +1,35 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Register" class="app-small-width">
+  <t:layout title="Register" class="ac-small-width">
     <h1>Register</h1>
 
-    <div class="description">All fields are required</div>
+    <div class="ac-description">All fields are required</div>
 
     <form method="post" action="doSignup">
-      <div class="form-group">
+      <div class="ac-form-group">
         <label for="userid">Username</label>
-        <div class="description">
+        <div class="ac-description">
           Only letters, numbers, and '_' is allowed.
         </div>
         <input autofocus="autofocus" autocomplete="username" type="text" name="userid" id="userid" class="form-control text"/>
       </div>
 
-      <div class="form-group">
+      <div class="ac-form-group">
         <label for="firstname">First name</label>
         <input autocomplete="given-name" type="text" name="firstName" id="firstname" class="form-control text" />
       </div>
 
-      <div class="form-group">
+      <div class="ac-form-group">
         <label for="lastname">Last name</label>
         <input autocomplete="family-name" type="text" id='lastname' name="lastName" class="form-control text" />
       </div>
 
-      <div class="form-group">
+      <div class="ac-form-group">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" class="form-control text"/>
       </div>
 
-      <div class="form-group">
+      <div class="ac-form-group">
         <label for="emailconfirm">Confirm your email</label>
         <input type="email" name="emailconfirm" id="emailconfirm" class="form-control text"/>
       </div>
@@ -40,13 +40,13 @@
         <![CDATA[document.getElementById("hp").style.display = "none";]]>
       </script>
 
-      <div class="form-group">
+      <div class="ac-form-group">
           <label for="captchaCode">Captcha</label>
           <j:out value="${it.showCaptcha('signUpCaptcha')}"/>
           <input type="text" name="captchaCode" id="captchaCode" class="form-control text mt-2"/>
       </div>
 
-      <button type="submit" class="app-button app-button--primary app-button--large">Create account</button>
+      <button type="submit" class="app-button app-button--primary ac-button--large">Create account</button>
     </form>
   </t:layout>
 </j:jelly>

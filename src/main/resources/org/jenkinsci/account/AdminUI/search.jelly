@@ -7,10 +7,10 @@
       </a>
     </div>
     <h1>Search results</h1>
-    <div class="description">
+    <div class="ac-description">
       To delete, type "YES" to the text field left of "Delete" then click the Delete button.
     </div>
-    <table class="table">
+    <table class="ac-table">
       <thead>
         <tr>
           <th>User ID</th>

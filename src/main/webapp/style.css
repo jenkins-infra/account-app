@@ -2,16 +2,16 @@
   --bs-navbar-brand-color: var(--color) !important;
 }
 
-.description {
+.ac-description {
   color: var(--color--secondary);
 }
 
-.form-group {
+.ac-form-group {
   display: flex;
   flex-direction: column;
 }
 
-.app-sidepanel-layout {
+.ac-sidepanel-layout {
   margin-inline: auto;
   display: inline-grid;
   grid-template-columns: 280px 840px;
@@ -62,13 +62,13 @@ input[type='text'], input[type='password'], input[type='email'], textarea {
   }
 }
 
-.app-small-width {
+.ac-small-width {
   max-width: 550px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 
-  form, .mainwrapper {
+  form, .ac-main-content {
     display: contents;
   }
 
@@ -81,7 +81,7 @@ h1 {
   margin: 0;
 }
 
-.app-button--large {
+.ac-button--large {
   display: flex !important;
   padding: 0.75rem !important;
   font-size: 1rem !important;
@@ -89,7 +89,7 @@ h1 {
   cursor: pointer;
 }
 
-.mainwrapper {
+.ac-main-content {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -104,7 +104,7 @@ h1 {
   }
 }
 
-.navbar {
+.ac-navbar {
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
@@ -154,14 +154,14 @@ h1 {
   }
 }
 
-.app-login__controls {
+.ac-login__controls {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
 }
 
-.table {
+.ac-table {
   --table-background: color-mix(in srgb, var(--color--secondary) 5%, transparent);
   --table-border-radius: 0.75rem;
   --table-row-border-radius: 0.25rem;
