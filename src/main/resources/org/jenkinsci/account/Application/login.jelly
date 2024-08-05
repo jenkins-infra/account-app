@@ -1,6 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Sign in" class="app-small-width TODOrenamethis">
+  <t:layout title="Sign in" class="app-small-width">
     <h1>Sign in</h1>
 
     <form method="post" action="doLogin">

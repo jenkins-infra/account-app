@@ -1,6 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Register" class="app-small-width TODOrenamethis">
+  <t:layout title="Register" class="app-small-width">
     <h1>Register</h1>
 
     <div class="description">All fields are required</div>

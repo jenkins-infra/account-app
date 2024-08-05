@@ -64,6 +64,17 @@ input[type='text'], input[type='password'], input[type='email'], textarea {
 
 .app-small-width {
   max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  form, .mainwrapper {
+    display: contents;
+  }
+
+  p {
+    margin: 0;
+  }
 }
 
 h1 {
@@ -89,20 +100,6 @@ h1 {
   }
 
   h1, h2, p {
-    margin: 0;
-  }
-}
-
-.TODOrenamethis {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-
-  form, .mainwrapper {
-    display: contents;
-  }
-
-  p {
     margin: 0;
   }
 }
