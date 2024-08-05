@@ -3,13 +3,14 @@
   <t:layout title="Account">
     <j:if test="${it.isLoggedIn()}">
       <h1>Hey ${it.myself.firstName}</h1>
+
+      <p class="app-description">
+        You can create/manage your user account that you use for accessing
+        <a href="https://issues.jenkins.io/" target="_blank">Jira</a>,
+        <a href="https://repo.jenkins-ci.org/" target="_blank">Artifactory</a>,
+        VPN and other services within the <a href="https://www.jenkins.io/projects/infrastructure" target="_top">Jenkins Infrastructure</a>.
+      </p>
     </j:if>
-    <p class="app-description">
-    You can create/manage your user account that you use for accessing
-    <a href="https://issues.jenkins.io/" target="_blank">Jira</a>,
-    <a href="https://repo.jenkins-ci.org/" target="_blank">Artifactory</a>,
-    VPN and other services within the <a href="https://www.jenkins.io/projects/infrastructure" target="_top">Jenkins Infrastructure</a>.
-    </p>
 
     <j:if test="${not it.isLoggedIn()}">
       <script type="text/javascript">
