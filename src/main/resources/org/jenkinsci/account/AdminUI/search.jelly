@@ -1,6 +1,11 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Search results">
+  <t:layout title="Search results" hideNavigation="true">
+    <div class="app-!-display-flex">
+      <a class="app-back-link" href="/admin">
+        Back to Admin
+      </a>
+    </div>
     <h1>Search results</h1>
     <div class="description">
       To delete, type "YES" to the text field left of "Delete" then click the Delete button.
@@ -29,7 +34,7 @@
             <form method="post" action="emailReset" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
               <input type="text" name="email" value="${u.mail}" class="form-control" />
-              <input type="submit" value="Update" class="app-button" />
+              <input type="submit" value="Update" class="app-button" style="margin-left: 0.5rem" />
             </form>
           </td>
 
@@ -37,7 +42,7 @@
             <form method="post" action="delete" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
               <input type="text" name="confirm" style="width:4em" class="form-control" />
-              <input type="submit" value="Delete" class="app-button" />
+              <input type="submit" value="Delete" class="app-button" style="margin-left: 0.5rem" />
             </form>
           </td>
         </tr>

@@ -3,6 +3,7 @@
   <st:documentation>
     <st:attribute name="title" use="required"/>
     <st:attribute name="class" />
+    <st:attribute name="hideNavigation" />
   </st:documentation>
   <st:contentType value="text/html;charset=UTF-8" />
 <html style="height:100%;min-height:100%;">
@@ -45,8 +46,9 @@
 
     <jio-navbar class="fixed-top" property="https://accounts.jenkins.io" theme="auto" />
 
-    <div class='app-container ${attrs.class} ${app.isLoggedIn() or it.isLoggedIn() ? "app-sidepanel-layout" : ""}'>
-        <j:if test="${app.isLoggedIn() or it.isLoggedIn()}">
+    <j:set var="showNavigation" value="${(app.isLoggedIn() or it.isLoggedIn()) and attrs.hideNavigation != true}" />
+    <div class='app-container ${attrs.class} ${showNavigation ? "app-sidepanel-layout" : ""}'>
+        <j:if test="${showNavigation}">
             <nav class='navbar'>
                 <p class="h1">Account</p>
                     <ul>
