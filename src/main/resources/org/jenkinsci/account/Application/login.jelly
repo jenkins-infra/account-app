@@ -3,7 +3,7 @@
   <t:layout title="Sign in" class="app-small-width TODOrenamethis">
     <h1>Sign in</h1>
 
-    <form method="post" action="doLogin" class="fooorm">
+    <form method="post" action="doLogin">
       <div class="form-group">
         <label for="userid">Username</label>
         <input autofocus="autofocus" type="text" name="userid" class="form-control text" id="userid" />
