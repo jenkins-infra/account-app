@@ -48,12 +48,12 @@ testing {
             dependencies {
                 implementation(project())
 
-                implementation("io.github.bonigarcia:webdrivermanager:5.9.1")
+                implementation("io.github.bonigarcia:webdrivermanager:5.9.2")
 
                 implementation("com.sun.mail:jakarta.mail:2.0.1")
 
-                implementation("org.seleniumhq.selenium:selenium-java:4.22.0")
-                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.22.0")
+                implementation("org.seleniumhq.selenium:selenium-java:4.23.0")
+                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.23.0")
                 implementation("org.assertj:assertj-core:3.26.0")
 
                 implementation("com.unboundid:unboundid-ldapsdk:7.0.1")
@@ -84,7 +84,7 @@ dependencies {
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     implementation("org.glassfish:javax.json:1.1.4")
-    implementation("commons-codec:commons-codec:1.17.0")
+    implementation("commons-codec:commons-codec:1.17.1")
 
     implementation("org.kohsuke.stapler:stapler-jelly:1870.v48cc46ef5fee")
     implementation("org.kohsuke.stapler:stapler-openid-server:1.0")
