@@ -45,7 +45,7 @@
 
     <jio-navbar class="fixed-top" property="https://accounts.jenkins.io" theme="auto" />
 
-    <div class='app-container ${attrs.class} ${app.isLoggedIn() or it.isLoggedIn() ? "bananarama" : ""}'>
+    <div class='app-container ${attrs.class} ${app.isLoggedIn() or it.isLoggedIn() ? "app-sidepanel-layout" : ""}'>
         <j:if test="${app.isLoggedIn() or it.isLoggedIn()}">
             <nav class='navbar'>
                 <h1>Account</h1>

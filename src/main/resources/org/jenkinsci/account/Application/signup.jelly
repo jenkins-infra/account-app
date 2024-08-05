@@ -1,6 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Sign up" class="smol menoo">
+  <t:layout title="Sign up" class="app-small-width TODOrenamethis">
     <h1>Sign up</h1>
 
     <div class="description">All fields are required</div>

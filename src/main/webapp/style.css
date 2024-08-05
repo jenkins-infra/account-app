@@ -11,7 +11,7 @@
   flex-direction: column;
 }
 
-.bananarama {
+.app-sidepanel-layout {
   margin-inline: auto;
   display: inline-grid;
   grid-template-columns: 280px 800px;
@@ -62,7 +62,7 @@ input[type='text'], input[type='password'], input[type='email'], textarea {
   }
 }
 
-.smol {
+.app-small-width {
   max-width: 550px;
 }
 
@@ -93,7 +93,7 @@ h1 {
   }
 }
 
-.menoo {
+.TODOrenamethis {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
