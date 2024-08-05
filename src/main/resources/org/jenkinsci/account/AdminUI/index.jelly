@@ -1,7 +1,7 @@
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Admin">
       <h1>Admin</h1>
-        <h2>Manage Users</h2>
+        <h2>Manage users</h2>
         <p class="description">
           Type the username or email address to find the user.
         </p>
@@ -16,7 +16,7 @@
           </button>
         </form>
 
-        <h2>Set Circuit Breaker</h2>
+        <h2>Set circuit breaker</h2>
         <p class="description">
           Temporarily disable sign-up to fight spam until a certain time.
           All times are in UTC.

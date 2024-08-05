@@ -14,7 +14,7 @@
 .app-sidepanel-layout {
   margin-inline: auto;
   display: inline-grid;
-  grid-template-columns: 280px 800px;
+  grid-template-columns: 280px 840px;
   gap: 3.75rem;
   width: unset;
 
@@ -159,4 +159,98 @@ h1 {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+.table {
+  --table-background: color-mix(in srgb, var(--color--secondary) 5%, transparent);
+  --table-border-radius: 0.75rem;
+  --table-row-border-radius: 0.25rem;
+  --table-padding: 0.45rem;
+
+  position: relative;
+  width: 100%;
+  background: var(--table-background);
+  border-radius: calc(var(--table-border-radius) + 4px);
+  border: 4px solid var(--table-background);
+  border-bottom-width: 2px;
+  border-spacing: 0 2px;
+  background-clip: padding-box;
+
+  * {
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+  }
+
+  & > thead {
+    & > tr {
+      & > th {
+        color: var(--color);
+        text-align: left;
+        padding-top: calc(var(--table-padding) * 0.9);
+        padding-bottom: calc(var(--table-padding) * 1.3);
+        padding-left: 1.25rem;
+        font-weight: 500;
+        font-size: 0.875rem;
+
+        &:first-of-type {
+          padding-left: calc(var(--table-padding) * 2);
+        }
+
+        &:last-of-type {
+          padding-right: var(--table-padding);
+        }
+      }
+    }
+  }
+
+  & > tbody {
+    & > tr {
+      color: var(--color);
+
+      & > td {
+        background: var(--background);
+        vertical-align: middle;
+        padding: var(--table-padding) 0 var(--table-padding) 1.25rem;
+        height: 3rem;
+
+        &:first-of-type {
+          padding-left: calc(var(--table-padding) * 2);
+        }
+
+        &:last-of-type {
+          padding-right: var(--table-padding);
+        }
+      }
+
+      & > td:first-of-type {
+        border-top-left-radius: var(--table-row-border-radius);
+        border-bottom-left-radius: var(--table-row-border-radius);
+      }
+
+      & > td:last-of-type {
+        border-top-right-radius: var(--table-row-border-radius);
+        border-bottom-right-radius: var(--table-row-border-radius);
+      }
+
+      &:first-of-type {
+        & > td:first-of-type {
+          border-top-left-radius: var(--table-border-radius);
+        }
+
+        & > td:last-of-type {
+          border-top-right-radius: var(--table-border-radius);
+        }
+      }
+
+      &:last-of-type {
+        & > td:first-of-type {
+          border-bottom-left-radius: var(--table-border-radius);
+        }
+
+        & > td:last-of-type {
+          border-bottom-right-radius: var(--table-border-radius);
+        }
+      }
+    }
+  }
 }

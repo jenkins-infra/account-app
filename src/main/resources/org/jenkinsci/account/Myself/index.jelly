@@ -1,7 +1,7 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Your Profile">
-    <h1>Your Profile</h1>
+  <t:layout title="Your profile">
+    <h1>Your profile</h1>
 
     <form method="post" action="update">
     <div class="form-group">
@@ -10,12 +10,12 @@
     </div>
 
     <div class="form-group">
-      <label>First Name</label>
+      <label>First name</label>
       <input type="text" name="firstName" value="${it.firstName}" class="form-control text"/>
     </div>
 
     <div class="form-group">
-      <label>Last Name</label>
+      <label>Last name</label>
       <input type="text" name="lastName" value="${it.lastName}" class="form-control text"/>
     </div>
 
@@ -44,6 +44,7 @@
         <label>Current password</label>
         <input autocomplete="current-password" type="password" name="password" value="" class="form-control text"/>
       </div>
+
       <div class="form-group">
         <label>New password</label>
         <input autocomplete="new-password" type="password" name="newPassword1" class="form-control text"/>

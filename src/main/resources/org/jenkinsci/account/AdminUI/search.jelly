@@ -2,14 +2,17 @@
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
   <t:layout title="Search results">
     <h1>Search results</h1>
+    <div class="description">
+      To delete, type "YES" to the text field left of "Delete" then click the Delete button.
+    </div>
     <table class="table">
       <thead>
         <tr>
-          <td>User ID</td>
-          <td>Email address</td>
-          <td>Reset password</td>
-          <td>Update email</td>
-          <td>Delete user</td>
+          <th>User ID</th>
+          <th>Email address</th>
+          <th>Reset password</th>
+          <th>Update email</th>
+          <th>Delete user</th>
         </tr>
       </thead>
       <j:forEach var="u" items="${all}">
@@ -22,7 +25,7 @@
               <input type="submit" value="Reset password" class="app-button" />
             </form>
           </td>
-          <td style="padding-left:1em">
+          <td>
             <form method="post" action="emailReset" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
               <input type="text" name="email" value="${u.mail}" class="form-control" />
@@ -30,18 +33,15 @@
             </form>
           </td>
 
-          <td style="padding-left:1em">
+          <td>
             <form method="post" action="delete" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="text" name="confirm" style="width:3em" class="form-control" />
-              <input type="submit" value="Delete" class="app-button app-button--TODO" />
+              <input type="text" name="confirm" style="width:4em" class="form-control" />
+              <input type="submit" value="Delete" class="app-button" />
             </form>
           </td>
         </tr>
       </j:forEach>
     </table>
-    <p class="description">
-      To delete, type "YES" to the text field left of "Delete" then click the Delete button.
-    </p>
   </t:layout>
 </j:jelly>
