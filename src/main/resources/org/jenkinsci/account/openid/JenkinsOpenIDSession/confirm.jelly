@@ -6,7 +6,9 @@
     </div>
 
     <form method="post" action="verify">
-      <input type="submit" value="Proceed"/>
+      <button type="submit">
+        Proceed
+      </button>
     </form>
   </t:layout>
 </j:jelly>

@@ -1,15 +1,23 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Search results">
+  <t:layout title="Search results" hideNavigation="true">
+    <div class="app-!-display-flex">
+      <a class="app-back-link" href="/admin">
+        Back to Admin
+      </a>
+    </div>
     <h1>Search results</h1>
-    <table class="table">
+    <div class="ac-description">
+      To delete, type "YES" to the text field left of "Delete" then click the Delete button.
+    </div>
+    <table class="ac-table">
       <thead>
         <tr>
-          <td>User ID</td>
-          <td>Email address</td>
-          <td>Reset password</td>
-          <td>Update email</td>
-          <td>Delete user</td>
+          <th>User ID</th>
+          <th>Email address</th>
+          <th>Reset password</th>
+          <th>Update email</th>
+          <th>Delete user</th>
         </tr>
       </thead>
       <j:forEach var="u" items="${all}">
@@ -19,29 +27,26 @@
           <td>
             <form method="post" action="passwordReset" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="submit" value="Reset password" class="btn btn-secondary" />
+              <input type="submit" value="Reset password" class="app-button" />
             </form>
           </td>
-          <td style="padding-left:1em">
+          <td>
             <form method="post" action="emailReset" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="text" name="email" value="${u.mail}" class="form-control mb-1" />
-              <input type="submit" value="Update" class="btn btn-secondary" />
+              <input type="text" name="email" value="${u.mail}" class="form-control" />
+              <input type="submit" value="Update" class="app-button" style="margin-left: 0.5rem" />
             </form>
           </td>
 
-          <td style="padding-left:1em">
+          <td>
             <form method="post" action="delete" style="margin:0">
               <input type="hidden" name="id" value="${u.id}" />
-              <input type="text" name="confirm" style="width:3em" class="form-control mb-1" />
-              <input type="submit" value="Delete" class="btn btn-danger" />
+              <input type="text" name="confirm" style="width:4em" class="form-control" />
+              <input type="submit" value="Delete" class="app-button" style="margin-left: 0.5rem" />
             </form>
           </td>
         </tr>
       </j:forEach>
     </table>
-    <p>
-      To delete, type "YES" to the text field left of "Delete" then click the Delete button.
-    </p>
   </t:layout>
 </j:jelly>

@@ -1,40 +1,40 @@
 <j:jelly xmlns:j="jelly:core" xmlns:t="/org/jenkinsci/account/taglib">
-  <t:layout title="Manage Users">
-    <div class="row">
-      <div class="col-md-6">
-        <h1>Manage Users</h1>
-        <p class="description">
+  <t:layout title="Admin">
+      <h1>Admin</h1>
+        <h2>Manage users</h2>
+        <p class="ac-description">
           Type the username or email address to find the user.
         </p>
         <form method="post" action="search">
-          <div class="form-group">
+          <div class="ac-form-group">
             <label for="word">Username or email address</label>
             <input type="text" name="word" class="form-control text"/>
           </div>
 
-          <input type="submit" class="btn btn-primary" value="Search"/>
+          <button type="submit" class="app-button app-button--primary">
+            Search
+          </button>
         </form>
 
-        <h2>Set Circuit Breaker</h2>
-        <p class="description">
+        <h2>Set circuit breaker</h2>
+        <p class="ac-description">
           Temporarily disable sign-up to fight spam until a certain time.
           All times are in UTC.
         </p>
         <j:if test="${it.circuitBreaker.isOn()}">
-          <p class="description">
+          <p class="ac-description">
             Circuit breaker is currently on until ${it.circuitBreaker.date}.
             To disable it, set it to the time in the past, such as 2000/01/01 00:00.
           </p>
         </j:if>
         <form method="post" action="circuitBreaker/set">
-          <div class="form-group">
+          <div class="ac-form-group">
             <label for="time">Circuit breaker is on until when? (YYYY/MM/DD HH:MM)</label>
             <input type="text" name="time" class="form-control text"/>
           </div>
-
-          <input type="submit" class="btn btn-secondary" value="Save"/>
+          <button type="submit" class="app-button">
+            Save
+          </button>
         </form>
-      </div>
-    </div>
   </t:layout>
 </j:jelly>

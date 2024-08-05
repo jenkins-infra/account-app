@@ -13,7 +13,7 @@ public class AdminPage {
     @FindBy(name = "word")
     private WebElement searchInput;
 
-    @FindBy(xpath = "//input[@value=\"Search\"]")
+    @FindBy(xpath = "//button[contains(text(), 'Search')]")
     private WebElement searchButton;
     private final WebDriver driver;
 
@@ -24,7 +24,7 @@ public class AdminPage {
 
     public void verifyOnPage() {
         assertThat(driver.getTitle())
-                .contains("Manage Users");
+                .contains("Admin");
     }
 
     public void search(String query) {

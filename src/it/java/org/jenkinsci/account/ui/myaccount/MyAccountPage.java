@@ -8,10 +8,10 @@ import java.util.List;
 
 // page_url = http://localhost:8080/
 public class MyAccountPage {
-    @FindBy(xpath = "//a[@href=\"./admin\"]")
+    @FindBy(xpath = "//a[@href=\"/admin\"]")
     private WebElement administerLink;
 
-    @FindBy(xpath = "//a[@href=\"./myself\"]")
+    @FindBy(xpath = "//a[@href=\"/myself\"]")
     private WebElement profileLink;
 
     public MyAccountPage(WebDriver driver) {
