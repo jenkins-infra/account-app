@@ -112,9 +112,12 @@ h1 {
   flex-direction: column;
   gap: 0.125rem;
 
-  h1 {
+  .h1 {
+    margin-top: 0;
     margin-bottom: 1.5rem;
     margin-left: 0.85rem;
+    font-size: 1.8rem;
+    font-weight: 600;
   }
 
   ul {
