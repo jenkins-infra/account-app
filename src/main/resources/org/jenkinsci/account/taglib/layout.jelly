@@ -30,7 +30,7 @@
 <meta content='article' property='og:type'/>
 <meta content='Jenkins – Continuous Delivery for every team' property='og:description'/>
 <!-- Don't index internal tooling in search engines -->
-<meta name="robots" content="noindex"/>
+<meta name="robots" content="noindex, nofollow"/>
     <link href='https://www.jenkins.io/css/jenkins.css' media='screen' rel='stylesheet'/>
     <link href='https://www.jenkins.io/stylesheets/styles.css' media='screen' rel='stylesheet'/>
     <link href='/style.css' media='screen' rel='stylesheet'/>
