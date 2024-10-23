@@ -86,7 +86,7 @@ dependencies {
     implementation("org.glassfish:javax.json:1.1.4")
     implementation("commons-codec:commons-codec:1.17.1")
 
-    implementation("org.kohsuke.stapler:stapler-jelly:1870.v48cc46ef5fee")
+    implementation("org.kohsuke.stapler:stapler-jelly:1896.v8170998149d0")
     implementation("org.kohsuke.stapler:stapler-openid-server:1.0")
 
     implementation("commons-jelly:commons-jelly-tags-define:1.0")
