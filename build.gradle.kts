@@ -102,7 +102,7 @@ dependencies {
 
     implementation("com.captcha:botdetect-jsp20:4.0.beta3.7")
 
-    implementation("com.github.spotbugs:spotbugs-annotations:4.8.6")
+    implementation("com.github.spotbugs:spotbugs-annotations:4.9.0")
 
     implementation("com.google.guava:guava:33.4.0-jre")
 
