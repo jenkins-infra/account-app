@@ -97,6 +97,12 @@ public class Myself {
             @QueryParameter String newPassword2
     ) throws Exception {
 
+        if (!isValidName(firstName))
+            throw new UserError("First name is too long");
+        
+        if (!isValidName(lastName))
+            throw new UserError("Last name is too long");
+
         final Attributes attrs = new BasicAttributes();
 
         attrs.put("givenName", fixEmpty(firstName));
@@ -169,6 +175,11 @@ public class Myself {
     private String fixEmpty(String s) {
         if (s!=null && s.length()==0)   return null;
         return s;
+    }
+
+    private boolean isValidName(String name){
+        if(name.length() > 100) return false;
+        return true;
     }
 
     private static final Logger LOGGER = Logger.getLogger(Myself.class.getName());
