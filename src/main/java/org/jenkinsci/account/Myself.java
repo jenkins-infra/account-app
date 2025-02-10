@@ -98,15 +98,15 @@ public class Myself {
     ) throws Exception {
 
         if (!isValidName(firstName)) {
-            throw new UserError("First name is too long");
+            throw new UserError("First name is Invalid");
         }
         if (!isValidName(lastName)) {
-            throw new UserError("Last name is too long");
+            throw new UserError("Last name is Invalid");
         }
         final Attributes attrs = new BasicAttributes();
 
-        attrs.put("givenName", fixEmpty(firstName));
-        attrs.put("sn", fixEmpty(lastName));
+        attrs.put("givenName", firstName);
+        attrs.put("sn", lastName);
         attrs.put("mail", email);
         attrs.put(GITHUB_ID,fixEmpty(githubId));
         attrs.put(SSH_KEYS,fixEmpty(sshKeys)); // hack since I find it too hard to add custom attributes to LDAP
@@ -178,7 +178,7 @@ public class Myself {
     }
 
     private boolean isValidName(String name) {
-        return name.length() < 100;
+        return name != null && !name.isEmpty() && name.length() < 100;
     }
 
     private static final Logger LOGGER = Logger.getLogger(Myself.class.getName());
