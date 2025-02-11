@@ -1,7 +1,7 @@
 version: '3'
 services:
   ldap:
-    image: jenkinsciinfra/mock-ldap:latest
+    build: ./mock-ldap
     ports:
         - "1636:636"
         - "1389:389"
@@ -14,7 +14,6 @@ services:
 
   app:
     build: .
-    image: accountapp:latest
     environment:
       - LDAP_URL=ldap://ldap:389
     depends_on:
