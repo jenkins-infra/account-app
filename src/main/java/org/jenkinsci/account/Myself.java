@@ -97,10 +97,16 @@ public class Myself {
             @QueryParameter String newPassword2
     ) throws Exception {
 
+        if (!isValidName(firstName)) {
+            throw new UserError("First name is Invalid");
+        }
+        if (!isValidName(lastName)) {
+            throw new UserError("Last name is Invalid");
+        }
         final Attributes attrs = new BasicAttributes();
 
-        attrs.put("givenName", fixEmpty(firstName));
-        attrs.put("sn", fixEmpty(lastName));
+        attrs.put("givenName", firstName);
+        attrs.put("sn", lastName);
         attrs.put("mail", email);
         attrs.put(GITHUB_ID,fixEmpty(githubId));
         attrs.put(SSH_KEYS,fixEmpty(sshKeys)); // hack since I find it too hard to add custom attributes to LDAP
@@ -169,6 +175,10 @@ public class Myself {
     private String fixEmpty(String s) {
         if (s!=null && s.length()==0)   return null;
         return s;
+    }
+
+    private boolean isValidName(String name) {
+        return name != null && !name.isEmpty() && name.length() < 100;
     }
 
     private static final Logger LOGGER = Logger.getLogger(Myself.class.getName());
