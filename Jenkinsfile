@@ -34,7 +34,6 @@ pipeline {
             steps {
                 buildDockerAndPublishImage('account-app', [
                     rebuildImageOnPeriodicJob: false,
-                    automaticSemanticVersioning: true,
                     targetplatforms: 'linux/amd64,linux/arm64',
                     disablePublication: !infra.isInfra()
                 ])
