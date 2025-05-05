@@ -26,18 +26,19 @@ RUN \
   mkdir -p /home/jetty/.app &&\
   mkdir -p /etc/accountapp
 
-COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
-COPY entrypoint.sh /entrypoint.sh
-
 ENV DD_AGENT_VERSION=0.9.0
 ADD https://repo1.maven.org/maven2/com/datadoghq/dd-java-agent/$DD_AGENT_VERSION/dd-java-agent-"$DD_AGENT_VERSION".jar /home/jetty/dd-java-agent.jar
 
 COPY --chown=jetty:root --from=build /app/build/libs/accountapp*.war /var/lib/jetty/webapps/ROOT.war
 
+COPY entrypoint.sh /entrypoint.sh
+
 RUN chmod 0755 /entrypoint.sh &&\
-    chown -R jetty:root /etc/accountapp &&\
-    chown -R jetty:root /var/lib/jetty &&\
-    chown -R jetty:root /home/jetty/dd-java-agent.jar
+  chown -R jetty:root /etc/accountapp &&\
+  chown -R jetty:root /var/lib/jetty &&\
+  chown -R jetty:root /home/jetty/dd-java-agent.jar
+
+COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
 
 USER jetty
 
