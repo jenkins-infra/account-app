@@ -14,6 +14,10 @@ Both cases will get you a development server running at <http://localhost:8080>.
 
 The default admin username is `kohsuke` and its password is `password` (see the mock-ldap/ directory).
 
+### Emails
+
+Emails are send to a local mail server and not forwarded on, you can see them at <http://localhost:3000>.
+
 ## Packaging
 
 For deploying to production, this app is packaged as a container.
