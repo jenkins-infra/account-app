@@ -1,10 +1,53 @@
-version: '3'
 services:
+  certs:
+    image: jenkinsciinfra/ldap:latest
+    volumes:
+      - certs:/certs:rw
+    entrypoint:
+      - "/bin/bash"
+      - -eucx
+      - |
+        if test -f /certs/rootCA.pem; then exit 0;fi
+        apt-get update -q
+        apt-get install --yes --no-install-recommends curl
+        curl --silent --show-error --location "https://dl.filippo.io/mkcert/latest?for=linux/$(dpkg --print-architecture)" \
+          --output /usr/local/bin/mkcert
+        chmod +x /usr/local/bin/mkcert
+        mkcert -key-file /certs/privkey.key -cert-file /certs/cert.pem ldap ldap.localhost localhost 127.0.0.1 ::1
+        cp "$(mkcert -CAROOT)"/rootCA.pem /certs/rootCA.pem
+        chown 101 /certs/*
+        chmod 0664 /certs/*
+
   ldap:
-    build: ./mock-ldap
+    image: jenkinsciinfra/ldap:latest
+    depends_on:
+      certs:
+        condition: service_completed_successfully
+    environment:
+      OPENLDAP_SSL_CA_ROOTDIR: /etc/ldap/ssl
+      OPENLDAP_SSL_CA: rootCA.pem
+    volumes:
+      - certs:/etc/ldap/ssl/:ro
     ports:
         - "1636:636"
         - "1389:389"
+    healthcheck:
+      test: ["CMD", "cat", "/run/slapd/slapd.pid"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  ldap-data:
+    image: jenkinsciinfra/ldap:latest
+    depends_on:
+      ldap:
+        condition: service_healthy
+    # exit code 68 in LDAP means entries already exists: we consider this case a success
+    entrypoint: bash -c 'ldapmodify -H ldap://ldap -x -w "$${OPENLDAP_ADMIN_PASSWORD}" -D "$${OPENLDAP_ADMIN_DN}" -a -c -f /var/backups/backup.latest.ldif || [ $? -eq 68 ]  || exit 1'
+    volumes:
+      - ./mock-ldap/data.ldif:/var/backups/backup.latest.ldif:ro
+
   mail:
     image: rnwood/smtp4dev
     ports:
@@ -15,8 +58,19 @@ services:
   app:
     build: .
     environment:
-      - LDAP_URL=ldap://ldap:389
+      - LDAP_URL=ldaps://ldap:636
+      - CUSTOM_CERT_FILE=/certs/rootCA.pem
     depends_on:
-      - ldap
+      ldap:
+        condition: service_healthy
+      ldap-data:
+        condition: service_completed_successfully
+      mail:
+        condition: service_started
+    volumes:
+      - certs:/certs:ro
     ports:
       - '8080:8080'
+
+volumes:
+  certs:

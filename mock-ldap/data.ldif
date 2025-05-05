@@ -5,13 +5,13 @@
 # Both has the password 'password'
 #
 
-#dn: dc=jenkins-ci,dc=org
-#objectClass: top
-#objectClass: dcObject
-#objectClass: organization
-#o: Jenkins users
-#dc: Jenkins-Ci
-#description: Jenkins users
+dn: dc=jenkins-ci,dc=org
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: Jenkins users
+dc: Jenkins-Ci
+description: Jenkins users
 
 #dn: cn=admin,dc=jenkins-ci,dc=org
 #objectClass: simpleSecurityObject

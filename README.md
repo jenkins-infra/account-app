@@ -2,17 +2,21 @@
 
 ## Testing locally
 
-Run `docker compose up -d ldap`
+With a Docker Engine in "Linux Container" mode and the `compose` plugin installed,
+run the command `docker compose up --build -d` which will:
 
-```shell
-./gradlew appRun
-```
+- Build the application (in a container)
+- Start a LDAP server with fixtures
 
-This will get you a development server running at http://localhost:8080
+You can also run only the LDAP stack with `docker compose up -d ldap-data` and then `./gradlew appRun` for local development.
+
+Both cases will get you a development server running at <http://localhost:8080>.
+
+The default admin username is `kohsuke` and its password is `password` (see the mock-ldap/ directory).
 
 ### Emails
 
-Emails are send to a local mail server and not forwarded on, you can see them at http://localhost:3000.
+Emails are send to a local mail server and not forwarded on, you can see them at <http://localhost:3000>.
 
 ## Packaging
 
@@ -24,15 +28,11 @@ To run the container locally:
 docker compose up --build app
 ```
 
-## Makefile
-
-`make run`: Runs the docker container
-
 ## SMTP
 
 The account app support different types of SMTP configuration to send emails:
 
-* Nothing is configured, the application try to connect on `localhost:25`
-* `SMTP_AUTH` is set to false, the accountapp will connect on `$SMTP_SERVER:25`
-* `SMTP_AUTH` is set to true, the accountapp will connect on `$SMTP_SERVER:587` with tls authentication
+- Nothing is configured, the application try to connect on `localhost:25`
+- `SMTP_AUTH` is set to false, the accountapp will connect on `$SMTP_SERVER:25`
+- `SMTP_AUTH` is set to true, the accountapp will connect on `$SMTP_SERVER:587` with tls authentication
   and will use: `$SMTP_USER` with `$SMTP_PASSWORD`.
