@@ -1,7 +1,8 @@
+#syntax=docker/dockerfile:1.7-labs
 FROM eclipse-temurin:17 AS build
 
 WORKDIR /app
-COPY . .
+COPY --exclude=entrypoint.sh . .
 RUN ./gradlew --no-daemon --info war -x test -x integrationTest
 
 FROM jetty:10.0.25-jre17 AS production
