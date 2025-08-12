@@ -52,8 +52,8 @@ testing {
 
                 implementation("com.sun.mail:jakarta.mail:2.0.2")
 
-                implementation("org.seleniumhq.selenium:selenium-java:4.34.0")
-                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.34.0")
+                implementation("org.seleniumhq.selenium:selenium-java:4.35.0")
+                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.35.0")
                 implementation("org.assertj:assertj-core:3.27.4")
 
                 implementation("com.unboundid:unboundid-ldapsdk:7.0.3")
