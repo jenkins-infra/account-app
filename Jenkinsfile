@@ -34,7 +34,7 @@ pipeline {
             steps {
                 buildDockerAndPublishImage('account-app', [
                     rebuildImageOnPeriodicJob: false,
-                    publishToPrivateAzureRegistry: true
+                    publishToPrivateAzureRegistry: true,
                     targetplatforms: 'linux/arm64',
                     disablePublication: !infra.isInfra()
                 ])
