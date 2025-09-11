@@ -79,7 +79,7 @@ tasks.named("check") {
 }
 
 dependencies {
-    implementation("com.typesafe:config:1.4.4")
+    implementation("com.typesafe:config:1.4.5")
 
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
