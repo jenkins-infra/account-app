@@ -44,6 +44,7 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import javax.servlet.http.Cookie;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
 import org.kohsuke.stapler.Header;
 import org.kohsuke.stapler.HttpRedirect;
@@ -160,6 +161,10 @@ public class Application {
 
         if(Pattern.matches("(?:^jb\\d+@gmail.com|seo\\d+@)", email)) {
             blockReasons.add("BL: email (custom)");
+        }
+
+        if(!EmailValidator.getInstance().isValid(email)) {
+            blockReasons.add("BL: invalid email");
         }
 
         if(
