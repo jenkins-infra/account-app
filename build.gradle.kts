@@ -14,7 +14,7 @@ version = "2.5"
 repositories {
     mavenCentral()
     maven("https://repo.jenkins-ci.org/public/")
-    maven("https://git.captcha.com/maven.git/blob_plain/HEAD:/")
+    maven("https://raw.githubusercontent.com/MarkEWaite/botdetect-java-captcha/f3ff42c0b3c63ed860632e83a5d5ae237649072d/")
 }
 
 java {
