@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
     war
     id("org.gretty") version "3.1.1"
-    id("com.github.ben-manes.versions") version "0.52.0"
+    id("com.github.ben-manes.versions") version "0.53.0"
 }
 
 group = "org.jenkins-ci"
@@ -14,7 +14,7 @@ version = "2.5"
 repositories {
     mavenCentral()
     maven("https://repo.jenkins-ci.org/public/")
-    maven("https://git.captcha.com/maven.git/blob_plain/HEAD:/")
+    maven("https://raw.githubusercontent.com/jenkins-infra/botdetect-java-captcha/f3ff42c0b3c63ed860632e83a5d5ae237649072d/")
 }
 
 java {
@@ -48,15 +48,15 @@ testing {
             dependencies {
                 implementation(project())
 
-                implementation("io.github.bonigarcia:webdrivermanager:6.1.0")
+                implementation("io.github.bonigarcia:webdrivermanager:6.3.3")
 
-                implementation("com.sun.mail:jakarta.mail:2.0.1")
+                implementation("com.sun.mail:jakarta.mail:2.0.2")
 
-                implementation("org.seleniumhq.selenium:selenium-java:4.32.0")
-                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.32.0")
-                implementation("org.assertj:assertj-core:3.27.3")
+                implementation("org.seleniumhq.selenium:selenium-java:4.38.0")
+                implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.38.0")
+                implementation("org.assertj:assertj-core:3.27.7")
 
-                implementation("com.unboundid:unboundid-ldapsdk:7.0.2")
+                implementation("com.unboundid:unboundid-ldapsdk:7.0.3")
 
                 implementation("com.icegreen:greenmail-junit5:2.0.1")
             }
@@ -79,19 +79,19 @@ tasks.named("check") {
 }
 
 dependencies {
-    implementation("com.typesafe:config:1.4.3")
+    implementation("com.typesafe:config:1.4.5")
 
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     implementation("org.glassfish:javax.json:1.1.4")
-    implementation("commons-codec:commons-codec:1.18.0")
+    implementation("commons-codec:commons-codec:1.20.0")
 
     implementation("org.kohsuke.stapler:stapler-jelly:1870.v48cc46ef5fee")
     implementation("org.kohsuke.stapler:stapler-openid-server:1.0")
 
     implementation("commons-jelly:commons-jelly-tags-define:1.0")
 
-    implementation("com.sun.mail:jakarta.mail:2.0.1")
+    implementation("com.sun.mail:jakarta.mail:2.0.2")
 
     implementation("com.sun.activation:jakarta.activation:2.0.1")
 
@@ -102,11 +102,11 @@ dependencies {
 
     implementation("com.captcha:botdetect-jsp20:4.0.beta3.7")
 
-    implementation("com.github.spotbugs:spotbugs-annotations:4.9.3")
+    implementation("com.github.spotbugs:spotbugs-annotations:4.9.8")
 
-    implementation("com.google.guava:guava:33.4.8-jre")
+    implementation("com.google.guava:guava:33.5.0-jre")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.0.2")
 }
 
 tasks {
