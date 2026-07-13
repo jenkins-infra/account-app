@@ -45,6 +45,7 @@ import javax.naming.ldap.LdapContext;
 import javax.servlet.http.Cookie;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.account.openid.JenkinsOpenIDServer;
+import org.jenkinsci.account.security.CrumbIssuer;
 import org.kohsuke.stapler.Header;
 import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
@@ -53,6 +54,7 @@ import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import static javax.naming.directory.DirContext.ADD_ATTRIBUTE;
 import static javax.naming.directory.DirContext.REMOVE_ATTRIBUTE;
@@ -100,6 +102,7 @@ public class Application {
     /**
      * Receives the sign-up form submission.
      */
+    @RequirePOST
     public HttpResponse doDoSignup(
             StaplerRequest request,
             StaplerResponse response,
@@ -329,6 +332,7 @@ public class Application {
     /**
      * Handles the password reset form submission.
      */
+    @RequirePOST
     public HttpResponse doDoPasswordReset(@QueryParameter String id, @QueryParameter String reason) throws Exception {
         final DirContext con = connect();
         if (id.isEmpty())
@@ -496,6 +500,7 @@ public class Application {
     /**
      * Handles the login form submission.
      */
+    @RequirePOST
     public HttpResponse doDoLogin(
             @QueryParameter String userid,
             @QueryParameter String password,
@@ -521,7 +526,9 @@ public class Application {
             LdapContext context = connect(dn, password);    // make sure the password is valid
             try {
                 Myself myself = new Myself(this, dn, context.getAttributes(dn), getGroups(dn,context));
-                Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(), myself);
+                StaplerRequest req = Stapler.getCurrentRequest();
+                req.getSession().invalidate();
+                req.getSession(true).setAttribute(Myself.class.getName(), myself);
                 return myself;
             } finally {
                 context.close();
@@ -553,6 +560,10 @@ public class Application {
     public HttpResponse doLogout(StaplerRequest req) {
         req.getSession().invalidate();
         return HttpResponses.redirectToDot();
+    }
+
+    public String getCrumb() {
+        return CrumbIssuer.getCrumb(Stapler.getCurrentRequest());
     }
 
     public boolean isLoggedIn() {

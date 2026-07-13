@@ -37,6 +37,7 @@ public class AdminUI {
         return app.circuitBreaker;
     }
 
+    @RequirePOST
     public HttpResponse doSearch(@QueryParameter String word) throws NamingException {
         List<User> all = new ArrayList<User>();
         LdapContext con = app.connect();

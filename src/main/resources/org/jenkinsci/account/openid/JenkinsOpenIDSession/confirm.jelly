@@ -6,6 +6,7 @@
     </div>
 
     <form method="post" action="verify">
+      <input type="hidden" name="crumb" value="${app.crumb}"/>
       <button type="submit">
         Proceed
       </button>

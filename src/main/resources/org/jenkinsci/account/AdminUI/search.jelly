@@ -26,12 +26,14 @@
           <td>${u.mail}</td>
           <td>
             <form method="post" action="passwordReset" style="margin:0">
+              <input type="hidden" name="crumb" value="${app.crumb}"/>
               <input type="hidden" name="id" value="${u.id}" />
               <input type="submit" value="Reset password" class="app-button" />
             </form>
           </td>
           <td>
             <form method="post" action="emailReset" style="margin:0">
+              <input type="hidden" name="crumb" value="${app.crumb}"/>
               <input type="hidden" name="id" value="${u.id}" />
               <input type="text" name="email" value="${u.mail}" class="form-control" />
               <input type="submit" value="Update" class="app-button" style="margin-left: 0.5rem" />
@@ -40,6 +42,7 @@
 
           <td>
             <form method="post" action="delete" style="margin:0">
+              <input type="hidden" name="crumb" value="${app.crumb}"/>
               <input type="hidden" name="id" value="${u.id}" />
               <input type="text" name="confirm" style="width:4em" class="form-control" />
               <input type="submit" value="Delete" class="app-button" style="margin-left: 0.5rem" />

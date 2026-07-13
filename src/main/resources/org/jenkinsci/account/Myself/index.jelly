@@ -4,6 +4,7 @@
     <h1>Your profile</h1>
 
     <form method="post" action="update">
+    <input type="hidden" name="crumb" value="${app.crumb}"/>
     <div class="ac-form-group">
       <label>Username</label>
       <input type="text" readonly="true" value="${it.userId}" class="form-control text" disabled="true"/>
