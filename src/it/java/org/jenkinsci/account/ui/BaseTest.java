@@ -44,9 +44,16 @@ public class BaseTest {
 
     public static final ReadInboundEmailService READ_INBOUND_EMAIL_SERVICE = new ReadInboundEmailService("localhost", 3143);
 
+    private static WebDriverManager wdm;
+
     @BeforeAll
     static void setupAll() {
-        WebDriverManager.chromiumdriver().setup();
+        wdm = WebDriverManager.chromedriver();
+        String browserBinary = System.getenv("SELENIUM_BROWSER_BINARY");
+        if (browserBinary != null && !browserBinary.isBlank()) {
+            wdm.browserPath(browserBinary);
+        }
+        wdm.setup();
     }
 
     @BeforeEach
@@ -80,6 +87,10 @@ public class BaseTest {
     public void startBrowser() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless", "--window-size=1920,1080");
+        String browserBinary = System.getenv("SELENIUM_BROWSER_BINARY");
+        if (browserBinary != null && !browserBinary.isBlank()) {
+            options.setBinaryLocation(browserBinary);
+        }
         driver = new ChromeDriver(options);
     }
 

@@ -17,6 +17,9 @@ pipeline {
             }
         }
         stage('Test') {
+            environment {
+                SELENIUM_BROWSER_BINARY = sh(script: 'ls ${HOME}/.cache/ms-playwright/chromium_headless_shell-*/chrome-headless-shell-linux64/chrome-headless-shell', returnStdout: true).trim()
+            }
             steps {
                 sh './gradlew check'
             }
