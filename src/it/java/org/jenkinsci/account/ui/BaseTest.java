@@ -52,7 +52,7 @@ public class BaseTest {
         wdm = WebDriverManager.chromedriver();
         String browserBinary = System.getenv("SELENIUM_BROWSER_BINARY");
         if (browserBinary != null && !browserBinary.isBlank()) {
-            wdm.browserPath(browserBinary);
+            wdm.browserBinary(browserBinary);
         }
         wdm.setup();
     }
@@ -90,7 +90,7 @@ public class BaseTest {
         options.addArguments("--headless", "--window-size=1920,1080");
         String browserBinary = System.getenv("SELENIUM_BROWSER_BINARY");
         if (browserBinary != null && !browserBinary.isBlank()) {
-            options.setBinaryLocation(browserBinary);
+            options.setBinary(browserBinary);
         }
         driver = new ChromeDriver(options);
     }
