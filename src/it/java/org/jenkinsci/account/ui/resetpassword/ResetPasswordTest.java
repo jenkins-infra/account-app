@@ -8,6 +8,7 @@ import org.jenkinsci.account.ui.BaseTest;
 import org.jenkinsci.account.ui.email.Emails;
 import org.jenkinsci.account.ui.login.LoginPage;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,12 +27,12 @@ class ResetPasswordTest extends BaseTest {
     private void resetPassword(String username, String email, UserLookupType userLookupType) throws MessagingException, IOException {
         openHomePage();
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.clickForgotPassword();
 
         Date timestampBeforeReset = new Date();
 
-        ResetPasswordPage resetPasswordPage = new ResetPasswordPage(driver);
+        ResetPasswordPage resetPasswordPage = new ResetPasswordPage(driver, wait);
         if (userLookupType == UserLookupType.USERNAME) {
             resetPasswordPage.resetPassword(username);
         } else {
@@ -57,9 +58,10 @@ class ResetPasswordTest extends BaseTest {
         String password = matcher.group(1);
 
         openHomePage();
+        loginPage = new LoginPage(driver, wait);
         loginPage.login(username, password);
 
-        String pageTitle = driver.getTitle();
-        assertThat(pageTitle).contains("Account");
+        wait.until(ExpectedConditions.titleContains("Account"));
+        assertThat(driver.getTitle()).contains("Account");
     }
 }
