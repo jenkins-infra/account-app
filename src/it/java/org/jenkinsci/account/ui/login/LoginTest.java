@@ -1,8 +1,8 @@
 package org.jenkinsci.account.ui.login;
 
 import org.jenkinsci.account.ui.BaseTest;
-import org.jenkinsci.account.ui.login.LoginPage;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,11 +12,10 @@ class LoginTest extends BaseTest {
     void acceptsValidPassword() {
         openHomePage();
 
-        LoginPage loginPage = new LoginPage(driver);
-
+        LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.login("alice", "password");
 
-        String pageTitle = driver.getTitle();
-        assertThat(pageTitle).contains("Account");
+        wait.until(ExpectedConditions.titleContains("Account"));
+        assertThat(driver.getTitle()).contains("Account");
     }
 }

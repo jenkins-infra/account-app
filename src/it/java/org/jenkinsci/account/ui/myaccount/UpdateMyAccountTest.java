@@ -4,6 +4,7 @@ import org.jenkinsci.account.ui.BaseTest;
 import org.jenkinsci.account.ui.login.LoginPage;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,13 +14,13 @@ public class UpdateMyAccountTest extends BaseTest {
     public void updateProfileDetails() {
         openHomePage();
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.login("alice", "password");
 
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        MyAccountPage myAccountPage = new MyAccountPage(driver, wait);
         myAccountPage.clickProfileLink();
 
-        MyProfilePage profilePage = new MyProfilePage(driver);
+        MyProfilePage profilePage = new MyProfilePage(driver, wait);
         profilePage.updateFirstName("Kohsuke1");
         profilePage.updateLastName("Kawaguchi1");
         profilePage.updateEmail("kohsuke@jenkins-ci.org");
@@ -27,6 +28,7 @@ public class UpdateMyAccountTest extends BaseTest {
         profilePage.updateSSHKeys("abcdefgh");
         profilePage.update();
 
+        wait.until(ExpectedConditions.titleContains("Account App"));
         assertThat(driver.findElement(By.tagName("h1")).getText()).isEqualTo("Done!");
     }
 
@@ -35,59 +37,60 @@ public class UpdateMyAccountTest extends BaseTest {
     public void changePasswordValuesMustMatch() {
         openHomePage();
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.login("alice", "password");
 
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        MyAccountPage myAccountPage = new MyAccountPage(driver, wait);
         myAccountPage.clickProfileLink();
 
-        MyProfilePage profilePage = new MyProfilePage(driver);
+        MyProfilePage profilePage = new MyProfilePage(driver, wait);
         profilePage.updateOldPassword("password");
         profilePage.updateNewPassword("password1");
         profilePage.updateConfirmNewPassword("password2");
         profilePage.update();
 
-        String pageTitle = driver.getTitle();
-        assertThat(pageTitle).contains("Error");
+        wait.until(ExpectedConditions.titleContains("Error"));
+        assertThat(driver.getTitle()).contains("Error");
     }
 
     @Test
     public void changePasswordValuesMustProvideOldPassword() {
         openHomePage();
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.login("alice", "password");
 
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        MyAccountPage myAccountPage = new MyAccountPage(driver, wait);
         myAccountPage.clickProfileLink();
 
-        MyProfilePage profilePage = new MyProfilePage(driver);
+        MyProfilePage profilePage = new MyProfilePage(driver, wait);
         profilePage.updateNewPassword("password1");
         profilePage.updateConfirmNewPassword("password1");
         profilePage.update();
 
-        String pageTitle = driver.getTitle();
-        assertThat(pageTitle).contains("Error");
+        wait.until(ExpectedConditions.titleContains("Error"));
+        assertThat(driver.getTitle()).contains("Error");
     }
 
     @Test
     public void changePassword() {
         openHomePage();
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.login("alice", "password");
 
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        MyAccountPage myAccountPage = new MyAccountPage(driver, wait);
         myAccountPage.clickProfileLink();
 
-        MyProfilePage profilePage = new MyProfilePage(driver);
+        MyProfilePage profilePage = new MyProfilePage(driver, wait);
         profilePage.changePassword("password", "password1");
 
+        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.titleContains("Account App"));
         newSession();
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPage(driver, wait);
         loginPage.login("alice", "password1");
 
-        String pageTitle = driver.getTitle();
-        assertThat(pageTitle).contains("Account");
+        wait.until(ExpectedConditions.titleContains("Account"));
+        assertThat(driver.getTitle()).contains("Account");
     }
 }

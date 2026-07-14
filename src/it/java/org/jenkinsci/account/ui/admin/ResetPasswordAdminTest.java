@@ -10,6 +10,7 @@ import org.jenkinsci.account.ui.login.LoginPage;
 import org.jenkinsci.account.ui.myaccount.MyAccountPage;
 import org.jenkinsci.account.ui.resetpassword.UserLookupType;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,13 +28,13 @@ public class ResetPasswordAdminTest extends BaseTest {
 
     private void resetPassword(String username, String email, UserLookupType userLookupType) throws MessagingException, IOException {
         openHomePage();
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.login("kohsuke", "password");
 
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        MyAccountPage myAccountPage = new MyAccountPage(driver, wait);
         myAccountPage.clickAdminLink();
 
-        AdminPage adminPage = new AdminPage(driver);
+        AdminPage adminPage = new AdminPage(driver, wait);
         if (userLookupType == UserLookupType.USERNAME) {
             adminPage.search(username);
         } else {
@@ -42,10 +43,10 @@ public class ResetPasswordAdminTest extends BaseTest {
 
         Date timestampBeforeReset = new Date();
 
-        AdminSearchPage adminSearchPage = new AdminSearchPage(driver);
+        AdminSearchPage adminSearchPage = new AdminSearchPage(driver, wait);
         adminSearchPage.resetPassword();
 
-        AdminResetPasswordResultPage resetPasswordResultPage = new AdminResetPasswordResultPage(driver);
+        AdminResetPasswordResultPage resetPasswordResultPage = new AdminResetPasswordResultPage(driver, wait);
         String newPassword = resetPasswordResultPage.getNewPassword();
 
         String emailContent = READ_INBOUND_EMAIL_SERVICE
@@ -65,8 +66,8 @@ public class ResetPasswordAdminTest extends BaseTest {
 
         newSession();
 
-        new LoginPage(driver).login(username, newPassword);
-        String pageTitle = driver.getTitle();
-        assertThat(pageTitle).contains("Account");
+        new LoginPage(driver, wait).login(username, newPassword);
+        wait.until(ExpectedConditions.titleContains("Account"));
+        assertThat(driver.getTitle()).contains("Account");
     }
 }
