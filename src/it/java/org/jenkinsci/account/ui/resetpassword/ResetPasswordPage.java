@@ -33,7 +33,7 @@ public class ResetPasswordPage {
     }
 
     public String resultText() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("p")));
+        wait.until(ExpectedConditions.titleContains("Email sent!"));
         return driver.findElement(By.cssSelector("p")).getText();
     }
 }

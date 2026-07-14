@@ -28,7 +28,7 @@ public class UpdateMyAccountTest extends BaseTest {
         profilePage.updateSSHKeys("abcdefgh");
         profilePage.update();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
+        wait.until(ExpectedConditions.titleContains("Account App"));
         assertThat(driver.findElement(By.tagName("h1")).getText()).isEqualTo("Done!");
     }
 
