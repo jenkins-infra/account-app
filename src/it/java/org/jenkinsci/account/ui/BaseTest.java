@@ -32,11 +32,14 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 @ExtendWith(BaseTest.ScreenShotOnFailedTestExtension.class)
 public class BaseTest {
 
     public ChromeDriver driver;
+    public WebDriverWait wait;
     protected InMemoryDirectoryServer ds;
 
     @RegisterExtension
@@ -86,12 +89,13 @@ public class BaseTest {
 
     public void startBrowser() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless", "--window-size=1920,1080");
+        options.addArguments("--headless", "--window-size=1920,1080", "--no-sandbox", "--disable-dev-shm-usage");
         String browserBinary = System.getenv("SELENIUM_BROWSER_BINARY");
         if (browserBinary != null && !browserBinary.isBlank()) {
             options.setBinary(browserBinary);
         }
         driver = new ChromeDriver(options);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public void openHomePage() {
