@@ -13,6 +13,7 @@ import javax.naming.directory.DirContext;
 import javax.naming.ldap.LdapContext;
 import java.util.Set;
 import java.util.logging.Logger;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import static org.jenkinsci.account.LdapAbuse.GITHUB_ID;
 import static org.jenkinsci.account.LdapAbuse.SSH_KEYS;
@@ -86,6 +87,7 @@ public class Myself {
         return att!=null ? (String) att.get() : null;
     }
 
+    @RequirePOST
     public HttpResponse doUpdate(
             @QueryParameter String firstName,
             @QueryParameter String lastName,
@@ -133,8 +135,7 @@ public class Myself {
         return new HttpRedirect("done");
     }
 
-    // no longer invoked directly from outside, but left as is
-    public HttpResponse doChangePassword(
+    protected HttpResponse doChangePassword(
             @QueryParameter String password,
             @QueryParameter String newPassword1,
             @QueryParameter String newPassword2

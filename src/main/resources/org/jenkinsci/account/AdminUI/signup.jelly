@@ -5,6 +5,7 @@
       Confirm creating the following user
     </p>
     <form method="post" action="doSignup">
+      <input type="hidden" name="crumb" value="${app.crumb}"/>
       <div class="ac-form-group">
         <label>User ID</label>
         <input type="text" name="userid" value="${request.getParameter('userId')}" class="form-control text" placeholder="Userid" />

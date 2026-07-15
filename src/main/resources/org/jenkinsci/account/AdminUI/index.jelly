@@ -6,6 +6,7 @@
           Type the username or email address to find the user.
         </p>
         <form method="post" action="search">
+          <input type="hidden" name="crumb" value="${app.crumb}"/>
           <div class="ac-form-group">
             <label for="word">Username or email address</label>
             <input type="text" name="word" class="form-control text"/>
@@ -28,6 +29,7 @@
           </p>
         </j:if>
         <form method="post" action="circuitBreaker/set">
+          <input type="hidden" name="crumb" value="${app.crumb}"/>
           <div class="ac-form-group">
             <label for="time">Circuit breaker is on until when? (YYYY/MM/DD HH:MM)</label>
             <input type="text" name="time" class="form-control text"/>

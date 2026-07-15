@@ -2,8 +2,11 @@ package org.jenkinsci.account;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import javax.servlet.ServletContextEvent;
 import org.jenkinsci.account.config.LdapConfig;
 import org.jenkinsci.account.config.MailConfig;
+import org.jenkinsci.account.security.CrumbIssuer;
+import org.kohsuke.stapler.WebApp;
 import org.kohsuke.stapler.framework.AbstractWebAppMain;
 import org.kohsuke.stapler.jelly.DefaultScriptInvoker;
 
@@ -21,6 +24,12 @@ public class WebAppMain extends AbstractWebAppMain<Application> {
     @Override
     protected String getApplicationName() {
         return "APP";
+    }
+
+    @Override
+    public void contextInitialized(ServletContextEvent event) {
+        super.contextInitialized(event);
+        WebApp.get(event.getServletContext()).setCrumbIssuer(new CrumbIssuer());
     }
 
     @Override

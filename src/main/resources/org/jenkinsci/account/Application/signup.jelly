@@ -6,6 +6,7 @@
     <div class="ac-description">All fields are required</div>
 
     <form method="post" action="doSignup">
+      <input type="hidden" name="crumb" value="${app.crumb}"/>
       <div class="ac-form-group">
         <label for="userid">Username</label>
         <div class="ac-description">
