@@ -51,15 +51,20 @@ class ResetPasswordTest extends BaseTest {
 
         assertThat(emailContent).isNotEmpty();
 
-        Matcher matcher = Emails.PASSWORD_EXTRACTOR.matcher(emailContent);
-        boolean matches = matcher.find();
-        assertThat(matches).isTrue();
+        Matcher matcher = Emails.RESET_LINK_EXTRACTOR.matcher(emailContent);
+        assertThat(matcher.find()).isTrue();
 
-        String password = matcher.group(1);
+        String resetLink = matcher.group(1);
+
+        driver.get(resetLink);
+
+        String newPassword = "newSecurePass42";
+        ConfirmPasswordResetPage confirmPage = new ConfirmPasswordResetPage(driver);
+        confirmPage.setNewPassword(newPassword, newPassword);
 
         openHomePage();
         loginPage = new LoginPage(driver, wait);
-        loginPage.login(username, password);
+        loginPage.login(username, newPassword);
 
         wait.until(ExpectedConditions.titleContains("Account"));
         assertThat(driver.getTitle()).contains("Account");
