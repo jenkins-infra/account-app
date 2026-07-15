@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
-import com.sun.mail.imap.IMAPFolder;
 
 public class ReadInboundEmailService {
     private final String host;
@@ -25,7 +24,7 @@ public class ReadInboundEmailService {
         Session session = this.getImapSession();
         Store store = session.getStore("imap");
         store.connect(host, port, toAddressToSearchFor, toAddressToSearchFor);
-        IMAPFolder inbox = (IMAPFolder) store.getFolder("INBOX");
+        Folder inbox = store.getFolder("INBOX");
         inbox.open(Folder.READ_WRITE);
         Message[] messages = inbox.getMessages();
 
