@@ -3,7 +3,7 @@ plugins {
     `jvm-test-suite`
     `maven-publish`
     war
-    id("org.gretty") version "3.1.1"
+    id("org.gretty") version "3.1.9"
     id("com.github.ben-manes.versions") version "0.53.0"
 }
 
@@ -34,11 +34,11 @@ java {
 
 testing {
     suites {
-        @Suppress("UnstableApiUsage") val test by getting(JvmTestSuite::class) {
+        named<JvmTestSuite>("test") {
             useJUnitJupiter()
         }
 
-        @Suppress("UnstableApiUsage", "UNUSED_VARIABLE") val integrationTest by registering(JvmTestSuite::class) {
+        register<JvmTestSuite>("integrationTest") {
             sources {
                 java {
                     setSrcDirs(listOf("src/it/java"))
@@ -64,12 +64,10 @@ testing {
             targets {
                 all {
                     testTask.configure {
-                        shouldRunAfter(test)
+                        shouldRunAfter("test")
                     }
                 }
             }
-
-            testType.set(TestSuiteType.INTEGRATION_TEST)
         }
     }
 }
