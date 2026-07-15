@@ -110,6 +110,7 @@ dependencies {
 tasks {
     test {
         useJUnitPlatform()
+        failOnNoDiscoveredTests = false
     }
     withType<org.akhikhl.gretty.AppBeforeIntegrationTestTask> {
         doFirst {
