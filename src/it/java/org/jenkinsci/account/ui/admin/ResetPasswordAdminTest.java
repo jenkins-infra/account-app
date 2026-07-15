@@ -8,6 +8,7 @@ import org.jenkinsci.account.ui.BaseTest;
 import org.jenkinsci.account.ui.email.Emails;
 import org.jenkinsci.account.ui.login.LoginPage;
 import org.jenkinsci.account.ui.myaccount.MyAccountPage;
+import org.jenkinsci.account.ui.resetpassword.ConfirmPasswordResetPage;
 import org.jenkinsci.account.ui.resetpassword.UserLookupType;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -46,8 +47,8 @@ public class ResetPasswordAdminTest extends BaseTest {
         AdminSearchPage adminSearchPage = new AdminSearchPage(driver, wait);
         adminSearchPage.resetPassword();
 
-        AdminResetPasswordResultPage resetPasswordResultPage = new AdminResetPasswordResultPage(driver, wait);
-        String newPassword = resetPasswordResultPage.getNewPassword();
+        AdminResetPasswordResultPage resultPage = new AdminResetPasswordResultPage(driver, wait);
+        assertThat(resultPage.getConfirmationText()).contains(email);
 
         String emailContent = READ_INBOUND_EMAIL_SERVICE
                 .retrieveEmail(
@@ -56,15 +57,20 @@ public class ResetPasswordAdminTest extends BaseTest {
                         timestampBeforeReset
                 );
 
-        Matcher matcher = Emails.PASSWORD_EXTRACTOR.matcher(emailContent);
-        boolean matches = matcher.find();
-        assertThat(matches).isTrue();
+        assertThat(emailContent).isNotEmpty();
 
-        String passwordFromEmail = matcher.group(1);
+        Matcher matcher = Emails.RESET_LINK_EXTRACTOR.matcher(emailContent);
+        assertThat(matcher.find()).isTrue();
 
-        assertThat(newPassword).isEqualTo(passwordFromEmail);
+        String resetLink = matcher.group(1);
 
         newSession();
+
+        driver.get(resetLink);
+
+        String newPassword = "newSecurePass99";
+        ConfirmPasswordResetPage confirmPage = new ConfirmPasswordResetPage(driver);
+        confirmPage.setNewPassword(newPassword, newPassword);
 
         new LoginPage(driver, wait).login(username, newPassword);
         wait.until(ExpectedConditions.titleContains("Account"));

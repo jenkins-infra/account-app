@@ -83,10 +83,13 @@ public class Application {
     // not exposing this to UI
     /*package*/ final CircuitBreaker circuitBreaker;
 
+    public final PasswordResetTokenService resetTokenService;
+
     public Application(Parameters params) throws Exception {
         this.params = params;
         this.openid = new JenkinsOpenIDServer(this);
         this.circuitBreaker = new CircuitBreaker(params);
+        this.resetTokenService = new PasswordResetTokenService();
     }
 
     public String getUrl() {
@@ -221,12 +224,13 @@ public class Application {
             throw new SystemError(SPAM_MESSAGE);
         }
 
-        String password = createRecord(userid, firstName, lastName, email);
+        createRecord(userid, firstName, lastName, email);
         LOGGER.info("User "+userid+" is from "+ip);
         mail("jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
             userDetails + "\n\nHTTP Headers\n" +
                 dumpHeaders(request) + "\n\n" + "Account page: " + getUrl() + "/admin/search?word=" + userid + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
-        new User(userid,email).mailPassword(password);
+        String token = resetTokenService.createToken(userid, PasswordResetTokenService.ACTIVATION_TTL);
+        new User(userid,email).mailActivationLink(token);
 
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
         cookie.setDomain("accounts.jenkins.io");
@@ -330,28 +334,57 @@ public class Application {
     }
 
     /**
-     * Handles the password reset form submission.
+     * Handles the "Forgot password" form submission.
+     * Issues a time-limited token and emails a reset link — does NOT change the current password.
      */
     @RequirePOST
-    public HttpResponse doDoPasswordReset(@QueryParameter String id, @QueryParameter String reason) throws Exception {
-        final DirContext con = connect();
-        if (id.isEmpty())
+    public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
+        if (id == null || id.isEmpty())
             throw new UserError("No email or user account provided");
+        final DirContext con = connect();
         try {
             Iterator<User> a = searchByWord(id, con);
             if (a.hasNext()) {
                 User u = a.next();
-
-                String p = PasswordUtil.generateRandomPassword();
-                u.modifyPassword(con, p);
-                u.mailPasswordReset(p, Stapler.getCurrentRequest().getRemoteUser(),
-                    StringUtils.isBlank(reason) ? "request in the account management app" : reason );
+                String token = resetTokenService.createToken(u.id, PasswordResetTokenService.RESET_TTL);
+                u.mailPasswordResetLink(token);
             }
         } finally {
             con.close();
         }
-
         return new HttpRedirect("resetMail");
+    }
+
+    /**
+     * Shows the "set new password" form after the user clicks the reset link in their email.
+     */
+    public HttpResponse doConfirmPasswordReset(@QueryParameter String token) {
+        resetTokenService.validateToken(token);
+        return HttpResponses.forwardToView(this, "confirmPasswordReset.jelly").with("token", token);
+    }
+
+    /**
+     * Applies the new password chosen by the user after validating the reset token.
+     */
+    @RequirePOST
+    public HttpResponse doDoConfirmPasswordReset(
+            @QueryParameter String token,
+            @QueryParameter String newPassword1,
+            @QueryParameter String newPassword2) throws Exception {
+        if (newPassword1 == null || newPassword1.isEmpty())
+            throw new UserError("New password is required");
+        if (newPassword1.length() < 8)
+            throw new UserError("Password must be at least 8 characters long.");
+        if (!newPassword1.equals(newPassword2))
+            throw new UserError("Passwords do not match");
+        String userId = resetTokenService.validateAndConsumeToken(token);
+        final DirContext con = connect();
+        try {
+            getUserById(userId, con).modifyPassword(con, newPassword1);
+        } finally {
+            con.close();
+        }
+        return new HttpRedirect("login");
     }
 
     public User getUserById(String id, DirContext con) throws NamingException {
@@ -397,41 +430,56 @@ public class Application {
         }
 
         /**
-         * Sends a new password to this user.
+         * Emails a one-time account activation link after self-signup.
          */
-        public void mailPassword(String password) throws MessagingException {
-            mail(mail, "Your access to Jenkins resources", "Your userid is " + id + "\n" +
-                "Your temporary password is " + password + "\n" +
-                "\n" +
-                "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
-        }
-
-        /**
-         * Sends a new password to this user.
-         */
-        public void mailAccountCreated(boolean sendPassword, String password, @CheckForNull String message) throws MessagingException {
-            mail(mail, "New account on the Jenkins project infrastructure",
-                "Dear recipient, \n\n" +
-                "We have created a new Jenkins project account for you. Your new user ID is " + id + "\n" +
-                ( sendPassword ? "Your temporary password is " + password + "\n" : "" ) +
-                ( StringUtils.isNotBlank(message) ? message + "\n" : "" ) +
-                "\n" +
-                ( sendPassword ? "Please visit " + getUrl() + " and update your password and profile\n" : "" ), 
+        public void mailActivationLink(String token) throws MessagingException {
+            String link = getUrl() + "confirmPasswordReset?token=" + token;
+            mail(mail, "Your access to Jenkins resources",
+                "Your Jenkins account has been created. Your userid is " + id + "\n\n" +
+                "Click the following link to set your password and activate your account. The link expires in 24 hours:\n" +
+                link + "\n",
                 "text/plain");
         }
 
         /**
-         * Sends a new password and a password reset notification to this user.
+         * Emails a one-time account activation link for admin-created accounts.
          */
-        public void mailPasswordReset(String password, @CheckForNull String requestedByUser, @CheckForNull String reason) throws MessagingException {
+        public void mailAccountCreatedWithLink(String token, @CheckForNull String message) throws MessagingException {
+            String link = getUrl() + "confirmPasswordReset?token=" + token;
+            mail(mail, "New account on the Jenkins project infrastructure",
+                "Dear recipient,\n\n" +
+                "We have created a new Jenkins project account for you. Your new user ID is " + id + "\n" +
+                (StringUtils.isNotBlank(message) ? message + "\n" : "") +
+                "\nClick the following link to set your password. The link expires in 24 hours:\n" +
+                link + "\n",
+                "text/plain");
+        }
+
+        /**
+         * Emails a one-time password reset link for a user-initiated reset.
+         * Does not change or reveal the current password.
+         */
+        public void mailPasswordResetLink(String token) throws MessagingException {
+            String link = getUrl() + "confirmPasswordReset?token=" + token;
             mail(mail, "Password reset on the Jenkins project infrastructure",
-                "Your Jenkins account password was reset. " +
-                (requestedByUser != null ? String.format("It was requested by user %s. ", requestedByUser) : "") +
-                (StringUtils.isNotBlank(reason) ? String.format("Reason: %s. ", reason) : "") +
-                "Your userid is " + id + "\n" +
-                "Your temporary password is " + password + "\n" +
-                "\n" +
-                "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
+                "A password reset was requested for your Jenkins account (userid: " + id + ").\n\n" +
+                "Click the following link to set a new password. The link expires in 1 hour:\n" +
+                link + "\n\n" +
+                "If you did not request this, you can safely ignore this email — your current password has not been changed.\n",
+                "text/plain");
+        }
+
+        /**
+         * Emails a one-time password reset link for an admin-initiated reset.
+         * The previous password has already been invalidated.
+         */
+        public void mailAdminPasswordResetLink(String token) throws MessagingException {
+            String link = getUrl() + "confirmPasswordReset?token=" + token;
+            mail(mail, "Password reset on the Jenkins project infrastructure",
+                "An administrator has reset the password for your Jenkins account (userid: " + id + ").\n\n" +
+                "Your previous password has been invalidated. Click the following link to set a new password. The link expires in 1 hour:\n" +
+                link + "\n",
+                "text/plain");
         }
 
         public void delete(DirContext con) throws NamingException {

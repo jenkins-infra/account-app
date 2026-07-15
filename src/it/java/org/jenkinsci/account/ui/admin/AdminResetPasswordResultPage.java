@@ -10,18 +10,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 // page_url = http://localhost:8080/admin/passwordReset
 public class AdminResetPasswordResultPage {
-    @FindBy(xpath = "//p/code")
-    private WebElement newPasswordText;
+    @FindBy(xpath = "//p[strong]")
+    private WebElement confirmationText;
 
     private final WebDriverWait wait;
 
     public AdminResetPasswordResultPage(WebDriver driver, WebDriverWait wait) {
         this.wait = wait;
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p/code")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p/strong")));
         PageFactory.initElements(driver, this);
     }
 
-    public String getNewPassword() {
-        return newPasswordText.getText();
+    public String getConfirmationText() {
+        return confirmationText.getText();
     }
 }

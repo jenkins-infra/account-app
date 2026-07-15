@@ -2,10 +2,10 @@ package org.jenkinsci.account;
 
 import jakarta.mail.MessagingException;
 import org.jenkinsci.account.Application.User;
+import org.jenkinsci.account.PasswordResetTokenService;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import javax.naming.NamingException;
@@ -57,15 +57,15 @@ public class AdminUI {
         LdapContext con = app.connect();
         try {
             User u = app.getUserById(id, con);
-
-            String p = PasswordUtil.generateRandomPassword();
-            u.modifyPassword(con, p);
-            u.mailPasswordReset(p, Stapler.getCurrentRequest().getRemoteUser(), reason);
+            u.modifyPassword(con, PasswordUtil.generateRandomPassword());
+            String token = app.resetTokenService.createToken(u.id, PasswordResetTokenService.RESET_TTL);
+            u.mailAdminPasswordResetLink(token);
+            LOGGER.info("Admin triggered password reset for " + u.id + " (reason: " + reason + ")");
 
             if (Myself.current().isAuthenticatedWithREST()) {
                 return HttpResponses.ok();
             } else {
-                return HttpResponses.forwardToView(this,"newPassword.jelly").with("user", u).with("password", p);
+                return HttpResponses.forwardToView(this, "passwordResetSent.jelly").with("user", u);
             }
         } finally {
             con.close();
@@ -110,9 +110,12 @@ public class AdminUI {
             @QueryParameter boolean skipPassword,
             @QueryParameter String message
     ) throws NamingException, MessagingException {
-        String password = app.createRecord(userid, firstName, lastName, email);
+        app.createRecord(userid, firstName, lastName, email);
 
-        app.new User(userid,email).mailAccountCreated(!skipPassword, password, message);
+        if (!skipPassword) {
+            String token = app.resetTokenService.createToken(userid, PasswordResetTokenService.ACTIVATION_TTL);
+            app.new User(userid, email).mailAccountCreatedWithLink(token, message);
+        }
 
         return HttpResponses.plainText("Created");
     }
