@@ -3,8 +3,8 @@ pipeline {
         JAVA_HOME = '/opt/jdk-17'
     }
     agent {
-        // Integration tests requires an x86_64 CPU (Selenium) VM (no sandbox)
-        label 'linux-amd64-docker'
+        // Integration tests requires an x86_64 CPU (Selenium) but can run inside a container
+        label 'maven-17 || jnlp-linux-amd64'
     }
     options {
         disableConcurrentBuilds(abortPrevious: true)
