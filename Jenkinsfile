@@ -1,10 +1,12 @@
+// Integration tests requires an x86_64 CPU for Selenium. A VM is required at least in infra.ci (AKS does not fare well with chromium (sandbox?) compared to EKS).
+final String agentLabel = infra.isInfra() ? 'linux-amd64-docker' : 'linux-amd64'
+
 pipeline {
     environment {
         JAVA_HOME = '/opt/jdk-17'
     }
     agent {
-        // Integration tests requires an x86_64 CPU (Selenium) but can run inside a container
-        label 'maven-17 || jnlp-linux-amd64'
+        label agentLabel
     }
     options {
         disableConcurrentBuilds(abortPrevious: true)
