@@ -433,7 +433,7 @@ public class Application {
          * Emails a one-time account activation link after self-signup.
          */
         public void mailActivationLink(String token) throws MessagingException {
-            String link = getUrl() + "confirmPasswordReset?token=" + token;
+            String link = getUrl() + "/confirmPasswordReset?token=" + token;
             mail(mail, "Your access to Jenkins resources",
                 "Your Jenkins account has been created. Your userid is " + id + "\n\n" +
                 "Click the following link to set your password and activate your account. The link expires in 24 hours:\n" +
@@ -445,7 +445,7 @@ public class Application {
          * Emails a one-time account activation link for admin-created accounts.
          */
         public void mailAccountCreatedWithLink(String token, @CheckForNull String message) throws MessagingException {
-            String link = getUrl() + "confirmPasswordReset?token=" + token;
+            String link = getUrl() + "/confirmPasswordReset?token=" + token;
             mail(mail, "New account on the Jenkins project infrastructure",
                 "Dear recipient,\n\n" +
                 "We have created a new Jenkins project account for you. Your new user ID is " + id + "\n" +
@@ -460,7 +460,7 @@ public class Application {
          * Does not change or reveal the current password.
          */
         public void mailPasswordResetLink(String token) throws MessagingException {
-            String link = getUrl() + "confirmPasswordReset?token=" + token;
+            String link = getUrl() + "/confirmPasswordReset?token=" + token;
             mail(mail, "Password reset on the Jenkins project infrastructure",
                 "A password reset was requested for your Jenkins account (userid: " + id + ").\n\n" +
                 "Click the following link to set a new password. The link expires in 1 hour:\n" +
