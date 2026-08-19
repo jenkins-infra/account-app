@@ -20,7 +20,8 @@ ENV APP_URL=http://accounts.jenkins.io/
 
 EXPOSE 8080
 
-USER root
+ARG ROOT_UID=0
+USER $ROOT_UID
 
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
 RUN \
@@ -41,6 +42,7 @@ RUN chmod 0755 /entrypoint.sh &&\
 
 COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
 
-USER jetty
+ARG JETTY_UID=999
+USER $JETTY_UID
 
 ENTRYPOINT ["bash","/entrypoint.sh"]
