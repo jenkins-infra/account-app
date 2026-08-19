@@ -1,11 +1,11 @@
 #syntax=docker/dockerfile:1.7-labs
-FROM eclipse-temurin:17 AS build
+FROM eclipse-temurin:21 AS build
 
 WORKDIR /app
 COPY --exclude=entrypoint.sh . .
 RUN ./gradlew --no-daemon --info war -x test -x integrationTest
 
-FROM jetty:10.0.26-jre17 AS production
+FROM jetty:11.0.26-jre21 AS production
 
 LABEL \
   description="Deploy Jenkins infra account app" \

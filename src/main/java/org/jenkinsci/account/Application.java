@@ -1,6 +1,7 @@
 package org.jenkinsci.account;
 
-import com.captcha.botdetect.web.servlet.Captcha;
+import com.github.cage.Cage;
+import com.github.cage.GCage;
 import com.google.common.net.InetAddresses;
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
@@ -10,6 +11,7 @@ import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -43,8 +45,8 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import javax.servlet.http.Cookie;
-import org.apache.commons.lang.StringUtils;
-import org.jenkinsci.account.openid.JenkinsOpenIDServer;
+import javax.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
 import org.jenkinsci.account.security.CrumbIssuer;
 import org.kohsuke.stapler.Header;
 import org.kohsuke.stapler.HttpRedirect;
@@ -60,7 +62,7 @@ import static javax.naming.directory.DirContext.ADD_ATTRIBUTE;
 import static javax.naming.directory.DirContext.REMOVE_ATTRIBUTE;
 import static javax.naming.directory.DirContext.REPLACE_ATTRIBUTE;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.jenkinsci.account.LdapAbuse.REGISTRATION_DATE;
 import static org.jenkinsci.account.LdapAbuse.SENIOR_STATUS;
 
@@ -75,19 +77,15 @@ public class Application {
      */
     private final Parameters params;
 
-    /**
-     * For bringing the OpenID server into the URL space.
-     */
-    public final JenkinsOpenIDServer openid;
-
     // not exposing this to UI
     /*package*/ final CircuitBreaker circuitBreaker;
 
     public final PasswordResetTokenService resetTokenService;
 
+    private final Cage cage = new GCage();
+
     public Application(Parameters params) throws Exception {
         this.params = params;
-        this.openid = new JenkinsOpenIDServer(this);
         this.circuitBreaker = new CircuitBreaker(params);
         this.resetTokenService = new PasswordResetTokenService();
     }
@@ -96,10 +94,25 @@ public class Application {
         return params.url();
     }
 
-    public String showCaptcha(String name){
-        Captcha captcha = Captcha.load(Stapler.getCurrentRequest(), name);
-        captcha.setUserInputID("captchaCode");
-        return captcha.getHtml();
+    public String showCaptcha(String name) {
+        String token = cage.getTokenGenerator().next();
+        Stapler.getCurrentRequest().getSession(true).setAttribute("captcha." + name, token);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            cage.draw(token, baos);
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+        String b64 = Base64.getEncoder().encodeToString(baos.toByteArray());
+        return "<img src=\"data:image/png;base64," + b64 + "\" alt=\"captcha\" />";
+    }
+
+    private boolean validateCaptcha(String name, String userInput) {
+        HttpSession session = Stapler.getCurrentRequest().getSession(false);
+        if (session == null) return false;
+        String expected = (String) session.getAttribute("captcha." + name);
+        session.removeAttribute("captcha." + name);
+        return expected != null && expected.equalsIgnoreCase(userInput);
     }
 
     /**
@@ -121,8 +134,7 @@ public class Application {
 
         ip = extractFirst(ip);
 
-        Captcha captcha = Captcha.load(request, "signUpCaptcha");
-        boolean isHuman = captcha.validate(request.getParameter("captchaCode"));
+        boolean isHuman = validateCaptcha("signUpCaptcha", captchaCode);
 
         // Check if userid and email are available before going further
         final DirContext con = connect();

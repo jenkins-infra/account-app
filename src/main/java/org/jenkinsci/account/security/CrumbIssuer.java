@@ -8,8 +8,6 @@ import java.security.SecureRandom;
 import java.util.HexFormat;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.kohsuke.stapler.StaplerRequest;
 
 public class CrumbIssuer extends org.kohsuke.stapler.CrumbIssuer {
@@ -28,17 +26,34 @@ public class CrumbIssuer extends org.kohsuke.stapler.CrumbIssuer {
         return hmac(request.getSession().getId());
     }
 
-    public static String getCrumb(HttpServletRequest request) {
+    public static String getCrumb(javax.servlet.http.HttpServletRequest request) {
         return hmac(request.getSession().getId());
     }
 
-    /** Validates a submitted crumb against the expected value for this session. */
-    public static void validate(HttpServletRequest request, String submitted) {
-        HttpSession session = request.getSession(false);
+    public static String getCrumb(jakarta.servlet.http.HttpServletRequest request) {
+        return hmac(request.getSession().getId());
+    }
+
+    /** Validates a submitted crumb against the expected value for this session (javax variant). */
+    public static void validate(javax.servlet.http.HttpServletRequest request, String submitted) {
+        javax.servlet.http.HttpSession session = request.getSession(false);
         if (session == null) {
             throw new SecurityException("Invalid or missing CSRF token. Please reload the page and try again.");
         }
-        String expected = hmac(session.getId());
+        validateHmac(session.getId(), submitted);
+    }
+
+    /** Validates a submitted crumb against the expected value for this session (jakarta variant). */
+    public static void validate(jakarta.servlet.http.HttpServletRequest request, String submitted) {
+        jakarta.servlet.http.HttpSession session = request.getSession(false);
+        if (session == null) {
+            throw new SecurityException("Invalid or missing CSRF token. Please reload the page and try again.");
+        }
+        validateHmac(session.getId(), submitted);
+    }
+
+    private static void validateHmac(String sessionId, String submitted) {
+        String expected = hmac(sessionId);
         if (!MessageDigest.isEqual(
                 expected.getBytes(StandardCharsets.UTF_8),
                 submitted != null ? submitted.getBytes(StandardCharsets.UTF_8) : new byte[0])) {

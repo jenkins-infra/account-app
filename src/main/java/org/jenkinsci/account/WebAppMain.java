@@ -2,14 +2,12 @@ package org.jenkinsci.account;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import javax.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextEvent;
 import org.jenkinsci.account.config.LdapConfig;
 import org.jenkinsci.account.config.MailConfig;
 import org.jenkinsci.account.security.CrumbIssuer;
 import org.kohsuke.stapler.WebApp;
 import org.kohsuke.stapler.framework.AbstractWebAppMain;
-import org.kohsuke.stapler.jelly.DefaultScriptInvoker;
-
 /**
  * Bootstrap code.
  *
@@ -18,7 +16,6 @@ import org.kohsuke.stapler.jelly.DefaultScriptInvoker;
 public class WebAppMain extends AbstractWebAppMain<Application> {
     public WebAppMain() {
         super(Application.class);
-        DefaultScriptInvoker.COMPRESS_BY_DEFAULT = false;   // blind shot
     }
 
     @Override
