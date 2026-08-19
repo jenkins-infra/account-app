@@ -3,7 +3,7 @@ final String agentLabel = infra.isInfra() ? 'linux-amd64-docker' : 'linux-amd64'
 
 pipeline {
     environment {
-        JAVA_HOME = '/opt/jdk-17'
+        JAVA_HOME = '/opt/jdk-21'
     }
     agent {
         label agentLabel
