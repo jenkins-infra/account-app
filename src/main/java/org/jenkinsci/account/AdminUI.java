@@ -10,7 +10,7 @@ import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import javax.naming.NamingException;
 import javax.naming.ldap.LdapContext;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

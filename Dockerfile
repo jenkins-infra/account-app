@@ -1,11 +1,11 @@
 #syntax=docker/dockerfile:1.7-labs
-FROM eclipse-temurin:17 AS build
+FROM eclipse-temurin:21 AS build
 
 WORKDIR /app
 COPY --exclude=entrypoint.sh . .
 RUN ./gradlew --no-daemon --info war -x test -x integrationTest
 
-FROM jetty:10.0.26-jre17 AS production
+FROM jetty:11.0.26-jre21 AS production
 
 LABEL \
   description="Deploy Jenkins infra account app" \
@@ -20,7 +20,8 @@ ENV APP_URL=http://accounts.jenkins.io/
 
 EXPOSE 8080
 
-USER root
+ARG ROOT_UID=0
+USER $ROOT_UID
 
 # /home/jetty/.app is apparently needed by Stapler for some weird reason. O_O
 RUN \
@@ -41,6 +42,7 @@ RUN chmod 0755 /entrypoint.sh &&\
 
 COPY circuitBreaker.txt /etc/accountapp/circuitBreaker.txt
 
-USER jetty
+ARG JETTY_UID=999
+USER $JETTY_UID
 
 ENTRYPOINT ["bash","/entrypoint.sh"]

@@ -3,7 +3,7 @@ plugins {
     `jvm-test-suite`
     `maven-publish`
     war
-    id("org.gretty") version "3.1.9"
+    id("org.gretty") version "4.1.10"
     id("com.github.ben-manes.versions") version "0.53.0"
 }
 
@@ -14,16 +14,15 @@ version = "2.5"
 repositories {
     mavenCentral()
     maven("https://repo.jenkins-ci.org/public/")
-    maven("https://raw.githubusercontent.com/jenkins-infra/botdetect-java-captcha/f3ff42c0b3c63ed860632e83a5d5ae237649072d/")
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 plugins.withId("java") {
     the<JavaPluginExtension>().toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
@@ -79,13 +78,10 @@ tasks.named("check") {
 dependencies {
     implementation("com.typesafe:config:1.4.5")
 
-    implementation("javax.servlet:javax.servlet-api:4.0.1")
-
-    implementation("org.glassfish:javax.json:1.1.4")
     implementation("commons-codec:commons-codec:1.20.0")
+    implementation("org.apache.commons:commons-lang3:3.17.0")
 
-    implementation("org.kohsuke.stapler:stapler-jelly:1870.v48cc46ef5fee")
-    implementation("org.kohsuke.stapler:stapler-openid-server:1.0")
+    implementation("org.kohsuke.stapler:stapler-jelly:2107.v8dfcb_e8ed317")
 
     implementation("commons-jelly:commons-jelly-tags-define:1.0")
 
@@ -93,12 +89,7 @@ dependencies {
 
     implementation("com.sun.activation:jakarta.activation:2.0.1")
 
-    implementation("org.webjars:webjars-servlet-2.x:1.6")
-    implementation("org.webjars:jquery:3.7.1")
-    implementation("org.webjars:jquery-ui:1.14.1")
-    implementation("org.webjars.bower:fontawesome:4.7.0")
-
-    implementation("com.captcha:botdetect-jsp20:4.0.beta3.7")
+    implementation("com.github.cage:cage:1.0")
 
     implementation("com.github.spotbugs:spotbugs-annotations:4.9.8")
 
@@ -127,5 +118,5 @@ gretty {
     httpPort = 8080
 
     integrationTestTask = "integrationTest"
-    servletContainer = "jetty10"
+    servletContainer = "jetty11"
 }

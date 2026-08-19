@@ -1,5 +1,7 @@
 package org.jenkinsci.account.security;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -8,9 +10,7 @@ import java.security.SecureRandom;
 import java.util.HexFormat;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class CrumbIssuer extends org.kohsuke.stapler.CrumbIssuer {
 
@@ -24,15 +24,14 @@ public class CrumbIssuer extends org.kohsuke.stapler.CrumbIssuer {
     }
 
     @Override
-    public String issueCrumb(StaplerRequest request) {
+    public String issueCrumb(StaplerRequest2 request) {
         return hmac(request.getSession().getId());
     }
 
-    public static String getCrumb(HttpServletRequest request) {
-        return hmac(request.getSession().getId());
+    public static String getCrumb(String sessionId) {
+        return hmac(sessionId);
     }
 
-    /** Validates a submitted crumb against the expected value for this session. */
     public static void validate(HttpServletRequest request, String submitted) {
         HttpSession session = request.getSession(false);
         if (session == null) {
