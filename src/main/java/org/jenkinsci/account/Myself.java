@@ -4,6 +4,7 @@ import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.Stapler;
+import org.kohsuke.stapler.StaplerRequest2;
 
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -63,7 +64,7 @@ public class Myself {
     }
 
     public static Myself current() {
-        return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        return (Myself) Stapler.getCurrentRequest2().getSession().getAttribute(Myself.class.getName());
     }
 
     /**

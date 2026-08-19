@@ -44,8 +44,8 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.jenkinsci.account.security.CrumbIssuer;
 import org.kohsuke.stapler.Header;
@@ -54,8 +54,8 @@ import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.StaplerRequest2;
+import org.kohsuke.stapler.StaplerResponse2;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import static javax.naming.directory.DirContext.ADD_ATTRIBUTE;
@@ -96,7 +96,7 @@ public class Application {
 
     public String showCaptcha(String name) {
         String token = cage.getTokenGenerator().next();
-        Stapler.getCurrentRequest().getSession(true).setAttribute("captcha." + name, token);
+        Stapler.getCurrentRequest2().getSession(true).setAttribute("captcha." + name, token);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             cage.draw(token, baos);
@@ -108,7 +108,7 @@ public class Application {
     }
 
     private boolean validateCaptcha(String name, String userInput) {
-        HttpSession session = Stapler.getCurrentRequest().getSession(false);
+        HttpSession session = Stapler.getCurrentRequest2().getSession(false);
         if (session == null) return false;
         String expected = (String) session.getAttribute("captcha." + name);
         session.removeAttribute("captcha." + name);
@@ -120,8 +120,8 @@ public class Application {
      */
     @RequirePOST
     public HttpResponse doDoSignup(
-            StaplerRequest request,
-            StaplerResponse response,
+            StaplerRequest2 request,
+            StaplerResponse2 response,
             @QueryParameter String userid,
             @QueryParameter String firstName,
             @QueryParameter String lastName,
@@ -253,7 +253,7 @@ public class Application {
         return new HttpRedirect("doneMail");
     }
 
-    private String dumpHeaders(StaplerRequest request) {
+    private String dumpHeaders(StaplerRequest2 request) {
         Enumeration headerNames = request.getHeaderNames();
         StringBuffer buffer = new StringBuffer();
         while(headerNames.hasMoreElements()) {
@@ -263,7 +263,7 @@ public class Application {
         return buffer.toString();
     }
 
-    private boolean checkCookie(StaplerRequest request, String x) {
+    private boolean checkCookie(StaplerRequest2 request, String x) {
         for (Cookie cookie: request.getCookies()) {
             if(cookie.getName().equals(ALREADY_SIGNED_UP)) {
                 return "1".equals(cookie.getValue());
@@ -586,7 +586,7 @@ public class Application {
             LdapContext context = connect(dn, password);    // make sure the password is valid
             try {
                 Myself myself = new Myself(this, dn, context.getAttributes(dn), getGroups(dn,context));
-                StaplerRequest req = Stapler.getCurrentRequest();
+                StaplerRequest2 req = Stapler.getCurrentRequest2();
                 req.getSession().invalidate();
                 req.getSession(true).setAttribute(Myself.class.getName(), myself);
                 return myself;
@@ -617,13 +617,13 @@ public class Application {
         return groups;
     }
 
-    public HttpResponse doLogout(StaplerRequest req) {
+    public HttpResponse doLogout(StaplerRequest2 req) {
         req.getSession().invalidate();
         return HttpResponses.redirectToDot();
     }
 
     public String getCrumb() {
-        return CrumbIssuer.getCrumb(Stapler.getCurrentRequest());
+        return CrumbIssuer.getCrumb(Stapler.getCurrentRequest2().getSession().getId());
     }
 
     public boolean isLoggedIn() {
@@ -649,7 +649,7 @@ public class Application {
 
     private Myself needToLogin() {
         // needs to login
-        StaplerRequest req = Stapler.getCurrentRequest();
+        StaplerRequest2 req = Stapler.getCurrentRequest2();
 
         String authHeader = req.getHeader("Authorization");
         if (authHeader != null) { // Basic auth
@@ -1472,7 +1472,7 @@ public class Application {
      * Returns true if the provided url is the active url
      */
     public boolean isActive(String url) {
-        StaplerRequest req = Stapler.getCurrentRequest();
+        StaplerRequest2 req = Stapler.getCurrentRequest2();
         String currentUrl = StringUtils.strip(req.getRequestURI(), "/");
         return currentUrl.equals(url);
     }

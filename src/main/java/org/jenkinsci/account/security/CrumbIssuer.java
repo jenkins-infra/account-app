@@ -1,5 +1,7 @@
 package org.jenkinsci.account.security;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -8,7 +10,7 @@ import java.security.SecureRandom;
 import java.util.HexFormat;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class CrumbIssuer extends org.kohsuke.stapler.CrumbIssuer {
 
@@ -22,38 +24,20 @@ public class CrumbIssuer extends org.kohsuke.stapler.CrumbIssuer {
     }
 
     @Override
-    public String issueCrumb(StaplerRequest request) {
+    public String issueCrumb(StaplerRequest2 request) {
         return hmac(request.getSession().getId());
     }
 
-    public static String getCrumb(javax.servlet.http.HttpServletRequest request) {
-        return hmac(request.getSession().getId());
+    public static String getCrumb(String sessionId) {
+        return hmac(sessionId);
     }
 
-    public static String getCrumb(jakarta.servlet.http.HttpServletRequest request) {
-        return hmac(request.getSession().getId());
-    }
-
-    /** Validates a submitted crumb against the expected value for this session (javax variant). */
-    public static void validate(javax.servlet.http.HttpServletRequest request, String submitted) {
-        javax.servlet.http.HttpSession session = request.getSession(false);
+    public static void validate(HttpServletRequest request, String submitted) {
+        HttpSession session = request.getSession(false);
         if (session == null) {
             throw new SecurityException("Invalid or missing CSRF token. Please reload the page and try again.");
         }
-        validateHmac(session.getId(), submitted);
-    }
-
-    /** Validates a submitted crumb against the expected value for this session (jakarta variant). */
-    public static void validate(jakarta.servlet.http.HttpServletRequest request, String submitted) {
-        jakarta.servlet.http.HttpSession session = request.getSession(false);
-        if (session == null) {
-            throw new SecurityException("Invalid or missing CSRF token. Please reload the page and try again.");
-        }
-        validateHmac(session.getId(), submitted);
-    }
-
-    private static void validateHmac(String sessionId, String submitted) {
-        String expected = hmac(sessionId);
+        String expected = hmac(session.getId());
         if (!MessageDigest.isEqual(
                 expected.getBytes(StandardCharsets.UTF_8),
                 submitted != null ? submitted.getBytes(StandardCharsets.UTF_8) : new byte[0])) {
