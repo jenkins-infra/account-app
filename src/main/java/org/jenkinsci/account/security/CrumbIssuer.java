@@ -24,6 +24,11 @@ public class CrumbIssuer extends org.kohsuke.stapler.CrumbIssuer {
     }
 
     @Override
+    public String getCrumbExpression() {
+        return "'document.head.dataset.crumbValue'";
+    }
+
+    @Override
     public String issueCrumb(StaplerRequest2 request) {
         return hmac(request.getSession().getId());
     }

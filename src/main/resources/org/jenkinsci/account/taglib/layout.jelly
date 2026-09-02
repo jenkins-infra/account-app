@@ -7,7 +7,7 @@
   </st:documentation>
   <st:contentType value="text/html;charset=UTF-8" />
 <html style="height:100%;min-height:100%;">
-<head>
+<head data-crumb-value="${app.crumb}">
 <title>
     ${attrs.title} | Jenkins
 </title>
