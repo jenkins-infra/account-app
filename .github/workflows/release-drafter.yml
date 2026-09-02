@@ -1,24 +1,19 @@
-name: release-drafter
+name: Release Drafter
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
-  workflow_dispatch:
   release:
+    types: [released]
 # Only allow 1 release-drafter build at a time to avoid creating multiple "next" releases
 concurrency: "release-drafter"
 jobs:
-  deploy:
+  update_release_draft:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-        with:
-          fetch-depth: 0
       - name: Release Drafter
-        uses: release-drafter/release-drafter@139054aeaa9adc52ab36ddf67437541f039b88e2 # v7.1.1
+        uses: release-drafter/release-drafter@34d80673e067bdc0c24568d3af899c216adcfaa9 # v7.7.0
         with:
-          name: next
-          tag: next
-          version: next
+          # This token is generated automatically by default in GitHub Actions: no need to create it manually
           token: ${{ secrets.GITHUB_TOKEN }}
