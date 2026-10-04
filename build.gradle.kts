@@ -78,7 +78,7 @@ tasks.named("check") {
 dependencies {
     implementation("com.typesafe:config:1.4.5")
 
-    implementation("commons-codec:commons-codec:1.20.0")
+    implementation("commons-codec:commons-codec:1.22.1")
     implementation("org.apache.commons:commons-lang3:3.17.0")
 
     implementation("org.kohsuke.stapler:stapler-jelly:2106.2111.v22866cc60465")
