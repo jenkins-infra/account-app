@@ -76,7 +76,7 @@ tasks.named("check") {
 }
 
 dependencies {
-    implementation("com.typesafe:config:1.4.5")
+    implementation("com.typesafe:config:1.4.9")
 
     implementation("commons-codec:commons-codec:1.20.0")
     implementation("org.apache.commons:commons-lang3:3.17.0")
