@@ -1,4 +1,4 @@
-#syntax=docker/dockerfile:1.7-labs
+#syntax=docker/dockerfile:1.27-labs
 FROM eclipse-temurin:21 AS build
 
 WORKDIR /app
