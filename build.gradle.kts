@@ -57,7 +57,7 @@ testing {
 
                 implementation("com.unboundid:unboundid-ldapsdk:7.0.5")
 
-                implementation("com.icegreen:greenmail-junit5:2.1.10")
+                implementation("com.icegreen:greenmail-junit5:2.1.14")
             }
 
             targets {
