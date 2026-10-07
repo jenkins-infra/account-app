@@ -91,7 +91,7 @@ dependencies {
 
     implementation("com.github.cage:cage:1.0")
 
-    implementation("com.github.spotbugs:spotbugs-annotations:4.9.8")
+    implementation("com.github.spotbugs:spotbugs-annotations:4.10.4")
 
     implementation("com.google.guava:guava:33.5.0-jre")
 
