@@ -95,7 +95,7 @@ dependencies {
 
     implementation("com.google.guava:guava:33.5.0-jre")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:6.0.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.1.3")
 }
 
 tasks {
