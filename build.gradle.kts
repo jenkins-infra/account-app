@@ -81,7 +81,7 @@ dependencies {
     implementation("commons-codec:commons-codec:1.23.0")
     implementation("org.apache.commons:commons-lang3:3.21.0")
 
-    implementation("org.kohsuke.stapler:stapler-jelly:2117.vb_66952503166")
+    implementation("org.kohsuke.stapler:stapler-jelly:2127.v73cb_e2fb_e431")
 
     implementation("commons-jelly:commons-jelly-tags-define:1.0")
 
