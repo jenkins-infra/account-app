@@ -230,7 +230,7 @@ public class Application {
                 + String.join("\n", blockReasons) + "\n===================" + "\n\n" +
                 "IP Void link: http://ipvoid.com/scan/" + ip + "\n\n" +
                 "To allow this account to be created, click the following link:\n" +
-                getUrl() + "/admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
+                getUrl() + "admin/signup?userId=" + enc(userid) + "&firstName=" + enc(firstName) + "&lastName=" + enc(lastName) + "&email=" + enc(email) + "\n";
             LOGGER.warning(userDetails.replaceAll("\\R", " ") + " signup rejected, likely spam: " + String.join(" / ", blockReasons));
             mail("jenkinsci-account-admins@googlegroups.com", "Rejection of a new account creation for " + firstName + " " + lastName, body, "text/plain");
             throw new SystemError(SPAM_MESSAGE);
@@ -240,7 +240,7 @@ public class Application {
         LOGGER.info("User "+userid+" is from "+ip);
         mail("jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
             userDetails + "\n\nHTTP Headers\n" +
-                dumpHeaders(request) + "\n\n" + "Account page: " + getUrl() + "/admin/search?word=" + userid + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
+                dumpHeaders(request) + "\n\n" + "Account page: " + getUrl() + "admin/search?word=" + userid + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
         String token = resetTokenService.createToken(userid, PasswordResetTokenService.ACTIVATION_TTL);
         new User(userid,email).mailActivationLink(token);
 
@@ -567,10 +567,17 @@ public class Application {
             @QueryParameter String from
     ) {
         login(userid, password);
+        return HttpResponses.redirectTo(safeRedirectTarget(from));
+    }
 
-        // to limit the redirect to this application, require that the from URL starts from '/'
-        if (from==null || !from.startsWith("/")) from="/";
-        return HttpResponses.redirectTo(from);
+    /**
+     * Restricts the post-login redirect to the pages {@link #needToLogin()} sends users from.
+     */
+    static String safeRedirectTarget(String from) {
+        if (from != null && (from.startsWith("/myself") || from.startsWith("/admin"))) {
+            return from;
+        }
+        return "/";
     }
 
     private Myself login(String userid, String password) throws UserError {
