@@ -30,4 +30,16 @@
   <listener>
     <listener-class>org.jenkinsci.account.WebAppMain</listener-class>
   </listener>
+
+  <session-config>
+    <cookie-config>
+      <http-only>true</http-only>
+      <!--
+        Servlet 5 has no SameSite API. Jetty 11 translates this marker into "SameSite=Lax" and strips it from the comment.
+        Strict would log users out when they follow a link from another site to this app, as every page creates a session.
+        Secure is set in WebAppMain#contextInitialized.
+      -->
+      <comment>__SAME_SITE_LAX__</comment>
+    </cookie-config>
+  </session-config>
 </web-app>
