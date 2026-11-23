@@ -2,7 +2,6 @@ package org.jenkinsci.account;
 
 import jakarta.mail.MessagingException;
 import org.jenkinsci.account.Application.User;
-import org.jenkinsci.account.PasswordResetTokenService;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.QueryParameter;
@@ -62,11 +61,7 @@ public class AdminUI {
             u.mailAdminPasswordResetLink(token);
             LOGGER.info("Admin triggered password reset for " + u.id + " (reason: " + reason + ")");
 
-            if (Myself.current().isAuthenticatedWithREST()) {
-                return HttpResponses.ok();
-            } else {
-                return HttpResponses.forwardToView(this, "passwordResetSent.jelly").with("user", u);
-            }
+            return HttpResponses.forwardToView(this, "passwordResetSent.jelly").with("user", u);
         } finally {
             con.close();
         }
