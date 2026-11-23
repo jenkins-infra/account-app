@@ -1,10 +1,12 @@
 package org.jenkinsci.account.ui.myaccount;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import java.util.List;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 // page_url = http://localhost:8080/myself/
 public class MyProfilePage {
@@ -35,7 +37,11 @@ public class MyProfilePage {
     @FindBy(xpath = "//button[@type=\"submit\"]")
     private WebElement updateButton;
 
-    public MyProfilePage(WebDriver driver) {
+    private final WebDriverWait wait;
+
+    public MyProfilePage(WebDriver driver, WebDriverWait wait) {
+        this.wait = wait;
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("firstName")));
         PageFactory.initElements(driver, this);
     }
 
@@ -68,7 +74,6 @@ public class MyProfilePage {
         updateOldPassword(oldPassword);
         updateNewPassword(newPassword);
         updateConfirmNewPassword(newPassword);
-
         updateButton.click();
     }
 

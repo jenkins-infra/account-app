@@ -1,0 +1,8 @@
+.tmp
+.github
+.git
+Jenkinsfile
+README.*
+fake_data
+docker-compose.*
+mock-ldap

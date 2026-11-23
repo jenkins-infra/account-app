@@ -1,1 +1,0 @@
-parallelDockerUpdatecli([imageName: 'account-app', rebuildImageOnPeriodicJob: false])

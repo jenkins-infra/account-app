@@ -8,6 +8,7 @@ import org.jenkinsci.account.ui.BaseTest;
 import org.jenkinsci.account.ui.email.Emails;
 import org.jenkinsci.account.ui.login.LoginPage;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,12 +27,12 @@ class ResetPasswordTest extends BaseTest {
     private void resetPassword(String username, String email, UserLookupType userLookupType) throws MessagingException, IOException {
         openHomePage();
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.clickForgotPassword();
 
         Date timestampBeforeReset = new Date();
 
-        ResetPasswordPage resetPasswordPage = new ResetPasswordPage(driver);
+        ResetPasswordPage resetPasswordPage = new ResetPasswordPage(driver, wait);
         if (userLookupType == UserLookupType.USERNAME) {
             resetPasswordPage.resetPassword(username);
         } else {
@@ -50,16 +51,22 @@ class ResetPasswordTest extends BaseTest {
 
         assertThat(emailContent).isNotEmpty();
 
-        Matcher matcher = Emails.PASSWORD_EXTRACTOR.matcher(emailContent);
-        boolean matches = matcher.find();
-        assertThat(matches).isTrue();
+        Matcher matcher = Emails.RESET_LINK_EXTRACTOR.matcher(emailContent);
+        assertThat(matcher.find()).isTrue();
 
-        String password = matcher.group(1);
+        String resetLink = matcher.group(1);
+
+        driver.get(resetLink);
+
+        String newPassword = "newSecurePass42";
+        ConfirmPasswordResetPage confirmPage = new ConfirmPasswordResetPage(driver);
+        confirmPage.setNewPassword(newPassword, newPassword);
 
         openHomePage();
-        loginPage.login(username, password);
+        loginPage = new LoginPage(driver, wait);
+        loginPage.login(username, newPassword);
 
-        String pageTitle = driver.getTitle();
-        assertThat(pageTitle).contains("Account");
+        wait.until(ExpectedConditions.titleContains("Account"));
+        assertThat(driver.getTitle()).contains("Account");
     }
 }

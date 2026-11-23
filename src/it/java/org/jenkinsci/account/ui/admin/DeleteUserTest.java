@@ -5,6 +5,7 @@ import org.jenkinsci.account.ui.login.LoginPage;
 import org.jenkinsci.account.ui.myaccount.MyAccountPage;
 import org.jenkinsci.account.ui.resetpassword.UserLookupType;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,27 +23,28 @@ public class DeleteUserTest extends BaseTest {
 
     public void deleteUser(String username, String email, UserLookupType userLookupType) {
         openHomePage();
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.login("kohsuke", "password");
 
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        MyAccountPage myAccountPage = new MyAccountPage(driver, wait);
         myAccountPage.clickAdminLink();
 
-        AdminPage adminPage = new AdminPage(driver);
+        AdminPage adminPage = new AdminPage(driver, wait);
         if (userLookupType == UserLookupType.USERNAME) {
             adminPage.search(username);
         } else {
             adminPage.search(email);
         }
 
-        AdminSearchPage adminSearchPage = new AdminSearchPage(driver);
+        AdminSearchPage adminSearchPage = new AdminSearchPage(driver, wait);
         adminSearchPage.deleteUser();
         adminPage.verifyOnPage();
 
         newSession();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPage(driver, wait);
         loginPage.login("alice", "password");
+        wait.until(ExpectedConditions.titleContains("Error"));
         assertThat(driver.getTitle()).isEqualTo("Error | Jenkins");
     }
 }

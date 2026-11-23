@@ -1,6 +1,7 @@
 package org.jenkinsci.account;
 
-import com.captcha.botdetect.web.servlet.Captcha;
+import com.github.cage.Cage;
+import com.github.cage.GCage;
 import com.google.common.net.InetAddresses;
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
@@ -10,6 +11,7 @@ import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -42,24 +44,25 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
-import javax.servlet.http.Cookie;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.validator.routines.EmailValidator;
-import org.jenkinsci.account.openid.JenkinsOpenIDServer;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
+import org.jenkinsci.account.security.CrumbIssuer;
 import org.kohsuke.stapler.Header;
 import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.HttpResponses;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.StaplerRequest2;
+import org.kohsuke.stapler.StaplerResponse2;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import static javax.naming.directory.DirContext.ADD_ATTRIBUTE;
 import static javax.naming.directory.DirContext.REMOVE_ATTRIBUTE;
 import static javax.naming.directory.DirContext.REPLACE_ATTRIBUTE;
 import static javax.naming.directory.SearchControls.SUBTREE_SCOPE;
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.jenkinsci.account.LdapAbuse.REGISTRATION_DATE;
 import static org.jenkinsci.account.LdapAbuse.SENIOR_STATUS;
 
@@ -74,36 +77,51 @@ public class Application {
      */
     private final Parameters params;
 
-    /**
-     * For bringing the OpenID server into the URL space.
-     */
-    public final JenkinsOpenIDServer openid;
-
     // not exposing this to UI
     /*package*/ final CircuitBreaker circuitBreaker;
 
+    public final PasswordResetTokenService resetTokenService;
+
+    private final Cage cage = new GCage();
+
     public Application(Parameters params) throws Exception {
         this.params = params;
-        this.openid = new JenkinsOpenIDServer(this);
         this.circuitBreaker = new CircuitBreaker(params);
+        this.resetTokenService = new PasswordResetTokenService();
     }
 
     public String getUrl() {
         return params.url();
     }
 
-    public String showCaptcha(String name){
-        Captcha captcha = Captcha.load(Stapler.getCurrentRequest(), name);
-        captcha.setUserInputID("captchaCode");
-        return captcha.getHtml();
+    public String showCaptcha(String name) {
+        String token = cage.getTokenGenerator().next();
+        Stapler.getCurrentRequest2().getSession(true).setAttribute("captcha." + name, token);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            cage.draw(token, baos);
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+        String b64 = Base64.getEncoder().encodeToString(baos.toByteArray());
+        return "<img src=\"data:image/png;base64," + b64 + "\" alt=\"captcha\" />";
+    }
+
+    private boolean validateCaptcha(String name, String userInput) {
+        HttpSession session = Stapler.getCurrentRequest2().getSession(false);
+        if (session == null) return false;
+        String expected = (String) session.getAttribute("captcha." + name);
+        session.removeAttribute("captcha." + name);
+        return expected != null && expected.equalsIgnoreCase(userInput);
     }
 
     /**
      * Receives the sign-up form submission.
      */
+    @RequirePOST
     public HttpResponse doDoSignup(
-            StaplerRequest request,
-            StaplerResponse response,
+            StaplerRequest2 request,
+            StaplerResponse2 response,
             @QueryParameter String userid,
             @QueryParameter String firstName,
             @QueryParameter String lastName,
@@ -116,8 +134,7 @@ public class Application {
 
         ip = extractFirst(ip);
 
-        Captcha captcha = Captcha.load(request, "signUpCaptcha");
-        boolean isHuman = captcha.validate(request.getParameter("captchaCode"));
+        boolean isHuman = validateCaptcha("signUpCaptcha", captchaCode);
 
         // Check if userid and email are available before going further
         final DirContext con = connect();
@@ -223,12 +240,13 @@ public class Application {
             throw new SystemError(SPAM_MESSAGE);
         }
 
-        String password = createRecord(userid, firstName, lastName, email);
+        createRecord(userid, firstName, lastName, email);
         LOGGER.info("User "+userid+" is from "+ip);
         mail("jenkinsci-account-admins@googlegroups.com", "New user created for " + userid,
             userDetails + "\n\nHTTP Headers\n" +
                 dumpHeaders(request) + "\n\n" + "Account page: " + getUrl() + "/admin/search?word=" + userid + "\n\nIP Void link: http://ipvoid.com/scan/" + ip + "/\n", "text/plain");
-        new User(userid,email).mailPassword(password);
+        String token = resetTokenService.createToken(userid, PasswordResetTokenService.ACTIVATION_TTL);
+        new User(userid,email).mailActivationLink(token);
 
         Cookie cookie = new Cookie(ALREADY_SIGNED_UP, "1");
         cookie.setDomain("accounts.jenkins.io");
@@ -239,7 +257,7 @@ public class Application {
         return new HttpRedirect("doneMail");
     }
 
-    private String dumpHeaders(StaplerRequest request) {
+    private String dumpHeaders(StaplerRequest2 request) {
         Enumeration headerNames = request.getHeaderNames();
         StringBuffer buffer = new StringBuffer();
         while(headerNames.hasMoreElements()) {
@@ -249,7 +267,7 @@ public class Application {
         return buffer.toString();
     }
 
-    private boolean checkCookie(StaplerRequest request, String x) {
+    private boolean checkCookie(StaplerRequest2 request, String x) {
         for (Cookie cookie: request.getCookies()) {
             if(cookie.getName().equals(ALREADY_SIGNED_UP)) {
                 return "1".equals(cookie.getValue());
@@ -332,27 +350,57 @@ public class Application {
     }
 
     /**
-     * Handles the password reset form submission.
+     * Handles the "Forgot password" form submission.
+     * Issues a time-limited token and emails a reset link — does NOT change the current password.
      */
-    public HttpResponse doDoPasswordReset(@QueryParameter String id, @QueryParameter String reason) throws Exception {
-        final DirContext con = connect();
-        if (id.isEmpty())
+    @RequirePOST
+    public HttpResponse doDoPasswordReset(@QueryParameter String id) throws Exception {
+        if (id == null || id.isEmpty())
             throw new UserError("No email or user account provided");
+        final DirContext con = connect();
         try {
             Iterator<User> a = searchByWord(id, con);
             if (a.hasNext()) {
                 User u = a.next();
-
-                String p = PasswordUtil.generateRandomPassword();
-                u.modifyPassword(con, p);
-                u.mailPasswordReset(p, Stapler.getCurrentRequest().getRemoteUser(),
-                    StringUtils.isBlank(reason) ? "request in the account management app" : reason );
+                String token = resetTokenService.createToken(u.id, PasswordResetTokenService.RESET_TTL);
+                u.mailPasswordResetLink(token);
             }
         } finally {
             con.close();
         }
-
         return new HttpRedirect("resetMail");
+    }
+
+    /**
+     * Shows the "set new password" form after the user clicks the reset link in their email.
+     */
+    public HttpResponse doConfirmPasswordReset(@QueryParameter String token) {
+        resetTokenService.validateToken(token);
+        return HttpResponses.forwardToView(this, "confirmPasswordReset.jelly").with("token", token);
+    }
+
+    /**
+     * Applies the new password chosen by the user after validating the reset token.
+     */
+    @RequirePOST
+    public HttpResponse doDoConfirmPasswordReset(
+            @QueryParameter String token,
+            @QueryParameter String newPassword1,
+            @QueryParameter String newPassword2) throws Exception {
+        if (newPassword1 == null || newPassword1.isEmpty())
+            throw new UserError("New password is required");
+        if (newPassword1.length() < 8)
+            throw new UserError("Password must be at least 8 characters long.");
+        if (!newPassword1.equals(newPassword2))
+            throw new UserError("Passwords do not match");
+        String userId = resetTokenService.validateAndConsumeToken(token);
+        final DirContext con = connect();
+        try {
+            getUserById(userId, con).modifyPassword(con, newPassword1);
+        } finally {
+            con.close();
+        }
+        return new HttpRedirect("login");
     }
 
     public User getUserById(String id, DirContext con) throws NamingException {
@@ -398,41 +446,56 @@ public class Application {
         }
 
         /**
-         * Sends a new password to this user.
+         * Emails a one-time account activation link after self-signup.
          */
-        public void mailPassword(String password) throws MessagingException {
-            mail(mail, "Your access to Jenkins resources", "Your userid is " + id + "\n" +
-                "Your temporary password is " + password + "\n" +
-                "\n" +
-                "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
-        }
-
-        /**
-         * Sends a new password to this user.
-         */
-        public void mailAccountCreated(boolean sendPassword, String password, @CheckForNull String message) throws MessagingException {
-            mail(mail, "New account on the Jenkins project infrastructure",
-                "Dear recipient, \n\n" +
-                "We have created a new Jenkins project account for you. Your new user ID is " + id + "\n" +
-                ( sendPassword ? "Your temporary password is " + password + "\n" : "" ) +
-                ( StringUtils.isNotBlank(message) ? message + "\n" : "" ) +
-                "\n" +
-                ( sendPassword ? "Please visit " + getUrl() + " and update your password and profile\n" : "" ), 
+        public void mailActivationLink(String token) throws MessagingException {
+            String link = getUrl() + "confirmPasswordReset?token=" + token;
+            mail(mail, "Your access to Jenkins resources",
+                "Your Jenkins account has been created. Your userid is " + id + "\n\n" +
+                "Click the following link to set your password and activate your account. The link expires in 24 hours:\n" +
+                link + "\n",
                 "text/plain");
         }
 
         /**
-         * Sends a new password and a password reset notification to this user.
+         * Emails a one-time account activation link for admin-created accounts.
          */
-        public void mailPasswordReset(String password, @CheckForNull String requestedByUser, @CheckForNull String reason) throws MessagingException {
+        public void mailAccountCreatedWithLink(String token, @CheckForNull String message) throws MessagingException {
+            String link = getUrl() + "confirmPasswordReset?token=" + token;
+            mail(mail, "New account on the Jenkins project infrastructure",
+                "Dear recipient,\n\n" +
+                "We have created a new Jenkins project account for you. Your new user ID is " + id + "\n" +
+                (StringUtils.isNotBlank(message) ? message + "\n" : "") +
+                "\nClick the following link to set your password. The link expires in 24 hours:\n" +
+                link + "\n",
+                "text/plain");
+        }
+
+        /**
+         * Emails a one-time password reset link for a user-initiated reset.
+         * Does not change or reveal the current password.
+         */
+        public void mailPasswordResetLink(String token) throws MessagingException {
+            String link = getUrl() + "confirmPasswordReset?token=" + token;
             mail(mail, "Password reset on the Jenkins project infrastructure",
-                "Your Jenkins account password was reset. " +
-                (requestedByUser != null ? String.format("It was requested by user %s. ", requestedByUser) : "") +
-                (StringUtils.isNotBlank(reason) ? String.format("Reason: %s. ", reason) : "") +
-                "Your userid is " + id + "\n" +
-                "Your temporary password is " + password + "\n" +
-                "\n" +
-                "Please visit " + getUrl() + " and update your password and profile\n", "text/plain");
+                "A password reset was requested for your Jenkins account (userid: " + id + ").\n\n" +
+                "Click the following link to set a new password. The link expires in 1 hour:\n" +
+                link + "\n\n" +
+                "If you did not request this, you can safely ignore this email — your current password has not been changed.\n",
+                "text/plain");
+        }
+
+        /**
+         * Emails a one-time password reset link for an admin-initiated reset.
+         * The previous password has already been invalidated.
+         */
+        public void mailAdminPasswordResetLink(String token) throws MessagingException {
+            String link = getUrl() + "confirmPasswordReset?token=" + token;
+            mail(mail, "Password reset on the Jenkins project infrastructure",
+                "An administrator has reset the password for your Jenkins account (userid: " + id + ").\n\n" +
+                "Your previous password has been invalidated. Click the following link to set a new password. The link expires in 1 hour:\n" +
+                link + "\n",
+                "text/plain");
         }
 
         public void delete(DirContext con) throws NamingException {
@@ -501,6 +564,7 @@ public class Application {
     /**
      * Handles the login form submission.
      */
+    @RequirePOST
     public HttpResponse doDoLogin(
             @QueryParameter String userid,
             @QueryParameter String password,
@@ -526,7 +590,9 @@ public class Application {
             LdapContext context = connect(dn, password);    // make sure the password is valid
             try {
                 Myself myself = new Myself(this, dn, context.getAttributes(dn), getGroups(dn,context));
-                Stapler.getCurrentRequest().getSession().setAttribute(Myself.class.getName(), myself);
+                StaplerRequest2 req = Stapler.getCurrentRequest2();
+                req.getSession().invalidate();
+                req.getSession(true).setAttribute(Myself.class.getName(), myself);
                 return myself;
             } finally {
                 context.close();
@@ -555,9 +621,13 @@ public class Application {
         return groups;
     }
 
-    public HttpResponse doLogout(StaplerRequest req) {
+    public HttpResponse doLogout(StaplerRequest2 req) {
         req.getSession().invalidate();
         return HttpResponses.redirectToDot();
+    }
+
+    public String getCrumb() {
+        return CrumbIssuer.getCrumb(Stapler.getCurrentRequest2().getSession().getId());
     }
 
     public boolean isLoggedIn() {
@@ -583,19 +653,7 @@ public class Application {
 
     private Myself needToLogin() {
         // needs to login
-        StaplerRequest req = Stapler.getCurrentRequest();
-
-        String authHeader = req.getHeader("Authorization");
-        if (authHeader != null) { // Basic auth
-            if (!authHeader.startsWith("Basic")) {
-                throw HttpResponses.error(403, "Only Basic authentication is supported");
-            }
-            byte[] userPasswordBytes = Base64.getDecoder().decode(authHeader.trim().substring(6));
-            String[] res = new String(userPasswordBytes).split(":");
-            String user = res[0];
-            String password = res[1];
-            return login(user, password).withRESTAuthentication(true);
-        }
+        StaplerRequest2 req = Stapler.getCurrentRequest2();
 
         StringBuilder from = new StringBuilder(req.getRequestURI());
         if (req.getQueryString()!=null)
@@ -897,6 +955,7 @@ public class Application {
         "sandysharmja121@gmail.com",
         "saundraclogston@gmail.com",
         "sawanjha17@gmail.com",
+        "sayyedabrash110202@gmail.com",
         "sbabita149@gmail.com",
         "sellikepovscotta@gmail.com",
         "seo@gmail.com",
@@ -1177,7 +1236,11 @@ public class Application {
         "176.67.86.", // laptoprepair gmail guy and Persistent spammers
         "176.67.86.36", // Persistent spammer
         "177.154.139.203", // http://www.ipvoid.com/scan/177.154.139.203
-        "180.151.",
+        "180.151.228.235", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
+        "180.151.246.3", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
+        "180.151.30.243", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
+        "180.151.7.42", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
+        "180.151.84.234", // https://github.com/jenkins-infra/account-app/commit/a04efa7690fa6fc228a407d6707cfe24bf1dd995
         "180.254.96.177", // http://www.ipvoid.com/scan/180.254.96.177
         "181.41.197.63", // Persistent spammer
         "182.156.72.162",
@@ -1396,4 +1459,13 @@ public class Application {
 
     // Somewhat cryptic name for cookie, so prying eyes don't know its use.
     public static final String ALREADY_SIGNED_UP = "JENKINSACCOUNT";
+
+    /**
+     * Returns true if the provided url is the active url
+     */
+    public boolean isActive(String url) {
+        StaplerRequest2 req = Stapler.getCurrentRequest2();
+        String currentUrl = StringUtils.strip(req.getRequestURI(), "/");
+        return currentUrl.equals(url);
+    }
 }

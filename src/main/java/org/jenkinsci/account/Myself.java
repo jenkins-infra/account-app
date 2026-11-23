@@ -13,6 +13,7 @@ import javax.naming.directory.DirContext;
 import javax.naming.ldap.LdapContext;
 import java.util.Set;
 import java.util.logging.Logger;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import static org.jenkinsci.account.LdapAbuse.GITHUB_ID;
 import static org.jenkinsci.account.LdapAbuse.SSH_KEYS;
@@ -29,11 +30,6 @@ public class Myself {
     private final String dn;
     public String firstName, lastName, email, userId;
     public String githubId, sshKeys, registrationDate;
-    /**
-     * Indicates that a REST API client is used.
-     * It will impact some redirects on commands.
-     */
-    private boolean authenticatedWithREST;
     private final Set<String> groups;
 
     public Myself(Application parent, String dn, Attributes attributes, Set<String> groups) throws NamingException {
@@ -62,7 +58,7 @@ public class Myself {
     }
 
     public static Myself current() {
-        return (Myself) Stapler.getCurrentRequest().getSession().getAttribute(Myself.class.getName());
+        return (Myself) Stapler.getCurrentRequest2().getSession().getAttribute(Myself.class.getName());
     }
 
     /**
@@ -72,20 +68,12 @@ public class Myself {
         return groups.contains("admins");
     }
 
-    public Myself withRESTAuthentication(boolean value) {
-        this.authenticatedWithREST = value;
-        return this;
-    }
-
-    public boolean isAuthenticatedWithREST() {
-        return this.authenticatedWithREST;
-    }
-
     private static String getAttribute(Attributes attributes, String name) throws NamingException {
         Attribute att = attributes.get(name);
         return att!=null ? (String) att.get() : null;
     }
 
+    @RequirePOST
     public HttpResponse doUpdate(
             @QueryParameter String firstName,
             @QueryParameter String lastName,
@@ -97,10 +85,16 @@ public class Myself {
             @QueryParameter String newPassword2
     ) throws Exception {
 
+        if (!isValidName(firstName)) {
+            throw new UserError("First name is Invalid");
+        }
+        if (!isValidName(lastName)) {
+            throw new UserError("Last name is Invalid");
+        }
         final Attributes attrs = new BasicAttributes();
 
-        attrs.put("givenName", fixEmpty(firstName));
-        attrs.put("sn", fixEmpty(lastName));
+        attrs.put("givenName", firstName);
+        attrs.put("sn", lastName);
         attrs.put("mail", email);
         attrs.put(GITHUB_ID,fixEmpty(githubId));
         attrs.put(SSH_KEYS,fixEmpty(sshKeys)); // hack since I find it too hard to add custom attributes to LDAP
@@ -127,8 +121,7 @@ public class Myself {
         return new HttpRedirect("done");
     }
 
-    // no longer invoked directly from outside, but left as is
-    public HttpResponse doChangePassword(
+    protected HttpResponse doChangePassword(
             @QueryParameter String password,
             @QueryParameter String newPassword1,
             @QueryParameter String newPassword2
@@ -169,6 +162,10 @@ public class Myself {
     private String fixEmpty(String s) {
         if (s!=null && s.length()==0)   return null;
         return s;
+    }
+
+    private boolean isValidName(String name) {
+        return name != null && !name.isEmpty() && name.length() < 100;
     }
 
     private static final Logger LOGGER = Logger.getLogger(Myself.class.getName());

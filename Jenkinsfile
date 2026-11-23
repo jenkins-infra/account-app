@@ -1,6 +1,12 @@
+// Integration tests requires an x86_64 CPU for Selenium. A VM is required at least in infra.ci (AKS does not fare well with chromium (sandbox?) compared to EKS).
+final String agentLabel = infra.isInfra() ? 'linux-amd64-docker' : 'linux-amd64'
+
 pipeline {
+    environment {
+        JAVA_HOME = '/opt/jdk-21'
+    }
     agent {
-        label 'jdk17'
+        label agentLabel
     }
     options {
         disableConcurrentBuilds(abortPrevious: true)
@@ -12,7 +18,10 @@ pipeline {
                 sh './gradlew build -x test -x integrationTest'
             }
         }
-       stage('Test') {
+        stage('Test') {
+            environment {
+                SELENIUM_BROWSER_BINARY = sh(script: 'ls ${HOME}/.cache/ms-playwright/chromium_headless_shell-*/chrome-headless-shell-linux64/chrome-headless-shell', returnStdout: true).trim()
+            }
             steps {
                 sh './gradlew check'
             }
@@ -28,7 +37,12 @@ pipeline {
         }
         stage('Docker image') {
             steps {
-                buildDockerAndPublishImage('account-app', [rebuildImageOnPeriodicJob: false])
+                buildDockerAndPublishImage('account-app', [
+                    rebuildImageOnPeriodicJob: false,
+                    publishToPrivateAzureRegistry: true,
+                    targetplatforms: 'linux/arm64',
+                    disablePublication: !infra.isInfra()
+                ])
             }
         }
     }
