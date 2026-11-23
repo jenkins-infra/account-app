@@ -651,18 +651,6 @@ public class Application {
         // needs to login
         StaplerRequest2 req = Stapler.getCurrentRequest2();
 
-        String authHeader = req.getHeader("Authorization");
-        if (authHeader != null) { // Basic auth
-            if (!authHeader.startsWith("Basic")) {
-                throw HttpResponses.error(403, "Only Basic authentication is supported");
-            }
-            byte[] userPasswordBytes = Base64.getDecoder().decode(authHeader.trim().substring(6));
-            String[] res = new String(userPasswordBytes).split(":");
-            String user = res[0];
-            String password = res[1];
-            return login(user, password).withRESTAuthentication(true);
-        }
-
         StringBuilder from = new StringBuilder(req.getRequestURI());
         if (req.getQueryString()!=null)
             from.append('?').append(req.getQueryString());

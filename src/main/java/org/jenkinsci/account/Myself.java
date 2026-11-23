@@ -4,7 +4,6 @@ import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest2;
 
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -31,11 +30,6 @@ public class Myself {
     private final String dn;
     public String firstName, lastName, email, userId;
     public String githubId, sshKeys, registrationDate;
-    /**
-     * Indicates that a REST API client is used.
-     * It will impact some redirects on commands.
-     */
-    private boolean authenticatedWithREST;
     private final Set<String> groups;
 
     public Myself(Application parent, String dn, Attributes attributes, Set<String> groups) throws NamingException {
@@ -72,15 +66,6 @@ public class Myself {
      */
     public boolean isAdmin() {
         return groups.contains("admins");
-    }
-
-    public Myself withRESTAuthentication(boolean value) {
-        this.authenticatedWithREST = value;
-        return this;
-    }
-
-    public boolean isAuthenticatedWithREST() {
-        return this.authenticatedWithREST;
     }
 
     private static String getAttribute(Attributes attributes, String name) throws NamingException {
