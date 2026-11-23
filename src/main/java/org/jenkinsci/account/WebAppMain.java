@@ -25,6 +25,11 @@ public class WebAppMain extends AbstractWebAppMain<Application> {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
+        // TLS is terminated before requests reach Jetty, so it cannot detect HTTPS itself.
+        // Use the configured public URL to decide whether the session cookie should be Secure.
+        if (ConfigFactory.load().getString("url").startsWith("https://")) {
+            event.getServletContext().getSessionCookieConfig().setSecure(true);
+        }
         super.contextInitialized(event);
         WebApp.get(event.getServletContext()).setCrumbIssuer(new CrumbIssuer());
     }
