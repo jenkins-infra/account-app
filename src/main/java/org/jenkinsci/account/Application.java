@@ -180,6 +180,10 @@ public class Application {
             blockReasons.add("BL: email (custom)");
         }
 
+        if(!EmailValidator.getInstance().isValid(email)) {
+            blockReasons.add("BL: invalid email");
+        }
+
         if(
             (firstName.equalsIgnoreCase("help") && lastName.equalsIgnoreCase("desk")) ||
                 (firstName.contains("quickbook") || lastName.contains("quickbook"))
